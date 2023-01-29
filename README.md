@@ -1,4 +1,4 @@
-# ajedrez
+[![Production CI](https://github.com/Hec7or-Uni/chess-mobile/actions/workflows/production.yml/badge.svg)](https://github.com/Hec7or-Uni/chess-mobile/actions/workflows/production.yml)
 
 A new Flutter project.
 

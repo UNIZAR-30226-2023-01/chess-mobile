@@ -9,8 +9,6 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
-  List<String> displayExOh = ['', '', '', '', '', '', '', '', ''];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

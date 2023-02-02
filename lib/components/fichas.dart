@@ -8,6 +8,10 @@ abstract class Ficha {
     return isWhite;
   }
 
+  bool esVacia() {
+    return false;
+  }
+
   int getValue() {
     return _value;
   }
@@ -29,6 +33,11 @@ class Vacia extends Ficha {
   List<List<int>> posiblesMovimientos(int x, int y) {
     List<List<int>> movimientos = [];
     return movimientos;
+  }
+
+  @override
+  bool esVacia() {
+    return true;
   }
 }
 
@@ -187,7 +196,9 @@ List<Ficha> piezasBlancas = [
 class SharedData {
   static final SharedData _singleton = SharedData._internal();
   List<List<Ficha>> tablero = _initTablero();
-
+  List<List<bool>> tableroMovimientos = _initEmptyMovements();
+  bool whiteTurn = true;
+  List<int> casillaSeleccionada = [-1, -1];
   factory SharedData() {
     return _singleton;
   }
@@ -209,4 +220,35 @@ List<List<Ficha>> _initTablero() {
   tab.add(aux);
   tab.add(piezasBlancas);
   return tab;
+}
+
+List<List<bool>> _initEmptyMovements() {
+  List<List<bool>> movements = [];
+  for (int i = 0; i < 64; i++) {
+    if (i % 8 == 0) movements.add([]);
+    movements[i ~/ 8].add(false);
+  }
+  return movements;
+}
+
+List<List<int>> validateMovements(List<List<int>> movimientos) {
+  List<List<int>> movimientosValidos = [];
+  final SharedData sharedData = SharedData();
+  int temp;
+  movimientos.forEach((movimiento) {
+    /// Transponemos para que encaje con la definición del tablero(y,x)
+    temp = movimiento[0];
+    movimiento[0] = movimiento[1];
+    movimiento[1] = temp;
+    if (movimiento[0] >= 0 &&
+        movimiento[0] < 8 &&
+        movimiento[1] >= 0 &&
+        movimiento[1] < 8 &&
+        (sharedData.tablero[movimiento[0]][movimiento[1]].esVacia() ||
+            sharedData.tablero[movimiento[0]][movimiento[1]].color() ==
+                sharedData.whiteTurn)) {
+      movimientosValidos.add(movimiento);
+    }
+  });
+  return movimientosValidos;
 }

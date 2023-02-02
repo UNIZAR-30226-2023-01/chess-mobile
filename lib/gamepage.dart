@@ -1,4 +1,4 @@
-import 'package:ajedrez/casilla.dart';
+import 'package:ajedrez/components/casilla.dart';
 import 'package:flutter/material.dart';
 
 class GamePage extends StatefulWidget {

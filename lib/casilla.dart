@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'fichas.dart';
 
 class Casilla extends StatefulWidget {
   final int index;
   const Casilla({super.key, required this.index});
-
   @override
   State<Casilla> createState() => _CasillaState();
 }
@@ -11,11 +11,15 @@ class Casilla extends StatefulWidget {
 class _CasillaState extends State<Casilla> {
   /// Contiene el índice de la casilla(0-63)
   int i = 0;
-
+  int x = 0;
+  int y = 0;
+  final SharedData sharedData = SharedData();
   @override
   void initState() {
     super.initState();
     i = widget.index;
+    y = i ~/ 8;
+    x = i % 8;
   }
 
   @override
@@ -31,13 +35,16 @@ class _CasillaState extends State<Casilla> {
           color: ((i % 2 + ((i ~/ 8) % 2)) % 2 == 0)
 
               /// Formula que determina el color de la casilla
-              ? Colors.white
-              : Colors.black,
-          child: Center(
-            child: Text(
-              i.toString(),
-              style: const TextStyle(color: Colors.redAccent),
-            ),
+              ? const Color(0xffeeeed2)
+              : const Color(0xff769656),
+          child: Container(
+            decoration: BoxDecoration(
+                image: sharedData.tablero[y][x].getImg() != ""
+                    ? DecorationImage(
+                        image: AssetImage(
+                            "lib/images/${sharedData.tablero[y][x].getImg()}.png"),
+                        fit: BoxFit.cover)
+                    : null),
           ),
         ),
       ),

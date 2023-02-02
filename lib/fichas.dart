@@ -1,6 +1,7 @@
 abstract class Ficha {
   bool isWhite;
-  int value = 0;
+  String _img = "";
+  int _value = 0;
   Ficha({required this.isWhite});
 
   bool color() {
@@ -8,15 +9,33 @@ abstract class Ficha {
   }
 
   int getValue() {
-    return value;
+    return _value;
+  }
+
+  String getImg() {
+    return _img;
   }
 
   List<List<int>> posiblesMovimientos(int x, int y);
 }
 
+class Vacia extends Ficha {
+  Vacia({required super.isWhite}) {
+    _value = 0;
+    _img = "";
+  }
+
+  @override
+  List<List<int>> posiblesMovimientos(int x, int y) {
+    List<List<int>> movimientos = [];
+    return movimientos;
+  }
+}
+
 class Torre extends Ficha {
   Torre({required super.isWhite}) {
-    value = 5;
+    _value = 5;
+    _img = "torre${super.isWhite ? "B" : "N"}";
   }
 
   @override
@@ -34,7 +53,8 @@ class Torre extends Ficha {
 
 class Alfil extends Ficha {
   Alfil({required super.isWhite}) {
-    value = 3;
+    _value = 3;
+    _img = "alfil${super.isWhite ? "B" : "N"}";
   }
 
   @override
@@ -54,7 +74,8 @@ class Alfil extends Ficha {
 
 class Caballo extends Ficha {
   Caballo({required super.isWhite}) {
-    value = 3;
+    _value = 3;
+    _img = "caballo${super.isWhite ? "B" : "N"}";
   }
 
   @override
@@ -76,7 +97,8 @@ class Caballo extends Ficha {
 
 class Peon extends Ficha {
   Peon({required super.isWhite}) {
-    value = 1;
+    _value = 1;
+    _img = "peon${super.isWhite ? "B" : "N"}";
   }
 
   @override
@@ -94,7 +116,8 @@ class Peon extends Ficha {
 
 class Reina extends Ficha {
   Reina({required super.isWhite}) {
-    value = 10;
+    _value = 10;
+    _img = "reina${super.isWhite ? "B" : "N"}";
   }
 
   @override
@@ -118,7 +141,8 @@ class Reina extends Ficha {
 
 class Rey extends Ficha {
   Rey({required super.isWhite}) {
-    value = 10000;
+    _value = 10000;
+    _img = "rey${super.isWhite ? "B" : "N"}";
   }
 
   @override
@@ -136,4 +160,53 @@ class Rey extends Ficha {
 
     return movimientos;
   }
+}
+
+List<Ficha> piezasNegras = [
+  Torre(isWhite: false),
+  Caballo(isWhite: false),
+  Alfil(isWhite: false),
+  Reina(isWhite: false),
+  Rey(isWhite: false),
+  Alfil(isWhite: false),
+  Caballo(isWhite: false),
+  Torre(isWhite: false)
+];
+
+List<Ficha> piezasBlancas = [
+  Torre(isWhite: true),
+  Caballo(isWhite: true),
+  Alfil(isWhite: true),
+  Rey(isWhite: true),
+  Reina(isWhite: true),
+  Alfil(isWhite: true),
+  Caballo(isWhite: true),
+  Torre(isWhite: true)
+];
+
+class SharedData {
+  static final SharedData _singleton = SharedData._internal();
+  List<List<Ficha>> tablero = _initTablero();
+
+  factory SharedData() {
+    return _singleton;
+  }
+
+  SharedData._internal();
+}
+
+List<List<Ficha>> _initTablero() {
+  List<List<Ficha>> tab = [];
+  tab.add(piezasNegras);
+  var aux = <Ficha>[];
+  aux = List.filled(8, Peon(isWhite: false));
+  tab.add(aux);
+  aux = List.filled(8, Vacia(isWhite: false));
+  for (int i = 0; i < 4; i++) {
+    tab.add(aux);
+  }
+  aux = List.filled(8, Peon(isWhite: true));
+  tab.add(aux);
+  tab.add(piezasBlancas);
+  return tab;
 }

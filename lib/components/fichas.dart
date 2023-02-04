@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 abstract class Ficha {
   bool isWhite;
   String _img = "";
@@ -196,7 +198,8 @@ List<Ficha> piezasBlancas = [
 class SharedData {
   static final SharedData _singleton = SharedData._internal();
   List<List<Ficha>> tablero = _initTablero();
-  List<List<bool>> tableroMovimientos = _initEmptyMovements();
+  List<List<bool>> tableroMovimientos = initEmptyMovements();
+  List<State> casillas = [];
   bool whiteTurn = true;
   List<int> casillaSeleccionada = [-1, -1];
   factory SharedData() {
@@ -222,7 +225,7 @@ List<List<Ficha>> _initTablero() {
   return tab;
 }
 
-List<List<bool>> _initEmptyMovements() {
+List<List<bool>> initEmptyMovements() {
   List<List<bool>> movements = [];
   for (int i = 0; i < 64; i++) {
     if (i % 8 == 0) movements.add([]);
@@ -234,21 +237,26 @@ List<List<bool>> _initEmptyMovements() {
 List<List<int>> validateMovements(List<List<int>> movimientos) {
   List<List<int>> movimientosValidos = [];
   final SharedData sharedData = SharedData();
-  int temp;
-  movimientos.forEach((movimiento) {
-    /// Transponemos para que encaje con la definición del tablero(y,x)
-    temp = movimiento[0];
-    movimiento[0] = movimiento[1];
-    movimiento[1] = temp;
-    if (movimiento[0] >= 0 &&
-        movimiento[0] < 8 &&
-        movimiento[1] >= 0 &&
-        movimiento[1] < 8 &&
-        (sharedData.tablero[movimiento[0]][movimiento[1]].esVacia() ||
-            sharedData.tablero[movimiento[0]][movimiento[1]].color() ==
-                sharedData.whiteTurn)) {
-      movimientosValidos.add(movimiento);
-    }
-  });
+  int temp = 0;
+  for (int i = 0; i < movimientos.length; i++) {
+    _validateMovement(movimientos[i], temp, sharedData, movimientosValidos);
+  }
   return movimientosValidos;
+}
+
+void _validateMovement(List<int> movimiento, int temp, SharedData sharedData,
+    List<List<int>> movimientosValidos) {
+  /// Transponemos para que encaje con la definición del tablero(y,x)
+  temp = movimiento[0];
+  movimiento[0] = movimiento[1];
+  movimiento[1] = temp;
+  if (movimiento[0] >= 0 &&
+      movimiento[0] < 8 &&
+      movimiento[1] >= 0 &&
+      movimiento[1] < 8 &&
+      (sharedData.tablero[movimiento[0]][movimiento[1]].esVacia() ||
+          sharedData.tablero[movimiento[0]][movimiento[1]].color() !=
+              sharedData.whiteTurn)) {
+    movimientosValidos.add(movimiento);
+  }
 }

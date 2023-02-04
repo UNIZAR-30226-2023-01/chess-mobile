@@ -19,13 +19,14 @@ class _CasillaState extends State<Casilla> {
   void initState() {
     super.initState();
     i = widget.index;
+    sharedData.casillas.add(this);
     y = i ~/ 8;
     x = i % 8;
   }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("Build method called for widget with index ${widget.index}");
+    // debugPrint("Build method called for widget with index ${widget.index}");
     return GestureDetector(
       onTap: () {
         _tapped();
@@ -38,7 +39,7 @@ class _CasillaState extends State<Casilla> {
                   sharedData.casillaSeleccionada[1] == x
               ? const Color(0xffbaca44)
               : sharedData.tableroMovimientos[y][x]
-                  ? const Color(0xffbaca44)
+                  ? const Color(0xfff2ca5c)
                   : ((i % 2 + ((i ~/ 8) % 2)) % 2 == 0)
 
                       /// Formula que determina el color de la casilla
@@ -60,22 +61,37 @@ class _CasillaState extends State<Casilla> {
 
   /// Se llama al tocar una casilla
   void _tapped() {
-    if (sharedData.tablero[y][x].isWhite == sharedData.whiteTurn) {
+    if (sharedData.tablero[y][x].isWhite == sharedData.whiteTurn &&
+        !sharedData.tableroMovimientos[y][x]) {
+      var auxY = sharedData.casillaSeleccionada[0];
+      var auxX = sharedData.casillaSeleccionada[1];
       sharedData.casillaSeleccionada = [y, x];
-      sharedData.whiteTurn = !sharedData.whiteTurn;
+      if (auxX != -1) {
+        sharedData.casillas[8 * auxY + auxX].setState(() {});
+      }
+
+      for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+          if (sharedData.tableroMovimientos[i][j]) {
+            sharedData.tableroMovimientos[i][j] = false;
+            sharedData.casillas[i * 8 + j].setState(() {});
+          }
+        }
+      }
       var posiblesMovimientos =
           validateMovements(sharedData.tablero[y][x].posiblesMovimientos(x, y));
 
-      // print(sharedData.tableroMovimientos);
-      posiblesMovimientos.forEach((movimientoValido) {
-        sharedData.tableroMovimientos[movimientoValido[0]]
-            [movimientoValido[1]] = true;
-      });
-      sharedData.tableroMovimientos.forEach((filaMov) {
-        print(filaMov);
-      });
+      posiblesMovimientos.forEach(_processValidMovement);
     }
 
     setState(() {});
+  }
+
+  ///Sino el foreach se queja el flutter analyze
+  void _processValidMovement(List<int> movimientoValido) {
+    sharedData.tableroMovimientos[movimientoValido[0]][movimientoValido[1]] =
+        true;
+    sharedData.casillas[movimientoValido[0] * 8 + movimientoValido[1]]
+        .setState(() {});
   }
 }

@@ -215,8 +215,8 @@ List<List<Ficha>> _initTablero() {
   var aux = <Ficha>[];
   aux = List.filled(8, Peon(isWhite: false));
   tab.add(aux);
-  aux = List.filled(8, Vacia(isWhite: false));
   for (int i = 0; i < 4; i++) {
+    aux = List.filled(8, Vacia(isWhite: false));
     tab.add(aux);
   }
   aux = List.filled(8, Peon(isWhite: true));

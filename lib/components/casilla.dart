@@ -82,6 +82,24 @@ class _CasillaState extends State<Casilla> {
           validateMovements(sharedData.tablero[y][x].posiblesMovimientos(x, y));
 
       posiblesMovimientos.forEach(_processValidMovement);
+    } else if ((sharedData.tablero[y][x].esVacia() ||
+            sharedData.tablero[y][x].isWhite != sharedData.whiteTurn) &&
+        sharedData.tableroMovimientos[y][x]) {
+      var auxY = sharedData.casillaSeleccionada[0];
+      var auxX = sharedData.casillaSeleccionada[1];
+      sharedData.tablero[y][x] = sharedData.tablero[auxY][auxX];
+      sharedData.tablero[auxY][auxX] = Vacia(isWhite: false);
+      sharedData.casillaSeleccionada = [-1, -1];
+      sharedData.casillas[auxY * 8 + auxX].setState(() {});
+      sharedData.whiteTurn = !sharedData.whiteTurn;
+      for (int i = 0; i < 8; i++) {
+        for (int j = 0; j < 8; j++) {
+          if (sharedData.tableroMovimientos[i][j]) {
+            sharedData.tableroMovimientos[i][j] = false;
+            sharedData.casillas[i * 8 + j].setState(() {});
+          }
+        }
+      }
     }
 
     setState(() {});

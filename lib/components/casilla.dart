@@ -78,8 +78,8 @@ class _CasillaState extends State<Casilla> {
           }
         }
       }
-      var posiblesMovimientos =
-          validateMovements(sharedData.tablero[y][x].posiblesMovimientos(x, y));
+      var posiblesMovimientos = validateMovements(sharedData.tablero[y][x]
+          .posiblesMovimientos(x, y, sharedData.tablero));
 
       posiblesMovimientos.forEach(_processValidMovement);
     } else if ((sharedData.tablero[y][x].esVacia() ||

@@ -22,7 +22,7 @@ abstract class Ficha {
     return _img;
   }
 
-  List<List<int>> posiblesMovimientos(int x, int y);
+  List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero);
 }
 
 class Vacia extends Ficha {
@@ -32,7 +32,7 @@ class Vacia extends Ficha {
   }
 
   @override
-  List<List<int>> posiblesMovimientos(int x, int y) {
+  List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero) {
     List<List<int>> movimientos = [];
     return movimientos;
   }
@@ -50,12 +50,51 @@ class Torre extends Ficha {
   }
 
   @override
-  List<List<int>> posiblesMovimientos(int x, int y) {
+  List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero) {
     List<List<int>> movimientos = [];
 
-    for (int i = 0; i < 8; i++) {
-      if (i != x) movimientos.add([i, y]);
-      if (i != y) movimientos.add([x, i]);
+    for (int i = y + 1; i < 8; i++) {
+      if (tablero[i][x].esVacia()) {
+        movimientos.add([x, i]);
+      } else {
+        if (tablero[i][x].isWhite != isWhite) {
+          movimientos.add([x, i]);
+        }
+        break;
+      }
+    }
+
+    for (int i = y - 1; i >= 0; i--) {
+      if (tablero[i][x].esVacia()) {
+        movimientos.add([x, i]);
+      } else {
+        if (tablero[i][x].isWhite != isWhite) {
+          movimientos.add([x, i]);
+        }
+        break;
+      }
+    }
+
+    for (int i = x + 1; i < 8; i++) {
+      if (tablero[y][i].esVacia()) {
+        movimientos.add([i, y]);
+      } else {
+        if (tablero[y][i].isWhite != isWhite) {
+          movimientos.add([i, y]);
+        }
+        break;
+      }
+    }
+
+    for (int i = x - 1; i >= 0; i--) {
+      if (tablero[y][i].esVacia()) {
+        movimientos.add([i, y]);
+      } else {
+        if (tablero[y][i].isWhite != isWhite) {
+          movimientos.add([i, y]);
+        }
+        break;
+      }
     }
 
     return movimientos;
@@ -69,7 +108,7 @@ class Alfil extends Ficha {
   }
 
   @override
-  List<List<int>> posiblesMovimientos(int x, int y) {
+  List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero) {
     List<List<int>> movimientos = [];
 
     for (int i = 1; i < 8; i++) {
@@ -90,7 +129,7 @@ class Caballo extends Ficha {
   }
 
   @override
-  List<List<int>> posiblesMovimientos(int x, int y) {
+  List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero) {
     List<List<int>> movimientos = [];
 
     movimientos.add([x + 2, y + 1]);
@@ -113,7 +152,7 @@ class Peon extends Ficha {
   }
 
   @override
-  List<List<int>> posiblesMovimientos(int x, int y) {
+  List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero) {
     List<List<int>> movimientos = [];
     int aux = super.isWhite ? -1 : 1;
     movimientos.add([x, y + aux]);
@@ -132,7 +171,7 @@ class Reina extends Ficha {
   }
 
   @override
-  List<List<int>> posiblesMovimientos(int x, int y) {
+  List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero) {
     List<List<int>> movimientos = [];
 
     for (int i = 0; i < 8; i++) {
@@ -157,7 +196,7 @@ class Rey extends Ficha {
   }
 
   @override
-  List<List<int>> posiblesMovimientos(int x, int y) {
+  List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero) {
     List<List<int>> movimientos = [];
 
     movimientos.add([x - 1, y - 1]);

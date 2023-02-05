@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'components/navigate_button.dart';
-import 'components/textfield_custom.dart';
-import 'components/return_button.dart';
-import 'password_changed_page.dart';
+import 'package:lottie/lottie.dart';
+import '../../components/buttons/textfield_custom.dart';
+import '../../components/buttons/return_button.dart';
+import '../../components/buttons/navigate_button.dart';
+import 'create_password.dart';
+import 'signin.dart';
 
-class CreatePwPage extends StatefulWidget {
-  const CreatePwPage({super.key});
+class ForgotPwPage extends StatefulWidget {
+  const ForgotPwPage({super.key});
 
   @override
-  State<CreatePwPage> createState() => _CreatePwPageState();
+  State<ForgotPwPage> createState() => _ForgotPwPageState();
 }
 
-class _CreatePwPageState extends State<CreatePwPage> {
+class _ForgotPwPageState extends State<ForgotPwPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,14 +41,14 @@ class _CreatePwPageState extends State<CreatePwPage> {
                 height: 20,
               ),
 
-              // Create Password header text
+              // Forgot password header text
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: const [
                     Text(
-                      'Create new password',
+                      'Forgot Password?',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 30,
@@ -60,11 +62,11 @@ class _CreatePwPageState extends State<CreatePwPage> {
                 height: 10,
               ),
 
-              // Process description text
+              // Process description
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Text(
-                  'Your new password must be unique from those previously used.',
+                  'Don\'t worry! It occurs. Please enter the email address linked with your account.',
                   style: TextStyle(
                     color: Color.fromARGB(255, 131, 145, 161),
                     fontWeight: FontWeight.w400,
@@ -77,39 +79,73 @@ class _CreatePwPageState extends State<CreatePwPage> {
                 height: 30,
               ),
 
-              // New Password textfield
-              const TextFieldCustom(
-                hintText: 'New Password',
-                obscureText: true,
-              ),
-
-              const SizedBox(
-                height: 15,
-              ),
-
-              // Confirm Password textfield
-              const TextFieldCustom(
-                hintText: 'Confirm Password',
-                obscureText: true,
+              // Animated graphic
+              Lottie.network(
+                'https://assets10.lottiefiles.com/packages/lf20_iwyr6aqu.json',
+                height: 225,
               ),
 
               const SizedBox(
                 height: 30,
               ),
 
-              // Reset Password button
+              // Email textfield
+              const TextFieldCustom(
+                hintText: 'Enter your email',
+                obscureText: false,
+              ),
+
+              const SizedBox(
+                height: 30,
+              ),
+
+              // Send code button
               NavigateButton(
-                text: 'Reset Password',
+                text: 'Send Code',
                 textColor: Colors.white,
                 innerBoxColor: const Color.fromARGB(255, 30, 35, 44),
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const PwChangedPage(),
+                      builder: (context) => const CreatePwPage(),
                     ),
                   );
                 },
+              ),
+
+              const SizedBox(
+                height: 30,
+              ),
+
+              // User remembers password
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Remember Password?',
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SignInPage(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Login',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 59, 203, 255),
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

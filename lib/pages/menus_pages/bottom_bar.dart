@@ -1,7 +1,7 @@
-import 'package:ajedrez/home_screen.dart';
-import 'package:ajedrez/my_flutter_app_icons.dart';
-import 'package:ajedrez/profile_screen.dart';
-import 'package:ajedrez/ranking_screen.dart';
+import 'home.dart';
+import '../../components/my_flutter_app_icons.dart';
+import 'profile.dart';
+import 'ranking.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -40,7 +40,7 @@ class _BottomBarState extends State<BottomBar> {
             padding: const EdgeInsets.all(16),
             tabs: const [
               GButton(
-                icon: MyFlutterApp.chess_knight,
+                icon: MyFlutterApp.chessknight,
                 text: 'Game',
               ),
               GButton(

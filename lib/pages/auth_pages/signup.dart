@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'components/return_button.dart';
-import 'components/navigate_button.dart';
-import 'components/textfield_custom.dart';
-import 'components/platform_button.dart';
-import 'signin_page.dart';
+import '../../components/buttons/return_button.dart';
+import '../../components/buttons/navigate_button.dart';
+import '../../components/buttons/textfield_custom.dart';
+import '../../components/buttons/platform_button.dart';
+import 'signin.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});

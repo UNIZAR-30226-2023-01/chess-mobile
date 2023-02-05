@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'gamepage.dart';
+import '../game_pages/game.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -51,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: defaultHeight * 0.15,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage('lib/images/caballo.png'),
+                          image: AssetImage('images/caballo.png'),
                         ),
                       ),
                     ),
@@ -96,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       bottom: defaultWidth * 0.04,
                     ),
                     child: Material(
-                      color: Color.fromARGB(255, 20, 25, 57),
+                      color: const Color.fromARGB(255, 20, 25, 57),
                       borderRadius: const BorderRadius.all(Radius.circular(20)),
                       child: InkWell(
                         borderRadius:
@@ -117,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: defaultWidth * 0.22,
                                 decoration: const BoxDecoration(
                                   image: DecorationImage(
-                                    image: AssetImage('lib/images/trofeo.png'),
+                                    image: AssetImage('images/trofeo.png'),
                                   ),
                                 ),
                               ),
@@ -167,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: defaultWidth * 0.22,
                                 decoration: const BoxDecoration(
                                   image: DecorationImage(
-                                    image: AssetImage('lib/images/diana.png'),
+                                    image: AssetImage("images/diana.png"),
                                   ),
                                 ),
                               ),

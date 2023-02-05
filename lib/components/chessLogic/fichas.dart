@@ -381,6 +381,15 @@ class SharedData {
   SharedData._internal();
 }
 
+void resetSingleton() {
+  SharedData sharedData = SharedData();
+  sharedData.tablero = _initTablero();
+  sharedData.tableroMovimientos = initEmptyMovements();
+  sharedData.casillas = [];
+  sharedData.whiteTurn = true;
+  sharedData.casillaSeleccionada = [-1, -1];
+}
+
 List<List<Ficha>> _initTablero() {
   List<List<Ficha>> tab = [];
   tab.add(piezasNegras);

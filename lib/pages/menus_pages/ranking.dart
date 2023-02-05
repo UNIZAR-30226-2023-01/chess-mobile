@@ -10,7 +10,7 @@ class RankingScreen extends StatefulWidget {
 class _RankingScreenState extends State<RankingScreen> {
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       'Ranking',
     );
   }

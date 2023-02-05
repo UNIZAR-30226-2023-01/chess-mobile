@@ -62,7 +62,8 @@ class _CasillaState extends State<Casilla> {
   /// Se llama al tocar una casilla
   void _tapped() {
     if (sharedData.tablero[y][x].isWhite == sharedData.whiteTurn &&
-        !sharedData.tableroMovimientos[y][x]) {
+        !sharedData.tableroMovimientos[y][x] &&
+        !sharedData.tablero[y][x].esVacia()) {
       var auxY = sharedData.casillaSeleccionada[0];
       var auxX = sharedData.casillaSeleccionada[1];
       sharedData.casillaSeleccionada = [y, x];

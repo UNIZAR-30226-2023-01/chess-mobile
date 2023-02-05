@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'components/navigate_button.dart';
-import 'signin_page.dart';
-import 'signup_page.dart';
+import '../../components/buttons/navigate_button.dart';
+import 'signin.dart';
+import 'signup.dart';
 
 class StartupPage extends StatefulWidget {
   const StartupPage({super.key});

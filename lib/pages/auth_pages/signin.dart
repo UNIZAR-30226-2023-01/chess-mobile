@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'bottom_bar.dart';
-import 'components/textfield_custom.dart';
-import 'components/return_button.dart';
-import 'components/navigate_button.dart';
-import 'components/platform_button.dart';
-import 'forgot_password_page.dart';
-import 'signup_page.dart';
-import 'gamepage.dart';
+import '../menus_pages/bottom_bar.dart';
+import '../../components/buttons/textfield_custom.dart';
+import '../../components/buttons/return_button.dart';
+import '../../components/buttons/navigate_button.dart';
+import '../../components/buttons/platform_button.dart';
+import 'forgot_password.dart';
+import 'signup.dart';
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});

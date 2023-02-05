@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'bottom_bar.dart';
 import 'components/textfield_custom.dart';
 import 'components/return_button.dart';
 import 'components/navigate_button.dart';
@@ -119,7 +120,7 @@ class _SignInPageState extends State<SignInPage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => const GamePage(),
+                      builder: (context) => const BottomBar(),
                     ),
                   );
                 },

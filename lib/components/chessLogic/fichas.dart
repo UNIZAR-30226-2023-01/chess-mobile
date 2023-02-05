@@ -345,27 +345,31 @@ class Rey extends Ficha {
   }
 }
 
-List<Ficha> piezasNegras = [
-  Torre(isWhite: false),
-  Caballo(isWhite: false),
-  Alfil(isWhite: false),
-  Reina(isWhite: false),
-  Rey(isWhite: false),
-  Alfil(isWhite: false),
-  Caballo(isWhite: false),
-  Torre(isWhite: false)
-];
+List<Ficha> piezasNegras() {
+  return [
+    Torre(isWhite: false),
+    Caballo(isWhite: false),
+    Alfil(isWhite: false),
+    Reina(isWhite: false),
+    Rey(isWhite: false),
+    Alfil(isWhite: false),
+    Caballo(isWhite: false),
+    Torre(isWhite: false)
+  ];
+}
 
-List<Ficha> piezasBlancas = [
-  Torre(isWhite: true),
-  Caballo(isWhite: true),
-  Alfil(isWhite: true),
-  Rey(isWhite: true),
-  Reina(isWhite: true),
-  Alfil(isWhite: true),
-  Caballo(isWhite: true),
-  Torre(isWhite: true)
-];
+List<Ficha> piezasBlancas() {
+  return [
+    Torre(isWhite: true),
+    Caballo(isWhite: true),
+    Alfil(isWhite: true),
+    Reina(isWhite: true),
+    Rey(isWhite: true),
+    Alfil(isWhite: true),
+    Caballo(isWhite: true),
+    Torre(isWhite: true)
+  ];
+}
 
 class SharedData {
   static final SharedData _singleton = SharedData._internal();
@@ -392,7 +396,7 @@ void resetSingleton() {
 
 List<List<Ficha>> _initTablero() {
   List<List<Ficha>> tab = [];
-  tab.add(piezasNegras);
+  tab.add(piezasNegras());
   var aux = <Ficha>[];
   aux = List.filled(8, Peon(isWhite: false));
   tab.add(aux);
@@ -402,7 +406,7 @@ List<List<Ficha>> _initTablero() {
   }
   aux = List.filled(8, Peon(isWhite: true));
   tab.add(aux);
-  tab.add(piezasBlancas);
+  tab.add(piezasBlancas());
   return tab;
 }
 

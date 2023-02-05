@@ -80,8 +80,8 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
               ),
 
               // Animated graphic
-              Lottie.network(
-                'https://assets10.lottiefiles.com/packages/lf20_iwyr6aqu.json',
+              Lottie.asset(
+                'assets/forgot_password.json',
                 height: 225,
               ),
 

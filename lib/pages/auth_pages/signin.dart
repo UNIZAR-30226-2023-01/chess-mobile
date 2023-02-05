@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
-import 'components/return_button.dart';
-import 'components/navigate_button.dart';
-import 'components/textfield_custom.dart';
-import 'components/platform_button.dart';
-import 'signin_page.dart';
+import '../menus_pages/bottom_bar.dart';
+import '../../components/buttons/textfield_custom.dart';
+import '../../components/buttons/return_button.dart';
+import '../../components/buttons/navigate_button.dart';
+import '../../components/buttons/platform_button.dart';
+import 'forgot_password.dart';
+import 'signup.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class SignInPage extends StatefulWidget {
+  const SignInPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  State<SignInPage> createState() => _SignInPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignInPageState extends State<SignInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,7 +24,7 @@ class _SignUpPageState extends State<SignUpPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Return Button
+              // Return button
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
@@ -41,11 +43,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 20,
               ),
 
-              // Header text
+              // Welcome text
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Text(
-                  'Hello! Register to get started',
+                  'Welcome back! Glad to see you, Again!',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
@@ -57,9 +59,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 20,
               ),
 
-              // Username textfield
+              // Email text box
               const TextFieldCustom(
-                hintText: 'Username',
+                hintText: 'Enter your email',
                 obscureText: false,
               ),
 
@@ -67,19 +69,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 15,
               ),
 
-              // Email textfield
+              // Password text box
               const TextFieldCustom(
-                hintText: 'Email',
-                obscureText: false,
-              ),
-
-              const SizedBox(
-                height: 15,
-              ),
-
-              // Password textfield
-              const TextFieldCustom(
-                hintText: 'Password',
+                hintText: 'Enter your password',
                 obscureText: true,
               ),
 
@@ -87,22 +79,50 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 15,
               ),
 
-              // Confirm password textfield
-              const TextFieldCustom(
-                hintText: 'Confirm password',
-                obscureText: true,
+              // Forgot password
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ForgotPwPage(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        'Forgot password?',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 208, 211, 218),
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
 
               const SizedBox(
-                height: 40,
+                height: 35,
               ),
 
-              // Register Button
+              // Login button
               NavigateButton(
-                text: 'Register',
+                text: 'Login',
                 textColor: Colors.white,
                 innerBoxColor: const Color.fromARGB(255, 30, 35, 44),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const BottomBar(),
+                    ),
+                  );
+                },
               ),
 
               const SizedBox(
@@ -143,7 +163,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 20,
               ),
 
-              // Other platforms for registration
+              // Other platforms for login
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
@@ -163,27 +183,30 @@ class _SignUpPageState extends State<SignUpPage> {
                 height: 50,
               ),
 
-              // User already has an account
+              // Sign Up option
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // User doesn't have an account
                   const Text(
-                    'Already have an account?',
+                    'Don\'t have an account?',
                     style: TextStyle(fontWeight: FontWeight.w500),
                   ),
+
                   const SizedBox(
                     width: 5,
                   ),
+
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const SignInPage()),
+                            builder: (context) => const SignUpPage()),
                       );
                     },
                     child: const Text(
-                      'Login Now',
+                      'Register Now',
                       style: TextStyle(
                           color: Color.fromARGB(255, 59, 203, 255),
                           fontWeight: FontWeight.bold),

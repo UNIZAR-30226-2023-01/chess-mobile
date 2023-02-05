@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'components/textfield_custom.dart';
-import 'components/return_button.dart';
-import 'components/navigate_button.dart';
-import 'components/platform_button.dart';
-import 'forgot_password_page.dart';
-import 'signup_page.dart';
-import 'gamepage.dart';
+import '../../components/buttons/return_button.dart';
+import '../../components/buttons/navigate_button.dart';
+import '../../components/buttons/textfield_custom.dart';
+import '../../components/buttons/platform_button.dart';
+import 'signin.dart';
 
-class SignInPage extends StatefulWidget {
-  const SignInPage({super.key});
+class SignUpPage extends StatefulWidget {
+  const SignUpPage({super.key});
 
   @override
-  State<SignInPage> createState() => _SignInPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignInPageState extends State<SignInPage> {
+class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +22,7 @@ class _SignInPageState extends State<SignInPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Return button
+              // Return Button
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
@@ -43,11 +41,11 @@ class _SignInPageState extends State<SignInPage> {
                 height: 20,
               ),
 
-              // Welcome text
+              // Header text
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Text(
-                  'Welcome back! Glad to see you, Again!',
+                  'Hello! Register to get started',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
@@ -59,9 +57,9 @@ class _SignInPageState extends State<SignInPage> {
                 height: 20,
               ),
 
-              // Email text box
+              // Username textfield
               const TextFieldCustom(
-                hintText: 'Enter your email',
+                hintText: 'Username',
                 obscureText: false,
               ),
 
@@ -69,9 +67,19 @@ class _SignInPageState extends State<SignInPage> {
                 height: 15,
               ),
 
-              // Password text box
+              // Email textfield
               const TextFieldCustom(
-                hintText: 'Enter your password',
+                hintText: 'Email',
+                obscureText: false,
+              ),
+
+              const SizedBox(
+                height: 15,
+              ),
+
+              // Password textfield
+              const TextFieldCustom(
+                hintText: 'Password',
                 obscureText: true,
               ),
 
@@ -79,50 +87,22 @@ class _SignInPageState extends State<SignInPage> {
                 height: 15,
               ),
 
-              // Forgot password
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ForgotPwPage(),
-                          ),
-                        );
-                      },
-                      child: const Text(
-                        'Forgot password?',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 208, 211, 218),
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              // Confirm password textfield
+              const TextFieldCustom(
+                hintText: 'Confirm password',
+                obscureText: true,
               ),
 
               const SizedBox(
-                height: 35,
+                height: 40,
               ),
 
-              // Login button
+              // Register Button
               NavigateButton(
-                text: 'Login',
+                text: 'Register',
                 textColor: Colors.white,
                 innerBoxColor: const Color.fromARGB(255, 30, 35, 44),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const GamePage(),
-                    ),
-                  );
-                },
+                onTap: () {},
               ),
 
               const SizedBox(
@@ -163,7 +143,7 @@ class _SignInPageState extends State<SignInPage> {
                 height: 20,
               ),
 
-              // Other platforms for login
+              // Other platforms for registration
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: const [
@@ -183,30 +163,27 @@ class _SignInPageState extends State<SignInPage> {
                 height: 50,
               ),
 
-              // Sign Up option
+              // User already has an account
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // User doesn't have an account
                   const Text(
-                    'Don\'t have an account?',
+                    'Already have an account?',
                     style: TextStyle(fontWeight: FontWeight.w500),
                   ),
-
                   const SizedBox(
                     width: 5,
                   ),
-
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const SignUpPage()),
+                            builder: (context) => const SignInPage()),
                       );
                     },
                     child: const Text(
-                      'Register Now',
+                      'Login Now',
                       style: TextStyle(
                           color: Color.fromARGB(255, 59, 203, 255),
                           fontWeight: FontWeight.bold),

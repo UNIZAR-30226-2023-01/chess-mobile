@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'components/navigate_button.dart';
-import 'startup_page.dart';
+import '../../components/buttons/navigate_button.dart';
+import 'startup.dart';
 
 class PwChangedPage extends StatefulWidget {
   const PwChangedPage({super.key});

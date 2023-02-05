@@ -50,7 +50,7 @@ class _CasillaState extends State<Casilla> {
                 image: sharedData.tablero[y][x].getImg() != ""
                     ? DecorationImage(
                         image: AssetImage(
-                            "lib/images/${sharedData.tablero[y][x].getImg()}.png"),
+                            "images/${sharedData.tablero[y][x].getImg()}.png"),
                         fit: BoxFit.cover)
                     : null),
           ),

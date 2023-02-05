@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../winner_dialog.dart';
 import 'fichas.dart';
 
 class Casilla extends StatefulWidget {
@@ -29,7 +30,7 @@ class _CasillaState extends State<Casilla> {
     // debugPrint("Build method called for widget with index ${widget.index}");
     return GestureDetector(
       onTap: () {
-        _tapped();
+        _tapped(context);
       },
       child: SizedBox(
         width: 5,
@@ -39,7 +40,11 @@ class _CasillaState extends State<Casilla> {
                   sharedData.casillaSeleccionada[1] == x
               ? const Color(0xffbaca44)
               : sharedData.tableroMovimientos[y][x]
-                  ? const Color(0xfff2ca5c)
+                  ? (!sharedData.tablero[y][x].esVacia() &&
+                          sharedData.tablero[y][x].color() !=
+                              sharedData.whiteTurn)
+                      ? const Color(0xffFF4D4D)
+                      : const Color(0xfff2ca5c)
                   : ((i % 2 + ((i ~/ 8) % 2)) % 2 == 0)
 
                       /// Formula que determina el color de la casilla
@@ -60,7 +65,7 @@ class _CasillaState extends State<Casilla> {
   }
 
   /// Se llama al tocar una casilla
-  void _tapped() {
+  Object _tapped(BuildContext context) {
     if (sharedData.tablero[y][x].isWhite == sharedData.whiteTurn &&
         !sharedData.tableroMovimientos[y][x] &&
         !sharedData.tablero[y][x].esVacia()) {
@@ -88,6 +93,10 @@ class _CasillaState extends State<Casilla> {
         sharedData.tableroMovimientos[y][x]) {
       var auxY = sharedData.casillaSeleccionada[0];
       var auxX = sharedData.casillaSeleccionada[1];
+      if (sharedData.tablero[y][x].getValue() == 10000) {
+        //Se ha comido el rey => mensaje de fin
+        alertaGanador(context, sharedData.whiteTurn);
+      }
       sharedData.tablero[y][x] = sharedData.tablero[auxY][auxX];
       sharedData.tablero[auxY][auxX] = Vacia(isWhite: false);
       sharedData.casillaSeleccionada = [-1, -1];
@@ -102,8 +111,8 @@ class _CasillaState extends State<Casilla> {
         }
       }
     }
-
     setState(() {});
+    return Container();
   }
 
   ///Sino el foreach se queja el flutter analyze

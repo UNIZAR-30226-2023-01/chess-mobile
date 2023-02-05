@@ -1,5 +1,7 @@
-import 'package:ajedrez/casilla.dart';
+import 'package:ajedrez/components/chessLogic/casilla.dart';
 import 'package:flutter/material.dart';
+
+import '../../components/chessLogic/fichas.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -9,6 +11,12 @@ class GamePage extends StatefulWidget {
 }
 
 class _GamePageState extends State<GamePage> {
+  @override
+  void dispose() {
+    super.dispose();
+    resetSingleton();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

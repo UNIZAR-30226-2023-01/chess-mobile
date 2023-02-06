@@ -1,7 +1,7 @@
 import 'package:ajedrez/components/chessLogic/casilla.dart';
 import 'package:flutter/material.dart';
 
-import '../../components/chessLogic/fichas.dart';
+import '../../components/chessLogic/tablero.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});

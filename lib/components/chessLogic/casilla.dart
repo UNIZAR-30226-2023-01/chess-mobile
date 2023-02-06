@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../winner_dialog.dart';
+// import 'fichas.dart';
 import 'fichas.dart';
+import 'tablero.dart';
 
 class Casilla extends StatefulWidget {
   final int index;

@@ -42,9 +42,11 @@ class Vacia extends Ficha {
 }
 
 class Torre extends Ficha {
+  bool alreadyMoved = false;
   Torre({required super.isWhite}) {
     _value = 5;
     _img = "torre${super.isWhite ? "B" : "N"}";
+    alreadyMoved = false;
   }
 
   @override
@@ -321,9 +323,11 @@ class Reina extends Ficha {
 }
 
 class Rey extends Ficha {
+  bool alreadyMoved = false;
   Rey({required super.isWhite}) {
     _value = 10000;
     _img = "rey${super.isWhite ? "B" : "N"}";
+    alreadyMoved = false;
   }
 
   @override
@@ -339,6 +343,20 @@ class Rey extends Ficha {
     movimientos.add([y, x + 1]);
     movimientos.add([y + 1, x + 1]);
 
+    if ((x + 3) < 8 &&
+        tablero[y][x + 3] is Torre &&
+        tablero[y][x] is Rey &&
+        !(tablero[y][x + 3] as Torre).alreadyMoved &&
+        !(tablero[y][x] as Rey).alreadyMoved) {
+      movimientos.add([y, x + 2]);
+    }
+    if ((x - 4) >= 0 &&
+        tablero[y][x - 4] is Torre &&
+        tablero[y][x] is Rey &&
+        !(tablero[y][x - 4] as Torre).alreadyMoved &&
+        !(tablero[y][x] as Rey).alreadyMoved) {
+      movimientos.add([y, x - 2]);
+    }
     return movimientos;
   }
 }

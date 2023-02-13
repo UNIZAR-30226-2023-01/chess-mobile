@@ -99,8 +99,28 @@ class _CasillaState extends State<Casilla> {
         //Se ha comido el rey => mensaje de fin
         alertaGanador(context, sharedData.whiteTurn);
       }
+      if (sharedData.tablero[auxY][auxX] is Rey) {
+        (sharedData.tablero[auxY][auxX] as Rey).alreadyMoved = true;
+      } else if (sharedData.tablero[auxY][auxX] is Torre) {
+        (sharedData.tablero[auxY][auxX] as Torre).alreadyMoved = true;
+      }
+      //enroque
+      if (sharedData.tablero[auxY][auxX] is Rey && (auxX - x).abs() > 1) {
+        if (x == 6) {
+          sharedData.tablero[y][5] = sharedData.tablero[y][7];
+          sharedData.tablero[y][7] = Vacia(isWhite: false);
+          sharedData.casillas[y * 8 + 5].setState(() {});
+          sharedData.casillas[y * 8 + 7].setState(() {});
+        } else if (x == 2) {
+          sharedData.tablero[y][3] = sharedData.tablero[y][0];
+          sharedData.tablero[y][0] = Vacia(isWhite: false);
+          sharedData.casillas[y * 8 + 0].setState(() {});
+          sharedData.casillas[y * 8 + 3].setState(() {});
+        }
+      }
       sharedData.tablero[y][x] = sharedData.tablero[auxY][auxX];
       sharedData.tablero[auxY][auxX] = Vacia(isWhite: false);
+
       sharedData.casillaSeleccionada = [-1, -1];
       sharedData.casillas[auxY * 8 + auxX].setState(() {});
       sharedData.whiteTurn = !sharedData.whiteTurn;

@@ -53,10 +53,10 @@ class Torre extends Ficha {
 
     for (int i = y + 1; i < 8; i++) {
       if (tablero[i][x].esVacia()) {
-        movimientos.add([x, i]);
+        movimientos.add([i, x]);
       } else {
         if (tablero[i][x].isWhite != isWhite) {
-          movimientos.add([x, i]);
+          movimientos.add([i, x]);
         }
         break;
       }
@@ -64,10 +64,10 @@ class Torre extends Ficha {
 
     for (int i = y - 1; i >= 0; i--) {
       if (tablero[i][x].esVacia()) {
-        movimientos.add([x, i]);
+        movimientos.add([i, x]);
       } else {
         if (tablero[i][x].isWhite != isWhite) {
-          movimientos.add([x, i]);
+          movimientos.add([i, x]);
         }
         break;
       }
@@ -75,10 +75,10 @@ class Torre extends Ficha {
 
     for (int i = x + 1; i < 8; i++) {
       if (tablero[y][i].esVacia()) {
-        movimientos.add([i, y]);
+        movimientos.add([y, i]);
       } else {
         if (tablero[y][i].isWhite != isWhite) {
-          movimientos.add([i, y]);
+          movimientos.add([y, i]);
         }
         break;
       }
@@ -86,10 +86,10 @@ class Torre extends Ficha {
 
     for (int i = x - 1; i >= 0; i--) {
       if (tablero[y][i].esVacia()) {
-        movimientos.add([i, y]);
+        movimientos.add([y, i]);
       } else {
         if (tablero[y][i].isWhite != isWhite) {
-          movimientos.add([i, y]);
+          movimientos.add([y, i]);
         }
         break;
       }
@@ -111,11 +111,11 @@ class Alfil extends Ficha {
 
     for (int i = 1; i < 8; i++) {
       if ((x + i < 8 && y + i < 8) && tablero[y + i][x + i].esVacia()) {
-        movimientos.add([x + i, y + i]);
+        movimientos.add([y + i, x + i]);
       } else {
         if ((x + i < 8 && y + i < 8) &&
             tablero[y + i][x + i].isWhite != isWhite) {
-          movimientos.add([x + i, y + i]);
+          movimientos.add([y + i, x + i]);
         }
         break;
       }
@@ -123,11 +123,11 @@ class Alfil extends Ficha {
 
     for (int i = 1; i < 8; i++) {
       if ((x - i >= 0 && y - i >= 0) && tablero[y - i][x - i].esVacia()) {
-        movimientos.add([x - i, y - i]);
+        movimientos.add([y - i, x - i]);
       } else {
         if ((x - i >= 0 && y - i >= 0) &&
             tablero[y - i][x - i].isWhite != isWhite) {
-          movimientos.add([x - i, y - i]);
+          movimientos.add([y - i, x - i]);
         }
         break;
       }
@@ -135,11 +135,11 @@ class Alfil extends Ficha {
 
     for (int i = 1; i < 8; i++) {
       if ((x + i < 8 && y - i >= 0) && tablero[y - i][x + i].esVacia()) {
-        movimientos.add([x + i, y - i]);
+        movimientos.add([y - i, x + i]);
       } else {
         if ((x + i < 8 && y - i >= 0) &&
             tablero[y - i][x + i].isWhite != isWhite) {
-          movimientos.add([x + i, y - i]);
+          movimientos.add([y - i, x + i]);
         }
         break;
       }
@@ -147,11 +147,11 @@ class Alfil extends Ficha {
 
     for (int i = 1; i < 8; i++) {
       if ((x - i >= 0 && y + i < 8) && tablero[y + i][x - i].esVacia()) {
-        movimientos.add([x - i, y + i]);
+        movimientos.add([y + i, x - i]);
       } else {
         if ((x - i >= 0 && y + i < 8) &&
             tablero[y + i][x - i].isWhite != isWhite) {
-          movimientos.add([x - i, y + i]);
+          movimientos.add([y + i, x - i]);
         }
         break;
       }
@@ -171,14 +171,14 @@ class Caballo extends Ficha {
   List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero) {
     List<List<int>> movimientos = [];
 
-    movimientos.add([x + 2, y + 1]);
-    movimientos.add([x + 2, y - 1]);
-    movimientos.add([x - 2, y + 1]);
-    movimientos.add([x - 2, y - 1]);
-    movimientos.add([x + 1, y + 2]);
-    movimientos.add([x - 1, y + 2]);
-    movimientos.add([x + 1, y - 2]);
-    movimientos.add([x - 1, y - 2]);
+    movimientos.add([y + 1, x + 2]);
+    movimientos.add([y - 1, x + 2]);
+    movimientos.add([y + 1, x - 2]);
+    movimientos.add([y - 1, x - 2]);
+    movimientos.add([y + 2, x + 1]);
+    movimientos.add([y + 2, x - 1]);
+    movimientos.add([y - 2, x + 1]);
+    movimientos.add([y - 2, x - 1]);
 
     return movimientos;
   }
@@ -195,20 +195,20 @@ class Peon extends Ficha {
     List<List<int>> movimientos = [];
     int aux = super.isWhite ? -1 : 1;
 
-    if (tablero[y + aux][x].esVacia()) movimientos.add([x, y + aux]);
+    if (tablero[y + aux][x].esVacia()) movimientos.add([y + aux, x]);
     if (x < 7 &&
         tablero[y + aux][x + 1].color() != isWhite &&
         !tablero[y + aux][x + 1].esVacia()) {
-      movimientos.add([x + 1, y + aux]);
+      movimientos.add([y + aux, x + 1]);
     }
     if (x > 0 &&
         tablero[y + aux][x - 1].color() != isWhite &&
         !tablero[y + aux][x - 1].esVacia()) {
-      movimientos.add([x - 1, y + aux]);
+      movimientos.add([y + aux, x - 1]);
     }
     aux = super.isWhite ? -2 : 2;
     if (super.isWhite && y == 6 || !super.isWhite && y == 1) {
-      if (tablero[y + aux][x].esVacia()) movimientos.add([x, y + aux]);
+      if (tablero[y + aux][x].esVacia()) movimientos.add([y + aux, x]);
     }
     return movimientos;
   }
@@ -226,10 +226,10 @@ class Reina extends Ficha {
 
     for (int i = y + 1; i < 8; i++) {
       if (tablero[i][x].esVacia()) {
-        movimientos.add([x, i]);
+        movimientos.add([i, x]);
       } else {
         if (tablero[i][x].isWhite != isWhite) {
-          movimientos.add([x, i]);
+          movimientos.add([i, x]);
         }
         break;
       }
@@ -237,10 +237,10 @@ class Reina extends Ficha {
 
     for (int i = y - 1; i >= 0; i--) {
       if (tablero[i][x].esVacia()) {
-        movimientos.add([x, i]);
+        movimientos.add([i, x]);
       } else {
         if (tablero[i][x].isWhite != isWhite) {
-          movimientos.add([x, i]);
+          movimientos.add([i, x]);
         }
         break;
       }
@@ -248,10 +248,10 @@ class Reina extends Ficha {
 
     for (int i = x + 1; i < 8; i++) {
       if (tablero[y][i].esVacia()) {
-        movimientos.add([i, y]);
+        movimientos.add([y, i]);
       } else {
         if (tablero[y][i].isWhite != isWhite) {
-          movimientos.add([i, y]);
+          movimientos.add([y, i]);
         }
         break;
       }
@@ -259,10 +259,10 @@ class Reina extends Ficha {
 
     for (int i = x - 1; i >= 0; i--) {
       if (tablero[y][i].esVacia()) {
-        movimientos.add([i, y]);
+        movimientos.add([y, i]);
       } else {
         if (tablero[y][i].isWhite != isWhite) {
-          movimientos.add([i, y]);
+          movimientos.add([y, i]);
         }
         break;
       }
@@ -270,11 +270,11 @@ class Reina extends Ficha {
 
     for (int i = 1; i < 8; i++) {
       if ((x + i < 8 && y + i < 8) && tablero[y + i][x + i].esVacia()) {
-        movimientos.add([x + i, y + i]);
+        movimientos.add([y + i, x + i]);
       } else {
         if ((x + i < 8 && y + i < 8) &&
             tablero[y + i][x + i].isWhite != isWhite) {
-          movimientos.add([x + i, y + i]);
+          movimientos.add([y + i, x + i]);
         }
         break;
       }
@@ -282,11 +282,11 @@ class Reina extends Ficha {
 
     for (int i = 1; i < 8; i++) {
       if ((x - i >= 0 && y - i >= 0) && tablero[y - i][x - i].esVacia()) {
-        movimientos.add([x - i, y - i]);
+        movimientos.add([y - i, x - i]);
       } else {
         if ((x - i >= 0 && y - i >= 0) &&
             tablero[y - i][x - i].isWhite != isWhite) {
-          movimientos.add([x - i, y - i]);
+          movimientos.add([y - i, x - i]);
         }
         break;
       }
@@ -294,11 +294,11 @@ class Reina extends Ficha {
 
     for (int i = 1; i < 8; i++) {
       if ((x + i < 8 && y - i >= 0) && tablero[y - i][x + i].esVacia()) {
-        movimientos.add([x + i, y - i]);
+        movimientos.add([y - i, x + i]);
       } else {
         if ((x + i < 8 && y - i >= 0) &&
             tablero[y - i][x + i].isWhite != isWhite) {
-          movimientos.add([x + i, y - i]);
+          movimientos.add([y - i, x + i]);
         }
         break;
       }
@@ -306,11 +306,11 @@ class Reina extends Ficha {
 
     for (int i = 1; i < 8; i++) {
       if ((x - i >= 0 && y + i < 8) && tablero[y + i][x - i].esVacia()) {
-        movimientos.add([x - i, y + i]);
+        movimientos.add([y + i, x - i]);
       } else {
         if ((x - i >= 0 && y + i < 8) &&
             tablero[y + i][x - i].isWhite != isWhite) {
-          movimientos.add([x - i, y + i]);
+          movimientos.add([y + i, x - i]);
         }
         break;
       }
@@ -330,14 +330,14 @@ class Rey extends Ficha {
   List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero) {
     List<List<int>> movimientos = [];
 
-    movimientos.add([x - 1, y - 1]);
-    movimientos.add([x - 1, y]);
-    movimientos.add([x - 1, y + 1]);
-    movimientos.add([x, y - 1]);
-    movimientos.add([x, y + 1]);
-    movimientos.add([x + 1, y - 1]);
-    movimientos.add([x + 1, y]);
-    movimientos.add([x + 1, y + 1]);
+    movimientos.add([y - 1, x - 1]);
+    movimientos.add([y, x - 1]);
+    movimientos.add([y + 1, x - 1]);
+    movimientos.add([y - 1, x]);
+    movimientos.add([y + 1, x]);
+    movimientos.add([y - 1, x + 1]);
+    movimientos.add([y, x + 1]);
+    movimientos.add([y + 1, x + 1]);
 
     return movimientos;
   }

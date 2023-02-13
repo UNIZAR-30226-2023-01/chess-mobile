@@ -1,5 +1,6 @@
 import 'fichas.dart';
 import 'package:flutter/material.dart';
+
 List<Ficha> piezasNegras() {
   return [
     Torre(isWhite: false),
@@ -86,10 +87,6 @@ List<List<int>> validateMovements(List<List<int>> movimientos) {
 
 void _validateMovement(List<int> movimiento, int temp, SharedData sharedData,
     List<List<int>> movimientosValidos) {
-  /// Transponemos para que encaje con la definición del tablero(y,x)
-  temp = movimiento[0];
-  movimiento[0] = movimiento[1];
-  movimiento[1] = temp;
   if (movimiento[0] >= 0 &&
       movimiento[0] < 8 &&
       movimiento[1] >= 0 &&

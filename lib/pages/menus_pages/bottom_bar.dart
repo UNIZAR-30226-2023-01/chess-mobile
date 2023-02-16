@@ -13,51 +13,72 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
-  static int _selectedIndex = 0;
+  static int _selectedIndex = 1;
 
   static const List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
     RankingScreen(),
+    HomeScreen(),
     ProfileScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: Container(
-        color: const Color.fromARGB(255, 20, 25, 57),
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: GNav(
-            backgroundColor: const Color.fromARGB(255, 20, 25, 57),
-            color: Colors.white,
-            activeColor: const Color.fromARGB(255, 20, 25, 57),
-            tabBackgroundColor: Colors.blue.shade100,
-            gap: 20,
-            padding: const EdgeInsets.all(16),
-            tabs: const [
-              GButton(
-                icon: MyFlutterApp.chessknight,
-                text: 'Game',
+    return WillPopScope(
+      onWillPop: () async {
+        return await showDialog(
+              context: context,
+              builder: (BuildContext context) => AlertDialog(
+                title: const Text("Deseas salir de la sesión?"),
+                actions: <Widget>[
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, false),
+                    child: const Text("No"),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.pop(context, true),
+                    child: const Text("Si"),
+                  ),
+                ],
               ),
-              GButton(
-                icon: MyFlutterApp.trophy,
-                text: 'Ranking',
-              ),
-              GButton(
-                icon: MyFlutterApp.user,
-                text: 'Profile',
-              ),
-            ],
-            selectedIndex: _selectedIndex,
-            onTabChange: (index) {
-              setState(() {
-                _selectedIndex = index;
-              });
-            },
+            ) ??
+            false;
+      },
+      child: Scaffold(
+        body: Center(
+          child: _widgetOptions.elementAt(_selectedIndex),
+        ),
+        bottomNavigationBar: Container(
+          color: const Color.fromARGB(255, 30, 35, 44),
+          child: Padding(
+            padding: const EdgeInsets.all(20),
+            child: GNav(
+              backgroundColor: const Color.fromARGB(255, 30, 35, 44),
+              color: Colors.white,
+              activeColor: const Color.fromARGB(255, 30, 35, 44),
+              tabBackgroundColor: const Color.fromARGB(255, 162, 197, 255),
+              gap: 20,
+              padding: const EdgeInsets.all(16),
+              tabs: const [
+                GButton(
+                  icon: MyFlutterApp.podium,
+                  text: 'Clasificación',
+                ),
+                GButton(
+                  icon: MyFlutterApp.chessknight,
+                  text: 'Juego',
+                ),
+                GButton(
+                  icon: MyFlutterApp.user,
+                  text: 'Perfil',
+                ),
+              ],
+              selectedIndex: _selectedIndex,
+              onTabChange: (index) {
+                setState(() {
+                  _selectedIndex = index;
+                });
+              },
+            ),
           ),
         ),
       ),

@@ -27,30 +27,28 @@ List<Ficha> piezasBlancas() {
   ];
 }
 
-class SharedData {
-  static final SharedData _singleton = SharedData._internal();
+class BoardData {
+  static final BoardData _singleton = BoardData._internal();
   List<List<Ficha>> tablero = _initTablero(true);
   List<List<bool>> tableroMovimientos = initEmptyMovements();
   List<State> casillas = [];
   bool whiteTurn = true;
   bool reversedBoard = true;
-  bool shiny = true;
   List<int> casillaSeleccionada = [-1, -1];
-  factory SharedData() {
+  factory BoardData() {
     return _singleton;
   }
 
-  SharedData._internal();
+  BoardData._internal();
 }
 
-void resetSingleton(bool reversedBoard, bool shiny) {
-  SharedData board = SharedData();
+void resetSingleton(bool reversedBoard) {
+  BoardData board = BoardData();
   board.tablero = _initTablero(reversedBoard);
   board.tableroMovimientos = initEmptyMovements();
   board.casillas = [];
   board.whiteTurn = true;
   board.reversedBoard = reversedBoard;
-  board.shiny = shiny;
   board.casillaSeleccionada = [-1, -1];
 }
 
@@ -94,7 +92,7 @@ List<List<bool>> initEmptyMovements() {
 
 List<List<int>> validateMovements(List<List<int>> movimientos) {
   List<List<int>> movimientosValidos = [];
-  final SharedData board = SharedData();
+  final BoardData board = BoardData();
   int temp = 0;
   for (int i = 0; i < movimientos.length; i++) {
     _validateMovement(movimientos[i], temp, board, movimientosValidos);
@@ -102,7 +100,7 @@ List<List<int>> validateMovements(List<List<int>> movimientos) {
   return movimientosValidos;
 }
 
-void _validateMovement(List<int> movimiento, int temp, SharedData board,
+void _validateMovement(List<int> movimiento, int temp, BoardData board,
     List<List<int>> movimientosValidos) {
   if (movimiento[0] >= 0 &&
       movimiento[0] < 8 &&

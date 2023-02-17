@@ -1,4 +1,5 @@
 import 'package:ajedrez/components/chessLogic/casilla.dart';
+import 'package:ajedrez/components/profile_data.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import '../../components/chessLogic/tablero.dart';
@@ -14,13 +15,15 @@ class _GamePageState extends State<GamePage> {
   @override
   void dispose() {
     super.dispose();
-    resetSingleton(Random().nextBool(), Random().nextBool());
+    resetSingleton(Random().nextBool());
+    resetProfileData(Random().nextBool());
   }
 
   @override
   void initState() {
     super.initState();
-    resetSingleton(Random().nextBool(), Random().nextBool());
+    resetSingleton(Random().nextBool());
+    resetProfileData(Random().nextBool());
   }
 
   @override

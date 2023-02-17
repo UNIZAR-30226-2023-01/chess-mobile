@@ -1,3 +1,5 @@
+import 'package:ajedrez/components/profile_data.dart';
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import '../winner_dialog.dart';
 // import 'fichas.dart';
@@ -16,8 +18,8 @@ class _CasillaState extends State<Casilla> {
   int i = 0;
   int x = 0;
   int y = 0;
-  final SharedData board = SharedData();
-
+  final BoardData board = BoardData();
+  final UserData userData = UserData();
   @override
   void initState() {
     super.initState();
@@ -61,18 +63,12 @@ class _CasillaState extends State<Casilla> {
       var auxY = board.casillaSeleccionada[0];
       var auxX = board.casillaSeleccionada[1];
       board.casillaSeleccionada = [y, x];
+
       if (auxX != -1) {
         board.casillas[8 * auxY + auxX].setState(() {});
       }
 
-      for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
-          if (board.tableroMovimientos[i][j]) {
-            board.tableroMovimientos[i][j] = false;
-            board.casillas[i * 8 + j].setState(() {});
-          }
-        }
-      }
+      _actualizarCasillas();
       var posiblesMovimientos = validateMovements(board.tablero[y][x]
           .posiblesMovimientos(x, y, board.tablero, board.reversedBoard));
 
@@ -80,45 +76,27 @@ class _CasillaState extends State<Casilla> {
     } else if ((board.tablero[y][x].esVacia() ||
             board.tablero[y][x].isWhite != board.whiteTurn) &&
         board.tableroMovimientos[y][x]) {
+      final player = AudioPlayer();
+      player.play(AssetSource("sounds/movePiece.mp3"));
+
       var auxY = board.casillaSeleccionada[0];
       var auxX = board.casillaSeleccionada[1];
-      if (board.tablero[y][x].getValue() == 10000) {
+
+      if (board.tablero[y][x] is Rey) {
         //Se ha comido el rey => mensaje de fin
         alertaGanador(context, board.whiteTurn);
       }
-      if (board.tablero[auxY][auxX] is Rey) {
-        (board.tablero[auxY][auxX] as Rey).alreadyMoved = true;
-      } else if (board.tablero[auxY][auxX] is Torre) {
-        (board.tablero[auxY][auxX] as Torre).alreadyMoved = true;
-      }
+
       //enroque
-      if (board.tablero[auxY][auxX] is Rey && (auxX - x).abs() > 1) {
-        if (x == 6) {
-          board.tablero[y][5] = board.tablero[y][7];
-          board.tablero[y][7] = Vacia(isWhite: false);
-          board.casillas[y * 8 + 5].setState(() {});
-          board.casillas[y * 8 + 7].setState(() {});
-        } else if (x == 2) {
-          board.tablero[y][3] = board.tablero[y][0];
-          board.tablero[y][0] = Vacia(isWhite: false);
-          board.casillas[y * 8 + 0].setState(() {});
-          board.casillas[y * 8 + 3].setState(() {});
-        }
-      }
+      _procesarEnroque(auxY, auxX);
+
       board.tablero[y][x] = board.tablero[auxY][auxX];
       board.tablero[auxY][auxX] = Vacia(isWhite: false);
 
       board.casillaSeleccionada = [-1, -1];
       board.casillas[auxY * 8 + auxX].setState(() {});
       board.whiteTurn = !board.whiteTurn;
-      for (int i = 0; i < 8; i++) {
-        for (int j = 0; j < 8; j++) {
-          if (board.tableroMovimientos[i][j]) {
-            board.tableroMovimientos[i][j] = false;
-            board.casillas[i * 8 + j].setState(() {});
-          }
-        }
-      }
+      _actualizarCasillas();
     }
     setState(() {});
     return Container();
@@ -133,7 +111,7 @@ class _CasillaState extends State<Casilla> {
 
   Color _calcularColorCasilla() {
     Color whiteTile, blackTile;
-    if (board.shiny) {
+    if (userData.shiny) {
       whiteTile = const Color(0xffeeeed2);
       blackTile = const Color(0xff769656);
     } else {
@@ -154,5 +132,37 @@ class _CasillaState extends State<Casilla> {
                 /// Formula que determina el color de la casilla
                 ? whiteTile
                 : blackTile;
+  }
+
+  void _procesarEnroque(int auxY, int auxX) {
+    if (board.tablero[auxY][auxX] is Rey) {
+      (board.tablero[auxY][auxX] as Rey).alreadyMoved = true;
+    } else if (board.tablero[auxY][auxX] is Torre) {
+      (board.tablero[auxY][auxX] as Torre).alreadyMoved = true;
+    }
+    if (board.tablero[auxY][auxX] is Rey && (auxX - x).abs() > 1) {
+      if (x == 6) {
+        board.tablero[y][5] = board.tablero[y][7];
+        board.tablero[y][7] = Vacia(isWhite: false);
+        board.casillas[y * 8 + 5].setState(() {});
+        board.casillas[y * 8 + 7].setState(() {});
+      } else if (x == 2) {
+        board.tablero[y][3] = board.tablero[y][0];
+        board.tablero[y][0] = Vacia(isWhite: false);
+        board.casillas[y * 8 + 0].setState(() {});
+        board.casillas[y * 8 + 3].setState(() {});
+      }
+    }
+  }
+
+  void _actualizarCasillas() {
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 8; j++) {
+        if (board.tableroMovimientos[i][j]) {
+          board.tableroMovimientos[i][j] = false;
+          board.casillas[i * 8 + j].setState(() {});
+        }
+      }
+    }
   }
 }

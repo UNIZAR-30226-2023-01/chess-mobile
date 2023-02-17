@@ -1,6 +1,6 @@
 import 'package:ajedrez/components/chessLogic/casilla.dart';
 import 'package:flutter/material.dart';
-
+import 'dart:math';
 import '../../components/chessLogic/tablero.dart';
 
 class GamePage extends StatefulWidget {
@@ -14,7 +14,13 @@ class _GamePageState extends State<GamePage> {
   @override
   void dispose() {
     super.dispose();
-    resetSingleton();
+    resetSingleton(Random().nextBool(), Random().nextBool());
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    resetSingleton(Random().nextBool(), Random().nextBool());
   }
 
   @override

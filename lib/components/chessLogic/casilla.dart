@@ -1,10 +1,11 @@
 import 'package:ajedrez/components/profile_data.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import '../winner_dialog.dart';
-// import 'fichas.dart';
+import '../popups/winner_dialog.dart';
+
 import 'fichas.dart';
 import 'tablero.dart';
+import '../popups/promotion.dart';
 
 class Casilla extends StatefulWidget {
   final int index;
@@ -33,8 +34,8 @@ class _CasillaState extends State<Casilla> {
   Widget build(BuildContext context) {
     // debugPrint("Build method called for widget with index ${widget.index}");
     return GestureDetector(
-      onTap: () {
-        _tapped(context);
+      onTap: () async {
+        await _tapped(context);
       },
       child: SizedBox(
         width: 5,
@@ -56,7 +57,7 @@ class _CasillaState extends State<Casilla> {
   }
 
   /// Se llama al tocar una casilla
-  Object _tapped(BuildContext context) {
+  Future<Object> _tapped(BuildContext context) async {
     if (board.tablero[y][x].isWhite == board.whiteTurn &&
         !board.tableroMovimientos[y][x] &&
         !board.tablero[y][x].esVacia()) {
@@ -89,9 +90,9 @@ class _CasillaState extends State<Casilla> {
 
       //enroque
       _procesarEnroque(auxY, auxX);
-
       board.tablero[y][x] = board.tablero[auxY][auxX];
       board.tablero[auxY][auxX] = Vacia(isWhite: false);
+      _procesarPromocion();
 
       board.casillaSeleccionada = [-1, -1];
       board.casillas[auxY * 8 + auxX].setState(() {});
@@ -152,6 +153,33 @@ class _CasillaState extends State<Casilla> {
         board.casillas[y * 8 + 0].setState(() {});
         board.casillas[y * 8 + 3].setState(() {});
       }
+    }
+  }
+
+  Future<void> _procesarPromocion() async {
+    if (board.tablero[y][x] is Peon && (y == 0 || y == 7)) {
+      final RenderBox box = context.findRenderObject() as RenderBox;
+      final Offset position = box.localToGlobal(Offset.zero);
+      PieceOption? selectedPiece;
+      while (selectedPiece == null) {
+        selectedPiece = await showPieceSelectionDialog(
+            context, position, board.tablero[y][x].color());
+      }
+      switch (selectedPiece) {
+        case PieceOption.reina:
+          board.tablero[y][x] = Reina(isWhite: board.tablero[y][x].color());
+          break;
+        case PieceOption.torre:
+          board.tablero[y][x] = Torre(isWhite: board.tablero[y][x].color());
+          break;
+        case PieceOption.alfil:
+          board.tablero[y][x] = Alfil(isWhite: board.tablero[y][x].color());
+          break;
+        case PieceOption.caballo:
+          board.tablero[y][x] = Caballo(isWhite: board.tablero[y][x].color());
+          break;
+      }
+      setState(() {});
     }
   }
 

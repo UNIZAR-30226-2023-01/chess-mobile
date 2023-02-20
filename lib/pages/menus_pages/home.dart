@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../components/visual/custom_shape.dart';
 import '../game_pages/game.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
@@ -85,7 +86,20 @@ class _HomeScreenState extends State<HomeScreen> {
                       iconSize: 0,
                       value: timeValue,
                       isExpanded: true,
-                      items: timeItems.map(buildMenuItem).toList(),
+                      items: timeItems.map((item) {
+                        return DropdownMenuItem(
+                          value: item,
+                          child: Center(
+                            child: Text(
+                              item,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 19,
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
                       onChanged: (value) =>
                           setState(() => timeValue = value ?? ""),
                       dropdownDecoration: BoxDecoration(
@@ -332,38 +346,5 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
     );
-  }
-
-  DropdownMenuItem<String> buildMenuItem(String item) {
-    return DropdownMenuItem(
-      value: item,
-      child: Center(
-        child: Text(
-          item,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 19,
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class CustomShape extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    path.lineTo(0, size.height - 100);
-    path.quadraticBezierTo(
-        size.width / 2, size.height, size.width, size.height - 100);
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return true;
   }
 }

@@ -1,5 +1,5 @@
 import 'home.dart';
-import '../../components/my_flutter_app_icons.dart';
+import '../../components/visual/my_flutter_app_icons.dart';
 import 'profile.dart';
 import 'ranking.dart';
 import 'package:flutter/material.dart';
@@ -32,11 +32,11 @@ class _BottomBarState extends State<BottomBar> {
                 actions: <Widget>[
                   TextButton(
                     onPressed: () => Navigator.pop(context, false),
-                    child: const Text("No"),
+                    child: const Text("NO"),
                   ),
                   TextButton(
                     onPressed: () => Navigator.pop(context, true),
-                    child: const Text("Si"),
+                    child: const Text("SÍ"),
                   ),
                 ],
               ),
@@ -61,15 +61,15 @@ class _BottomBarState extends State<BottomBar> {
               tabs: const [
                 GButton(
                   icon: MyFlutterApp.podium,
-                  text: 'Clasificación',
+                  text: 'CLASIFICACIÓN',
                 ),
                 GButton(
                   icon: MyFlutterApp.chessknight,
-                  text: 'Juego',
+                  text: 'JUEGO',
                 ),
                 GButton(
                   icon: MyFlutterApp.user,
-                  text: 'Perfil',
+                  text: 'PERFIL',
                 ),
               ],
               selectedIndex: _selectedIndex,

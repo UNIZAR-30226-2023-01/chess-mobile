@@ -112,13 +112,15 @@ class _CasillaState extends State<Casilla> {
 
   Color _calcularColorCasilla() {
     Color whiteTile, blackTile;
-    if (userData.shiny) {
+    /*if (userData.shiny) {
       whiteTile = const Color(0xffeeeed2);
       blackTile = const Color(0xff769656);
     } else {
       whiteTile = const Color(0xffE3C16F);
       blackTile = const Color(0xffB88B4A);
-    }
+    }*/
+    whiteTile = Color(userData.tableroB);
+    blackTile = Color(userData.tableroN);
     return board.casillaSeleccionada[0] == y &&
             board.casillaSeleccionada[1] == x
         ? const Color(0xffbaca44)

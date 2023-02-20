@@ -194,6 +194,7 @@ class Caballo extends Ficha {
 class Peon extends Ficha {
   Peon({required super.isWhite}) {
     _value = 1;
+
     _img = "peon${super.isWhite ? "B" : "N"}";
   }
 

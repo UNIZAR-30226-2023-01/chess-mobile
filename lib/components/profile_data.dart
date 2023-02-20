@@ -2,11 +2,13 @@
 
 //de momento se queda como singleton :D
 
+import 'package:ajedrez/components/visual/colores_tablero.dart';
+
 class UserData {
   static final UserData _singleton = UserData._internal();
   bool shiny = true;
-  int tableroN = 0xff769656;
-  int tableroB = 0xffeeeed2;
+  int tableroN = maderaN;
+  int tableroB = maderaB;
   String tipo = "merida";
   factory UserData() {
     return _singleton;

@@ -1,4 +1,7 @@
+import '../profile_data.dart';
+
 abstract class Ficha {
+  final UserData userData = UserData();
   bool isWhite;
   String _img = "";
   int _value = 0;
@@ -47,7 +50,7 @@ class Torre extends Ficha {
   bool alreadyMoved = false;
   Torre({required super.isWhite}) {
     _value = 5;
-    _img = "torre${super.isWhite ? "B" : "N"}";
+    _img = "${userData.tipo}/torre${super.isWhite ? "B" : "N"}";
     alreadyMoved = false;
   }
 
@@ -107,7 +110,7 @@ class Torre extends Ficha {
 class Alfil extends Ficha {
   Alfil({required super.isWhite}) {
     _value = 3;
-    _img = "alfil${super.isWhite ? "B" : "N"}";
+    _img = "${userData.tipo}/alfil${super.isWhite ? "B" : "N"}";
   }
 
   @override
@@ -170,7 +173,7 @@ class Alfil extends Ficha {
 class Caballo extends Ficha {
   Caballo({required super.isWhite}) {
     _value = 3;
-    _img = "caballo${super.isWhite ? "B" : "N"}";
+    _img = "${userData.tipo}/caballo${super.isWhite ? "B" : "N"}";
   }
 
   @override
@@ -195,7 +198,7 @@ class Peon extends Ficha {
   Peon({required super.isWhite}) {
     _value = 1;
 
-    _img = "peon${super.isWhite ? "B" : "N"}";
+    _img = "${userData.tipo}/peon${super.isWhite ? "B" : "N"}";
   }
 
   @override
@@ -230,7 +233,7 @@ class Peon extends Ficha {
 class Reina extends Ficha {
   Reina({required super.isWhite}) {
     _value = 10;
-    _img = "reina${super.isWhite ? "B" : "N"}";
+    _img = "${userData.tipo}/reina${super.isWhite ? "B" : "N"}";
   }
 
   @override
@@ -338,7 +341,7 @@ class Rey extends Ficha {
   bool alreadyMoved = false;
   Rey({required super.isWhite}) {
     _value = 10000;
-    _img = "rey${super.isWhite ? "B" : "N"}";
+    _img = "${userData.tipo}/rey${super.isWhite ? "B" : "N"}";
     alreadyMoved = false;
   }
 

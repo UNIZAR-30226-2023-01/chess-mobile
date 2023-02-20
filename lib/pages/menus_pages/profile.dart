@@ -1,6 +1,7 @@
 import 'package:ajedrez/components/profile_data.dart';
 import 'package:flutter/material.dart';
 import '../../components/visual/custom_shape.dart';
+import '../../components/visual/colores_tablero.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -174,7 +175,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               child: Image.asset('images/current_board.png'),
                             ),
                           ),
-                          SizedBox(
+                          Container(
+                            margin: EdgeInsets.only(
+                                top: defaultWidth * 0.119,
+                                left: defaultWidth * 0.119),
                             height: defaultWidth * 0.15,
                             width: defaultWidth * 0.15,
                             child: Image.asset(
@@ -211,24 +215,59 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 onSelected: (value) {
-                                  if (value == "_naturaleza") {
-                                    changeColorBoard(0xff769656, 0xffeeeed2);
-                                  } else if (value == "_madera") {
-                                    changeColorBoard(0xffB88B4A, 0xffE3C16F);
+                                  switch (value) {
+                                    case "_madera":
+                                      changeColorBoard(maderaN, maderaB);
+                                      break;
+                                    case "_coral":
+                                      changeColorBoard(coralN, coralB);
+                                      break;
+                                    case "_oscuro":
+                                      changeColorBoard(oscuroN, oscuroB);
+                                      break;
+                                    case "_mar":
+                                      changeColorBoard(marN, marB);
+                                      break;
+                                    case "_trigo":
+                                      changeColorBoard(trigoN, trigoB);
+                                      break;
+                                    case "_esmeralda":
+                                      changeColorBoard(esmeraldaN, esmeraldaB);
+                                      break;
                                   }
                                   setState(() {});
                                 },
                                 itemBuilder: (context) {
                                   return [
                                     PopupMenuItem(
-                                      value: '_naturaleza',
-                                      child: itemPopupTablero(defaultWidth,
-                                          0xff769656, 0xffeeeed2, "Naturaleza"),
-                                    ),
-                                    PopupMenuItem(
                                       value: '_madera',
                                       child: itemPopupTablero(defaultWidth,
-                                          0xffB88B4A, 0xffE3C16F, "Madera"),
+                                          maderaN, maderaB, "Madera"),
+                                    ),
+                                    PopupMenuItem(
+                                      value: '_coral',
+                                      child: itemPopupTablero(defaultWidth,
+                                          coralN, coralB, "Coral"),
+                                    ),
+                                    PopupMenuItem(
+                                      value: '_oscuro',
+                                      child: itemPopupTablero(defaultWidth,
+                                          oscuroN, oscuroB, "Oscuro"),
+                                    ),
+                                    PopupMenuItem(
+                                      value: '_mar',
+                                      child: itemPopupTablero(
+                                          defaultWidth, marN, marB, "Océano"),
+                                    ),
+                                    PopupMenuItem(
+                                      value: '_trigo',
+                                      child: itemPopupTablero(defaultWidth,
+                                          trigoN, trigoB, "Trigo"),
+                                    ),
+                                    PopupMenuItem(
+                                      value: '_esmeralda',
+                                      child: itemPopupTablero(defaultWidth,
+                                          esmeraldaN, esmeraldaB, "Esmeralda"),
                                     ),
                                   ];
                                 },
@@ -262,10 +301,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 onSelected: (value) {
-                                  if (value == "_merida") {
-                                    changeTypePieces("merida");
-                                  } else if (value == "_maya") {
-                                    changeTypePieces("maya");
+                                  switch (value) {
+                                    case "_merida":
+                                      changeTypePieces("merida");
+                                      break;
+                                    case "_maya":
+                                      changeTypePieces("maya");
+                                      break;
+                                    case "_marroquin":
+                                      changeTypePieces("marroquin");
+                                      break;
+                                    case "_medieval":
+                                      changeTypePieces("medieval");
+                                      break;
                                   }
                                   setState(() {});
                                 },
@@ -280,6 +328,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       value: '_maya',
                                       child: itemPopupPiezas(
                                           defaultWidth, "maya", "Maya"),
+                                    ),
+                                    PopupMenuItem(
+                                      value: '_marroquin',
+                                      child: itemPopupPiezas(defaultWidth,
+                                          "marroquin", "Marroquín"),
+                                    ),
+                                    PopupMenuItem(
+                                      value: '_medieval',
+                                      child: itemPopupPiezas(
+                                          defaultWidth, "medieval", "Medieval"),
                                     ),
                                   ];
                                 },

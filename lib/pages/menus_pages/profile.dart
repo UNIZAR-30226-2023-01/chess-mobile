@@ -171,7 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 Color(userData.tableroN),
                                 BlendMode.modulate,
                               ),
-                              child: Image.asset('images/board_theme.png'),
+                              child: Image.asset('images/current_board.png'),
                             ),
                           ),
                           SizedBox(
@@ -191,13 +191,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               color: const Color.fromARGB(255, 162, 197, 255),
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(15)),
-                              child: InkWell(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(15)),
-                                onTap: () {
-                                  changeColorBoard(0xff769656, 0xffeeeed2);
-                                  setState(() {});
-                                },
+                              child: PopupMenuButton(
+                                color: Colors.grey.shade300,
+                                shape: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: const BorderSide(
+                                      color: Color.fromARGB(255, 30, 35, 44),
+                                      width: 1.25,
+                                    )),
                                 child: const Center(
                                   child: Text(
                                     "Tablero",
@@ -208,6 +209,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                 ),
+                                onSelected: (value) {
+                                  if (value == "_naturaleza") {
+                                    changeColorBoard(0xff769656, 0xffeeeed2);
+                                  } else if (value == "_madera") {
+                                    changeColorBoard(0xffB88B4A, 0xffE3C16F);
+                                  }
+                                  setState(() {});
+                                },
+                                itemBuilder: (context) {
+                                  return [
+                                    PopupMenuItem(
+                                      value: '_naturaleza',
+                                      child: itemPopup(defaultWidth, 0xff769656,
+                                          0xffeeeed2, "Naturaleza"),
+                                    ),
+                                    PopupMenuItem(
+                                      value: '_madera',
+                                      child: itemPopup(defaultWidth, 0xffB88B4A,
+                                          0xffE3C16F, "Madera"),
+                                    ),
+                                  ];
+                                },
                               ),
                             ),
                           ),
@@ -222,10 +245,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               child: InkWell(
                                 borderRadius:
                                     const BorderRadius.all(Radius.circular(15)),
-                                onTap: () {
-                                  changeColorBoard(0xffB88B4A, 0xffE3C16F);
-                                  setState(() {});
-                                },
+                                onTap: () {},
                                 child: const Center(
                                   child: Text(
                                     "Piezas",
@@ -293,6 +313,38 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  itemPopup(double defaultWidth, int tableroN, int tableroB, String texto) {
+    return Row(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            color: Color(tableroB),
+            borderRadius: const BorderRadius.all(Radius.circular(15)),
+          ),
+          height: defaultWidth * 0.1,
+          width: defaultWidth * 0.1,
+          child: ColorFiltered(
+            colorFilter: ColorFilter.mode(
+              Color(tableroN),
+              BlendMode.modulate,
+            ),
+            child: Image.asset('images/posible_board.png'),
+          ),
+        ),
+        SizedBox(
+          width: defaultWidth * 0.05,
+        ),
+        Text(
+          texto,
+          style: const TextStyle(
+            fontSize: 19,
+            color: Color.fromARGB(255, 30, 35, 44),
+          ),
+        )
+      ],
     );
   }
 

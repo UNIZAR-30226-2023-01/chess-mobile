@@ -7,6 +7,7 @@ class UserData {
   bool shiny = true;
   int tableroN = 0xff769656;
   int tableroB = 0xffeeeed2;
+  String tipo = "merida";
   factory UserData() {
     return _singleton;
   }
@@ -23,4 +24,9 @@ void changeColorBoard(int tableroN, int tableroB) {
   UserData userData = UserData();
   userData.tableroN = tableroN;
   userData.tableroB = tableroB;
+}
+
+void changeTypePieces(String tipo) {
+  UserData userData = UserData();
+  userData.tipo = tipo;
 }

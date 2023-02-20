@@ -175,9 +175,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: defaultWidth * 0.3875,
-                            width: defaultWidth * 0.3875,
-                            child: Image.asset('images/caballoN.png'),
+                            height: defaultWidth * 0.15,
+                            width: defaultWidth * 0.15,
+                            child: Image.asset(
+                                'images/${userData.tipo}/caballoN.png'),
                           ),
                         ],
                       ),
@@ -221,13 +222,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   return [
                                     PopupMenuItem(
                                       value: '_naturaleza',
-                                      child: itemPopup(defaultWidth, 0xff769656,
-                                          0xffeeeed2, "Naturaleza"),
+                                      child: itemPopupTablero(defaultWidth,
+                                          0xff769656, 0xffeeeed2, "Naturaleza"),
                                     ),
                                     PopupMenuItem(
                                       value: '_madera',
-                                      child: itemPopup(defaultWidth, 0xffB88B4A,
-                                          0xffE3C16F, "Madera"),
+                                      child: itemPopupTablero(defaultWidth,
+                                          0xffB88B4A, 0xffE3C16F, "Madera"),
                                     ),
                                   ];
                                 },
@@ -242,10 +243,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               color: const Color.fromARGB(255, 162, 197, 255),
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(15)),
-                              child: InkWell(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(15)),
-                                onTap: () {},
+                              child: PopupMenuButton(
+                                color: Colors.grey.shade300,
+                                shape: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: const BorderSide(
+                                      color: Color.fromARGB(255, 30, 35, 44),
+                                      width: 1.25,
+                                    )),
                                 child: const Center(
                                   child: Text(
                                     "Piezas",
@@ -256,6 +261,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     ),
                                   ),
                                 ),
+                                onSelected: (value) {
+                                  if (value == "_merida") {
+                                    changeTypePieces("merida");
+                                  } else if (value == "_maya") {
+                                    changeTypePieces("maya");
+                                  }
+                                  setState(() {});
+                                },
+                                itemBuilder: (context) {
+                                  return [
+                                    PopupMenuItem(
+                                      value: '_merida',
+                                      child: itemPopupPiezas(
+                                          defaultWidth, "merida", "Mérida"),
+                                    ),
+                                    PopupMenuItem(
+                                      value: '_maya',
+                                      child: itemPopupPiezas(
+                                          defaultWidth, "maya", "Maya"),
+                                    ),
+                                  ];
+                                },
                               ),
                             ),
                           ),
@@ -316,7 +343,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  itemPopup(double defaultWidth, int tableroN, int tableroB, String texto) {
+  itemPopupTablero(
+      double defaultWidth, int tableroN, int tableroB, String texto) {
     return Row(
       children: [
         Container(
@@ -332,6 +360,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
               BlendMode.modulate,
             ),
             child: Image.asset('images/posible_board.png'),
+          ),
+        ),
+        SizedBox(
+          width: defaultWidth * 0.05,
+        ),
+        Text(
+          texto,
+          style: const TextStyle(
+            fontSize: 19,
+            color: Color.fromARGB(255, 30, 35, 44),
+          ),
+        )
+      ],
+    );
+  }
+
+  itemPopupPiezas(double defaultWidth, String tipo, String texto) {
+    return Row(
+      children: [
+        SizedBox(
+          height: defaultWidth * 0.1,
+          width: defaultWidth * 0.1,
+          child: Image(
+            image: AssetImage('images/$tipo/caballoN.png'),
           ),
         ),
         SizedBox(

@@ -28,15 +28,55 @@ class _BottomBarState extends State<BottomBar> {
         return await showDialog(
               context: context,
               builder: (BuildContext context) => AlertDialog(
-                title: const Text("Deseas salir de la sesión?"),
+                backgroundColor: Theme.of(context).colorScheme.tertiary,
+                shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.all(Radius.circular(15)),
+                ),
+                title: const Text("Seguro que deseas salir de la sesión?"),
                 actions: <Widget>[
                   TextButton(
                     onPressed: () => Navigator.pop(context, false),
-                    child: const Text("NO"),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.15,
+                      padding: const EdgeInsets.symmetric(vertical: 12.5),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "NO",
+                          style: TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                   TextButton(
                     onPressed: () => Navigator.pop(context, true),
-                    child: const Text("SÍ"),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.15,
+                      padding: const EdgeInsets.symmetric(vertical: 12.5),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(5)),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "SÍ",
+                          style: TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.secondary,
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -48,14 +88,14 @@ class _BottomBarState extends State<BottomBar> {
           child: _widgetOptions.elementAt(_selectedIndex),
         ),
         bottomNavigationBar: Container(
-          color: const Color.fromARGB(255, 30, 35, 44),
+          color: Theme.of(context).colorScheme.primary,
           child: Padding(
             padding: const EdgeInsets.all(20),
             child: GNav(
-              backgroundColor: const Color.fromARGB(255, 30, 35, 44),
+              backgroundColor: Theme.of(context).colorScheme.primary,
               color: Colors.white,
-              activeColor: const Color.fromARGB(255, 30, 35, 44),
-              tabBackgroundColor: const Color.fromARGB(255, 162, 197, 255),
+              activeColor: Theme.of(context).colorScheme.primary,
+              tabBackgroundColor: Theme.of(context).colorScheme.secondary,
               gap: 20,
               padding: const EdgeInsets.all(16),
               tabs: const [

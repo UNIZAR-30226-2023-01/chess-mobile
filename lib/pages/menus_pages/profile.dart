@@ -17,7 +17,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     double defaultHeight = MediaQuery.of(context).size.height;
     double defaultWidth = MediaQuery.of(context).size.width;
     return Container(
-      color: Colors.grey.shade100,
+      color: Theme.of(context).colorScheme.background,
       child: Column(
         children: <Widget>[
           SizedBox(
@@ -28,7 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   clipper: CustomShape(),
                   child: Container(
                     height: defaultHeight * 0.335,
-                    color: Colors.grey.shade300,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
                 Align(
@@ -39,11 +39,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       right: defaultHeight * 0.015,
                     ),
                     child: PopupMenuButton(
-                      color: Colors.grey.shade300,
+                      color: Theme.of(context).colorScheme.tertiary,
                       shape: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(15),
-                          borderSide: const BorderSide(
-                            color: Color.fromARGB(255, 30, 35, 44),
+                          borderSide: BorderSide(
+                            color: Theme.of(context).colorScheme.primary,
                             width: 1.25,
                           )),
                       child: Icon(
@@ -79,21 +79,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             top: defaultHeight * 0.1),
                         child: Column(
                           children: [
-                            const Text(
+                            Text(
                               "Grace Hopper",
                               style: TextStyle(
                                 fontSize: 27,
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 30, 35, 44),
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                             SizedBox(height: defaultHeight * 0.01),
-                            const Text(
+                            Text(
                               "GraceHopper@ejemplo.com",
                               style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 30, 35, 44),
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ],
@@ -107,7 +107,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               shape: BoxShape.circle,
                               color: Colors.white,
                               border: Border.all(
-                                color: const Color.fromARGB(255, 30, 35, 44),
+                                color: Theme.of(context).colorScheme.primary,
                                 width: 4,
                               ),
                               image: const DecorationImage(
@@ -193,24 +193,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: defaultWidth * 0.3875,
                             height: defaultWidth * 0.156,
                             child: Material(
-                              color: const Color.fromARGB(255, 162, 197, 255),
+                              color: Theme.of(context).colorScheme.secondary,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(15)),
                               child: PopupMenuButton(
-                                color: Colors.grey.shade300,
+                                color: Theme.of(context).colorScheme.tertiary,
                                 shape: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
-                                    borderSide: const BorderSide(
-                                      color: Color.fromARGB(255, 30, 35, 44),
+                                    borderSide: BorderSide(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                       width: 1.25,
                                     )),
-                                child: const Center(
+                                child: Center(
                                   child: Text(
                                     "Tablero",
                                     style: TextStyle(
                                       fontSize: 19,
                                       fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 30, 35, 44),
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ),
@@ -279,24 +281,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             width: defaultWidth * 0.3875,
                             height: defaultWidth * 0.156,
                             child: Material(
-                              color: const Color.fromARGB(255, 162, 197, 255),
+                              color: Theme.of(context).colorScheme.secondary,
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(15)),
                               child: PopupMenuButton(
-                                color: Colors.grey.shade300,
+                                color: Theme.of(context).colorScheme.tertiary,
                                 shape: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
-                                    borderSide: const BorderSide(
-                                      color: Color.fromARGB(255, 30, 35, 44),
+                                    borderSide: BorderSide(
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                       width: 1.25,
                                     )),
-                                child: const Center(
+                                child: Center(
                                   child: Text(
                                     "Piezas",
                                     style: TextStyle(
                                       fontSize: 19,
                                       fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 30, 35, 44),
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
                                     ),
                                   ),
                                 ),
@@ -365,9 +369,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return SizedBox(
       width: defaultWidth * 0.3875,
       child: Container(
-        decoration: const BoxDecoration(
-          color: Color.fromARGB(255, 30, 35, 44),
-          borderRadius: BorderRadius.all(Radius.circular(15)),
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
+          borderRadius: const BorderRadius.all(Radius.circular(15)),
         ),
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -379,19 +383,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Text(
                 asunto,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 17,
-                  color: Color.fromARGB(255, 162, 197, 255),
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
               SizedBox(height: defaultHeight * 0.005),
               Text(
                 cuerpo,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 162, 197, 255),
+                  color: Theme.of(context).colorScheme.secondary,
                 ),
               ),
             ],
@@ -425,9 +429,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         Text(
           texto,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 19,
-            color: Color.fromARGB(255, 30, 35, 44),
+            color: Theme.of(context).colorScheme.primary,
           ),
         )
       ],
@@ -449,9 +453,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         Text(
           texto,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 19,
-            color: Color.fromARGB(255, 30, 35, 44),
+            color: Theme.of(context).colorScheme.primary,
           ),
         )
       ],
@@ -463,7 +467,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       children: [
         Expanded(
           child: Divider(
-            color: const Color.fromARGB(255, 30, 35, 44),
+            color: Theme.of(context).colorScheme.primary,
             thickness: 1.25,
             indent: defaultWidth * 0.1,
             endIndent: defaultWidth * 0.05,
@@ -471,15 +475,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         Text(
           texto,
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 19,
             fontWeight: FontWeight.bold,
-            color: Color.fromARGB(255, 30, 35, 44),
+            color: Theme.of(context).colorScheme.primary,
           ),
         ),
         Expanded(
           child: Divider(
-            color: const Color.fromARGB(255, 30, 35, 44),
+            color: Theme.of(context).colorScheme.primary,
             thickness: 1.25,
             indent: defaultWidth * 0.05,
             endIndent: defaultWidth * 0.1,

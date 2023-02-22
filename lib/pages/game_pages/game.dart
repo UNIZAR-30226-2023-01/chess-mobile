@@ -32,7 +32,7 @@ class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[800],
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: Center(
         child: Column(
           children: [

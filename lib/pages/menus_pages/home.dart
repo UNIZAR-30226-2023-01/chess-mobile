@@ -19,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
     double defaultHeight = MediaQuery.of(context).size.height;
     double defaultWidth = MediaQuery.of(context).size.width;
     return Container(
-      color: Colors.grey.shade100,
+      color: Theme.of(context).colorScheme.background,
       child: Column(
         children: <Widget>[
           SizedBox(
@@ -30,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   clipper: CustomShape(),
                   child: Container(
                     height: defaultHeight * 0.275,
-                    color: Colors.grey.shade300,
+                    color: Theme.of(context).colorScheme.tertiary,
                   ),
                 ),
                 Center(
@@ -40,12 +40,12 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: EdgeInsets.only(
                             bottom: defaultHeight * 0.025,
                             top: defaultHeight * 0.075),
-                        child: const Text(
+                        child: Text(
                           "Elige un modo de juego",
                           style: TextStyle(
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
-                            color: Color.fromARGB(255, 30, 35, 44),
+                            color: Theme.of(context).colorScheme.primary,
                           ),
                         ),
                       ),
@@ -53,8 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: defaultHeight * 0.15,
                         width: defaultHeight * 0.15,
                         child: ColorFiltered(
-                          colorFilter: const ColorFilter.mode(
-                            Color.fromARGB(255, 30, 35, 44),
+                          colorFilter: ColorFilter.mode(
+                            Theme.of(context).colorScheme.primary,
                             BlendMode.modulate,
                           ),
                           child: Image.asset('images/Logo_app_chess_white.png'),
@@ -74,9 +74,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: defaultWidth * 0.85,
                   margin: EdgeInsets.only(bottom: defaultWidth * 0.05),
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade300,
+                    color: Theme.of(context).colorScheme.tertiary,
                     border: Border.all(
-                      color: const Color.fromARGB(255, 30, 35, 44),
+                      color: Theme.of(context).colorScheme.primary,
                       width: 1.25,
                     ),
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -104,9 +104,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           setState(() => timeValue = value ?? ""),
                       dropdownDecoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: Colors.grey.shade300,
+                        color: Theme.of(context).colorScheme.tertiary,
                         border: Border.all(
-                          color: const Color.fromARGB(255, 30, 35, 44),
+                          color: Theme.of(context).colorScheme.primary,
                           width: 1.25,
                         ),
                       ),
@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: defaultWidth * 0.85,
                   margin: EdgeInsets.only(bottom: defaultWidth * 0.05),
                   child: Material(
-                    color: const Color.fromARGB(255, 30, 35, 44),
+                    color: Theme.of(context).colorScheme.primary,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                     child: InkWell(
                       borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -138,8 +138,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: SizedBox(
                               height: defaultWidth * 0.15,
                               child: ColorFiltered(
-                                colorFilter: const ColorFilter.mode(
-                                  Color.fromARGB(255, 162, 197, 255),
+                                colorFilter: ColorFilter.mode(
+                                  Theme.of(context).colorScheme.secondary,
                                   BlendMode.modulate,
                                 ),
                                 child: Image.asset('images/Competitive.png'),
@@ -148,13 +148,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Padding(
                             padding: EdgeInsets.all(defaultWidth * 0.04),
-                            child: const Text(
+                            child: Text(
                               "Partida competitiva",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 19,
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 162, 197, 255),
+                                color: Theme.of(context).colorScheme.secondary,
                               ),
                             ),
                           ),
@@ -164,7 +164,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 Divider(
-                  color: const Color.fromARGB(255, 30, 35, 44),
+                  color: Theme.of(context).colorScheme.primary,
                   thickness: 1.25,
                   indent: defaultWidth * 0.15,
                   endIndent: defaultWidth * 0.15,
@@ -178,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         top: defaultWidth * 0.05,
                       ),
                       child: Material(
-                        color: const Color.fromARGB(255, 162, 197, 255),
+                        color: Theme.of(context).colorScheme.secondary,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(15)),
                         child: InkWell(
@@ -201,8 +201,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: SizedBox(
                                   height: defaultWidth * 0.15,
                                   child: ColorFiltered(
-                                    colorFilter: const ColorFilter.mode(
-                                      Color.fromARGB(255, 30, 35, 44),
+                                    colorFilter: ColorFilter.mode(
+                                      Theme.of(context).colorScheme.primary,
                                       BlendMode.modulate,
                                     ),
                                     child: Image.asset('images/Private.png'),
@@ -212,13 +212,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               Padding(
                                 padding: EdgeInsets.only(
                                     bottom: defaultWidth * 0.07),
-                                child: const Text(
+                                child: Text(
                                   "Partida privada",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 19,
                                     fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 30, 35, 44),
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                               ),
@@ -236,7 +237,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         top: defaultWidth * 0.05,
                       ),
                       child: Material(
-                        color: const Color.fromARGB(255, 162, 197, 255),
+                        color: Theme.of(context).colorScheme.secondary,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(15)),
                         child: InkWell(
@@ -259,8 +260,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: SizedBox(
                                   height: defaultWidth * 0.15,
                                   child: ColorFiltered(
-                                    colorFilter: const ColorFilter.mode(
-                                      Color.fromARGB(255, 30, 35, 44),
+                                    colorFilter: ColorFilter.mode(
+                                      Theme.of(context).colorScheme.primary,
                                       BlendMode.modulate,
                                     ),
                                     child:
@@ -271,13 +272,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               Padding(
                                 padding: EdgeInsets.only(
                                     bottom: defaultWidth * 0.07),
-                                child: const Text(
+                                child: Text(
                                   "Torneos",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontSize: 19,
                                     fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 30, 35, 44),
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
                                   ),
                                 ),
                               ),
@@ -294,7 +296,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     top: defaultWidth * 0.075,
                   ),
                   child: Material(
-                    color: const Color.fromARGB(255, 162, 197, 255),
+                    color: Theme.of(context).colorScheme.secondary,
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                     child: InkWell(
                       borderRadius: const BorderRadius.all(Radius.circular(15)),
@@ -315,8 +317,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: SizedBox(
                               height: defaultWidth * 0.15,
                               child: ColorFiltered(
-                                colorFilter: const ColorFilter.mode(
-                                  Color.fromARGB(255, 30, 35, 44),
+                                colorFilter: ColorFilter.mode(
+                                  Theme.of(context).colorScheme.primary,
                                   BlendMode.modulate,
                                 ),
                                 child: Image.asset('images/Computer.png'),
@@ -325,13 +327,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           Padding(
                             padding: EdgeInsets.all(defaultWidth * 0.04),
-                            child: const Text(
+                            child: Text(
                               "Juega contra la IA",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 19,
                                 fontWeight: FontWeight.bold,
-                                color: Color.fromARGB(255, 30, 35, 44),
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ),

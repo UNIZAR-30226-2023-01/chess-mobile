@@ -1,4 +1,4 @@
-import 'dart:convert';
+// import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import '../menus_pages/bottom_bar.dart';
@@ -228,16 +228,16 @@ class _SignInPageState extends State<SignInPage> {
   Future<void> calltoApi() async {
     var client = http.Client();
     try {
-      var response = await client
-          .post(Uri.http('localhost', 'api/v1/auth/sign-up'), body: {
-        'username': 'myusername',
-        'password': 'mypassword',
-        'email': 'DIOS@GMAIL.COM'
-      });
-      var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      print(decodedResponse);
-      var uri = Uri.parse(decodedResponse['uri'] as String);
-      print(await client.get(uri));
+      // var response = await client
+      //     .post(Uri.http('localhost', 'api/v1/auth/sign-up'), body: {
+      //   'username': 'myusername',
+      //   'password': 'mypassword',
+      //   'email': 'DIOS@GMAIL.COM'
+      // });
+      // var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+      // print(decodedResponse);
+      // var uri = Uri.parse(decodedResponse['uri'] as String);
+      // print(await client.get(uri));
     } finally {
       client.close();
     }

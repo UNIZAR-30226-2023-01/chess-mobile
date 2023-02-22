@@ -35,6 +35,10 @@ class BoardData {
   bool whiteTurn = true;
   bool reversedBoard = true;
   List<int> casillaSeleccionada = [-1, -1];
+  List<List<int>> ultimoMovimiento = [
+    [-1, -1],
+    [-1, -1]
+  ];
   factory BoardData() {
     return _singleton;
   }
@@ -50,6 +54,10 @@ void resetSingleton(bool reversedBoard) {
   board.whiteTurn = true;
   board.reversedBoard = reversedBoard;
   board.casillaSeleccionada = [-1, -1];
+  board.ultimoMovimiento = [
+    [-1, -1],
+    [-1, -1]
+  ];
 }
 
 List<List<Ficha>> _initTablero(bool reversedBoard) {

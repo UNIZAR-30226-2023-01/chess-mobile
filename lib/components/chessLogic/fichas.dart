@@ -23,8 +23,8 @@ abstract class Ficha {
     return _img;
   }
 
-  List<List<int>> posiblesMovimientos(
-      int x, int y, List<List<Ficha>> tablero, bool reversedBoard);
+  List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero,
+      bool reversedBoard, List<List<int>> ultimoMovimiento);
 }
 
 class Vacia extends Ficha {
@@ -34,8 +34,8 @@ class Vacia extends Ficha {
   }
 
   @override
-  List<List<int>> posiblesMovimientos(
-      int x, int y, List<List<Ficha>> tablero, bool reversedBoard) {
+  List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero,
+      bool reversedBoard, List<List<int>> ultimoMovimiento) {
     List<List<int>> movimientos = [];
     return movimientos;
   }
@@ -55,8 +55,8 @@ class Torre extends Ficha {
   }
 
   @override
-  List<List<int>> posiblesMovimientos(
-      int x, int y, List<List<Ficha>> tablero, bool reversedBoard) {
+  List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero,
+      bool reversedBoard, List<List<int>> ultimoMovimiento) {
     List<List<int>> movimientos = [];
 
     for (int i = y + 1; i < 8; i++) {
@@ -114,8 +114,8 @@ class Alfil extends Ficha {
   }
 
   @override
-  List<List<int>> posiblesMovimientos(
-      int x, int y, List<List<Ficha>> tablero, bool reversedBoard) {
+  List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero,
+      bool reversedBoard, List<List<int>> ultimoMovimiento) {
     List<List<int>> movimientos = [];
 
     for (int i = 1; i < 8; i++) {
@@ -177,8 +177,8 @@ class Caballo extends Ficha {
   }
 
   @override
-  List<List<int>> posiblesMovimientos(
-      int x, int y, List<List<Ficha>> tablero, bool reversedBoard) {
+  List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero,
+      bool reversedBoard, List<List<int>> ultimoMovimiento) {
     List<List<int>> movimientos = [];
 
     movimientos.add([y + 1, x + 2]);
@@ -202,30 +202,48 @@ class Peon extends Ficha {
   }
 
   @override
-  List<List<int>> posiblesMovimientos(
-      int x, int y, List<List<Ficha>> tablero, bool reversedBoard) {
+  List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero,
+      bool reversedBoard, List<List<int>> ultimoMovimiento) {
     List<List<int>> movimientos = [];
-    int aux = 0;
-    aux = !reversedBoard ? (super.isWhite ? -1 : 1) : (super.isWhite ? 1 : -1);
+    int aux1 = 0, aux2 = 0;
+    aux1 = !reversedBoard ? (super.isWhite ? -1 : 1) : (super.isWhite ? 1 : -1);
 
-    if (tablero[y + aux][x].esVacia()) movimientos.add([y + aux, x]);
+    if (tablero[y + aux1][x].esVacia()) movimientos.add([y + aux1, x]);
     if (x < 7 &&
-        tablero[y + aux][x + 1].color() != isWhite &&
-        !tablero[y + aux][x + 1].esVacia()) {
-      movimientos.add([y + aux, x + 1]);
+        tablero[y + aux1][x + 1].color() != isWhite &&
+        !tablero[y + aux1][x + 1].esVacia()) {
+      movimientos.add([y + aux1, x + 1]);
     }
     if (x > 0 &&
-        tablero[y + aux][x - 1].color() != isWhite &&
-        !tablero[y + aux][x - 1].esVacia()) {
-      movimientos.add([y + aux, x - 1]);
+        tablero[y + aux1][x - 1].color() != isWhite &&
+        !tablero[y + aux1][x - 1].esVacia()) {
+      movimientos.add([y + aux1, x - 1]);
     }
-    aux = !reversedBoard ? (super.isWhite ? -2 : 2) : (super.isWhite ? 2 : -2);
+    aux2 = !reversedBoard ? (super.isWhite ? -2 : 2) : (super.isWhite ? 2 : -2);
     if ((!reversedBoard &&
             (super.isWhite && y == 6 || !super.isWhite && y == 1)) ||
         (reversedBoard &&
             (super.isWhite && y == 1 || !super.isWhite && y == 6))) {
-      if (tablero[y + aux][x].esVacia()) movimientos.add([y + aux, x]);
+      if (tablero[y + aux2][x].esVacia() && tablero[y + aux1][x].esVacia()) {
+        movimientos.add([y + aux2, x]);
+      }
     }
+    //comer al paso
+    if (ultimoMovimiento !=
+            [
+              [-1, -1],
+              [-1, -1]
+            ] &&
+        (ultimoMovimiento[0][0] - ultimoMovimiento[1][0]).abs() > 1 &&
+        ((ultimoMovimiento[0][1] == x + 1 &&
+                tablero[y][x + 1] is Peon &&
+                tablero[y][x + 1].color() != isWhite) ||
+            (ultimoMovimiento[0][1] == x - 1 &&
+                tablero[y][x - 1] is Peon &&
+                tablero[y][x - 1].color() != isWhite))) {
+      movimientos.add([y + aux1, ultimoMovimiento[0][1]]);
+    }
+
     return movimientos;
   }
 }
@@ -237,8 +255,8 @@ class Reina extends Ficha {
   }
 
   @override
-  List<List<int>> posiblesMovimientos(
-      int x, int y, List<List<Ficha>> tablero, bool reversedBoard) {
+  List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero,
+      bool reversedBoard, List<List<int>> ultimoMovimiento) {
     List<List<int>> movimientos = [];
 
     for (int i = y + 1; i < 8; i++) {
@@ -346,8 +364,8 @@ class Rey extends Ficha {
   }
 
   @override
-  List<List<int>> posiblesMovimientos(
-      int x, int y, List<List<Ficha>> tablero, bool reversedBoard) {
+  List<List<int>> posiblesMovimientos(int x, int y, List<List<Ficha>> tablero,
+      bool reversedBoard, List<List<int>> ultimoMovimiento) {
     List<List<int>> movimientos = [];
 
     movimientos.add([y - 1, x - 1]);
@@ -361,6 +379,8 @@ class Rey extends Ficha {
 
     if ((x + 3) < 8 &&
         tablero[y][x + 3] is Torre &&
+        tablero[y][x + 2] is Vacia &&
+        tablero[y][x + 1] is Vacia &&
         tablero[y][x] is Rey &&
         !(tablero[y][x + 3] as Torre).alreadyMoved &&
         !(tablero[y][x] as Rey).alreadyMoved) {
@@ -368,6 +388,9 @@ class Rey extends Ficha {
     }
     if ((x - 4) >= 0 &&
         tablero[y][x - 4] is Torre &&
+        tablero[y][x - 3] is Vacia &&
+        tablero[y][x - 2] is Vacia &&
+        tablero[y][x - 1] is Vacia &&
         tablero[y][x] is Rey &&
         !(tablero[y][x - 4] as Torre).alreadyMoved &&
         !(tablero[y][x] as Rey).alreadyMoved) {

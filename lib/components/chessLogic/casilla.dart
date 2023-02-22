@@ -71,7 +71,8 @@ class _CasillaState extends State<Casilla> {
 
       _actualizarCasillas();
       var posiblesMovimientos = validateMovements(board.tablero[y][x]
-          .posiblesMovimientos(x, y, board.tablero, board.reversedBoard));
+          .posiblesMovimientos(x, y, board.tablero, board.reversedBoard,
+              board.ultimoMovimiento));
 
       posiblesMovimientos.forEach(_processValidMovement);
     } else if ((board.tablero[y][x].esVacia() ||
@@ -90,6 +91,11 @@ class _CasillaState extends State<Casilla> {
 
       //enroque
       _procesarEnroque(auxY, auxX);
+      _procesarComerAlPaso(auxY, auxX);
+      board.ultimoMovimiento = [
+        [auxY, auxX],
+        [y, x]
+      ];
       board.tablero[y][x] = board.tablero[auxY][auxX];
       board.tablero[auxY][auxX] = Vacia(isWhite: false);
       _procesarPromocion();
@@ -112,13 +118,6 @@ class _CasillaState extends State<Casilla> {
 
   Color _calcularColorCasilla() {
     Color whiteTile, blackTile;
-    /*if (userData.shiny) {
-      whiteTile = const Color(0xffeeeed2);
-      blackTile = const Color(0xff769656);
-    } else {
-      whiteTile = const Color(0xffE3C16F);
-      blackTile = const Color(0xffB88B4A);
-    }*/
     whiteTile = Color(userData.tableroB);
     blackTile = Color(userData.tableroN);
     return board.casillaSeleccionada[0] == y &&
@@ -182,6 +181,15 @@ class _CasillaState extends State<Casilla> {
           break;
       }
       setState(() {});
+    }
+  }
+
+  void _procesarComerAlPaso(int auxY, int auxX) {
+    if ((x - auxX).abs() > 0 &&
+        board.tablero[auxY][auxX] is Peon &&
+        board.tablero[y][x].esVacia()) {
+      board.tablero[auxY][x] = Vacia(isWhite: false);
+      board.casillas[auxY * 8 + x].setState(() {});
     }
   }
 

@@ -11,11 +11,11 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final UserData userData = UserData();
   @override
   Widget build(BuildContext context) {
-    final UserData userData = UserData();
-    double defaultHeight = MediaQuery.of(context).size.height;
-    double defaultWidth = MediaQuery.of(context).size.width;
+    final double defaultHeight = MediaQuery.of(context).size.height;
+    final double defaultWidth = MediaQuery.of(context).size.width;
     return Container(
       color: Theme.of(context).colorScheme.background,
       child: Column(
@@ -41,11 +41,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: PopupMenuButton(
                       color: Theme.of(context).colorScheme.tertiary,
                       shape: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide: BorderSide(
-                            color: Theme.of(context).colorScheme.primary,
-                            width: 1.25,
-                          )),
+                        borderRadius: BorderRadius.circular(15),
+                        borderSide: BorderSide(
+                          color: Theme.of(context).colorScheme.primary,
+                          width: 1.25,
+                        ),
+                      ),
                       child: Icon(
                         Icons.settings,
                         size: defaultHeight * 0.035,
@@ -81,6 +82,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             Text(
                               "Grace Hopper",
+                              overflow: TextOverflow.visible,
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 27,
                                 fontWeight: FontWeight.bold,
@@ -90,6 +93,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             SizedBox(height: defaultHeight * 0.01),
                             Text(
                               "GraceHopper@ejemplo.com",
+                              overflow: TextOverflow.visible,
+                              textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontSize: 17,
                                 fontWeight: FontWeight.bold,
@@ -104,16 +109,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         width: defaultHeight * 0.14,
                         child: Container(
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                              border: Border.all(
-                                color: Theme.of(context).colorScheme.primary,
-                                width: 4,
-                              ),
-                              image: const DecorationImage(
-                                fit: BoxFit.cover,
-                                image: AssetImage('images/Grace_Hopper.jpg'),
-                              )),
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Theme.of(context).colorScheme.primary,
+                              width: 4,
+                            ),
+                            image: const DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage('images/Grace_Hopper.jpg'),
+                            ),
+                          ),
                         ),
                       ),
                     ],
@@ -163,7 +169,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             decoration: BoxDecoration(
                               color: Color(userData.tableroB),
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(15)),
+                                  const BorderRadius.all(Radius.circular(20)),
                             ),
                             height: defaultWidth * 0.3875,
                             width: defaultWidth * 0.3875,

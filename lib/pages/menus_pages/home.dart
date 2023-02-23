@@ -16,8 +16,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double defaultHeight = MediaQuery.of(context).size.height;
-    double defaultWidth = MediaQuery.of(context).size.width;
+    final double defaultHeight = MediaQuery.of(context).size.height;
+    final double defaultWidth = MediaQuery.of(context).size.width;
     return Container(
       color: Theme.of(context).colorScheme.background,
       child: Column(

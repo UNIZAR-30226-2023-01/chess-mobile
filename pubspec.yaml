@@ -39,6 +39,7 @@ dependencies:
   audioplayers: ^3.0.1
   google_nav_bar: ^5.0.6
   dropdown_button2: ^1.9.2
+  number_paginator: ^0.2.3
   http: ^0.13.5
 
 flutter_icons:

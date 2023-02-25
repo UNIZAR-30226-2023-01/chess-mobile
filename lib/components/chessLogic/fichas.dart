@@ -235,10 +235,12 @@ class Peon extends Ficha {
               [-1, -1]
             ] &&
         (ultimoMovimiento[0][0] - ultimoMovimiento[1][0]).abs() > 1 &&
-        ((ultimoMovimiento[0][1] == x + 1 &&
+        ((x < 7 &&
+                ultimoMovimiento[0][1] == x + 1 &&
                 tablero[y][x + 1] is Peon &&
                 tablero[y][x + 1].color() != isWhite) ||
-            (ultimoMovimiento[0][1] == x - 1 &&
+            (x > 0 &&
+                ultimoMovimiento[0][1] == x - 1 &&
                 tablero[y][x - 1] is Peon &&
                 tablero[y][x - 1].color() != isWhite))) {
       movimientos.add([y + aux1, ultimoMovimiento[0][1]]);

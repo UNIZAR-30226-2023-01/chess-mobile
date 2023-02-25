@@ -73,8 +73,13 @@ class _CasillaState extends State<Casilla> {
       var posiblesMovimientos = validateMovements(board.tablero[y][x]
           .posiblesMovimientos(x, y, board.tablero, board.reversedBoard,
               board.ultimoMovimiento));
+      List<List<int>> movimientosPermitidos = [];
+      posiblesMovimientos.forEach((movimiento) {
+        if (_processIfSolvesCheckMate(movimiento))
+          movimientosPermitidos.add(movimiento);
+      });
 
-      posiblesMovimientos.forEach(_processValidMovement);
+      movimientosPermitidos.forEach(_processValidMovement);
     } else if ((board.tablero[y][x].esVacia() ||
             board.tablero[y][x].isWhite != board.whiteTurn) &&
         board.tableroMovimientos[y][x]) {
@@ -104,6 +109,8 @@ class _CasillaState extends State<Casilla> {
       board.casillas[auxY * 8 + auxX].setState(() {});
       board.whiteTurn = !board.whiteTurn;
       _actualizarCasillas();
+
+      // _checkIfWin();
     }
     setState(() {});
     return Container();
@@ -114,6 +121,54 @@ class _CasillaState extends State<Casilla> {
     board.tableroMovimientos[movimientoValido[0]][movimientoValido[1]] = true;
     board.casillas[movimientoValido[0] * 8 + movimientoValido[1]]
         .setState(() {});
+  }
+
+  bool _processIfSolvesCheckMate(List<int> movimiento) {
+    //hace el posible movimiento
+    var tmp, tmpLastBoardMove;
+    tmp = board.tablero[movimiento[0]][movimiento[1]];
+    board.tablero[movimiento[0]][movimiento[1]] = board.tablero[y][x];
+    board.tablero[y][x] = Vacia(isWhite: false);
+    board.whiteTurn = !board.whiteTurn;
+    bool SolvesCheckMate = true;
+    var yRey, xRey;
+    var movimientos = [];
+    tmpLastBoardMove = board.ultimoMovimiento;
+    board.ultimoMovimiento = [
+      [y, x],
+      [movimiento[0], movimiento[1]]
+    ];
+    //analiza todos los posibles movimientos de respuesta a este
+    for (int i = 0; i < 7; i++) {
+      for (int j = 0; j < 7; j++) {
+        if (board.tablero[i][j] is Rey &&
+            board.tablero[i][j].color() == !board.whiteTurn) {
+          yRey = i;
+          xRey = j;
+        } else if (!board.tablero[i][j].esVacia() &&
+            board.tablero[i][j].color() == board.whiteTurn) {
+          var tmpMovements = validateMovements(board.tablero[i][j]
+              .posiblesMovimientos(j, i, board.tablero, board.reversedBoard,
+                  board.ultimoMovimiento));
+
+          for (int k = 0; k < tmpMovements.length; k++) {
+            movimientos.add(tmpMovements[k]);
+          }
+        }
+      }
+    }
+    //comprueba las consecuencias del movimiento hecho
+    for (int i = 0; i < movimientos.length; i++) {
+      if (movimientos[i][0] == yRey && movimientos[i][1] == xRey) {
+        SolvesCheckMate = false;
+      }
+    }
+    //lo deshace
+    board.ultimoMovimiento = tmpLastBoardMove;
+    board.whiteTurn = !board.whiteTurn;
+    board.tablero[y][x] = board.tablero[movimiento[0]][movimiento[1]];
+    board.tablero[movimiento[0]][movimiento[1]] = tmp;
+    return SolvesCheckMate;
   }
 
   Color _calcularColorCasilla() {
@@ -202,5 +257,27 @@ class _CasillaState extends State<Casilla> {
         }
       }
     }
+  }
+
+  void _checkIfWin() {
+    var movimientosPermitidos = [];
+    for (int i = 0; i < 7; i++) {
+      for (int j = 0; j < 7; j++) {
+        if (!board.tablero[i][j].esVacia() &&
+            board.tablero[i][j].color() == board.whiteTurn) {
+          var tmpMovements = validateMovements(board.tablero[i][j]
+              .posiblesMovimientos(j, i, board.tablero, board.reversedBoard,
+                  board.ultimoMovimiento));
+
+          for (int k = 0; k < tmpMovements.length; k++) {
+            if (_processIfSolvesCheckMate(tmpMovements[k]))
+              movimientosPermitidos.add(tmpMovements[k]);
+          }
+        }
+      }
+    }
+    if (movimientosPermitidos.length == 0)
+      alertaGanador(context, !board.whiteTurn);
+    print(movimientosPermitidos.length);
   }
 }

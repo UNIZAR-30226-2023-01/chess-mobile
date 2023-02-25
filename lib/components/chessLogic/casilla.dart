@@ -74,10 +74,11 @@ class _CasillaState extends State<Casilla> {
           .posiblesMovimientos(x, y, board.tablero, board.reversedBoard,
               board.ultimoMovimiento));
       List<List<int>> movimientosPermitidos = [];
-      posiblesMovimientos.forEach((movimiento) {
-        if (_processIfSolvesCheckMate(movimiento))
-          movimientosPermitidos.add(movimiento);
-      });
+      for (int i = 0; i < posiblesMovimientos.length; i++) {
+        if (_processIfSolvesCheckMate(posiblesMovimientos[i])) {
+          movimientosPermitidos.add(posiblesMovimientos[i]);
+        }
+      }
 
       movimientosPermitidos.forEach(_processValidMovement);
     } else if ((board.tablero[y][x].esVacia() ||
@@ -125,13 +126,14 @@ class _CasillaState extends State<Casilla> {
 
   bool _processIfSolvesCheckMate(List<int> movimiento) {
     //hace el posible movimiento
-    var tmp, tmpLastBoardMove;
+    Ficha tmp;
+    List<List<int>> tmpLastBoardMove;
     tmp = board.tablero[movimiento[0]][movimiento[1]];
     board.tablero[movimiento[0]][movimiento[1]] = board.tablero[y][x];
     board.tablero[y][x] = Vacia(isWhite: false);
     board.whiteTurn = !board.whiteTurn;
-    bool SolvesCheckMate = true;
-    var yRey, xRey;
+    bool solvesCheckMate = true;
+    int yRey = -1, xRey = -1;
     var movimientos = [];
     tmpLastBoardMove = board.ultimoMovimiento;
     board.ultimoMovimiento = [
@@ -139,8 +141,8 @@ class _CasillaState extends State<Casilla> {
       [movimiento[0], movimiento[1]]
     ];
     //analiza todos los posibles movimientos de respuesta a este
-    for (int i = 0; i < 7; i++) {
-      for (int j = 0; j < 7; j++) {
+    for (int i = 0; i < 8; i++) {
+      for (int j = 0; j < 8; j++) {
         if (board.tablero[i][j] is Rey &&
             board.tablero[i][j].color() == !board.whiteTurn) {
           yRey = i;
@@ -160,7 +162,7 @@ class _CasillaState extends State<Casilla> {
     //comprueba las consecuencias del movimiento hecho
     for (int i = 0; i < movimientos.length; i++) {
       if (movimientos[i][0] == yRey && movimientos[i][1] == xRey) {
-        SolvesCheckMate = false;
+        solvesCheckMate = false;
       }
     }
     //lo deshace
@@ -168,7 +170,7 @@ class _CasillaState extends State<Casilla> {
     board.whiteTurn = !board.whiteTurn;
     board.tablero[y][x] = board.tablero[movimiento[0]][movimiento[1]];
     board.tablero[movimiento[0]][movimiento[1]] = tmp;
-    return SolvesCheckMate;
+    return solvesCheckMate;
   }
 
   Color _calcularColorCasilla() {
@@ -259,25 +261,27 @@ class _CasillaState extends State<Casilla> {
     }
   }
 
-  void _checkIfWin() {
-    var movimientosPermitidos = [];
-    for (int i = 0; i < 7; i++) {
-      for (int j = 0; j < 7; j++) {
-        if (!board.tablero[i][j].esVacia() &&
-            board.tablero[i][j].color() == board.whiteTurn) {
-          var tmpMovements = validateMovements(board.tablero[i][j]
-              .posiblesMovimientos(j, i, board.tablero, board.reversedBoard,
-                  board.ultimoMovimiento));
+  // void _checkIfWin() {
+  //   var movimientosPermitidos = [];
+  //   for (int i = 0; i < 8; i++) {
+  //     for (int j = 0; j < 8; j++) {
+  //       if (!board.tablero[i][j].esVacia() &&
+  //           board.tablero[i][j].color() == board.whiteTurn) {
+  //         var tmpMovements = validateMovements(board.tablero[i][j]
+  //             .posiblesMovimientos(j, i, board.tablero, board.reversedBoard,
+  //                 board.ultimoMovimiento));
 
-          for (int k = 0; k < tmpMovements.length; k++) {
-            if (_processIfSolvesCheckMate(tmpMovements[k]))
-              movimientosPermitidos.add(tmpMovements[k]);
-          }
-        }
-      }
-    }
-    if (movimientosPermitidos.length == 0)
-      alertaGanador(context, !board.whiteTurn);
-    print(movimientosPermitidos.length);
-  }
+  //         for (int k = 0; k < tmpMovements.length; k++) {
+  //           if (_processIfSolvesCheckMate(tmpMovements[k])) {
+  //             movimientosPermitidos.add(tmpMovements[k]);
+  //           }
+  //         }
+  //       }
+  //     }
+  //   }
+  //   if (movimientosPermitidos.isEmpty) {
+  //     alertaGanador(context, !board.whiteTurn);
+  //   }
+  //   //print(movimientosPermitidos.length);
+  // }
 }

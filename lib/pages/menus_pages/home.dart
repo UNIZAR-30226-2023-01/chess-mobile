@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton2<String>(
-                      iconSize: 0,
+                      //iconSize: 0,
                       value: timeValue,
                       isExpanded: true,
                       items: timeItems.map((item) {
@@ -102,14 +102,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       }).toList(),
                       onChanged: (value) =>
                           setState(() => timeValue = value ?? ""),
-                      dropdownDecoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        color: Theme.of(context).colorScheme.tertiary,
-                        border: Border.all(
-                          color: Theme.of(context).colorScheme.primary,
-                          width: 1.25,
-                        ),
-                      ),
+                      // dropdownDecoration: BoxDecoration(
+                      //   borderRadius: BorderRadius.circular(15),
+                      //   color: Theme.of(context).colorScheme.tertiary,
+                      //   border: Border.all(
+                      //     color: Theme.of(context).colorScheme.primary,
+                      //     width: 1.25,
+                      //   ),
+                      // ),
                     ),
                   ),
                 ),

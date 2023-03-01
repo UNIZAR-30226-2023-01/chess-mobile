@@ -19,7 +19,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'REIGN',
-      theme: ThemeData(fontFamily: 'Urbanist'),
+      theme: ThemeData(
+        fontFamily: 'Urbanist',
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          background: Colors.grey.shade100,
+          primary: const Color.fromARGB(255, 30, 35, 44),
+          secondary: const Color.fromARGB(255, 162, 197, 255),
+          tertiary: Colors.grey.shade300,
+        ),
+      ),
       home: const StartupPage(),
     );
   }

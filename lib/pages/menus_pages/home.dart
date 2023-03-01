@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../components/visual/custom_shape.dart';
 import '../game_pages/game.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,261 +11,342 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final timeItems = ['3 minutes', '5 minutes', '10 minutes'];
-  String timeValue = '3 minutes';
+  final timeItems = ['3 minutos', '5 minutos', '10 minutos'];
+  String timeValue = '3 minutos';
 
   @override
   Widget build(BuildContext context) {
-    double defaultHeight = MediaQuery.of(context).size.height;
-    double defaultWidth = MediaQuery.of(context).size.width;
-    return Column(
-      children: <Widget>[
-        SizedBox(
-          height: defaultHeight * 0.35,
-          child: Stack(
-            children: <Widget>[
-              ClipPath(
-                clipper: CustomShape(),
-                child: Container(
-                  height: defaultHeight * 0.3,
-                  color: Colors.blue.shade100,
+    final double defaultHeight = MediaQuery.of(context).size.height;
+    final double defaultWidth = MediaQuery.of(context).size.width;
+    return Container(
+      color: Theme.of(context).colorScheme.background,
+      child: Column(
+        children: <Widget>[
+          SizedBox(
+            height: defaultHeight * 0.325,
+            child: Stack(
+              children: <Widget>[
+                ClipPath(
+                  clipper: CustomShape(),
+                  child: Container(
+                    height: defaultHeight * 0.275,
+                    color: Theme.of(context).colorScheme.tertiary,
+                  ),
                 ),
-              ),
-              Center(
-                child: Column(
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(
-                          bottom: defaultHeight * 0.05,
-                          top: defaultHeight * 0.075),
-                      child: Text(
-                        "Choose a game mode",
-                        style: TextStyle(
-                          fontSize: defaultHeight * 0.025,
-                          fontWeight: FontWeight.bold,
-                          color: const Color.fromARGB(255, 20, 25, 57),
+                Center(
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.only(
+                            bottom: defaultHeight * 0.025,
+                            top: defaultHeight * 0.075),
+                        child: Text(
+                          "Elige un modo de juego",
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: defaultHeight * 0.15,
+                        width: defaultHeight * 0.15,
+                        child: ColorFiltered(
+                          colorFilter: ColorFilter.mode(
+                            Theme.of(context).colorScheme.primary,
+                            BlendMode.modulate,
+                          ),
+                          child: Image.asset('images/Logo_app_chess_white.png'),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Center(
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: defaultHeight * 0.05,
+                  width: defaultWidth * 0.85,
+                  margin: EdgeInsets.only(bottom: defaultWidth * 0.05),
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.tertiary,
+                    border: Border.all(
+                      color: Theme.of(context).colorScheme.primary,
+                      width: 1.25,
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton2<String>(
+                      iconSize: 0,
+                      value: timeValue,
+                      isExpanded: true,
+                      items: timeItems.map((item) {
+                        return DropdownMenuItem(
+                          value: item,
+                          child: Center(
+                            child: Text(
+                              item,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                fontSize: 19,
+                              ),
+                            ),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) =>
+                          setState(() => timeValue = value ?? ""),
+                      dropdownDecoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: Theme.of(context).colorScheme.tertiary,
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.primary,
+                          width: 1.25,
                         ),
                       ),
                     ),
+                  ),
+                ),
+                Container(
+                  width: defaultWidth * 0.85,
+                  margin: EdgeInsets.only(bottom: defaultWidth * 0.05),
+                  child: Material(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                    child: InkWell(
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const GamePage()),
+                        );
+                      },
+                      child: Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: defaultHeight * 0.01,
+                              horizontal: defaultWidth * 0.075,
+                            ),
+                            child: SizedBox(
+                              height: defaultWidth * 0.15,
+                              child: ColorFiltered(
+                                colorFilter: ColorFilter.mode(
+                                  Theme.of(context).colorScheme.secondary,
+                                  BlendMode.modulate,
+                                ),
+                                child: Image.asset('images/Competitive.png'),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(defaultWidth * 0.04),
+                            child: Text(
+                              "Partida competitiva",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.secondary,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+                Divider(
+                  color: Theme.of(context).colorScheme.primary,
+                  thickness: 1.25,
+                  indent: defaultWidth * 0.15,
+                  endIndent: defaultWidth * 0.15,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
                     Container(
-                      height: defaultHeight * 0.15,
-                      width: defaultHeight * 0.15,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('images/caballo.png'),
+                      width: defaultWidth * 0.3875,
+                      margin: EdgeInsets.only(
+                        top: defaultWidth * 0.05,
+                      ),
+                      child: Material(
+                        color: Theme.of(context).colorScheme.secondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15)),
+                        child: InkWell(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15)),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const GamePage()),
+                            );
+                          },
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: defaultHeight * 0.01,
+                                  horizontal: defaultWidth * 0.075,
+                                ),
+                                child: SizedBox(
+                                  height: defaultWidth * 0.15,
+                                  child: ColorFiltered(
+                                    colorFilter: ColorFilter.mode(
+                                      Theme.of(context).colorScheme.primary,
+                                      BlendMode.modulate,
+                                    ),
+                                    child: Image.asset('images/Private.png'),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: defaultWidth * 0.07),
+                                child: Text(
+                                  "Partida privada",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 19,
+                                    fontWeight: FontWeight.bold,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: defaultWidth * 0.075,
+                    ),
+                    Container(
+                      width: defaultWidth * 0.3875,
+                      margin: EdgeInsets.only(
+                        top: defaultWidth * 0.05,
+                      ),
+                      child: Material(
+                        color: Theme.of(context).colorScheme.secondary,
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(15)),
+                        child: InkWell(
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(15)),
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const GamePage()),
+                            );
+                          },
+                          child: Column(
+                            children: <Widget>[
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: defaultHeight * 0.01,
+                                  horizontal: defaultWidth * 0.075,
+                                ),
+                                child: SizedBox(
+                                  height: defaultWidth * 0.15,
+                                  child: ColorFiltered(
+                                    colorFilter: ColorFilter.mode(
+                                      Theme.of(context).colorScheme.primary,
+                                      BlendMode.modulate,
+                                    ),
+                                    child:
+                                        Image.asset('images/Tournaments.png'),
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    bottom: defaultWidth * 0.07),
+                                child: Text(
+                                  "Torneos",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 19,
+                                    fontWeight: FontWeight.bold,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          width: defaultWidth * 0.9,
-          decoration: BoxDecoration(
-            color: Colors.blue.shade100,
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-          ),
-          child: Column(
-            children: <Widget>[
-              Container(
-                height: defaultHeight * 0.05,
-                width: defaultWidth * 0.9,
-                margin: EdgeInsets.all(defaultWidth * 0.04),
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: const BoxDecoration(
-                  color: Colors.white70,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                ),
-                child: DropdownButton<String>(
-                  iconSize: 0,
-                  value: timeValue,
-                  isExpanded: true,
-                  items: timeItems.map(buildMenuItem).toList(),
-                  onChanged: (value) => setState(() => timeValue = value ?? ""),
-                ),
-              ),
-              Row(
-                children: <Widget>[
-                  Container(
-                    width: defaultWidth * 0.39,
-                    margin: EdgeInsets.only(
-                      right: defaultWidth * 0.04,
-                      left: defaultWidth * 0.04,
-                      bottom: defaultWidth * 0.04,
-                    ),
-                    child: Material(
-                      color: const Color.fromARGB(255, 20, 25, 57),
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      child: InkWell(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const GamePage()),
-                          );
-                        },
-                        child: Center(
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                margin:
-                                    EdgeInsets.only(top: defaultWidth * 0.04),
-                                height: defaultWidth * 0.22,
-                                decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage('images/trofeo.png'),
-                                  ),
+                Container(
+                  width: defaultWidth * 0.85,
+                  margin: EdgeInsets.only(
+                    top: defaultWidth * 0.075,
+                  ),
+                  child: Material(
+                    color: Theme.of(context).colorScheme.secondary,
+                    borderRadius: const BorderRadius.all(Radius.circular(15)),
+                    child: InkWell(
+                      borderRadius: const BorderRadius.all(Radius.circular(15)),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const GamePage()),
+                        );
+                      },
+                      child: Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: defaultHeight * 0.01,
+                              horizontal: defaultWidth * 0.075,
+                            ),
+                            child: SizedBox(
+                              height: defaultWidth * 0.15,
+                              child: ColorFiltered(
+                                colorFilter: ColorFilter.mode(
+                                  Theme.of(context).colorScheme.primary,
+                                  BlendMode.modulate,
                                 ),
+                                child: Image.asset('images/Computer.png'),
                               ),
-                              Padding(
-                                padding: EdgeInsets.all(defaultWidth * 0.04),
-                                child: const Text(
-                                  "Competitive\nmatch",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
-                        ),
+                          Padding(
+                            padding: EdgeInsets.all(defaultWidth * 0.04),
+                            child: Text(
+                              "Juega contra la IA",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 19,
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
-                  Container(
-                    width: defaultWidth * 0.39,
-                    margin: EdgeInsets.only(
-                      right: defaultWidth * 0.04,
-                      bottom: defaultWidth * 0.04,
-                    ),
-                    child: Material(
-                      color: Colors.white,
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                      child: InkWell(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(20)),
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const GamePage()),
-                          );
-                        },
-                        child: Center(
-                          child: Column(
-                            children: <Widget>[
-                              Container(
-                                margin:
-                                    EdgeInsets.only(top: defaultWidth * 0.04),
-                                height: defaultWidth * 0.22,
-                                decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                    image: AssetImage("images/diana.png"),
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.all(defaultWidth * 0.04),
-                                child: const Text(
-                                  "Training\nmatch",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold,
-                                    color: Color.fromARGB(255, 20, 25, 57),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        Container(
-          width: defaultWidth * 0.9,
-          margin: EdgeInsets.only(top: defaultWidth * 0.05),
-          decoration: BoxDecoration(
-            color: Colors.blue.shade100,
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-          ),
-          child: Container(
-            width: defaultWidth * 0.82,
-            margin: EdgeInsets.all(defaultWidth * 0.04),
-            child: Material(
-              color: Colors.white,
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
-              child: InkWell(
-                borderRadius: const BorderRadius.all(Radius.circular(20)),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const GamePage()),
-                  );
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(defaultWidth * 0.04),
-                  child: const Text(
-                    "Play with friends!",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 20, 25, 57),
-                    ),
-                  ),
                 ),
-              ),
+              ],
             ),
           ),
-        ),
-      ],
-    );
-  }
-
-  DropdownMenuItem<String> buildMenuItem(String item) {
-    return DropdownMenuItem(
-      value: item,
-      child: Center(
-        child: Text(
-          item,
-          textAlign: TextAlign.center,
-          style: const TextStyle(
-            fontSize: 18,
-          ),
-        ),
+        ],
       ),
     );
-  }
-}
-
-class CustomShape extends CustomClipper<Path> {
-  @override
-  Path getClip(Size size) {
-    var path = Path();
-    path.lineTo(0, size.height - 100);
-    path.quadraticBezierTo(
-        size.width / 2, size.height, size.width, size.height - 100);
-    path.lineTo(size.width, 0);
-    path.close();
-    return path;
-  }
-
-  @override
-  bool shouldReclip(CustomClipper<Path> oldClipper) {
-    return true;
   }
 }

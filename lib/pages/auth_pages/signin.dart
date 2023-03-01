@@ -134,10 +134,10 @@ class _SignInPageState extends State<SignInPage> {
               ),
 
               // Divider for other methods
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
-                  children: const [
+                  children: [
                     Expanded(
                       child: Divider(
                         thickness: 0.5,
@@ -168,9 +168,9 @@ class _SignInPageState extends State<SignInPage> {
               ),
 
               // Other platforms for login
-              Row(
+              const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   PlatformButton(
                     logoPath: 'images/Google_Logo.png',
                   ),

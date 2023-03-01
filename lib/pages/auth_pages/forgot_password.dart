@@ -42,11 +42,11 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
               ),
 
               // Forgot password header text
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
                       'Forgot Password?',
                       style: TextStyle(

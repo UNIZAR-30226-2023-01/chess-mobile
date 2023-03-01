@@ -85,7 +85,11 @@ class _CasillaState extends State<Casilla> {
             board.tablero[y][x].isWhite != board.whiteTurn) &&
         board.tableroMovimientos[y][x]) {
       final player = AudioPlayer();
-      player.play(AssetSource("sounds/movePiece.mp3"));
+      if (board.tablero[y][x].esVacia()) {
+        player.play(AssetSource("sounds/movePiece.mp3"));
+      } else {
+        player.play(AssetSource("sounds/capturePiece.mp3"));
+      }
 
       var auxY = board.casillaSeleccionada[0];
       var auxX = board.casillaSeleccionada[1];

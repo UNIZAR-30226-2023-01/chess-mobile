@@ -1,6 +1,5 @@
-// import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import '../../components/api.dart';
 import '../menus_pages/bottom_bar.dart';
 import '../../components/buttons/textfield_custom.dart';
 import '../../components/buttons/return_button.dart';
@@ -8,7 +7,6 @@ import '../../components/buttons/navigate_button.dart';
 import '../../components/buttons/platform_button.dart';
 import 'forgot_password.dart';
 import 'signup.dart';
-import 'package:http/http.dart' as http;
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -119,7 +117,7 @@ class _SignInPageState extends State<SignInPage> {
                 textColor: Colors.white,
                 innerBoxColor: const Color.fromARGB(255, 30, 35, 44),
                 onTap: () async {
-                  calltoApi();
+                  apiSignIn();
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -223,23 +221,5 @@ class _SignInPageState extends State<SignInPage> {
         ),
       ),
     );
-  }
-
-  Future<void> calltoApi() async {
-    var client = http.Client();
-    try {
-      // var response = await client
-      //     .post(Uri.http('localhost', 'api/v1/auth/sign-up'), body: {
-      //   'username': 'myusername',
-      //   'password': 'mypassword',
-      //   'email': 'DIOS@GMAIL.COM'
-      // });
-      // var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      // print(decodedResponse);
-      // var uri = Uri.parse(decodedResponse['uri'] as String);
-      // print(await client.get(uri));
-    } finally {
-      client.close();
-    }
   }
 }

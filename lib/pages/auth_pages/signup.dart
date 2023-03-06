@@ -1,3 +1,4 @@
+import 'package:ajedrez/components/api.dart';
 import 'package:flutter/material.dart';
 import '../../components/buttons/return_button.dart';
 import '../../components/buttons/navigate_button.dart';
@@ -102,7 +103,9 @@ class _SignUpPageState extends State<SignUpPage> {
                 text: 'Register',
                 textColor: Colors.white,
                 innerBoxColor: const Color.fromARGB(255, 30, 35, 44),
-                onTap: () {},
+                onTap: () async {
+                  apiSignUp();
+                },
               ),
 
               const SizedBox(

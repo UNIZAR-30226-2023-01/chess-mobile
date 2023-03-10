@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../components/communications/socket_io.dart';
 import '../../components/visual/custom_shape.dart';
 import '../game_pages/game.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -13,6 +14,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final timeItems = ['3 minutos', '5 minutos', '10 minutos'];
   String timeValue = '3 minutos';
+
+  void _handleTap() async {
+    await startGame(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,13 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                     child: InkWell(
                       borderRadius: const BorderRadius.all(Radius.circular(15)),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const GamePage()),
-                        );
-                      },
+                      onTap: _handleTap,
                       child: Row(
                         children: <Widget>[
                           Padding(

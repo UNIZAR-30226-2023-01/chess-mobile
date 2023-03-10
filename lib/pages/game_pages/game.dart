@@ -4,6 +4,7 @@ import 'package:ajedrez/components/chessLogic/casilla.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import '../../components/chessLogic/tablero.dart';
+import '../../components/communications/socket_io.dart';
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -24,13 +25,16 @@ class _GamePageState extends State<GamePage> {
   @override
   void initState() {
     super.initState();
-    resetSingleton(Random().nextBool());
+    // resetSingleton(Random().nextBool());
 
     ///resetProfileData(Random().nextBool());
   }
 
   @override
   Widget build(BuildContext context) {
+    GameSocket s = GameSocket();
+    listenGame();
+    resetSingleton(!s.iAmWhite);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: Center(

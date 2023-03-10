@@ -1,4 +1,4 @@
-import 'package:ajedrez/components/api.dart';
+import 'package:ajedrez/components/communications/api.dart';
 import 'package:flutter/material.dart';
 import '../../components/buttons/return_button.dart';
 import '../../components/buttons/navigate_button.dart';

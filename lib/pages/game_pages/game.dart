@@ -33,7 +33,7 @@ class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     GameSocket s = GameSocket();
-    listenGame();
+    listenGame(context);
     resetSingleton(!s.iAmWhite);
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,

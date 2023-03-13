@@ -350,7 +350,7 @@ void simularMovimiento(List<List<int>> movimientos) {
   b.tablero[auxY][auxX] = Vacia(isWhite: false);
   b.casillaSeleccionada = [-1, -1];
   (b.casillas[auxY * 8 + auxX] as CasillaState).actualizarEstado();
-  b.whiteTurn = !b.whiteTurn;
+  
   (b.casillas[y * 8 + x] as CasillaState).actualizarEstado();
   // actualizarCasillas();
   for (int i = 0; i < 8; i++) {
@@ -361,4 +361,6 @@ void simularMovimiento(List<List<int>> movimientos) {
       }
     }
   }
+  
+  b.whiteTurn = !b.whiteTurn;
 }

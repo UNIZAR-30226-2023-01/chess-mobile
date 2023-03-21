@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:ajedrez/components/chessLogic/casilla.dart';
+import 'package:ajedrez/components/chessLogic/square.dart';
 import 'package:ajedrez/components/profile_data.dart';
 import 'package:ajedrez/components/visual/colores_tablero.dart';
 import 'package:flutter/material.dart';
@@ -104,11 +104,11 @@ void listenGame(BuildContext context) {
       (data) => {
             if (data[0]["turn"] == (!s.iAmWhite ? "DARK" : "LIGHT"))
               {
-                simularMovimiento(decodificarJugada(data[0]["move"])),
+                simulateMovement(decodeMovement(data[0]["move"])),
                 if (data[0]["end_state"] == "CHECKMATE" &&
                     (data[0]["winner"] == (!s.iAmWhite ? "LIGHT" : "DARK")))
                   {
-                    alertaGanador(context, !s.iAmWhite),
+                    alertWinner(context, !s.iAmWhite),
                   },
               },
             // print(data),

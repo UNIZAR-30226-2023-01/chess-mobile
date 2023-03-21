@@ -1,9 +1,9 @@
-import 'package:ajedrez/components/chessLogic/casilla.dart';
+import 'package:ajedrez/components/chessLogic/square.dart';
 
 ///import 'package:ajedrez/components/profile_data.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
-import '../../components/chessLogic/tablero.dart';
+import '../../components/chessLogic/board.dart';
 import '../../components/communications/socket_io.dart';
 
 class GamePage extends StatefulWidget {
@@ -51,7 +51,7 @@ class _GamePageState extends State<GamePage> {
                       crossAxisCount: 8),
                   itemBuilder: (BuildContext context, int index) {
                     /// Cada elemento es una casilla
-                    return Casilla(index: index);
+                    return Square(index: index);
                   }),
             ),
           ],

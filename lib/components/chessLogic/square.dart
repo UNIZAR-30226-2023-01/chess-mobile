@@ -119,7 +119,7 @@ class SquareState extends State<Square> {
       _processPromotion();
       var jugada = _encodeMovement(auxX, auxY);
       // print(jugada);
-      var movimiento = {"roomID": s.room, "move": jugada};
+      var movimiento = {"move": jugada};
       s.socket.emit('move', movimiento);
       board.selectedSquare = [-1, -1];
       board.squares[auxY * 8 + auxX].setState(() {});

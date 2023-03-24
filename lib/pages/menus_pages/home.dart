@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
   String timeValue = '3 minutos';
 
   void _handleTap() async {
-    await startGame(context);
+    await startGame(context, "COMP");
   }
 
   @override

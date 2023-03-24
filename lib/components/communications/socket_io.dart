@@ -133,7 +133,7 @@ void listenGame(BuildContext context) {
             // print(data)
           });
   s.socket.on(
-      'move',
+      'moved',
       (data) => {
             if (data[0]["turn"] == (!s.iAmWhite ? "DARK" : "LIGHT"))
               {

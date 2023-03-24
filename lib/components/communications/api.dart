@@ -28,6 +28,15 @@ void apiSignUp() async {
     //     body: {"email": "eve.holt@reqres.in", "password": "pistol"});
     // var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
     // print(decodedResponse);
+    // PENDIENTE DE PROBAR
+    // response = await client
+    //     .post(Uri.https('192.168.1.250', '/api/v1/auth/sign-up'), body: {
+    //   "username": "johndoe",
+    //   "email": "johndoe@example.com",
+    //   "password": "1234"
+    // });
+    // decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
+    // print(decodedResponse);
   } finally {
     client.close();
   }

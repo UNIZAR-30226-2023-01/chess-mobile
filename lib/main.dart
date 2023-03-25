@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'pages/auth_pages/startup.dart';
 import 'package:flutter/services.dart';
+import 'components/visual/screen_size.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,6 +17,10 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
+    defaultHeight = MediaQuery.of(context).size.height;
+    defaultWidth = MediaQuery.of(context).size.width;
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'REIGN',

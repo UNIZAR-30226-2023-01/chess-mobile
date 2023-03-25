@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../../components/visual/custom_shape.dart';
 import '../../components/visual/colores_tablero.dart';
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ProfilePage> createState() => _ProfilePagenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfilePagenState extends State<ProfilePage> {
   final UserData userData = UserData();
   @override
   Widget build(BuildContext context) {

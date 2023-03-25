@@ -15,8 +15,12 @@ class _HomeScreenState extends State<HomeScreen> {
   final timeItems = ['3 minutos', '5 minutos', '10 minutos'];
   String timeValue = '3 minutos';
 
-  void _handleTap() async {
-    await startGame(context, "IA");
+  void _handleTapAI() async {
+    await startGame(context, "AI");
+  }
+
+  void _handleTapCOMP() async {
+    await startGame(context, "COMP");
   }
 
   @override
@@ -126,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                     child: InkWell(
                       borderRadius: const BorderRadius.all(Radius.circular(15)),
-                      onTap: _handleTap,
+                      onTap: _handleTapCOMP,
                       child: Row(
                         children: <Widget>[
                           Padding(
@@ -299,13 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     borderRadius: const BorderRadius.all(Radius.circular(15)),
                     child: InkWell(
                       borderRadius: const BorderRadius.all(Radius.circular(15)),
-                      onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const GamePage()),
-                        );
-                      },
+                      onTap: _handleTapAI,
                       child: Row(
                         children: <Widget>[
                           Padding(

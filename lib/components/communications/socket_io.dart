@@ -67,14 +67,14 @@ Future<void> startGame(BuildContext context, String type) {
   // var jsonData = {"token": "adasdada", "time": 180, "user": s.name};
   Map jsonData;
   switch (type) {
-    case "IA":
+    case "AI":
       {
         jsonData = {
           "gameType": "AI",
           "time": 300,
           "increment": 5,
           "hostColor": "LIGHT",
-          "difficulty": 2
+          "difficulty": 3
         };
       }
       break;
@@ -101,14 +101,6 @@ Future<void> startGame(BuildContext context, String type) {
       (data) => {
             s.room = data[0]["roomID"],
             s.iAmWhite = data[0]["color"] == "LIGHT",
-            // if (s.iAmWhite)
-            //   {
-            //     // changeColorBoard(coralN, coralB),
-            //     print("I am white"),
-            //   },
-            // print(s.room),
-            // print(s.iAmWhite),
-            // print(data),
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const GamePage()),
@@ -138,12 +130,18 @@ void listenGame(BuildContext context) {
             if (data[0]["turn"] == (!s.iAmWhite ? "DARK" : "LIGHT"))
               {
                 simulateMovement(decodeMovement(data[0]["move"])),
-                if (data[0]["end_state"] == "CHECKMATE" &&
-                    (data[0]["winner"] == (!s.iAmWhite ? "LIGHT" : "DARK")))
-                  {
-                    alertWinner(context, !s.iAmWhite),
-                  },
               },
+            // print(data),
+          });
+  s.socket.on(
+      'game_over',
+      (data) => {
+            if (data[0]["endState"] == "CHECKMATE" &&
+                (data[0]["winner"] == (!s.iAmWhite ? "LIGHT" : "DARK")))
+              {
+                alertWinner(context, !s.iAmWhite),
+              },
+
             // print(data),
           });
   s.socket.onDisconnect((_) => {

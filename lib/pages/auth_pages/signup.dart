@@ -2,7 +2,7 @@ import 'package:ajedrez/components/communications/api.dart';
 import 'package:flutter/material.dart';
 import '../../components/buttons/return_button.dart';
 import '../../components/buttons/navigate_button.dart';
-import '../../components/buttons/textfield_custom.dart';
+import '../../components/buttons/textfield_custom2.dart';
 import '../../components/buttons/platform_button.dart';
 import 'signin.dart';
 
@@ -14,6 +14,12 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +65,8 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               // Username textfield
-              const TextFieldCustom(
+              TextFieldCustom2(
+                controller: usernameController,
                 hintText: 'Username',
                 obscureText: false,
               ),
@@ -69,7 +76,8 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               // Email textfield
-              const TextFieldCustom(
+              TextFieldCustom2(
+                controller: emailController,
                 hintText: 'Email',
                 obscureText: false,
               ),
@@ -79,7 +87,8 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               // Password textfield
-              const TextFieldCustom(
+              TextFieldCustom2(
+                controller: passwordController,
                 hintText: 'Password',
                 obscureText: true,
               ),
@@ -89,8 +98,9 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               // Confirm password textfield
-              const TextFieldCustom(
-                hintText: 'Confirm password',
+              TextFieldCustom2(
+                controller: passwordController,
+                hintText: 'Password',
                 obscureText: true,
               ),
 
@@ -104,7 +114,11 @@ class _SignUpPageState extends State<SignUpPage> {
                 textColor: Colors.white,
                 innerBoxColor: const Color.fromARGB(255, 30, 35, 44),
                 onTap: () async {
-                  apiSignUp();
+                  apiSignUp(
+                    usernameController.text,
+                    emailController.text,
+                    passwordController.text,
+                  );
                 },
               ),
 

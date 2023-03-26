@@ -89,7 +89,11 @@ Future<void> startGame(BuildContext context, String type) {
   }
 
   // print("CONEXIÓN ESTABLECIDA2");
-  s.socket.on('error', (data) => {print(data)});
+  s.socket.on(
+      'error',
+      (data) => {
+            // print(data)
+          });
   s.socket.once(
       'room',
       (data) => {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../components/buttons/textfield_custom2.dart';
 import '../../components/communications/api.dart';
 import '../menus_pages/bottom_bar.dart';
-import '../../components/buttons/textfield_custom.dart';
 import '../../components/buttons/return_button.dart';
 import '../../components/buttons/navigate_button.dart';
 import '../../components/buttons/platform_button.dart';
@@ -16,6 +16,8 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,9 +62,10 @@ class _SignInPageState extends State<SignInPage> {
                 height: 20,
               ),
 
-              // Email text box
-              const TextFieldCustom(
-                hintText: 'Enter your email',
+              // Username textfield
+              TextFieldCustom2(
+                controller: usernameController,
+                hintText: 'Username',
                 obscureText: false,
               ),
 
@@ -70,9 +73,9 @@ class _SignInPageState extends State<SignInPage> {
                 height: 15,
               ),
 
-              // Password text box
-              const TextFieldCustom(
-                hintText: 'Enter your password',
+              TextFieldCustom2(
+                controller: passwordController,
+                hintText: 'Password',
                 obscureText: true,
               ),
 
@@ -117,7 +120,10 @@ class _SignInPageState extends State<SignInPage> {
                 textColor: Colors.white,
                 innerBoxColor: const Color.fromARGB(255, 30, 35, 44),
                 onTap: () async {
-                  apiSignIn();
+                  apiSignIn(
+                    usernameController.text,
+                    passwordController.text,
+                  );
                   Navigator.push(
                     context,
                     MaterialPageRoute(

@@ -10,6 +10,7 @@ class UserData {
   int tableroN = maderaN;
   int tableroB = maderaB;
   String tipo = "merida";
+  String token = "";
   factory UserData() {
     return _singleton;
   }
@@ -31,4 +32,9 @@ void changeColorBoard(int tableroN, int tableroB) {
 void changeTypePieces(String tipo) {
   UserData userData = UserData();
   userData.tipo = tipo;
+}
+
+void assignToken(String token) {
+  UserData userData = UserData();
+  userData.token = token;
 }

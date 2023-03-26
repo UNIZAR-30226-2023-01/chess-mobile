@@ -1,6 +1,7 @@
 import 'dart:async';
 // import 'dart:convert';
 import 'package:ajedrez/components/chessLogic/square.dart';
+import 'package:ajedrez/components/profile_data.dart';
 // import 'package:ajedrez/components/profile_data.dart';
 // import 'package:ajedrez/components/visual/colores_tablero.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,7 @@ class GameSocket {
       // 'http://192.168.1.250:4001',
       'http://reign-chess.duckdns.org:4001/',
       OptionBuilder().setTransports(['websocket']).setExtraHeaders({
-        // 'token':
+        'token': UserData().token
       }) // for Flutter or Dart VM SI BORRAS ESTO NO VA EL SOCKET :D
           .build());
   String room = "-1";

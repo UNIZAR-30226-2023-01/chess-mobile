@@ -42,6 +42,7 @@ dependencies:
   number_paginator: ^0.2.3
   http: ^0.13.5
   socket_io_client: ^2.0.1
+  webview_flutter: ^4.0.7
 
 flutter_icons:
   ios: true

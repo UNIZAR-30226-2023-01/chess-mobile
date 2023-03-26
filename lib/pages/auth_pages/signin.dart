@@ -172,17 +172,27 @@ class _SignInPageState extends State<SignInPage> {
               ),
 
               // Other platforms for login
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   PlatformButton(
                     logoPath: 'images/Google_Logo.png',
+                    onTap: () async {
+                      apiSignInGoogle(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const BottomBar(),
+                        ),
+                      );
+                    },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   PlatformButton(
                     logoPath: 'images/Apple_Logo.png',
+                    onTap: () async {},
                   ),
                 ],
               ),

@@ -161,16 +161,18 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               // Other platforms for registration
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   PlatformButton(
+                    onTap: () async {},
                     logoPath: 'images/Google_Logo.png',
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   PlatformButton(
+                    onTap: () async {},
                     logoPath: 'images/Apple_Logo.png',
                   ),
                 ],

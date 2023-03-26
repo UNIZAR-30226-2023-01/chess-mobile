@@ -16,7 +16,7 @@ class BottomBar extends StatefulWidget {
 class _BottomBarState extends State<BottomBar> {
   static int selectedIndex = 1;
 
-  static const List<Widget> widgetOptions = <Widget>[
+  static const List widgetOptions = [
     RankingPage(),
     HomePage(),
     ProfilePage(),

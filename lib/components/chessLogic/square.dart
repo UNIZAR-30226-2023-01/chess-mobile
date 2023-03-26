@@ -190,8 +190,8 @@ class SquareState extends State<Square> {
 
   Color _calculateSquareColor() {
     Color whiteTile, blackTile;
-    whiteTile = Color(userData.tableroB);
-    blackTile = Color(userData.tableroN);
+    whiteTile = Color(userData.boardTypeB);
+    blackTile = Color(userData.boardTypeN);
     return board.selectedSquare[0] == y && board.selectedSquare[1] == x
         ? const Color(0xffbaca44)
         : board.boardMovements[y][x]

@@ -38,25 +38,25 @@ Future<PieceOption?> showPieceSelectionDialog(
             value: PieceOption.reina,
             child: Image(
               image: AssetImage(
-                  "images/${userData.tipo}/reina${isWhite ? "B" : "N"}.png"),
+                  "images/${userData.pieceType}/reina${isWhite ? "B" : "N"}.png"),
             )),
         PopupMenuItem(
             value: PieceOption.torre,
             child: Image(
               image: AssetImage(
-                  "images/${userData.tipo}/torre${isWhite ? "B" : "N"}.png"),
+                  "images/${userData.pieceType}/torre${isWhite ? "B" : "N"}.png"),
             )),
         PopupMenuItem(
             value: PieceOption.alfil,
             child: Image(
               image: AssetImage(
-                  "images/${userData.tipo}/alfil${isWhite ? "B" : "N"}.png"),
+                  "images/${userData.pieceType}/alfil${isWhite ? "B" : "N"}.png"),
             )),
         PopupMenuItem(
             value: PieceOption.caballo,
             child: Image(
               image: AssetImage(
-                  "images/${userData.tipo}/caballo${isWhite ? "B" : "N"}.png"),
+                  "images/${userData.pieceType}/caballo${isWhite ? "B" : "N"}.png"),
             )),
       ],
       elevation: 8.0,

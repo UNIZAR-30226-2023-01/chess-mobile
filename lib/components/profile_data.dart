@@ -2,14 +2,14 @@
 
 //de momento se queda como singleton :D
 
-import 'package:ajedrez/components/visual/colores_tablero.dart';
+import 'package:ajedrez/components/visual/customization_constants.dart';
 
 class UserData {
   static final UserData _singleton = UserData._internal();
   bool shiny = true;
-  int tableroN = maderaN;
-  int tableroB = maderaB;
-  String tipo = "merida";
+  int boardTypeN = maderaN;
+  int boardTypeB = maderaB;
+  String pieceType = "merida";
   String token = "";
   factory UserData() {
     return _singleton;
@@ -25,13 +25,13 @@ void resetProfileData(bool shiny) {
 
 void changeColorBoard(int tableroN, int tableroB) {
   UserData userData = UserData();
-  userData.tableroN = tableroN;
-  userData.tableroB = tableroB;
+  userData.boardTypeN = tableroN;
+  userData.boardTypeB = tableroB;
 }
 
 void changeTypePieces(String tipo) {
   UserData userData = UserData();
-  userData.tipo = tipo;
+  userData.pieceType = tipo;
 }
 
 void assignToken(String token) {

@@ -3,8 +3,8 @@ import '../../components/buttons/textfield_custom2.dart';
 import '../../components/communications/api.dart';
 import '../menus_pages/bottom_bar.dart';
 import '../../components/buttons/return_button.dart';
-import '../../components/buttons/navigate_button.dart';
 import '../../components/buttons/platform_button.dart';
+import '../../components/buttons/text_long_button.dart';
 import 'forgot_password.dart';
 import 'signup.dart';
 
@@ -115,11 +115,11 @@ class _SignInPageState extends State<SignInPage> {
               ),
 
               // Login button
-              NavigateButton(
-                text: 'Login',
-                textColor: Colors.white,
-                innerBoxColor: const Color.fromARGB(255, 30, 35, 44),
-                onTap: () async {
+              textButton(
+                context,
+                true,
+                'Login',
+                () async {
                   apiSignIn(
                     usernameController.text,
                     passwordController.text,
@@ -138,10 +138,10 @@ class _SignInPageState extends State<SignInPage> {
               ),
 
               // Divider for other methods
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
-                  children: [
+                  children: const [
                     Expanded(
                       child: Divider(
                         thickness: 0.5,

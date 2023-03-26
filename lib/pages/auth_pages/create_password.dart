@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../components/buttons/navigate_button.dart';
 import '../../components/buttons/textfield_custom.dart';
 import '../../components/buttons/return_button.dart';
+import '../../components/buttons/text_long_button.dart';
 import 'password_changed.dart';
 
 class CreatePwPage extends StatefulWidget {
@@ -40,11 +40,11 @@ class _CreatePwPageState extends State<CreatePwPage> {
               ),
 
               // Create Password header text
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
+                  children: const [
                     Text(
                       'Create new password',
                       style: TextStyle(
@@ -98,11 +98,11 @@ class _CreatePwPageState extends State<CreatePwPage> {
               ),
 
               // Reset Password button
-              NavigateButton(
-                text: 'Reset Password',
-                textColor: Colors.white,
-                innerBoxColor: const Color.fromARGB(255, 30, 35, 44),
-                onTap: () {
+              textButton(
+                context,
+                true,
+                'Reset Password',
+                () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(

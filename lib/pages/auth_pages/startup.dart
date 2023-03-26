@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../components/buttons/navigate_button.dart';
+import '../../components/buttons/text_long_button.dart';
 import 'signin.dart';
 import 'signup.dart';
 
@@ -44,16 +44,14 @@ class _StartupPageState extends State<StartupPage> {
               ),
 
               // Sign In button
-              NavigateButton(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SignInPage()),
-                  );
-                },
-                text: 'Sign In',
-                innerBoxColor: const Color.fromARGB(255, 30, 35, 44),
-                textColor: Colors.white,
+              textButton(
+                context,
+                true,
+                'Sign In',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignInPage()),
+                ),
               ),
 
               const SizedBox(
@@ -61,16 +59,14 @@ class _StartupPageState extends State<StartupPage> {
               ),
 
               // Sign Up button
-              NavigateButton(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SignUpPage()),
-                  );
-                },
-                text: 'Sign Up',
-                textColor: const Color.fromARGB(255, 30, 35, 44),
-                innerBoxColor: const Color.fromARGB(255, 250, 250, 250),
+              textButton(
+                context,
+                false,
+                "Sign Up",
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignUpPage()),
+                ),
               ),
             ],
           ),

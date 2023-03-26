@@ -1,7 +1,7 @@
 import 'package:ajedrez/components/communications/api.dart';
 import 'package:flutter/material.dart';
 import '../../components/buttons/return_button.dart';
-import '../../components/buttons/navigate_button.dart';
+import '../../components/buttons/text_long_button.dart';
 import '../../components/buttons/textfield_custom2.dart';
 import '../../components/buttons/platform_button.dart';
 import 'signin.dart';
@@ -109,11 +109,11 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               // Register Button
-              NavigateButton(
-                text: 'Register',
-                textColor: Colors.white,
-                innerBoxColor: const Color.fromARGB(255, 30, 35, 44),
-                onTap: () async {
+              textButton(
+                context,
+                true,
+                'Register',
+                () {
                   apiSignUp(
                     usernameController.text,
                     emailController.text,
@@ -127,10 +127,10 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               // Divider for other methods
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
-                  children: [
+                  children: const [
                     Expanded(
                       child: Divider(
                         thickness: 0.5,

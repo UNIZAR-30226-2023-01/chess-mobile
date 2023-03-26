@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../components/buttons/navigate_button.dart';
+import '../../components/buttons/text_long_button.dart';
 import 'startup.dart';
 
 class PwChangedPage extends StatefulWidget {
@@ -64,12 +64,11 @@ class _PwChangedPageState extends State<PwChangedPage> {
               ),
 
               // Back to Login button
-              NavigateButton(
-                text: 'Back to Login',
-                textColor: Colors.white,
-                innerBoxColor: const Color.fromARGB(255, 30, 35, 44),
-                onTap: () {
-                  // Borrar historial de pantallas cargadas
+              textButton(
+                context,
+                true,
+                'Back to Login',
+                () {
                   Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(

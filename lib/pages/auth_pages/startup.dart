@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../components/buttons/text_long_button.dart';
+import '../menus_pages/bottom_bar.dart';
+import '../../components/profile_data.dart';
 import 'signin.dart';
 import 'signup.dart';
 
@@ -67,6 +69,45 @@ class _StartupPageState extends State<StartupPage> {
                   context,
                   MaterialPageRoute(builder: (context) => const SignUpPage()),
                 ),
+              ),
+
+              const SizedBox(
+                height: 50,
+              ),
+
+              // Anonymous user option
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // User doesn't have an account
+                  const Text(
+                    'Wan\'t to play without an account?',
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+
+                  const SizedBox(
+                    width: 5,
+                  ),
+
+                  GestureDetector(
+                    onTap: () {
+                      // De momento no rellena datos de usuario !!!
+                      assignIsRegistred(false);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const BottomBar(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Play Now',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 59, 203, 255),
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

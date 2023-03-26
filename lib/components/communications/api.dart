@@ -71,6 +71,7 @@ void apiSignIn(String username, password) async {
     assignId(responseBodyDictionary["data"]["_id"]);
     assignUsername(responseBodyDictionary["data"]["username"]);
     assignEmail(responseBodyDictionary["data"]["email"]);
+    assignIsRegistred(true);
   } catch (e) {
     // print(e.toString());
   } finally {

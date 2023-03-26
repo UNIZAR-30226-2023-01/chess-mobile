@@ -7,6 +7,7 @@ import 'package:ajedrez/components/visual/customization_constants.dart';
 class UserData {
   static final UserData _singleton = UserData._internal();
   bool shiny = true;
+  bool isRegistered = false;
   String id = "", username = "Grace Hopper", email = "Ghopper@mail";
   int boardTypeN = maderaN;
   int boardTypeB = maderaB;
@@ -53,4 +54,9 @@ void assignUsername(String username) {
 void assignEmail(String email) {
   UserData userData = UserData();
   userData.email = email;
+}
+
+void assignIsRegistred(bool isRegistered) {
+  UserData userData = UserData();
+  userData.isRegistered = isRegistered;
 }

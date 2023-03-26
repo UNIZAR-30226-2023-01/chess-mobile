@@ -4,10 +4,9 @@ import 'package:ajedrez/components/profile_data.dart';
 import 'package:flutter/services.dart' show rootBundle;
 
 void apiSignUp(String username, password, email) async {
-  SecurityContext context = SecurityContext.defaultContext;
   var pemBytes = await rootBundle.load("assets/cert.pem");
-  context.setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(),
-      password: '');
+  var context = SecurityContext()
+    ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
 
   var client = HttpClient(context: context)
     ..badCertificateCallback =
@@ -25,7 +24,7 @@ void apiSignUp(String username, password, email) async {
     // Set body
     request.write(body);
 
-    await request.close(); //comentar esta o la de abajo
+    await request.close(); //comentar esta o las de abajo
     // var response = await request.close();
     // var responseBody = await response.transform(utf8.decoder).join();
     // print(responseBody);
@@ -37,10 +36,10 @@ void apiSignUp(String username, password, email) async {
 }
 
 void apiSignIn(String username, password) async {
-  SecurityContext context = SecurityContext.defaultContext;
   var pemBytes = await rootBundle.load("assets/cert.pem");
-  context.setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(),
-      password: '');
+
+  var context = SecurityContext()
+    ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
 
   var client = HttpClient(context: context)
     ..badCertificateCallback =

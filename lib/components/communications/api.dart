@@ -59,7 +59,8 @@ void apiSignIn(String username, password) async {
     // Set body
     request.write(body);
     var response = await request.close();
-    // var responseBody = await response.transform(utf8.decoder).join();
+    var responseBody = await response.transform(utf8.decoder).join();
+    var responseBodyDictionary = jsonDecode(responseBody);
     // print(responseBody);
     String? cookieHeader = response.headers['set-cookie']?[0];
     cookieHeader == null ? cookieHeader = "" : cookieHeader = cookieHeader;
@@ -67,6 +68,9 @@ void apiSignIn(String username, password) async {
     String apiAuthCookie = cookies[0].split('=')[1];
     // print(apiAuthCookie);
     assignToken(apiAuthCookie);
+    assignId(responseBodyDictionary["data"]["_id"]);
+    assignUsername(responseBodyDictionary["data"]["username"]);
+    assignEmail(responseBodyDictionary["data"]["email"]);
   } catch (e) {
     // print(e.toString());
   } finally {

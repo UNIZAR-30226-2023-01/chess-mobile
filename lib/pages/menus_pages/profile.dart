@@ -82,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Grace Hopper",
+                      userData.username,
                       overflow: TextOverflow.visible,
                       style: TextStyle(
                         fontSize: 27,
@@ -92,7 +92,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                     SizedBox(height: defaultHeight * 0.01),
                     Text(
-                      "GraceHopper@ejemplo.com",
+                      userData.email,
                       overflow: TextOverflow.visible,
                       style: TextStyle(
                         fontSize: 17,

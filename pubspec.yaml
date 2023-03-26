@@ -83,6 +83,7 @@ flutter:
     - images/merida/
     - assets/launcher_icons/
     - assets/sounds/
+    - assets/
     
 
   # An image asset can refer to one or more resolution-specific "variants", see

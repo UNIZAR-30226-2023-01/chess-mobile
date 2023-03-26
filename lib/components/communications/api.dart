@@ -1,5 +1,7 @@
-// import 'dart:convert';
+import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart' show rootBundle;
 
 //los comentarios son para que el flutter analyze deje commitear, descomentar todo para usar
 void apiSignIn() async {
@@ -54,14 +56,29 @@ void apiSignIn() async {
 // }
 
 void apiSignUp() async {
-  var client = http.Client();
+  SecurityContext context = SecurityContext.defaultContext;
+  var pemBytes = await rootBundle.load("assets/cert.pem");
+  context.setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(),
+      password: '');
+
+  var client = HttpClient(context: context)
+    ..badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
   try {
-    // var response = await http.post(
-    //   Uri.parse('https://api.gracehopper.xyz/api/v1/ping'),
+    var request = await client
+        .getUrl(Uri.parse('https://api.gracehopper.xyz/api/v1/ping'));
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
+    // print(responseBody);
+
+    // var response = await http.get(
+    //   // Uri.parse('https://api.gracehopper.xyz/api/v1/ping'),
+    //   Uri.parse('http://192.168.1.250:4000/api/v1/ping'),
+    //   // Uri.https('api.gracehopper.xyz', 'api/v1/ping'),
     //   headers: <String, String>{
-    //     'Content-Type': 'application/json; charset=UTF-8',
+    //     'Content-Type': 'application/json;',
     //   },
-    //   body: jsonEncode(<String, String>{}),
+    //   // body: jsonEncode(<String, String>{}),
     // );
     // print("llega");
     // var decodedResponse2 = response.body;

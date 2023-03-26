@@ -40,14 +40,12 @@ class GameSocket {
   static final GameSocket _singleton = GameSocket._internal();
   io.Socket socket = io.io(
       //no borrar la linea comentada esta para el desarrollo en la red donde esta hosteado el backend
-      'http://192.168.1.250:4001',
-      // 'http://reign-chess.duckdns.org:4001/',
+      // 'http://192.168.1.250:4001',
+      'http://reign-chess.duckdns.org:4001/',
       OptionBuilder().setTransports(['websocket']).setExtraHeaders({
-        'token':
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0MWUwYTAwMTNkMWMwN2ZjMzQwY2UyNiIsInVzZXJuYW1lIjoiam9obmRvZSIsImlhdCI6MTY3OTY5MDM5MywiZXhwIjoxNzY2MDkwMzkzfQ.eKLvADbX0VfcFRBMQHRzGoP27FG8o7bsfNHM35ft9Mc'
+        // 'token':
       }) // for Flutter or Dart VM SI BORRAS ESTO NO VA EL SOCKET :D
           .build());
-  // io.Socket socket = io.io('http://localhost:4001');
   String room = "-1";
   bool iAmWhite = false;
   String name = _nombreRandom();
@@ -73,7 +71,7 @@ Future<void> startGame(BuildContext context, String type) {
           "gameType": "AI",
           "time": 300,
           "increment": 5,
-          "hostColor": "LIGHT",
+          "hostColor": "RANDOM",
           "difficulty": 3
         };
       }
@@ -91,11 +89,7 @@ Future<void> startGame(BuildContext context, String type) {
   }
 
   // print("CONEXIÓN ESTABLECIDA2");
-  s.socket.on(
-      'error',
-      (data) => {
-            // print(data)
-          });
+  s.socket.on('error', (data) => {print(data)});
   s.socket.once(
       'room',
       (data) => {

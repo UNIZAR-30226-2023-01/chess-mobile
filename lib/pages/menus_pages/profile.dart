@@ -115,7 +115,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   image: const DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage('images/Grace_Hopper.jpg'),
+                    image: AssetImage("images/Grace_Hopper.jpg"),
                   ),
                 ),
               ),
@@ -167,14 +167,14 @@ class _ProfilePageState extends State<ProfilePage> {
           height: defaultWidth * 0.3875,
           width: defaultWidth * 0.3875,
           child: setImageColor(
-              context, "images/current_board.png", Color(userData.boardTypeN)),
+              context, "current_board.png", Color(userData.boardTypeN)),
         ),
         Container(
           margin: EdgeInsets.only(
               top: defaultWidth * 0.12, left: defaultWidth * 0.12),
           height: defaultWidth * 0.15,
           width: defaultWidth * 0.15,
-          child: Image.asset('images/${userData.pieceType}/caballoN.png'),
+          child: Image.asset("images/${userData.pieceType}/caballoN.png"),
         ),
       ],
     );
@@ -245,8 +245,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           height: defaultWidth * 0.1,
           width: defaultWidth * 0.1,
-          child:
-              setImageColor(context, "images/posible_board.png", Color(boardN)),
+          child: setImageColor(context, "posible_board.png", Color(boardN)),
         ),
         SizedBox(
           width: defaultWidth * 0.05,
@@ -269,7 +268,7 @@ class _ProfilePageState extends State<ProfilePage> {
           height: defaultWidth * 0.1,
           width: defaultWidth * 0.1,
           child: Image(
-            image: AssetImage('images/$type/caballoN.png'),
+            image: AssetImage("images/$type/caballoN.png"),
           ),
         ),
         SizedBox(

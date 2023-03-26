@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import '../visual/screen_size.dart';
 
-TextButton backButton(BuildContext context, String text) {
+TextButton backButton(BuildContext context, String text, bool exit) {
   return TextButton(
-    onPressed: () => Navigator.pop(context, false),
+    onPressed: () => Navigator.pop(context, exit),
     child: Container(
       width: defaultWidth * 0.15,
       padding: const EdgeInsets.symmetric(vertical: 12.5),

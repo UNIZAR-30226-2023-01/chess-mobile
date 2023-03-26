@@ -82,8 +82,8 @@ class _BottomBarState extends State<BottomBar> {
       ),
       title: const Text("Seguro que deseas salir de la sesión?"),
       actions: [
-        backButton(context, "NO"),
-        backButton(context, "SÍ"),
+        backButton(context, "NO", false),
+        backButton(context, "SÍ", true),
       ],
     );
   }

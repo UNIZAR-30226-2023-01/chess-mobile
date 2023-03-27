@@ -12,7 +12,7 @@ class UserData {
   int boardTypeN = maderaN;
   int boardTypeB = maderaB;
   String pieceType = "merida";
-  String token = "";
+  String token = "_";
   factory UserData() {
     return _singleton;
   }

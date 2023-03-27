@@ -1,5 +1,6 @@
 import 'dart:async';
 // import 'dart:convert';
+import 'package:ajedrez/components/chessLogic/board.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
 import 'package:ajedrez/components/profile_data.dart';
 // import 'package:ajedrez/components/profile_data.dart';
@@ -63,7 +64,7 @@ Future<void> startGame(BuildContext context, String type) {
   s.socket.onConnect((_) {
     // print("CONEXIÓN ESTABLECIDA");
   });
-  // var jsonData = {"token": "adasdada", "time": 180, "user": s.name};
+
   Map jsonData;
   switch (type) {
     case "AI":
@@ -82,6 +83,29 @@ Future<void> startGame(BuildContext context, String type) {
         jsonData = {"gameType": "COMPETITIVE", "time": 300};
       }
       break;
+    case "CREATECUSTOM":
+      {
+        jsonData = {
+          "gameType": "CUSTOM",
+          "time": 300,
+          "increment": 5,
+          "hostColor": "RANDOM"
+        };
+      }
+      break;
+    case "JOINCUSTOM":
+      {
+        jsonData = {"gameType": "CUSTOM", "roomID": "810448"};
+      }
+      break;
+    case "SPECTATOR":
+      {
+        jsonData = {"roomID": "248525"};
+        s.socket.emit('join_room', jsonData);
+        s.room = "248525";
+        BoardData().spectatorMode = true;
+      }
+      break;
     default:
       {
         jsonData = {};
@@ -95,28 +119,73 @@ Future<void> startGame(BuildContext context, String type) {
       (data) => {
             // print(data)
           });
-  s.socket.once(
-      'room',
-      (data) => {
-            s.room = data[0]["roomID"],
-            s.iAmWhite = data[0]["color"] == "LIGHT",
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const GamePage()),
-            ),
-            completer.complete()
-          });
-  s.socket.emit('find_room', jsonData);
+  if (type != "SPECTATOR") s.socket.emit('find_room', jsonData);
+  // List movements;
+  if (type == "CREATECUSTOM") {
+    s.socket.once(
+        'room',
+        (data) => {
+              s.room = data[0]["roomID"],
+              // print(s.room),
+              s.socket.once(
+                  'room',
+                  (data) => {
+                        if (type != "SPECTATOR")
+                          {
+                            s.room = data[0]["roomID"],
+                            s.iAmWhite = data[0]["color"] == "LIGHT",
+                          },
+                        // print(data),
+                        // print(s.room),
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const GamePage()),
+                        ),
+                        completer.complete()
+                      })
+            });
+  } else {
+    s.socket.once(
+        'room',
+        (data) => {
+              if (type != "SPECTATOR")
+                {
+                  s.room = data[0]["roomID"],
+                  s.iAmWhite = data[0]["color"] == "LIGHT",
+                }
+              else
+                {
+                  // movements = data[0]["moves"],
+                  // movements.forEach((mov) => {
+                  //       // print(mov),
+                  //       // print(decodeMovement(mov)),
+                  //       // simulateMovement(decodeMovement(mov))
+                  //     }),
+                  // print(movements),
+                  s.iAmWhite = true
+                },
+              // print(data),
+              // print(s.room),
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const GamePage()),
+              ),
+              completer.complete()
+            });
+  }
+
   return completer.future;
 }
 
 void listenGame(BuildContext context) {
   GameSocket s = GameSocket();
+  bool espec = BoardData().spectatorMode;
   // Dart client
   s.socket.on(
       'error',
       (data) => {
-            // print(data)
+            // print("ERROR" + data)
           });
   s.socket.on(
       'game_state',
@@ -126,10 +195,16 @@ void listenGame(BuildContext context) {
   s.socket.on(
       'moved',
       (data) => {
-            if (data[0]["turn"] == (!s.iAmWhite ? "DARK" : "LIGHT"))
+            // print(data),
+            if (!espec)
               {
-                simulateMovement(decodeMovement(data[0]["move"])),
-              },
+                if (data[0]["turn"] == (!s.iAmWhite ? "DARK" : "LIGHT"))
+                  {
+                    simulateMovement(decodeMovement(data[0]["move"])),
+                  },
+              }
+            else
+              simulateMovement(decodeMovement(data[0]["move"])),
             // print(data),
           });
   s.socket.on(

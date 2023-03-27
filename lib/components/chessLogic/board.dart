@@ -40,6 +40,7 @@ class BoardData {
     [-1, -1]
   ];
   bool nextMoveIsCheckmate = false;
+  bool spectatorMode = false;
   factory BoardData() {
     return _singleton;
   }
@@ -60,6 +61,7 @@ void resetSingleton(bool reversedBoard) {
     [-1, -1]
   ];
   board.nextMoveIsCheckmate = false;
+  board.spectatorMode = false;
 }
 
 List<List<Piece>> _initTablero(bool reversedBoard) {

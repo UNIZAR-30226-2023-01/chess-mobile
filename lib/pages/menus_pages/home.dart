@@ -30,6 +30,21 @@ class _HomePageState extends State<HomePage> {
     await startGame(context, "COMP");
   }
 
+  void _handleTapCREATECUSTOM() async {
+    await startGame(context, "CREATECUSTOM");
+    temporalPlay();
+  }
+
+  void _handleTapJOINCUSTOM() async {
+    await startGame(context, "JOINCUSTOM");
+    temporalPlay();
+  }
+
+  void _handleTapSPECTATOR() async {
+    await startGame(context, "SPECTATOR");
+    temporalPlay();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,10 +61,10 @@ class _HomePageState extends State<HomePage> {
               SizedBox(height: defaultWidth * 0.075),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                 shortButton(context, false, "Private.png", "Partida privada",
-                    temporalPlay),
+                    _handleTapCREATECUSTOM),
                 SizedBox(width: defaultWidth * 0.075),
-                shortButton(
-                    context, false, "Tournaments.png", "Torneo", temporalPlay),
+                shortButton(context, false, "Tournaments.png", "Torneo",
+                    _handleTapJOINCUSTOM),
               ]),
               SizedBox(height: defaultWidth * 0.075),
               Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -57,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                     context, false, "Computer.png", "Contra la IA", popupAI),
                 SizedBox(width: defaultWidth * 0.075),
                 shortButton(context, false, "Spectator.png", "Espectar juego",
-                    temporalPlay),
+                    _handleTapSPECTATOR),
               ]),
             ]),
           ),

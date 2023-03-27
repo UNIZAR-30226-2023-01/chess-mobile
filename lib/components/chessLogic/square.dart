@@ -64,6 +64,7 @@ class SquareState extends State<Square> {
 
   /// Se llama al tocar una casilla
   Future<Object> _tapped(BuildContext context) async {
+    // if (!board.spectatorMode) {
     if (board.whiteTurn == s.iAmWhite &&
         board.currentBoard[y][x].isWhite == board.whiteTurn &&
         !board.boardMovements[y][x] &&
@@ -129,6 +130,7 @@ class SquareState extends State<Square> {
       _checkIfWin();
     }
     setState(() {});
+    // }
     return Container();
   }
 
@@ -347,7 +349,6 @@ void simulateMovement(List<List<int>> movements) {
   int auxX = movements[0][1];
   int y = movements[1][0];
   int x = movements[1][1];
-  // print(movements);
   b.lastMovement = movements;
   b.currentBoard[y][x] = b.currentBoard[auxY][auxX];
   b.currentBoard[auxY][auxX] = Empty(isWhite: false);

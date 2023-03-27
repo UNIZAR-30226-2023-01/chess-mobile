@@ -28,11 +28,10 @@ void apiSignUp(String username, password, email) async {
     request.write(body);
 
     await request.close(); //comentar esta o las de abajo
-    //var response = await request.close();
-    //var responseBody = await response.transform(utf8.decoder).join();
-    //print(responseBody);
+    // var response = await request.close();
+    // var responseBody = await response.transform(utf8.decoder).join();
   } catch (e) {
-    //print(e.toString());
+    //print(e);
   } finally {
     client.close();
   }
@@ -61,7 +60,7 @@ void apiSignIn(String username, password) async {
     var response = await request.close();
     var responseBody = await response.transform(utf8.decoder).join();
     var responseBodyDictionary = jsonDecode(responseBody);
-    //print(responseBody);
+    // print(responseBody);
     String? cookieHeader = response.headers['set-cookie']?[0];
     cookieHeader == null ? cookieHeader = "" : cookieHeader = cookieHeader;
     List<String> cookies = cookieHeader.split('; ');
@@ -73,7 +72,7 @@ void apiSignIn(String username, password) async {
     assignEmail(responseBodyDictionary["data"]["email"]);
     assignIsRegistred(true);
   } catch (e) {
-    //print(e.toString());
+    // print(e.toString());
   } finally {
     client.close();
   }

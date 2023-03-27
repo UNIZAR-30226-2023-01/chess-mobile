@@ -116,8 +116,14 @@ class _SignUpPageState extends State<SignUpPage> {
                 () {
                   apiSignUp(
                     usernameController.text,
-                    emailController.text,
                     passwordController.text,
+                    emailController.text,
+                  );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SignInPage(),
+                    ),
                   );
                 },
               ),
@@ -127,10 +133,10 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               // Divider for other methods
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
-                  children: const [
+                  children: [
                     Expanded(
                       child: Divider(
                         thickness: 0.5,

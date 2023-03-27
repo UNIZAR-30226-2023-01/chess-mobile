@@ -1,7 +1,8 @@
+import 'package:ajedrez/components/communications/api.dart';
 import 'package:flutter/material.dart';
 import '../../components/buttons/return_button.dart';
-import '../../components/buttons/navigate_button.dart';
-import '../../components/buttons/textfield_custom.dart';
+import '../../components/buttons/text_long_button.dart';
+import '../../components/buttons/textfield_custom2.dart';
 import '../../components/buttons/platform_button.dart';
 import 'signin.dart';
 
@@ -13,6 +14,12 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +65,8 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               // Username textfield
-              const TextFieldCustom(
+              TextFieldCustom2(
+                controller: usernameController,
                 hintText: 'Username',
                 obscureText: false,
               ),
@@ -68,7 +76,8 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               // Email textfield
-              const TextFieldCustom(
+              TextFieldCustom2(
+                controller: emailController,
                 hintText: 'Email',
                 obscureText: false,
               ),
@@ -78,7 +87,8 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               // Password textfield
-              const TextFieldCustom(
+              TextFieldCustom2(
+                controller: passwordController,
                 hintText: 'Password',
                 obscureText: true,
               ),
@@ -88,8 +98,9 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               // Confirm password textfield
-              const TextFieldCustom(
-                hintText: 'Confirm password',
+              TextFieldCustom2(
+                controller: passwordController,
+                hintText: 'Password',
                 obscureText: true,
               ),
 
@@ -98,11 +109,23 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               // Register Button
-              NavigateButton(
-                text: 'Register',
-                textColor: Colors.white,
-                innerBoxColor: const Color.fromARGB(255, 30, 35, 44),
-                onTap: () {},
+              textButton(
+                context,
+                true,
+                'Register',
+                () {
+                  apiSignUp(
+                    usernameController.text,
+                    passwordController.text,
+                    emailController.text,
+                  );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SignInPage(),
+                    ),
+                  );
+                },
               ),
 
               const SizedBox(
@@ -110,10 +133,10 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
 
               // Divider for other methods
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
-                  children: const [
+                  children: [
                     Expanded(
                       child: Divider(
                         thickness: 0.5,
@@ -146,14 +169,16 @@ class _SignUpPageState extends State<SignUpPage> {
               // Other platforms for registration
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   PlatformButton(
+                    onTap: () async {},
                     logoPath: 'images/Google_Logo.png',
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   PlatformButton(
+                    onTap: () async {},
                     logoPath: 'images/Apple_Logo.png',
                   ),
                 ],

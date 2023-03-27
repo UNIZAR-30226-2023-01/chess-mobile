@@ -3,14 +3,14 @@ import 'package:number_paginator/number_paginator.dart';
 
 import '../../components/visual/custom_shape.dart';
 
-class RankingScreen extends StatefulWidget {
-  const RankingScreen({super.key});
+class RankingPage extends StatefulWidget {
+  const RankingPage({super.key});
 
   @override
-  State<RankingScreen> createState() => _RankingScreenState();
+  State<RankingPage> createState() => _RankingPageState();
 }
 
-class _RankingScreenState extends State<RankingScreen> {
+class _RankingPageState extends State<RankingPage> {
   final int itemsPorPagina = 25;
   final int numPaginas = 25;
   int paginaActual = 0;

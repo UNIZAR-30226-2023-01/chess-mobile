@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import '../../components/buttons/textfield_custom.dart';
 import '../../components/buttons/return_button.dart';
-import '../../components/buttons/navigate_button.dart';
+import '../../components/buttons/text_long_button.dart';
 import 'create_password.dart';
 import 'signin.dart';
 
@@ -42,11 +42,11 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
               ),
 
               // Forgot password header text
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
                       'Forgot Password?',
                       style: TextStyle(
@@ -100,11 +100,11 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
               ),
 
               // Send code button
-              NavigateButton(
-                text: 'Send Code',
-                textColor: Colors.white,
-                innerBoxColor: const Color.fromARGB(255, 30, 35, 44),
-                onTap: () {
+              textButton(
+                context,
+                true,
+                'Send Code',
+                () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(

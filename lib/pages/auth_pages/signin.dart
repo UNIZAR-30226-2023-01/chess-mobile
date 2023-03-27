@@ -1,14 +1,12 @@
-// import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import '../../components/buttons/textfield_custom2.dart';
+import '../../components/communications/api.dart';
 import '../menus_pages/bottom_bar.dart';
-import '../../components/buttons/textfield_custom.dart';
 import '../../components/buttons/return_button.dart';
-import '../../components/buttons/navigate_button.dart';
 import '../../components/buttons/platform_button.dart';
+import '../../components/buttons/text_long_button.dart';
 import 'forgot_password.dart';
 import 'signup.dart';
-import 'package:http/http.dart' as http;
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -18,6 +16,8 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,9 +62,10 @@ class _SignInPageState extends State<SignInPage> {
                 height: 20,
               ),
 
-              // Email text box
-              const TextFieldCustom(
-                hintText: 'Enter your email',
+              // Username textfield
+              TextFieldCustom2(
+                controller: usernameController,
+                hintText: 'Username',
                 obscureText: false,
               ),
 
@@ -72,9 +73,9 @@ class _SignInPageState extends State<SignInPage> {
                 height: 15,
               ),
 
-              // Password text box
-              const TextFieldCustom(
-                hintText: 'Enter your password',
+              TextFieldCustom2(
+                controller: passwordController,
+                hintText: 'Password',
                 obscureText: true,
               ),
 
@@ -114,12 +115,15 @@ class _SignInPageState extends State<SignInPage> {
               ),
 
               // Login button
-              NavigateButton(
-                text: 'Login',
-                textColor: Colors.white,
-                innerBoxColor: const Color.fromARGB(255, 30, 35, 44),
-                onTap: () async {
-                  calltoApi();
+              textButton(
+                context,
+                true,
+                'Login',
+                () async {
+                  apiSignIn(
+                    usernameController.text,
+                    passwordController.text,
+                  );
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -134,10 +138,10 @@ class _SignInPageState extends State<SignInPage> {
               ),
 
               // Divider for other methods
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 25),
                 child: Row(
-                  children: const [
+                  children: [
                     Expanded(
                       child: Divider(
                         thickness: 0.5,
@@ -170,15 +174,25 @@ class _SignInPageState extends State<SignInPage> {
               // Other platforms for login
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   PlatformButton(
                     logoPath: 'images/Google_Logo.png',
+                    onTap: () async {
+                      apiSignInGoogle(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const BottomBar(),
+                        ),
+                      );
+                    },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 15,
                   ),
                   PlatformButton(
                     logoPath: 'images/Apple_Logo.png',
+                    onTap: () async {},
                   ),
                 ],
               ),
@@ -223,23 +237,5 @@ class _SignInPageState extends State<SignInPage> {
         ),
       ),
     );
-  }
-
-  Future<void> calltoApi() async {
-    var client = http.Client();
-    try {
-      // var response = await client
-      //     .post(Uri.http('localhost', 'api/v1/auth/sign-up'), body: {
-      //   'username': 'myusername',
-      //   'password': 'mypassword',
-      //   'email': 'DIOS@GMAIL.COM'
-      // });
-      // var decodedResponse = jsonDecode(utf8.decode(response.bodyBytes)) as Map;
-      // print(decodedResponse);
-      // var uri = Uri.parse(decodedResponse['uri'] as String);
-      // print(await client.get(uri));
-    } finally {
-      client.close();
-    }
   }
 }

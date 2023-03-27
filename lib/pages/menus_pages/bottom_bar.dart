@@ -4,6 +4,7 @@ import 'profile.dart';
 import 'ranking.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import '../../components/buttons/back_button.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});
@@ -13,12 +14,12 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> {
-  static int _selectedIndex = 1;
+  static int selectedIndex = 1;
 
-  static const List<Widget> _widgetOptions = <Widget>[
-    RankingScreen(),
-    HomeScreen(),
-    ProfileScreen(),
+  static const List widgetOptions = [
+    RankingPage(),
+    HomePage(),
+    ProfilePage(),
   ];
 
   @override
@@ -27,65 +28,13 @@ class _BottomBarState extends State<BottomBar> {
       onWillPop: () async {
         return await showDialog(
               context: context,
-              builder: (BuildContext context) => AlertDialog(
-                backgroundColor: Theme.of(context).colorScheme.tertiary,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15)),
-                ),
-                title: const Text("Seguro que deseas salir de la sesión?"),
-                actions: <Widget>[
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, false),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.15,
-                      padding: const EdgeInsets.symmetric(vertical: 12.5),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "NO",
-                          style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () => Navigator.pop(context, true),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.15,
-                      padding: const EdgeInsets.symmetric(vertical: 12.5),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.primary,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(5)),
-                      ),
-                      child: Center(
-                        child: Text(
-                          "SÍ",
-                          style: TextStyle(
-                            fontSize: 19,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+              builder: (BuildContext context) => popupBack(),
             ) ??
             false;
       },
       child: Scaffold(
         body: Center(
-          child: _widgetOptions.elementAt(_selectedIndex),
+          child: widgetOptions.elementAt(selectedIndex),
         ),
         bottomNavigationBar: Container(
           color: Theme.of(context).colorScheme.primary,
@@ -112,16 +61,30 @@ class _BottomBarState extends State<BottomBar> {
                   text: 'PERFIL',
                 ),
               ],
-              selectedIndex: _selectedIndex,
+              selectedIndex: selectedIndex,
               onTabChange: (index) {
                 setState(() {
-                  _selectedIndex = index;
+                  selectedIndex = index;
                 });
               },
             ),
           ),
         ),
       ),
+    );
+  }
+
+  AlertDialog popupBack() {
+    return AlertDialog(
+      backgroundColor: Theme.of(context).colorScheme.tertiary,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
+      title: const Text("Seguro que deseas salir de la sesión?"),
+      actions: [
+        backButton(context, "NO", false),
+        backButton(context, "SÍ", true),
+      ],
     );
   }
 }

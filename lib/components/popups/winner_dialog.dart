@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Object alertaGanador(BuildContext context, bool whiteTurn) {
+Object alertWinner(BuildContext context, bool whiteTurn) {
   return showDialog(
     barrierDismissible: false,
     context: context,

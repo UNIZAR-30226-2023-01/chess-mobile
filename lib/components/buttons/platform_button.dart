@@ -2,24 +2,36 @@ import 'package:flutter/material.dart';
 
 class PlatformButton extends StatelessWidget {
   final String logoPath;
-  const PlatformButton({super.key, required this.logoPath});
+  final Future<void> Function() onTap;
+  const PlatformButton(
+      {super.key, required this.logoPath, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 20,
-        vertical: 10,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(
-          color: const Color.fromARGB(255, 208, 211, 218),
+    return SizedBox(
+      child: Material(
+        color: Colors.grey[50],
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+          side: BorderSide(
+            color: Color.fromARGB(255, 208, 211, 218),
+            width: 1,
+          ),
         ),
-      ),
-      child: Image.asset(
-        logoPath,
-        height: 40,
+        child: InkWell(
+          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20,
+              vertical: 10,
+            ),
+            child: Image.asset(
+              logoPath,
+              height: 40,
+            ),
+          ),
+        ),
       ),
     );
   }

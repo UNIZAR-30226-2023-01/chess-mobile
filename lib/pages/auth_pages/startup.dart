@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../components/buttons/navigate_button.dart';
+import '../../components/buttons/text_long_button.dart';
+import '../menus_pages/bottom_bar.dart';
+import '../../components/profile_data.dart';
 import 'signin.dart';
 import 'signup.dart';
 
@@ -44,16 +46,14 @@ class _StartupPageState extends State<StartupPage> {
               ),
 
               // Sign In button
-              NavigateButton(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SignInPage()),
-                  );
-                },
-                text: 'Sign In',
-                innerBoxColor: const Color.fromARGB(255, 30, 35, 44),
-                textColor: Colors.white,
+              textButton(
+                context,
+                true,
+                'Sign In',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignInPage()),
+                ),
               ),
 
               const SizedBox(
@@ -61,16 +61,53 @@ class _StartupPageState extends State<StartupPage> {
               ),
 
               // Sign Up button
-              NavigateButton(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SignUpPage()),
-                  );
-                },
-                text: 'Sign Up',
-                textColor: const Color.fromARGB(255, 30, 35, 44),
-                innerBoxColor: const Color.fromARGB(255, 250, 250, 250),
+              textButton(
+                context,
+                false,
+                "Sign Up",
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignUpPage()),
+                ),
+              ),
+
+              const SizedBox(
+                height: 50,
+              ),
+
+              // Anonymous user option
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // User doesn't have an account
+                  const Text(
+                    'Wan\'t to play without an account?',
+                    style: TextStyle(fontWeight: FontWeight.w500),
+                  ),
+
+                  const SizedBox(
+                    width: 5,
+                  ),
+
+                  GestureDetector(
+                    onTap: () {
+                      // De momento no rellena datos de usuario !!!
+                      assignIsRegistred(false);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const BottomBar(),
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      'Play Now',
+                      style: TextStyle(
+                          color: Color.fromARGB(255, 59, 203, 255),
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),

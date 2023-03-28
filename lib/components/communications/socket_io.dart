@@ -112,15 +112,6 @@ Future<void> startGame(BuildContext context, String type) {
         // print("Animal has metido mal el tipo");
       }
   }
-
-  // print("CONEXIÓN ESTABLECIDA2");
-  s.socket.on(
-      'error',
-      (data) => {
-            // print(data)
-          });
-  if (type != "SPECTATOR") s.socket.emit('find_room', jsonData);
-  // List movements;
   if (type == "CREATECUSTOM") {
     s.socket.once(
         'room',
@@ -174,6 +165,14 @@ Future<void> startGame(BuildContext context, String type) {
               completer.complete()
             });
   }
+  // print("CONEXIÓN ESTABLECIDA2");
+  s.socket.on(
+      'error',
+      (data) => {
+            // print(data)
+          });
+  if (type != "SPECTATOR") s.socket.emit('find_room', jsonData);
+  // List movements;
 
   return completer.future;
 }
@@ -226,4 +225,10 @@ void listenGame(BuildContext context) {
       (_) => {
             //print(_)
           });
+}
+
+void surrender() {
+  GameSocket s = GameSocket();
+  // print("llegaaaaaaaaa");
+  s.socket.emit('surrender', {});
 }

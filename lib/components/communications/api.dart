@@ -30,8 +30,9 @@ void apiSignUp(String username, password, email) async {
     await request.close(); //comentar esta o las de abajo
     // var response = await request.close();
     // var responseBody = await response.transform(utf8.decoder).join();
+    // print(responseBody);
   } catch (e) {
-    //print(e);
+    // print(e);
   } finally {
     client.close();
   }

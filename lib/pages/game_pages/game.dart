@@ -3,6 +3,7 @@ import 'package:ajedrez/components/chessLogic/square.dart';
 ///import 'package:ajedrez/components/profile_data.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+import '../../components/buttons/surrender_button.dart';
 import '../../components/chessLogic/board.dart';
 import '../../components/communications/socket_io.dart';
 
@@ -40,7 +41,7 @@ class _GamePageState extends State<GamePage> {
       body: Center(
         child: Column(
           children: [
-            Expanded(child: Container()),
+            Expanded(child: Container(child: surrenderButton(context))),
             Expanded(
               flex: 4,
 

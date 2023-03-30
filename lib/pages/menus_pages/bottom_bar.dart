@@ -5,21 +5,46 @@ import 'ranking.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../components/buttons/back_button.dart';
+import '../../components/profile_data.dart';
 
+//ignore: must_be_immutable
 class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
+  bool fromSignIn = false;
+  BottomBar({super.key});
+  BottomBar.fromSignIn({super.key}) {
+    fromSignIn = true;
+  }
 
   @override
-  State<BottomBar> createState() => _BottomBarState();
+  // ignore: no_logic_in_create_state
+  State<BottomBar> createState() {
+    if (fromSignIn) {
+      return _BottomBarState.fromSignIn();
+    } else {
+      return _BottomBarState();
+    }
+  }
 }
 
 class _BottomBarState extends State<BottomBar> {
+  _BottomBarState();
+  _BottomBarState.fromSignIn() {
+    selectedIndex = 1;
+  }
+
+  final UserData userData = UserData();
+
   static int selectedIndex = 1;
 
   static const List widgetOptions = [
     RankingPage(),
     HomePage(),
     ProfilePage(),
+  ];
+
+  static const List widgetOptionsAnon = [
+    RankingPage(),
+    HomePage(),
   ];
 
   @override
@@ -34,7 +59,9 @@ class _BottomBarState extends State<BottomBar> {
       },
       child: Scaffold(
         body: Center(
-          child: widgetOptions.elementAt(selectedIndex),
+          child: userData.isRegistered
+              ? widgetOptions.elementAt(selectedIndex)
+              : widgetOptionsAnon.elementAt(selectedIndex),
         ),
         bottomNavigationBar: Container(
           color: Theme.of(context).colorScheme.primary,
@@ -47,19 +74,20 @@ class _BottomBarState extends State<BottomBar> {
               tabBackgroundColor: Theme.of(context).colorScheme.secondary,
               gap: 20,
               padding: const EdgeInsets.all(16),
-              tabs: const [
-                GButton(
+              tabs: [
+                const GButton(
                   icon: MyFlutterApp.podium,
                   text: 'CLASIFICACIÓN',
                 ),
-                GButton(
+                const GButton(
                   icon: MyFlutterApp.chessknight,
                   text: 'JUEGO',
                 ),
-                GButton(
-                  icon: MyFlutterApp.user,
-                  text: 'PERFIL',
-                ),
+                if (userData.isRegistered)
+                  const GButton(
+                    icon: MyFlutterApp.user,
+                    text: 'PERFIL',
+                  ),
               ],
               selectedIndex: selectedIndex,
               onTabChange: (index) {

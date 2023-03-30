@@ -17,31 +17,41 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  SelectionMenu selectTime =
-      SelectionMenu(["3 minutos", "5 minutos", "10 minutos"], "3 minutos");
-  SelectionMenu selectLevel =
-      SelectionMenu(["Fácil", "Normal", "Difícil", "Imposible"], "Normal");
+  SelectionMenu selectTime = SelectionMenu(
+      ["3 minutos", "5 minutos", "10 minutos"], [180, 300, 600], "5 minutos");
+  SelectionMenu selectIncrement = SelectionMenu(
+      ["3 segundos", "5 segundos", "10 segundos"], [3, 5, 10], "5 segundos");
+  SelectionMenu selectDifficulty = SelectionMenu(
+      ["Fácil", "Normal", "Difícil", "Imposible"], [0, 1, 2, 3], "Normal");
 
   void _handleTapAI() async {
-    await startGame(context, "AI");
+    Arguments arguments = Arguments.forAI(
+        selectTime.selectedCorrectValue,
+        selectIncrement.selectedCorrectValue,
+        selectDifficulty.selectedCorrectValue);
+    await startGame(context, "AI", arguments);
   }
 
   void _handleTapCOMP() async {
-    await startGame(context, "COMP");
+    Arguments arguments = Arguments.forCOMP(selectTime.selectedCorrectValue);
+    await startGame(context, "COMP", arguments);
   }
 
   void _handleTapCREATECUSTOM() async {
-    await startGame(context, "CREATECUSTOM");
+    Arguments arguments = Arguments();
+    await startGame(context, "CREATECUSTOM", arguments);
     temporalPlay();
   }
 
   void _handleTapJOINCUSTOM() async {
-    await startGame(context, "JOINCUSTOM");
+    Arguments arguments = Arguments();
+    await startGame(context, "JOINCUSTOM", arguments);
     temporalPlay();
   }
 
   void _handleTapSPECTATOR() async {
-    await startGame(context, "SPECTATOR");
+    Arguments arguments = Arguments();
+    await startGame(context, "SPECTATOR", arguments);
     temporalPlay();
   }
 
@@ -156,7 +166,7 @@ class _HomePageState extends State<HomePage> {
           borderRadius: BorderRadius.all(Radius.circular(15)),
         ),
         content: SizedBox(
-          height: defaultWidth * 0.75,
+          height: defaultWidth * 1.05,
           width: defaultWidth * 0.85,
           child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             Text(
@@ -170,6 +180,16 @@ class _HomePageState extends State<HomePage> {
             selectTime.selectionMenu(context),
             SizedBox(height: defaultWidth * 0.075),
             Text(
+              "Incremento:",
+              style: TextStyle(
+                fontSize: 19,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            SizedBox(height: defaultWidth * 0.0375),
+            selectIncrement.selectionMenu(context),
+            SizedBox(height: defaultWidth * 0.075),
+            Text(
               "Dificultad:",
               style: TextStyle(
                 fontSize: 19,
@@ -177,7 +197,7 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(height: defaultWidth * 0.0375),
-            selectLevel.selectionMenu(context),
+            selectDifficulty.selectionMenu(context),
             SizedBox(height: defaultWidth * 0.075),
             playButton(context, _handleTapAI),
           ]),

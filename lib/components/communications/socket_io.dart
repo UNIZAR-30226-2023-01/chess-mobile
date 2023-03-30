@@ -29,6 +29,16 @@ import '../../pages/game_pages/game.dart';
 //   // socket.on('fromServer', (_) => print(_));
 // }
 
+class Arguments {
+  int time = 300;
+  int increment = 5;
+  int difficulty = 1;
+
+  Arguments();
+  Arguments.forCOMP(this.time);
+  Arguments.forAI(this.time, this.increment, this.difficulty);
+}
+
 String _nombreRandom() {
   Random random = Random();
   int randomNumber = random
@@ -58,7 +68,7 @@ class GameSocket {
   GameSocket._internal();
 }
 
-Future<void> startGame(BuildContext context, String type) {
+Future<void> startGame(BuildContext context, String type, Arguments arguments) {
   GameSocket s = GameSocket();
   Completer completer = Completer<void>();
   s.socket.onConnect((_) {
@@ -71,24 +81,24 @@ Future<void> startGame(BuildContext context, String type) {
       {
         jsonData = {
           "gameType": "AI",
-          "time": 300,
-          "increment": 5,
+          "time": arguments.time,
+          "increment": arguments.increment,
           "hostColor": "RANDOM",
-          "difficulty": 3
+          "difficulty": arguments.difficulty
         };
       }
       break;
     case "COMP":
       {
-        jsonData = {"gameType": "COMPETITIVE", "time": 300};
+        jsonData = {"gameType": "COMPETITIVE", "time": arguments.time};
       }
       break;
     case "CREATECUSTOM":
       {
         jsonData = {
           "gameType": "CUSTOM",
-          "time": 300,
-          "increment": 5,
+          "time": arguments.time,
+          "increment": arguments.increment,
           "hostColor": "RANDOM"
         };
       }

@@ -40,8 +40,9 @@ class _GamePageState extends State<GamePage> {
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: Center(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Expanded(child: Container(child: surrenderButton(context))),
+            surrenderButton(context),
             Expanded(
               flex: 4,
 

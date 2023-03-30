@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../../components/buttons/text_long_button.dart';
 import '../menus_pages/bottom_bar.dart';
 import '../../components/profile_data.dart';
+import '../../components/visual/set_image_color.dart';
+import '../../components/visual/screen_size.dart';
 import 'signin.dart';
 import 'signup.dart';
 
@@ -15,6 +17,9 @@ class StartupPage extends StatefulWidget {
 class _StartupPageState extends State<StartupPage> {
   @override
   Widget build(BuildContext context) {
+    defaultHeight = MediaQuery.of(context).size.height;
+    defaultWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       backgroundColor: Colors.grey[50],
       body: SafeArea(
@@ -27,9 +32,10 @@ class _StartupPageState extends State<StartupPage> {
               ),
 
               // Logo
-              Image.asset(
-                'images/Logo_app_chess.png',
+              SizedBox(
                 height: 150,
+                child: setImageColor(context, "Logo_app_chess_white.png",
+                    Theme.of(context).colorScheme.primary),
               ),
 
               const Text(
@@ -46,30 +52,26 @@ class _StartupPageState extends State<StartupPage> {
               ),
 
               // Sign In button
-              textButton(
-                context,
-                true,
-                'Sign In',
-                () => Navigator.push(
+              textButton(context, true, 'Sign In', () {
+                assignIsRegistred(true);
+                Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const SignInPage()),
-                ),
-              ),
+                );
+              }),
 
               const SizedBox(
                 height: 15,
               ),
 
               // Sign Up button
-              textButton(
-                context,
-                false,
-                "Sign Up",
-                () => Navigator.push(
+              textButton(context, false, "Sign Up", () {
+                assignIsRegistred(true);
+                Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const SignUpPage()),
-                ),
-              ),
+                );
+              }),
 
               const SizedBox(
                 height: 50,
@@ -96,7 +98,7 @@ class _StartupPageState extends State<StartupPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const BottomBar(),
+                          builder: (context) => BottomBar.fromSignIn(),
                         ),
                       );
                     },

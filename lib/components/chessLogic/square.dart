@@ -105,7 +105,7 @@ class SquareState extends State<Square> {
 
       if (board.currentBoard[y][x] is King) {
         //Se ha comido el rey => mensaje de fin
-        alertWinner(context, board.whiteTurn);
+        alertWinner(context, board.whiteTurn, "Ha ganado el jugador con las fichas ");
       }
 
       //enroque
@@ -299,7 +299,7 @@ class SquareState extends State<Square> {
     y = tmpY;
     //falta el condicional que distingue si es jaque mate o ahogado
     if (allowedMovements.isEmpty) {
-      alertWinner(context, !board.whiteTurn);
+      alertWinner(context, !board.whiteTurn, "Ha ganado el jugador con las fichas ");
     }
   }
 

@@ -26,8 +26,8 @@ class GameSocket {
   static final GameSocket _singleton = GameSocket._internal();
   io.Socket socket = io.io(
       //no borrar la linea comentada esta para el desarrollo en la red donde esta hosteado el backend
-      'http://192.168.0.249:4001',
-      // 'http://reign-chess.duckdns.org:4001/',
+      // 'http://192.168.0.249:4001',
+      'http://reign-chess.duckdns.org:4001/',
       OptionBuilder().setTransports(['websocket']).setExtraHeaders({
         'token': UserData().token
       }) // for Flutter or Dart VM SI BORRAS ESTO NO VA EL SOCKET :D
@@ -174,7 +174,13 @@ void listenGame(BuildContext context) {
             if (data[0]["endState"] == "CHECKMATE" &&
                 (data[0]["winner"] == (!s.iAmWhite ? "LIGHT" : "DARK")))
               {
-                alertWinner(context, !s.iAmWhite),
+                alertWinner(context, !s.iAmWhite,"Ha ganado el jugador con las fichas "),
+              },
+
+            if (data[0]["endState"] == "SURRENDER" &&
+                (data[0]["winner"] == (!s.iAmWhite ? "LIGHT" : "DARK")))
+              {
+                alertWinner(context, s.iAmWhite,"Se ha rendido el jugador con las fichas "),
               },
 
             // print(data),

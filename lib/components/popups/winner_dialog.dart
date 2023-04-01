@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Object alertWinner(BuildContext context, bool whiteTurn) {
+Object alertWinner(BuildContext context, bool whiteTurn, String msg) {
   return showDialog(
     barrierDismissible: false,
     context: context,
@@ -11,7 +11,7 @@ Object alertWinner(BuildContext context, bool whiteTurn) {
       ),
       title: const Text("Partida finalizada"),
       content: Text(
-          "Ha ganado el jugador con las piezas ${whiteTurn ? "blancas" : "negras"}"),
+          "$msg ${whiteTurn ? "blancas" : "negras"}."),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),

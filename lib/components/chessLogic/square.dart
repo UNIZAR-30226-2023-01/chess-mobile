@@ -201,8 +201,7 @@ class SquareState extends State<Square> {
                     board.currentBoard[y][x].color() != board.whiteTurn)
                 ? const Color(0xffFF4D4D)
                 : const Color(0xfff2ca5c)
-            : (((i % 2 + ((i ~/ 8) % 2)) % 2 == 0) && !board.reversedBoard) ||
-                    (((i % 2 + ((i ~/ 8) % 2)) % 2 == 1) && board.reversedBoard)
+            : (((i % 2 + ((i ~/ 8) % 2)) % 2 == 0))
 
                 /// Formula que determina el color de la casilla
                 ? whiteTile
@@ -320,9 +319,11 @@ class SquareState extends State<Square> {
     var jugadas = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     var invertedPrevY = !board.reversedBoard ? 8 - prevY : prevY + 1;
     var invertedY = !board.reversedBoard ? 8 - y : y + 1;
-    String jugada = jugadas[prevX] +
+    var invertedPrevX = !board.reversedBoard ? prevX : 7 - prevX;
+    var invertedX = !board.reversedBoard ? x : 7 - x;
+    String jugada = jugadas[invertedPrevX] +
         (invertedPrevY).toString() +
-        jugadas[x] +
+        jugadas[invertedX] +
         (invertedY).toString();
     return jugada;
   }
@@ -330,15 +331,19 @@ class SquareState extends State<Square> {
 
 List<List<int>> decodeMovement(String jugada) {
   var jugadas = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-  int prevX = jugadas.indexOf(jugada[0]);
+  int prevx = jugadas.indexOf(jugada[0]);
   int x = jugadas.indexOf(jugada[2]);
   int prevy = jugada[1].codeUnitAt(0) - '0'.codeUnitAt(0);
   int y = jugada[3].codeUnitAt(0) - '0'.codeUnitAt(0);
   BoardData board = BoardData();
   prevy = board.reversedBoard ? prevy - 1 : 8 - prevy;
   y = board.reversedBoard ? y - 1 : 8 - y;
+
+
+  prevx = !board.reversedBoard ? prevx : 7 - prevx;
+  x = !board.reversedBoard ? x: 7 - x;
   return [
-    [prevy, prevX],
+    [prevy, prevx],
     [y, x]
   ];
 }

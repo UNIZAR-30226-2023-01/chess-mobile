@@ -27,6 +27,32 @@ List<Piece> whitePieces() {
   ];
 }
 
+List<Piece> inversedBlackPieces() {
+  return [
+    Rook(isWhite: false),
+    Knight(isWhite: false),
+    Bishop(isWhite: false),
+    King(isWhite: false),
+    Queen(isWhite: false),
+    Bishop(isWhite: false),
+    Knight(isWhite: false),
+    Rook(isWhite: false)
+  ];
+}
+
+List<Piece> inversedWhitePieces() {
+  return [
+    Rook(isWhite: true),
+    Knight(isWhite: true),
+    Bishop(isWhite: true),
+    King(isWhite: true),
+    Queen(isWhite: true),
+    Bishop(isWhite: true),
+    Knight(isWhite: true),
+    Rook(isWhite: true)
+  ];
+}
+
 class BoardData {
   static final BoardData _singleton = BoardData._internal();
   List<List<Piece>> currentBoard = _initTablero(true);
@@ -73,7 +99,7 @@ List<List<Piece>> _initTablero(bool reversedBoard) {
     aux = List.filled(8, Pawn(isWhite: false));
     tab.add(aux);
   } else {
-    tab.add(whitePieces());
+    tab.add(inversedWhitePieces());
     aux = List.filled(8, Pawn(isWhite: true));
     tab.add(aux);
   }
@@ -88,7 +114,7 @@ List<List<Piece>> _initTablero(bool reversedBoard) {
   } else {
     aux = List.filled(8, Pawn(isWhite: false));
     tab.add(aux);
-    tab.add(blackPieces());
+    tab.add(inversedBlackPieces());
   }
   return tab;
 }

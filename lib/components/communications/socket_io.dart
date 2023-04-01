@@ -194,3 +194,11 @@ void surrender() {
   // print("llegaaaaaaaaa");
   s.socket.emit('surrender', {});
 }
+
+void draw() {
+
+  //pendiente de implementar
+  // GameSocket s = GameSocket();
+  // print("llegaaaaaaaaa");
+  // s.socket.emit('surrender', {});
+}

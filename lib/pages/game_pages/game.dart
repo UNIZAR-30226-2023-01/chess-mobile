@@ -3,6 +3,7 @@ import 'package:ajedrez/components/chessLogic/square.dart';
 ///import 'package:ajedrez/components/profile_data.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
+import '../../components/buttons/draw_button.dart';
 import '../../components/buttons/surrender_button.dart';
 import '../../components/chessLogic/board.dart';
 import '../../components/communications/socket_io.dart';
@@ -34,6 +35,7 @@ class _GamePageState extends State<GamePage> {
   @override
   Widget build(BuildContext context) {
     GameSocket s = GameSocket();
+    String idR = s.room;
     listenGame(context);
     resetSingleton(!s.iAmWhite);
     return Scaffold(
@@ -42,7 +44,12 @@ class _GamePageState extends State<GamePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            surrenderButton(context),
+            Row(
+              children: [
+                surrenderButton(context),
+                drawButton(context),
+              ],
+            ),
             Expanded(
               flex: 4,
 
@@ -56,6 +63,7 @@ class _GamePageState extends State<GamePage> {
                     return Square(index: index);
                   }),
             ),
+            Text("Game code:$idR", style: const TextStyle(color: Colors.white),)
           ],
         ),
       ),

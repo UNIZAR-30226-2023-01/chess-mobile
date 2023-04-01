@@ -355,6 +355,12 @@ void simulateMovement(List<List<int>> movements) {
   int y = movements[1][0];
   int x = movements[1][1];
   b.lastMovement = movements;
+  final musicPlayer = AudioPlayer();
+  if (b.currentBoard[y][x].isEmpty()) {
+        musicPlayer.play(AssetSource("sounds/movePiece.mp3"));
+      } else {
+        musicPlayer.play(AssetSource("sounds/capturePiece.mp3"));
+      }
   b.currentBoard[y][x] = b.currentBoard[auxY][auxX];
   b.currentBoard[auxY][auxX] = Empty(isWhite: false);
   b.selectedSquare = [-1, -1];

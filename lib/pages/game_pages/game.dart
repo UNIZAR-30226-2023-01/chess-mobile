@@ -1,4 +1,5 @@
 import 'package:ajedrez/components/chessLogic/square.dart';
+import 'package:ajedrez/components/chessLogic/timer.dart';
 
 ///import 'package:ajedrez/components/profile_data.dart';
 import 'package:flutter/material.dart';
@@ -12,24 +13,40 @@ class GamePage extends StatefulWidget {
   const GamePage({super.key});
 
   @override
-  State<GamePage> createState() => _GamePageState();
+  State<GamePage> createState() => GamePageState();
 }
 
-class _GamePageState extends State<GamePage> {
+class GamePageState extends State<GamePage> {
   @override
   void dispose() {
     super.dispose();
     resetSingleton(Random().nextBool());
-
-    ///resetProfileData(Random().nextBool());
   }
 
+  late CustomTimer _player1Timer;
+  late CustomTimer _player2Timer;
+
+  final int _maxTime = 300;
+  BoardData b = BoardData();
   @override
   void initState() {
     super.initState();
-    // resetSingleton(Random().nextBool());
-
-    ///resetProfileData(Random().nextBool());
+    _player1Timer = CustomTimer(
+      label: 'Player 1',
+      duration: Duration(seconds: _maxTime),
+      onTimerEnd: () {
+        //Pendiente de implementar
+      },
+      isWhite: true,
+    );
+    _player2Timer = CustomTimer(
+      label: 'Player 2',
+      duration: Duration(seconds: _maxTime),
+      onTimerEnd: () {
+        //Pendiente de implementar
+      },
+      isWhite: false,
+    );
   }
 
   @override
@@ -63,6 +80,7 @@ class _GamePageState extends State<GamePage> {
                     return Square(index: index);
                   }),
             ),
+            Row(children: [_player1Timer,_player2Timer]),
             Text("Game code:$idR", style: const TextStyle(color: Colors.white),)
           ],
         ),

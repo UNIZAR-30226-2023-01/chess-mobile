@@ -15,11 +15,16 @@ import '../../pages/game_pages/game.dart';
 class Arguments {
   int time = 300;
   int increment = 5;
+  String hostColor = "RANDOM";
   int difficulty = 1;
+  String roomID = "roomID";
 
   Arguments();
   Arguments.forCOMP(this.time);
-  Arguments.forAI(this.time, this.increment, this.difficulty);
+  Arguments.forAI(this.time, this.increment, this.hostColor, this.difficulty);
+  Arguments.forSPECTATOR(this.roomID);
+  Arguments.forCREATECUSTOM(this.time, this.increment, this.hostColor);
+  Arguments.forJOINCUSTOM(this.roomID);
 }
 
 class GameSocket {
@@ -56,7 +61,7 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
           "gameType": "AI",
           "time": arguments.time,
           "increment": arguments.increment,
-          "hostColor": "RANDOM",
+          "hostColor": arguments.hostColor,
           "difficulty": arguments.difficulty
         };
       }
@@ -72,7 +77,7 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
           "gameType": "CUSTOM",
           "time": arguments.time,
           "increment": arguments.increment,
-          "hostColor": "RANDOM"
+          "hostColor": arguments.hostColor
         };
         s.socket.once(
             'room_created',
@@ -83,14 +88,14 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
       break;
     case "JOINCUSTOM":
       {
-        jsonData = {"gameType": "CUSTOM", "roomID": "810448"};
+        jsonData = {"gameType": "CUSTOM", "roomID": arguments.roomID};
       }
       break;
     case "SPECTATOR":
       {
-        jsonData = {"roomID": "248525"};
+        jsonData = {"roomID": arguments.roomID};
         s.socket.emit('join_room', jsonData);
-        s.room = "248525";
+        s.room = arguments.roomID;
         BoardData().spectatorMode = true;
       }
       break;
@@ -100,7 +105,7 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
         // print("Animal has metido mal el tipo");
       }
   }
- s.socket.once(
+  s.socket.once(
       'room',
       (data) => {
             if (type != "SPECTATOR")
@@ -174,13 +179,15 @@ void listenGame(BuildContext context) {
             if (data[0]["endState"] == "CHECKMATE" &&
                 (data[0]["winner"] == (!s.iAmWhite ? "LIGHT" : "DARK")))
               {
-                alertWinner(context, !s.iAmWhite,"Ha ganado el jugador con las fichas "),
+                alertWinner(context, !s.iAmWhite,
+                    "Ha ganado el jugador con las fichas "),
               },
 
             if (data[0]["endState"] == "SURRENDER" &&
                 (data[0]["winner"] == (!s.iAmWhite ? "LIGHT" : "DARK")))
               {
-                alertWinner(context, s.iAmWhite,"Se ha rendido el jugador con las fichas "),
+                alertWinner(context, s.iAmWhite,
+                    "Se ha rendido el jugador con las fichas "),
               },
 
             // print(data),
@@ -202,7 +209,6 @@ void surrender() {
 }
 
 void draw() {
-
   //pendiente de implementar
   // GameSocket s = GameSocket();
   // print("llegaaaaaaaaa");

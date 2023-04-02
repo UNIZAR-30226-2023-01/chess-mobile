@@ -38,12 +38,13 @@ class _StartupPageState extends State<StartupPage> {
                     Theme.of(context).colorScheme.primary),
               ),
 
-              const Text(
+              Text(
                 'R E I G N',
                 style: TextStyle(
                   fontFamily: 'VesperLibre',
                   fontWeight: FontWeight.w400,
                   fontSize: 56,
+                  color: Theme.of(context).colorScheme.primary,
                 ),
               ),
 
@@ -102,10 +103,11 @@ class _StartupPageState extends State<StartupPage> {
                         ),
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       'Play Now',
                       style: TextStyle(
-                          color: Color.fromARGB(255, 59, 203, 255),
+                          color: Theme.of(context).colorScheme.secondary,
+                          // Color.fromARGB(255, 59, 203, 255),
                           fontWeight: FontWeight.bold),
                     ),
                   ),

@@ -21,9 +21,10 @@ class TextFieldCustom extends StatelessWidget {
               color: Color.fromARGB(255, 232, 236, 244),
             ),
           ),
-          focusedBorder: const OutlineInputBorder(
+          focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(
-              color: Color.fromARGB(255, 59, 203, 255),
+              color: Theme.of(context).colorScheme.secondary,
+              // Color.fromARGB(255, 59, 203, 255),
             ),
           ),
           fillColor: const Color.fromARGB(255, 247, 248, 249),

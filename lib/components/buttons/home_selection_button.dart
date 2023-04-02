@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import '../visual/screen_size.dart';
 
-class SelectionMenu {
+class SelectionMenu<T> {
   List<String> listOfVisualValues = List.empty(growable: true);
-  List<int> listOfCorrectValues = List.empty(growable: true);
+  List<T> listOfCorrectValues = List.empty(growable: true);
   List<String> listOf = List.empty(growable: true);
   String selectedVisualValue;
-  late int selectedCorrectValue;
+  late T selectedCorrectValue;
   SelectionMenu(this.listOfVisualValues, this.listOfCorrectValues,
       this.selectedVisualValue) {
     for (int i = 0; i < listOfVisualValues.length; i++) {
@@ -20,7 +20,7 @@ class SelectionMenu {
 
   Container selectionMenu(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: defaultWidth * 0.03),
+      width: defaultWidth * 0.4,
       decoration: BoxDecoration(
         color: Colors.white,
         border: Border.all(

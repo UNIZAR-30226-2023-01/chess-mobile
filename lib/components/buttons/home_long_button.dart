@@ -14,14 +14,11 @@ SizedBox longButton(BuildContext context, bool type, String image, String text,
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(15)),
         onTap: action,
-        child: Row(children: [
+        child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: defaultHeight * 0.01,
-              horizontal: defaultWidth * 0.075,
-            ),
+            padding: EdgeInsets.all(defaultWidth * 0.025),
             child: SizedBox(
-              height: defaultWidth * 0.15,
+              height: defaultWidth * 0.175,
               child: setImageColor(
                   context,
                   image,
@@ -31,7 +28,7 @@ SizedBox longButton(BuildContext context, bool type, String image, String text,
             ),
           ),
           Padding(
-            padding: EdgeInsets.all(defaultWidth * 0.04),
+            padding: EdgeInsets.symmetric(horizontal: defaultWidth * 0.03),
             child: Text(
               text,
               textAlign: TextAlign.center,

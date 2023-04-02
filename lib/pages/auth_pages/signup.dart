@@ -25,8 +25,8 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       backgroundColor: Colors.grey[50],
       body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
+        child: SingleChildScrollView(
+          child: Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -50,11 +50,12 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
 
                 // Header text
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Text(
                     'Hello! Register to get started',
                     style: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
                       fontWeight: FontWeight.bold,
                       fontSize: 30,
                     ),
@@ -208,10 +209,11 @@ class _SignUpPageState extends State<SignUpPage> {
                               builder: (context) => const SignInPage()),
                         );
                       },
-                      child: const Text(
+                      child: Text(
                         'Login Now',
                         style: TextStyle(
-                            color: Color.fromARGB(255, 59, 203, 255),
+                            color: Theme.of(context).colorScheme.secondary,
+                            // Color.fromARGB(255, 59, 203, 255),
                             fontWeight: FontWeight.bold),
                       ),
                     ),

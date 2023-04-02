@@ -138,10 +138,11 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
                         ),
                       );
                     },
-                    child: const Text(
+                    child: Text(
                       'Login',
                       style: TextStyle(
-                          color: Color.fromARGB(255, 59, 203, 255),
+                          color: Theme.of(context).colorScheme.secondary,
+                          // Color.fromARGB(255, 59, 203, 255),
                           fontWeight: FontWeight.bold),
                     ),
                   ),

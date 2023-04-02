@@ -14,27 +14,21 @@ SizedBox shortButton(BuildContext context, bool type, String image, String text,
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(15)),
         onTap: action,
-        child: Column(children: [
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: defaultHeight * 0.01,
-              horizontal: defaultWidth * 0.075,
-            ),
+            padding: EdgeInsets.all(defaultWidth * 0.025),
             child: SizedBox(
-              height: defaultWidth * 0.15,
-              child: SizedBox(
-                height: defaultWidth * 0.15,
-                child: setImageColor(
-                    context,
-                    image,
-                    type
-                        ? Theme.of(context).colorScheme.secondary
-                        : Theme.of(context).colorScheme.primary),
-              ),
+              height: defaultWidth * 0.125,
+              child: setImageColor(
+                  context,
+                  image,
+                  type
+                      ? Theme.of(context).colorScheme.secondary
+                      : Theme.of(context).colorScheme.primary),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(bottom: defaultWidth * 0.07),
+            padding: EdgeInsets.only(bottom: defaultWidth * 0.025),
             child: Text(
               text,
               textAlign: TextAlign.center,

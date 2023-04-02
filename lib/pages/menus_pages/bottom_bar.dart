@@ -108,10 +108,10 @@ class _BottomBarState extends State<BottomBar> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
-      title: const Text("Seguro que deseas salir de la sesión?"),
+      title: const Text("¿Seguro que deseas salir de la sesión?"),
       actions: [
-        backButton(context, "NO", false),
-        backButton(context, "SÍ", true),
+        backButton(context, "No", false),
+        backButton(context, "Sí", true),
       ],
     );
   }

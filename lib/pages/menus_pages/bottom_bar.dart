@@ -42,11 +42,6 @@ class _BottomBarState extends State<BottomBar> {
     ProfilePage(),
   ];
 
-  static const List widgetOptionsAnon = [
-    RankingPage(),
-    HomePage(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -57,48 +52,47 @@ class _BottomBarState extends State<BottomBar> {
             ) ??
             false;
       },
-      child: Scaffold(
-        body: Center(
-          child: userData.isRegistered
-              ? widgetOptions.elementAt(selectedIndex)
-              : widgetOptionsAnon.elementAt(selectedIndex),
-        ),
-        bottomNavigationBar: Container(
-          color: Theme.of(context).colorScheme.primary,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: GNav(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              color: Colors.white,
-              activeColor: Theme.of(context).colorScheme.primary,
-              tabBackgroundColor: Theme.of(context).colorScheme.secondary,
-              gap: 20,
-              padding: const EdgeInsets.all(16),
-              tabs: [
-                const GButton(
-                  icon: MyFlutterApp.podium,
-                  text: 'CLASIFICACIÓN',
-                ),
-                const GButton(
-                  icon: MyFlutterApp.chessknight,
-                  text: 'JUEGO',
-                ),
-                if (userData.isRegistered)
-                  const GButton(
-                    icon: MyFlutterApp.user,
-                    text: 'PERFIL',
+      child: userData.isRegistered
+          ? Scaffold(
+              body: Center(
+                child: widgetOptions.elementAt(selectedIndex),
+              ),
+              bottomNavigationBar: Container(
+                color: Theme.of(context).colorScheme.primary,
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: GNav(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    color: Colors.white,
+                    activeColor: Theme.of(context).colorScheme.primary,
+                    tabBackgroundColor: Theme.of(context).colorScheme.secondary,
+                    gap: 20,
+                    padding: const EdgeInsets.all(16),
+                    tabs: const [
+                      GButton(
+                        icon: MyFlutterApp.podium,
+                        text: 'CLASIFICACIÓN',
+                      ),
+                      GButton(
+                        icon: MyFlutterApp.chessknight,
+                        text: 'JUEGO',
+                      ),
+                      GButton(
+                        icon: MyFlutterApp.user,
+                        text: 'PERFIL',
+                      ),
+                    ],
+                    selectedIndex: selectedIndex,
+                    onTabChange: (index) {
+                      setState(() {
+                        selectedIndex = index;
+                      });
+                    },
                   ),
-              ],
-              selectedIndex: selectedIndex,
-              onTabChange: (index) {
-                setState(() {
-                  selectedIndex = index;
-                });
-              },
-            ),
-          ),
-        ),
-      ),
+                ),
+              ),
+            )
+          : const Scaffold(body: HomePage()),
     );
   }
 

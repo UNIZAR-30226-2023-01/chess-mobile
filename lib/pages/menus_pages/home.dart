@@ -267,7 +267,8 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: defaultWidth * 0.05),
             GestureDetector(
               onTap: () =>
-                  Clipboard.setData(ClipboardData(text: s.room)).then((_) {
+                  Clipboard.setData(ClipboardData(text: GameSocket().room))
+                      .then((_) {
                 ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                     content: Text("Código de partida copiado.")));
               }),
@@ -290,7 +291,7 @@ class _HomePageState extends State<HomePage> {
                     width: defaultWidth * 0.55,
                     child: Center(
                       child: Text(
-                        s.room,
+                        GameSocket().room,
                         style: TextStyle(
                           fontSize: 19,
                           color: Theme.of(context).colorScheme.primary,

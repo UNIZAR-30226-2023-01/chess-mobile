@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 
 class TextFieldCustom extends StatelessWidget {
-  final String hintText;
+  final String labelText;
   final bool obscureText;
+  final IconData iconText;
+  final String? Function(String?)? validator;
   const TextFieldCustom({
     super.key,
-    required this.hintText,
+    required this.labelText,
     required this.obscureText,
+    required this.iconText,
+    required this.validator,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: TextField(
+      child: TextFormField(
         obscureText: obscureText,
         decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
@@ -29,11 +33,13 @@ class TextFieldCustom extends StatelessWidget {
           ),
           fillColor: const Color.fromARGB(255, 247, 248, 249),
           filled: true,
-          hintText: hintText,
-          hintStyle: const TextStyle(
-            color: Color.fromARGB(255, 232, 236, 244),
+          labelText: labelText,
+          labelStyle: const TextStyle(
+            color: Color.fromARGB(255, 110, 113, 116),
           ),
+          prefixIcon: Icon(iconText),
         ),
+        validator: validator,
       ),
     );
   }

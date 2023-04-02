@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'dart:io';
 import 'package:ajedrez/components/profile_data.dart';
@@ -16,7 +17,7 @@ void apiSignUp(String username, password, email) async {
         (X509Certificate cert, String host, int port) => true;
   try {
     var request = await client
-        .postUrl(Uri.parse('https://api.gracehopper.xyz/api/v1/auth/sign-up'));
+        .postUrl(Uri.parse('https://api.gracehopper.xyz/v1/auth/sign-up'));
     // Set headers
     request.headers.add('Content-Type', 'application/json');
 
@@ -28,17 +29,17 @@ void apiSignUp(String username, password, email) async {
     request.write(body);
 
     await request.close(); //comentar esta o las de abajo
-    // var response = await request.close();
-    // var responseBody = await response.transform(utf8.decoder).join();
-    // print(responseBody);
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
+    print(responseBody);
   } catch (e) {
-    // print(e);
+    print(e);
   } finally {
     client.close();
   }
 }
 
-void apiSignIn(String username, password) async {
+Future<int> apiSignIn(String username, password) async {
   var pemBytes = await rootBundle.load("assets/cert.pem");
 
   var context = SecurityContext()
@@ -49,7 +50,7 @@ void apiSignIn(String username, password) async {
         (X509Certificate cert, String host, int port) => true;
   try {
     var request = await client
-        .postUrl(Uri.parse('https://api.gracehopper.xyz/api/v1/auth/sign-in'));
+        .postUrl(Uri.parse('https://api.gracehopper.xyz/v1/auth/sign-in'));
     // Set headers
     request.headers.add('Content-Type', 'application/json');
 
@@ -61,18 +62,20 @@ void apiSignIn(String username, password) async {
     var response = await request.close();
     var responseBody = await response.transform(utf8.decoder).join();
     var responseBodyDictionary = jsonDecode(responseBody);
-    // print(responseBody);
+    print(responseBody);
     String? cookieHeader = response.headers['set-cookie']?[0];
     cookieHeader == null ? cookieHeader = "" : cookieHeader = cookieHeader;
     List<String> cookies = cookieHeader.split('; ');
     String apiAuthCookie = cookies[0].split('=')[1];
-    // print(apiAuthCookie);
+    print(apiAuthCookie);
     assignToken(apiAuthCookie);
-    assignId(responseBodyDictionary["data"]["_id"]);
+    assignId(responseBodyDictionary["data"]["id"]);
     assignUsername(responseBodyDictionary["data"]["username"]);
     assignEmail(responseBodyDictionary["data"]["email"]);
+    return responseBodyDictionary["status"]["error_code"];
   } catch (e) {
-    // print(e.toString());
+    print(e.toString());
+    return -1;
   } finally {
     client.close();
   }
@@ -89,7 +92,7 @@ void apiSignInGoogle(BuildContext context) async {
         (X509Certificate cert, String host, int port) => true;
   try {
     // var request = await client.getUrl(
-    //     Uri.parse('https://api.gracehopper.xyz/api/v1/auth/sign-in/google'));
+    //     Uri.parse('https://api.gracehopper.xyz/v1/auth/sign-in/google'));
 
     /// FUnciona pero como que no
 

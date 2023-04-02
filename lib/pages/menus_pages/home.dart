@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../components/communications/socket_io.dart';
 import '../../components/visual/custom_shape.dart';
 import '../../components/visual/screen_size.dart';
@@ -17,15 +18,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  SelectionMenu<int> selectTime = SelectionMenu(
+  final GameSocket s = GameSocket();
+  final SelectionMenu<int> selectTime = SelectionMenu(
       ["3 minutos", "5 minutos", "10 minutos"], [180, 300, 600], "5 minutos");
-  SelectionMenu<int> selectIncrement = SelectionMenu(
+  final SelectionMenu<int> selectIncrement = SelectionMenu(
       ["3 segundos", "5 segundos", "10 segundos"], [3, 5, 10], "5 segundos");
-  SelectionMenu<String> selectColor = SelectionMenu(
+  final SelectionMenu<String> selectColor = SelectionMenu(
       ["Aleatorio", "Blanco", "Negro"],
       ["RANDOM", "LIGHT", "DARK"],
       "Aleatorio");
-  SelectionMenu<int> selectDifficulty = SelectionMenu(
+  final SelectionMenu<int> selectDifficulty = SelectionMenu(
       ["Fácil", "Normal", "Difícil", "Imposible"], [0, 1, 2, 3], "Normal");
   final TextEditingController roomController = TextEditingController();
 
@@ -49,6 +51,11 @@ class _HomePageState extends State<HomePage> {
         selectIncrement.selectedCorrectValue,
         selectColor.selectedCorrectValue);
     await startGame(context, "CREATECUSTOM", arguments);
+  }
+
+  void _handleTapWAITCUSTOM() async {
+    Arguments arguments = Arguments();
+    await startGame(context, "WAITCUSTOM", arguments);
   }
 
   void _handleTapJOINCUSTOM() async {
@@ -184,7 +191,12 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: defaultWidth * 0.05),
             popupRowOption("Color:", selectColor.selectionMenu(context)),
             SizedBox(height: defaultWidth * 0.05),
-            playButton(context, "Crear", _handleTapCREATECUSTOM),
+            playButton(context, "Crear", (() {
+              _handleTapCREATECUSTOM;
+              Navigator.pop(context);
+              popupWAITING();
+              _handleTapWAITCUSTOM;
+            })),
             SizedBox(height: defaultWidth * 0.075),
             Row(
               children: [
@@ -227,6 +239,73 @@ class _HomePageState extends State<HomePage> {
             textField(context, roomController),
             SizedBox(height: defaultWidth * 0.05),
             playButton(context, "Unirse", _handleTapJOINCUSTOM),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  Object popupWAITING() {
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+        ),
+        contentPadding: EdgeInsets.all(defaultWidth * 0.05),
+        content: SizedBox(
+          width: defaultWidth * 0.85,
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Text(
+              "Código de la partida:",
+              style: TextStyle(
+                fontSize: 19,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            SizedBox(height: defaultWidth * 0.05),
+            GestureDetector(
+              onTap: () =>
+                  Clipboard.setData(ClipboardData(text: s.room)).then((_) {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    content: Text("Código de partida copiado.")));
+              }),
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  vertical: defaultWidth * 0.03,
+                  horizontal: defaultWidth * 0.03,
+                ),
+                width: defaultWidth * 0.7,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(
+                    color: Theme.of(context).colorScheme.primary,
+                    width: 1.25,
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                ), // copied successfully
+                child: Row(children: [
+                  SizedBox(
+                    width: defaultWidth * 0.55,
+                    child: Center(
+                      child: Text(
+                        s.room,
+                        style: TextStyle(
+                          fontSize: 19,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const Icon(Icons.copy),
+                ]),
+              ),
+            ),
+            SizedBox(height: defaultWidth * 0.05),
+            SizedBox(
+                height: defaultWidth * 0.3,
+                child: Image.asset('images/waiting.gif')),
           ]),
         ),
       ),

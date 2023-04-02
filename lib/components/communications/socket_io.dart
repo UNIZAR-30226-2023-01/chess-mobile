@@ -80,12 +80,15 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
           "hostColor": arguments.hostColor
         };
         s.socket.once(
-            'room_created',
-            (data) => {
-                  s.room = data[0]["roomID"],
-                });
+          'room_created',
+          (data) => {
+            s.room = data[0]["roomID"],
+          },
+        );
+        completer.complete();
+        s.socket.emit('find_room', jsonData);
       }
-      break;
+      return completer.future;
     case "JOINCUSTOM":
       {
         jsonData = {"gameType": "CUSTOM", "roomID": arguments.roomID};
@@ -138,7 +141,9 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
       (data) => {
             // print(data)
           });
-  if (type != "SPECTATOR") s.socket.emit('find_room', jsonData);
+  if (type != "SPECTATOR" && type != "WAITCUSTOM") {
+    s.socket.emit('find_room', jsonData);
+  }
   // List movements;
 
   return completer.future;

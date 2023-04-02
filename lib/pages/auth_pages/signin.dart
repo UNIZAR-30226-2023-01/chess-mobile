@@ -140,10 +140,10 @@ class _SignInPageState extends State<SignInPage> {
                 ),
 
                 // Divider for other methods
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Row(
-                    children: [
+                    children: const [
                       Expanded(
                         child: Divider(
                           thickness: 0.5,
@@ -153,7 +153,7 @@ class _SignInPageState extends State<SignInPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
-                          'Or Login with',
+                          'Or',
                           style: TextStyle(
                               color: Color.fromARGB(255, 208, 211, 218),
                               fontWeight: FontWeight.w500),
@@ -170,7 +170,7 @@ class _SignInPageState extends State<SignInPage> {
                 ),
 
                 const SizedBox(
-                  height: 20,
+                  height: 25,
                 ),
 
                 // Other platforms for login
@@ -179,6 +179,7 @@ class _SignInPageState extends State<SignInPage> {
                   children: [
                     PlatformButton(
                       logoPath: 'images/Google_Logo.png',
+                      message: 'Login with Google',
                       onTap: () async {
                         apiSignInGoogle(context);
                         Navigator.push(
@@ -188,13 +189,6 @@ class _SignInPageState extends State<SignInPage> {
                           ),
                         );
                       },
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    PlatformButton(
-                      logoPath: 'images/Apple_Logo.png',
-                      onTap: () async {},
                     ),
                   ],
                 ),

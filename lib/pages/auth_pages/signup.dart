@@ -135,10 +135,10 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
 
                 // Divider for other methods
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 25),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25),
                   child: Row(
-                    children: [
+                    children: const [
                       Expanded(
                         child: Divider(
                           thickness: 0.5,
@@ -148,7 +148,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 10),
                         child: Text(
-                          'Or Login with',
+                          'Or',
                           style: TextStyle(
                               color: Color.fromARGB(255, 208, 211, 218),
                               fontWeight: FontWeight.w500),
@@ -165,7 +165,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
 
                 const SizedBox(
-                  height: 20,
+                  height: 25,
                 ),
 
                 // Other platforms for registration
@@ -175,13 +175,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     PlatformButton(
                       onTap: () async {},
                       logoPath: 'images/Google_Logo.png',
-                    ),
-                    const SizedBox(
-                      width: 15,
-                    ),
-                    PlatformButton(
-                      onTap: () async {},
-                      logoPath: 'images/Apple_Logo.png',
+                      message: 'Login with Google',
                     ),
                   ],
                 ),

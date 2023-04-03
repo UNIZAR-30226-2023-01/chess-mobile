@@ -26,7 +26,7 @@ class GamePageState extends State<GamePage> {
   late CustomTimer _player1Timer;
   late CustomTimer _player2Timer;
 
-  final int _maxTime = 300;
+  final int _maxTime = GameSocket().timer;
   BoardData b = BoardData();
   @override
   void initState() {

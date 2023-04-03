@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'package:socket_io_client/socket_io_client.dart';
 
+import '../popups/draw_dialog.dart';
 import '../popups/winner_dialog.dart';
 import '../../pages/game_pages/game.dart';
 
@@ -41,6 +42,7 @@ class GameSocket {
   List pendingMovements = [];
   bool spectatorMode = false;
   bool iAmWhite = false;
+  int timer = 300;
   factory GameSocket() {
     return _singleton;
   }
@@ -125,6 +127,7 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
                 s.pendingMovements = movements,
                 s.iAmWhite = true
               },
+            s.timer = data[0]["initialTimer"],
             // print(data),
             // print(s.room),
             Navigator.push(
@@ -142,7 +145,6 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
   if (type != "SPECTATOR" && type != "WAITCUSTOM") {
     s.socket.emit('find_room', jsonData);
   }
-  // List movements;
 
   return completer.future;
 }
@@ -150,16 +152,11 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
 void listenGame(BuildContext context) {
   GameSocket s = GameSocket();
   bool espec = BoardData().spectatorMode;
-  // Dart client
+
   s.socket.on(
       'error',
       (data) => {
             // print("ERROR" + data)
-          });
-  s.socket.on(
-      'game_state',
-      (data) => {
-            // print(data)
           });
   s.socket.on(
       'moved',
@@ -174,26 +171,32 @@ void listenGame(BuildContext context) {
               }
             else
               simulateMovement(decodeMovement(data[0]["move"])),
-            // print(data),
           });
   s.socket.on(
       'game_over',
       (data) => {
+            // print(data),
             if (data[0]["endState"] == "CHECKMATE" &&
                 (data[0]["winner"] == (!s.iAmWhite ? "LIGHT" : "DARK")))
               {
                 alertWinner(context, !s.iAmWhite,
                     "Ha ganado el jugador con las fichas "),
               },
-
             if (data[0]["endState"] == "SURRENDER" &&
                 (data[0]["winner"] == (!s.iAmWhite ? "LIGHT" : "DARK")))
               {
                 alertWinner(context, s.iAmWhite,
                     "Se ha rendido el jugador con las fichas "),
               },
-
-            // print(data),
+            if (data[0]["endState"] == "TIMEOUT")
+              {
+                alertWinner(context, !s.iAmWhite,
+                    "Ha ganado por tiempo el jugador con las fichas "),
+              },
+            if (data[0]["endState"] == "DRAW")
+              {
+                alertDraw(context),
+              },
           });
   s.socket.onDisconnect((_) => {
         // print('disconnect')
@@ -207,13 +210,12 @@ void listenGame(BuildContext context) {
 
 void surrender() {
   GameSocket s = GameSocket();
-  // print("llegaaaaaaaaa");
   s.socket.emit('surrender', {});
 }
 
 void draw() {
-  //pendiente de implementar
-  // GameSocket s = GameSocket();
-  // print("llegaaaaaaaaa");
-  // s.socket.emit('surrender', {});
+  GameSocket s = GameSocket();
+  var jsonData = {"color": s.iAmWhite ? "LIGHT" : "DARK"};
+  s.socket.emit('vote_draw', jsonData);
+  // Falta gestionar el voted_draw de forma que avise al rival
 }

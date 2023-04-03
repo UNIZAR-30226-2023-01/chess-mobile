@@ -5,12 +5,14 @@ class TextFieldCustom extends StatelessWidget {
   final bool obscureText;
   final IconData iconText;
   final String? Function(String?)? validator;
+  final void Function(String)? onChanged;
   const TextFieldCustom({
     super.key,
     required this.labelText,
     required this.obscureText,
     required this.iconText,
     required this.validator,
+    this.onChanged,
   });
 
   @override
@@ -18,6 +20,7 @@ class TextFieldCustom extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: TextFormField(
+        onChanged: onChanged,
         obscureText: obscureText,
         decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(

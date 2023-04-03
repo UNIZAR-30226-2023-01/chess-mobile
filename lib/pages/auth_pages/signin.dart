@@ -1,4 +1,3 @@
-import 'package:ajedrez/components/buttons/home_play_button.dart';
 import 'package:flutter/material.dart';
 import '../../components/buttons/textfield_custom.dart';
 import '../../components/communications/api.dart';
@@ -6,7 +5,7 @@ import '../menus_pages/bottom_bar.dart';
 import '../../components/buttons/return_button.dart';
 import '../../components/buttons/platform_button.dart';
 import '../../components/buttons/text_long_button.dart';
-import '../../components/visual/screen_size.dart';
+import '../../components/popups/pop_error.dart';
 import 'forgot_password.dart';
 import 'signup.dart';
 
@@ -18,57 +17,22 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  //final TextEditingController usernameController = TextEditingController();
-  //final TextEditingController passwordController = TextEditingController();
-
   final formKey = GlobalKey<FormState>();
   String username = '';
   String password = '';
 
-  // PopUp Errors coming from backend
-  Object popupERR(String errorMsg) {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        backgroundColor: Theme.of(context).colorScheme.tertiary,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-        ),
-        contentPadding: EdgeInsets.all(defaultWidth * 0.05),
-        content: SizedBox(
-          width: defaultWidth * 0.85,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // Error icon
-              const Icon(
-                Icons.error_outline,
-                color: Color.fromARGB(255, 224, 16, 16),
-                size: 60,
-              ),
+  // Method to update username
+  void updateUsername(userText) {
+    setState(() {
+      username = userText;
+    });
+  }
 
-              SizedBox(height: defaultWidth * 0.05),
-
-              // Error text
-              Text(
-                errorMsg,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.primary,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 20,
-                ),
-              ),
-
-              SizedBox(height: defaultWidth * 0.05),
-
-              // Exit pop up button
-              playButton(context, "Ok", () => Navigator.pop(context))
-            ],
-          ),
-        ),
-      ),
-    );
+  // Method to update password
+  void updatePassword(pwText) {
+    setState(() {
+      password = pwText;
+    });
   }
 
   @override
@@ -125,14 +89,10 @@ class _SignInPageState extends State<SignInPage> {
                     labelText: 'Username',
                     obscureText: false,
                     iconText: Icons.person,
-                    validator: (userTxt) {
-                      if (userTxt == null || userTxt.isEmpty) {
-                        return 'Enter a valid username';
-                      } else {
-                        username = userTxt;
-                        return null;
-                      }
-                    },
+                    onChanged: (userTxt) => updateUsername(userTxt),
+                    validator: (userTxt) => userTxt == null || userTxt.isEmpty
+                        ? 'Enter a valid username'
+                        : null,
                   ),
 
                   const SizedBox(
@@ -144,13 +104,13 @@ class _SignInPageState extends State<SignInPage> {
                     labelText: 'Password',
                     obscureText: true,
                     iconText: Icons.lock,
+                    onChanged: (passTxt) => updatePassword(passTxt),
                     validator: (passTxt) {
                       if (passTxt == null || passTxt.isEmpty) {
                         return 'Enter a valid password';
                       } else if (passTxt.length < 8) {
-                        return 'Password must have at least 8 characters';
+                        return 'Must have at least 8 characters';
                       } else {
-                        password = passTxt;
                         return null;
                       }
                     },
@@ -205,6 +165,7 @@ class _SignInPageState extends State<SignInPage> {
                           username,
                           password,
                         );
+
                         switch (errCode) {
                           // Credentials are correct
                           case 0:
@@ -221,8 +182,10 @@ class _SignInPageState extends State<SignInPage> {
 
                           // An error has occurred during authentication
                           default:
-                            popupERR(
-                                "An error has occurred during authentication");
+                            if (context.mounted) {
+                              popupERR(context,
+                                  "An error has occurred during authentication");
+                            }
                         }
                       }
                     },

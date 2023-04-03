@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 // import 'package:webview_flutter/webview_flutter.dart';
 
-void apiSignUp(String username, password, email) async {
+Future<int> apiSignUp(String username, password, email) async {
   var pemBytes = await rootBundle.load("assets/cert.pem");
   var context = SecurityContext()
     ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
@@ -28,11 +28,14 @@ void apiSignUp(String username, password, email) async {
     request.write(body);
 
     await request.close(); //comentar esta o las de abajo
-    // var response = await request.close();
-    // var responseBody = await response.transform(utf8.decoder).join();
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
     // print(responseBody);
+    var responseBodyDictionary = jsonDecode(responseBody);
+    return responseBodyDictionary["status"]["error_code"];
   } catch (e) {
     // print(e);
+    return -1;
   } finally {
     client.close();
   }

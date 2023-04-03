@@ -43,6 +43,7 @@ dependencies:
   http: ^0.13.5
   socket_io_client: ^2.0.1
   webview_flutter: ^4.0.7
+  email_validator: ^2.0.1
 
 flutter_icons:
   ios: true

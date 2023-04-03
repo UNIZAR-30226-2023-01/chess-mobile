@@ -233,10 +233,10 @@ class _SignInPageState extends State<SignInPage> {
                   ),
 
                   // Divider for other methods
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25),
                     child: Row(
-                      children: const [
+                      children: [
                         Expanded(
                           child: Divider(
                             thickness: 0.5,

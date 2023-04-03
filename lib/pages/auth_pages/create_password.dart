@@ -43,11 +43,11 @@ class _CreatePwPageState extends State<CreatePwPage> {
                   ),
 
                   // Create Password header text
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
                           'Create new password',
                           style: TextStyle(

@@ -64,73 +64,74 @@ class SquareState extends State<Square> {
 
   /// Se llama al tocar una casilla
   Future<Object> _tapped(BuildContext context) async {
-    // if (!board.spectatorMode) {
-    if (board.whiteTurn == s.iAmWhite &&
-        board.currentBoard[y][x].isWhite == board.whiteTurn &&
-        !board.boardMovements[y][x] &&
-        !board.currentBoard[y][x].isEmpty()) {
-      var auxY = board.selectedSquare[0];
-      var auxX = board.selectedSquare[1];
-      board.selectedSquare = [y, x];
+    if (!board.spectatorMode) {
+      if (board.whiteTurn == s.iAmWhite &&
+          board.currentBoard[y][x].isWhite == board.whiteTurn &&
+          !board.boardMovements[y][x] &&
+          !board.currentBoard[y][x].isEmpty()) {
+        var auxY = board.selectedSquare[0];
+        var auxX = board.selectedSquare[1];
+        board.selectedSquare = [y, x];
 
-      if (auxX != -1) {
-        board.squares[8 * auxY + auxX].setState(() {});
-      }
-
-      updateSquares();
-      var possibleMovements = validateMovements(board.currentBoard[y][x]
-          .possibleMovements(x, y, board.currentBoard, board.reversedBoard,
-              board.lastMovement));
-      List<List<int>> allowedMovements = [];
-      for (int i = 0; i < possibleMovements.length; i++) {
-        if (_processIfSolvesCheckMate(possibleMovements[i])) {
-          allowedMovements.add(possibleMovements[i]);
+        if (auxX != -1) {
+          board.squares[8 * auxY + auxX].setState(() {});
         }
+
+        updateSquares();
+        var possibleMovements = validateMovements(board.currentBoard[y][x]
+            .possibleMovements(x, y, board.currentBoard, board.reversedBoard,
+                board.lastMovement));
+        List<List<int>> allowedMovements = [];
+        for (int i = 0; i < possibleMovements.length; i++) {
+          if (_processIfSolvesCheckMate(possibleMovements[i])) {
+            allowedMovements.add(possibleMovements[i]);
+          }
+        }
+
+        allowedMovements.forEach(_processValidMovement);
+      } else if (board.whiteTurn == s.iAmWhite &&
+          (board.currentBoard[y][x].isEmpty() ||
+              board.currentBoard[y][x].isWhite != board.whiteTurn) &&
+          board.boardMovements[y][x]) {
+        final musicPlayer = AudioPlayer();
+        if (board.currentBoard[y][x].isEmpty()) {
+          musicPlayer.play(AssetSource("sounds/movePiece.mp3"));
+        } else {
+          musicPlayer.play(AssetSource("sounds/capturePiece.mp3"));
+        }
+
+        var auxY = board.selectedSquare[0];
+        var auxX = board.selectedSquare[1];
+
+        if (board.currentBoard[y][x] is King) {
+          //Se ha comido el rey => mensaje de fin
+          alertWinner(
+              context, board.whiteTurn, "Ha ganado el jugador con las fichas ");
+        }
+
+        //enroque
+        _processCastling(auxY, auxX);
+        _procesarComerAlPaso(auxY, auxX);
+        board.lastMovement = [
+          [auxY, auxX],
+          [y, x]
+        ];
+        board.currentBoard[y][x] = board.currentBoard[auxY][auxX];
+        board.currentBoard[auxY][auxX] = Empty(isWhite: false);
+        _processPromotion();
+        var jugada = _encodeMovement(auxX, auxY);
+        // print(jugada);
+        var movimiento = {"move": jugada};
+        s.socket.emit('move', movimiento);
+        board.selectedSquare = [-1, -1];
+        board.squares[auxY * 8 + auxX].setState(() {});
+        board.whiteTurn = !board.whiteTurn;
+        updateSquares();
+
+        _checkIfWin();
       }
-
-      allowedMovements.forEach(_processValidMovement);
-    } else if (board.whiteTurn == s.iAmWhite &&
-        (board.currentBoard[y][x].isEmpty() ||
-            board.currentBoard[y][x].isWhite != board.whiteTurn) &&
-        board.boardMovements[y][x]) {
-      final musicPlayer = AudioPlayer();
-      if (board.currentBoard[y][x].isEmpty()) {
-        musicPlayer.play(AssetSource("sounds/movePiece.mp3"));
-      } else {
-        musicPlayer.play(AssetSource("sounds/capturePiece.mp3"));
-      }
-
-      var auxY = board.selectedSquare[0];
-      var auxX = board.selectedSquare[1];
-
-      if (board.currentBoard[y][x] is King) {
-        //Se ha comido el rey => mensaje de fin
-        alertWinner(context, board.whiteTurn, "Ha ganado el jugador con las fichas ");
-      }
-
-      //enroque
-      _processCastling(auxY, auxX);
-      _procesarComerAlPaso(auxY, auxX);
-      board.lastMovement = [
-        [auxY, auxX],
-        [y, x]
-      ];
-      board.currentBoard[y][x] = board.currentBoard[auxY][auxX];
-      board.currentBoard[auxY][auxX] = Empty(isWhite: false);
-      _processPromotion();
-      var jugada = _encodeMovement(auxX, auxY);
-      // print(jugada);
-      var movimiento = {"move": jugada};
-      s.socket.emit('move', movimiento);
-      board.selectedSquare = [-1, -1];
-      board.squares[auxY * 8 + auxX].setState(() {});
-      board.whiteTurn = !board.whiteTurn;
-      updateSquares();
-
-      _checkIfWin();
+      setState(() {});
     }
-    setState(() {});
-    // }
     return Container();
   }
 
@@ -299,7 +300,8 @@ class SquareState extends State<Square> {
     y = tmpY;
     //falta el condicional que distingue si es jaque mate o ahogado
     if (allowedMovements.isEmpty) {
-      alertWinner(context, !board.whiteTurn, "Ha ganado el jugador con las fichas ");
+      alertWinner(
+          context, !board.whiteTurn, "Ha ganado el jugador con las fichas ");
     }
   }
 
@@ -339,9 +341,8 @@ List<List<int>> decodeMovement(String jugada) {
   prevy = board.reversedBoard ? prevy - 1 : 8 - prevy;
   y = board.reversedBoard ? y - 1 : 8 - y;
 
-
   prevx = !board.reversedBoard ? prevx : 7 - prevx;
-  x = !board.reversedBoard ? x: 7 - x;
+  x = !board.reversedBoard ? x : 7 - x;
   return [
     [prevy, prevx],
     [y, x]
@@ -357,10 +358,10 @@ void simulateMovement(List<List<int>> movements) {
   b.lastMovement = movements;
   final musicPlayer = AudioPlayer();
   if (b.currentBoard[y][x].isEmpty()) {
-        musicPlayer.play(AssetSource("sounds/movePiece.mp3"));
-      } else {
-        musicPlayer.play(AssetSource("sounds/capturePiece.mp3"));
-      }
+    musicPlayer.play(AssetSource("sounds/movePiece.mp3"));
+  } else {
+    musicPlayer.play(AssetSource("sounds/capturePiece.mp3"));
+  }
   b.currentBoard[y][x] = b.currentBoard[auxY][auxX];
   b.currentBoard[auxY][auxX] = Empty(isWhite: false);
   b.selectedSquare = [-1, -1];
@@ -377,5 +378,18 @@ void simulateMovement(List<List<int>> movements) {
     }
   }
 
+  b.whiteTurn = !b.whiteTurn;
+}
+
+void loadMovement(List<List<int>> movements) {
+  BoardData b = BoardData();
+  int auxY = movements[0][0];
+  int auxX = movements[0][1];
+  int y = movements[1][0];
+  int x = movements[1][1];
+  b.lastMovement = movements;
+  b.currentBoard[y][x] = b.currentBoard[auxY][auxX];
+  b.currentBoard[auxY][auxX] = Empty(isWhite: false);
+  b.selectedSquare = [-1, -1];
   b.whiteTurn = !b.whiteTurn;
 }

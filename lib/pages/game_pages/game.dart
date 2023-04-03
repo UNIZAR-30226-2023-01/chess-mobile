@@ -55,18 +55,29 @@ class GamePageState extends State<GamePage> {
     String idR = s.room;
     listenGame(context);
     resetSingleton(!s.iAmWhite);
+
+    if (s.pendingMovements.isNotEmpty) {
+      for (var mov in s.pendingMovements) {
+        loadMovement(decodeMovement(mov));
+      }
+      s.pendingMovements = [];
+    }
+    BoardData().spectatorMode = s.spectatorMode;
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primary,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              children: [
-                surrenderButton(context),
-                drawButton(context),
-              ],
-            ),
+            !s.spectatorMode
+                ? Row(
+                    children: [
+                      surrenderButton(context),
+                      drawButton(context),
+                    ],
+                  )
+                : Container(),
             Expanded(
               flex: 4,
 
@@ -80,8 +91,11 @@ class GamePageState extends State<GamePage> {
                     return Square(index: index);
                   }),
             ),
-            Row(children: [_player1Timer,_player2Timer]),
-            Text("Game code:$idR", style: const TextStyle(color: Colors.white),)
+            Row(children: [_player1Timer, _player2Timer]),
+            Text(
+              "Game code:$idR",
+              style: const TextStyle(color: Colors.white),
+            )
           ],
         ),
       ),

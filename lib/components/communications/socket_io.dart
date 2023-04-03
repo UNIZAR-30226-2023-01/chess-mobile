@@ -38,6 +38,8 @@ class GameSocket {
       }) // for Flutter or Dart VM SI BORRAS ESTO NO VA EL SOCKET :D
           .build());
   String room = "-1";
+  List pendingMovements = [];
+  bool spectatorMode = false;
   bool iAmWhite = false;
   factory GameSocket() {
     return _singleton;
@@ -99,7 +101,7 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
         jsonData = {"roomID": arguments.roomID};
         s.socket.emit('join_room', jsonData);
         s.room = arguments.roomID;
-        BoardData().spectatorMode = true;
+        s.spectatorMode = true;
       }
       break;
     default:
@@ -108,6 +110,7 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
         // print("Animal has metido mal el tipo");
       }
   }
+  var movements = [];
   s.socket.once(
       'room',
       (data) => {
@@ -118,13 +121,8 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
               }
             else
               {
-                // movements = data[0]["moves"],
-                // movements.forEach((mov) => {
-                //       // print(mov),
-                //       // print(decodeMovement(mov)),
-                //       // simulateMovement(decodeMovement(mov))
-                //     }),
-                // print(movements),
+                movements = data[0]["moves"],
+                s.pendingMovements = movements,
                 s.iAmWhite = true
               },
             // print(data),

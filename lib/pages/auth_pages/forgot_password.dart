@@ -1,9 +1,12 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import '../../components/buttons/textfield_custom.dart';
 import '../../components/buttons/return_button.dart';
 import '../../components/buttons/text_long_button.dart';
 import 'create_password.dart';
+import '../../components/communications/api.dart';
+import '../../components/popups/pop_error.dart';
 import 'signin.dart';
 
 class ForgotPwPage extends StatefulWidget {
@@ -14,12 +17,22 @@ class ForgotPwPage extends StatefulWidget {
 }
 
 class _ForgotPwPageState extends State<ForgotPwPage> {
+  final formKey = GlobalKey<FormState>();
+  String email = '';
+
+  // Method to update email
+  void updateEmail(emailTxt) {
+    setState(() {
+      email = emailTxt;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: Form(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
+          key: formKey,
           child: SingleChildScrollView(
             child: Center(
               child: Column(
@@ -97,8 +110,12 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
                     labelText: 'Enter your email',
                     obscureText: false,
                     iconText: Icons.email,
-                    validator: (value) =>
-                        value != 'castilla' ? 'Invalid email' : null,
+                    onChanged: (emailTxt) => updateEmail(emailTxt),
+                    validator: (emailTxt) => emailTxt == null ||
+                            emailTxt.isEmpty ||
+                            !EmailValidator.validate(emailTxt)
+                        ? 'Enter a valid email'
+                        : null,
                   ),
 
                   const SizedBox(
@@ -110,13 +127,31 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
                     context,
                     true,
                     'Send Code',
-                    () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const CreatePwPage(),
-                        ),
-                      );
+                    () async {
+                      final isValidForm = formKey.currentState!.validate();
+
+                      if (isValidForm) {
+                        int errCode = await apiForgotPassword(email);
+
+                        switch (errCode) {
+                          case 0:
+                            if (context.mounted) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const CreatePwPage(),
+                                ),
+                              );
+                            }
+                            break;
+
+                          default:
+                            if (context.mounted) {
+                              popupERR(context,
+                                  "An error has ocurred during recovery");
+                            }
+                        }
+                      }
                     },
                   ),
 

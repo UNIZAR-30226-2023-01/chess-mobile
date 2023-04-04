@@ -83,6 +83,40 @@ Future<int> apiSignIn(String username, password) async {
   }
 }
 
+Future<int> apiForgotPassword(String email) async {
+  var pemBytes = await rootBundle.load("assets/cert.pem");
+
+  var context = SecurityContext()
+    ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
+
+  var client = HttpClient(context: context)
+    ..badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+
+  try {
+    var request = await client.postUrl(
+        Uri.parse('https://api.gracehopper.xyz/v1/auth/forgot-password'));
+    // Set headers
+    request.headers.add('Content-Type', 'application/json');
+
+    // Create JSON body
+    var body = jsonEncode({'email': email});
+
+    // Set body
+    request.write(body);
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
+    // print(responseBody);
+    var responseBodyDictionary = jsonDecode(responseBody);
+    return responseBodyDictionary["status"]["error_code"];
+  } catch (e) {
+    // print(e.toString());
+    return -1;
+  } finally {
+    client.close();
+  }
+}
+
 void apiSignInGoogle(BuildContext context) async {
   var pemBytes = await rootBundle.load("assets/cert.pem");
 

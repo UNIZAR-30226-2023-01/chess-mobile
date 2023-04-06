@@ -8,6 +8,7 @@ class SelectionMenu<T> {
   List<String> listOf = List.empty(growable: true);
   String selectedVisualValue;
   late T selectedCorrectValue;
+
   SelectionMenu(this.listOfVisualValues, this.listOfCorrectValues,
       this.selectedVisualValue) {
     for (int i = 0; i < listOfVisualValues.length; i++) {
@@ -62,5 +63,23 @@ class SelectionMenu<T> {
         );
       }),
     );
+  }
+
+  static Row rowOption(BuildContext context, String text, Widget widget) {
+    return Row(children: [
+      SizedBox(
+        width: defaultWidth * 0.25,
+        child: Text(
+          text,
+          textAlign: TextAlign.right,
+          style: TextStyle(
+            fontSize: 19,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+      ),
+      SizedBox(width: defaultWidth * 0.05),
+      widget,
+    ]);
   }
 }

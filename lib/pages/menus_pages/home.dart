@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import '../../components/communications/socket_io.dart';
 import '../../components/visual/custom_shape.dart';
 import '../../components/visual/screen_size.dart';
 import '../../components/visual/set_image_color.dart';
 import '../../components/buttons/home_long_button.dart';
 import '../../components/buttons/home_short_button.dart';
-import '../../components/buttons/home_play_button.dart';
-import '../../components/buttons/home_selection_button.dart';
-import '../../components/buttons/home_textfield_button.dart';
+import '../../components/popups/spectator.dart';
+import '../../components/popups/competitive.dart';
+import '../../components/popups/ai.dart';
+import '../../components/popups/custom.dart';
+import '../../components/profile_data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -18,55 +18,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final GameSocket s = GameSocket();
-  final SelectionMenu<int> selectTime = SelectionMenu(
-      ["3 minutos", "5 minutos", "10 minutos"], [180, 300, 600], "5 minutos");
-  final SelectionMenu<int> selectIncrement = SelectionMenu(
-      ["3 segundos", "5 segundos", "10 segundos"], [3, 5, 10], "5 segundos");
-  final SelectionMenu<String> selectColor = SelectionMenu(
-      ["Aleatorio", "Blanco", "Negro"],
-      ["RANDOM", "LIGHT", "DARK"],
-      "Aleatorio");
-  final SelectionMenu<int> selectDifficulty = SelectionMenu(
-      ["Fácil", "Normal", "Difícil", "Imposible"], [0, 1, 2, 3], "Normal");
-  final TextEditingController roomController = TextEditingController();
-
-  void _handleTapAI() async {
-    Arguments arguments = Arguments.forAI(
-        selectTime.selectedCorrectValue,
-        selectIncrement.selectedCorrectValue,
-        selectColor.selectedCorrectValue,
-        selectDifficulty.selectedCorrectValue);
-    await startGame(context, "AI", arguments);
-  }
-
-  void _handleTapCOMP() async {
-    Arguments arguments = Arguments.forCOMP(selectTime.selectedCorrectValue);
-    await startGame(context, "COMP", arguments);
-  }
-
-  void _handleTapCREATECUSTOM() async {
-    Arguments arguments = Arguments.forCREATECUSTOM(
-        selectTime.selectedCorrectValue,
-        selectIncrement.selectedCorrectValue,
-        selectColor.selectedCorrectValue);
-    await startGame(context, "CREATECUSTOM", arguments);
-  }
-
-  void _handleTapWAITCUSTOM() async {
-    Arguments arguments = Arguments();
-    await startGame(context, "WAITCUSTOM", arguments);
-  }
-
-  void _handleTapJOINCUSTOM() async {
-    Arguments arguments = Arguments.forJOINCUSTOM(roomController.text);
-    await startGame(context, "JOINCUSTOM", arguments);
-  }
-
-  void _handleTapSPECTATOR() async {
-    Arguments arguments = Arguments.forSPECTATOR(roomController.text);
-    await startGame(context, "SPECTATOR", arguments);
-  }
+  final UserData userData = UserData();
+  final Spectator spectator = Spectator();
+  final Competitive competitive = Competitive();
+  final AI ai = AI();
+  final Custom custom = Custom();
 
   @override
   Widget build(BuildContext context) {
@@ -75,33 +31,89 @@ class _HomePageState extends State<HomePage> {
         color: Theme.of(context).colorScheme.background,
         child: Column(children: [
           header(),
-          Expanded(
-            child: Center(
-              child: ListView(children: [
-                SizedBox(height: defaultWidth * 0.05),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  longButton(context, true, "Competitive.png",
-                      "Partida competitiva", popupCOMP),
-                ]),
-                SizedBox(height: defaultWidth * 0.075),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  shortButton(context, false, "Private.png", "Partida privada",
-                      popupCUSTOM),
-                  SizedBox(width: defaultWidth * 0.075),
-                  shortButton(context, false, "Tournaments.png", "Torneo",
-                      _handleTapJOINCUSTOM),
-                ]),
-                SizedBox(height: defaultWidth * 0.075),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  shortButton(
-                      context, false, "Computer.png", "Contra la IA", popupAI),
-                  SizedBox(width: defaultWidth * 0.075),
-                  shortButton(context, false, "Spectator.png", "Espectar juego",
-                      popupSPECTATOR),
-                ]),
-              ]),
-            ),
-          ),
+          userData.isRegistered
+              ? Expanded(
+                  child: Center(
+                    child: ListView(children: [
+                      SizedBox(height: defaultWidth * 0.05),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            longButton(
+                                context,
+                                true,
+                                "Competitive.png",
+                                "Partida competitiva",
+                                () => competitive.popupCOMP(context)),
+                          ]),
+                      SizedBox(height: defaultWidth * 0.075),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            shortButton(
+                                context,
+                                false,
+                                "Private.png",
+                                "Partida privada",
+                                () => custom.popupCUSTOM(context)),
+                            SizedBox(width: defaultWidth * 0.075),
+                            shortButton(context, false, "Tournaments.png",
+                                "Torneo", () => null),
+                          ]),
+                      SizedBox(height: defaultWidth * 0.075),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            shortButton(context, false, "Computer.png",
+                                "Contra la IA", () => ai.popupAI(context)),
+                            SizedBox(width: defaultWidth * 0.075),
+                            shortButton(
+                                context,
+                                false,
+                                "Spectator.png",
+                                "Espectar juego",
+                                () => spectator.popupSPECTATOR(context)),
+                          ]),
+                      SizedBox(height: defaultWidth * 0.05),
+                    ]),
+                  ),
+                )
+              : Expanded(
+                  child: Center(
+                    child: ListView(children: [
+                      SizedBox(height: defaultWidth * 0.05),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            longButton(
+                                context,
+                                false,
+                                "Private.png",
+                                "Partida privada",
+                                () => custom.popupCUSTOM(context)),
+                          ]),
+                      SizedBox(height: defaultWidth * 0.15),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            longButton(context, false, "Computer.png",
+                                "Contra la IA", () => ai.popupAI(context)),
+                          ]),
+                      SizedBox(height: defaultWidth * 0.15),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            longButton(
+                                context,
+                                false,
+                                "Spectator.png",
+                                "Espectar juego",
+                                () => spectator.popupSPECTATOR(context)),
+                            SizedBox(height: defaultWidth * 0.05),
+                          ]),
+                    ]),
+                  ),
+                ),
         ]),
       ),
     );
@@ -139,246 +151,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-    ]);
-  }
-
-  Object popupCOMP() {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        backgroundColor: Theme.of(context).colorScheme.tertiary,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-        ),
-        contentPadding: EdgeInsets.all(defaultWidth * 0.05),
-        content: SizedBox(
-          width: defaultWidth * 0.85,
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            popupRowOption("Duración:", selectTime.selectionMenu(context)),
-            SizedBox(height: defaultWidth * 0.05),
-            playButton(context, "Jugar", _handleTapCOMP),
-          ]),
-        ),
-      ),
-    );
-  }
-
-  Object popupCUSTOM() {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        backgroundColor: Theme.of(context).colorScheme.tertiary,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-        ),
-        contentPadding: EdgeInsets.all(defaultWidth * 0.05),
-        content: SizedBox(
-          width: defaultWidth * 0.85,
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Text(
-              "Crea una nueva ...",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            SizedBox(height: defaultWidth * 0.05),
-            popupRowOption("Duración:", selectTime.selectionMenu(context)),
-            SizedBox(height: defaultWidth * 0.05),
-            popupRowOption(
-                "Incremento:", selectIncrement.selectionMenu(context)),
-            SizedBox(height: defaultWidth * 0.05),
-            popupRowOption("Color:", selectColor.selectionMenu(context)),
-            SizedBox(height: defaultWidth * 0.05),
-            playButton(context, "Crear", (() {
-              _handleTapCREATECUSTOM;
-              Navigator.pop(context);
-              popupWAITING();
-              _handleTapWAITCUSTOM;
-            })),
-            SizedBox(height: defaultWidth * 0.075),
-            Row(
-              children: [
-                Expanded(
-                  child: Divider(
-                    color: Theme.of(context).colorScheme.primary,
-                    thickness: 1.25,
-                    indent: defaultWidth * 0.05,
-                    endIndent: defaultWidth * 0.05,
-                  ),
-                ),
-                Text(
-                  " o ",
-                  style: TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-                Expanded(
-                  child: Divider(
-                    color: Theme.of(context).colorScheme.primary,
-                    thickness: 1.25,
-                    indent: defaultWidth * 0.05,
-                    endIndent: defaultWidth * 0.05,
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: defaultWidth * 0.075),
-            Text(
-              "... únete a otra",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            SizedBox(height: defaultWidth * 0.05),
-            textField(context, roomController),
-            SizedBox(height: defaultWidth * 0.05),
-            playButton(context, "Unirse", _handleTapJOINCUSTOM),
-          ]),
-        ),
-      ),
-    );
-  }
-
-  Object popupWAITING() {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        backgroundColor: Theme.of(context).colorScheme.tertiary,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-        ),
-        contentPadding: EdgeInsets.all(defaultWidth * 0.05),
-        content: SizedBox(
-          width: defaultWidth * 0.85,
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Text(
-              "Código de la partida:",
-              style: TextStyle(
-                fontSize: 19,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-            ),
-            SizedBox(height: defaultWidth * 0.05),
-            GestureDetector(
-              onTap: () =>
-                  Clipboard.setData(ClipboardData(text: GameSocket().room))
-                      .then((_) {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text("Código de partida copiado.")));
-              }),
-              child: Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: defaultWidth * 0.03,
-                  horizontal: defaultWidth * 0.03,
-                ),
-                width: defaultWidth * 0.7,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.primary,
-                    width: 1.25,
-                  ),
-                  borderRadius: const BorderRadius.all(Radius.circular(8)),
-                ), // copied successfully
-                child: Row(children: [
-                  SizedBox(
-                    width: defaultWidth * 0.55,
-                    child: Center(
-                      child: Text(
-                        GameSocket().room,
-                        style: TextStyle(
-                          fontSize: 19,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                    ),
-                  ),
-                  const Icon(Icons.copy),
-                ]),
-              ),
-            ),
-            SizedBox(height: defaultWidth * 0.05),
-            SizedBox(
-                height: defaultWidth * 0.3,
-                child: Image.asset('images/waiting.gif')),
-          ]),
-        ),
-      ),
-    );
-  }
-
-  Object popupAI() {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        backgroundColor: Theme.of(context).colorScheme.tertiary,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-        ),
-        contentPadding: EdgeInsets.all(defaultWidth * 0.05),
-        content: SizedBox(
-          width: defaultWidth * 0.85,
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            popupRowOption("Duración:", selectTime.selectionMenu(context)),
-            SizedBox(height: defaultWidth * 0.05),
-            popupRowOption(
-                "Incremento:", selectIncrement.selectionMenu(context)),
-            SizedBox(height: defaultWidth * 0.05),
-            popupRowOption("Color:", selectColor.selectionMenu(context)),
-            SizedBox(height: defaultWidth * 0.05),
-            popupRowOption(
-                "Dificultad:", selectDifficulty.selectionMenu(context)),
-            SizedBox(height: defaultWidth * 0.05),
-            playButton(context, "Jugar", _handleTapAI),
-          ]),
-        ),
-      ),
-    );
-  }
-
-  Object popupSPECTATOR() {
-    roomController.text = "";
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        backgroundColor: Theme.of(context).colorScheme.tertiary,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(15)),
-        ),
-        contentPadding: EdgeInsets.all(defaultWidth * 0.05),
-        content: SizedBox(
-          width: defaultWidth * 0.85,
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            textField(context, roomController),
-            SizedBox(height: defaultWidth * 0.05),
-            playButton(context, "Espectar", _handleTapSPECTATOR),
-          ]),
-        ),
-      ),
-    );
-  }
-
-  Row popupRowOption(String text, Widget widget) {
-    return Row(children: [
-      SizedBox(
-        width: defaultWidth * 0.25,
-        child: Text(
-          text,
-          textAlign: TextAlign.right,
-          style: TextStyle(
-            fontSize: 19,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        ),
-      ),
-      SizedBox(width: defaultWidth * 0.05),
-      widget,
     ]);
   }
 }

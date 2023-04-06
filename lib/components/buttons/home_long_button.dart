@@ -29,15 +29,18 @@ SizedBox longButton(BuildContext context, bool type, String image, String text,
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: defaultWidth * 0.03),
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.bold,
-                color: type
-                    ? Theme.of(context).colorScheme.secondary
-                    : Theme.of(context).colorScheme.primary,
+            child: SizedBox(
+              width: defaultWidth * 0.45,
+              child: Text(
+                text,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 19,
+                  fontWeight: FontWeight.bold,
+                  color: type
+                      ? Theme.of(context).colorScheme.secondary
+                      : Theme.of(context).colorScheme.primary,
+                ),
               ),
             ),
           ),

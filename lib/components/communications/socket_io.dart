@@ -10,6 +10,7 @@ import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'package:socket_io_client/socket_io_client.dart';
 
 import '../popups/draw_dialog.dart';
+import '../popups/possible_draw.dart';
 import '../popups/winner_dialog.dart';
 import '../../pages/game_pages/game.dart';
 
@@ -198,6 +199,12 @@ void listenGame(BuildContext context) {
                 alertDraw(context),
               },
           });
+  s.socket.on(
+      'voted_draw',
+      (data) => {
+            if (data[0]["color"] == (s.iAmWhite ? "DARK" : "LIGHT"))
+              alertPossibleDraw(context)
+          });
   s.socket.onDisconnect((_) => {
         // print('disconnect')
       });
@@ -217,5 +224,4 @@ void draw() {
   GameSocket s = GameSocket();
   var jsonData = {"color": s.iAmWhite ? "LIGHT" : "DARK"};
   s.socket.emit('vote_draw', jsonData);
-  // Falta gestionar el voted_draw de forma que avise al rival
 }

@@ -6,6 +6,7 @@ import '../../components/visual/screen_size.dart';
 import '../../components/visual/set_image_color.dart';
 import '../../components/buttons/profile_statistic_button.dart';
 import '../../components/buttons/profile_options_button.dart';
+import '../../components/buttons/profile_short_button.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -34,6 +35,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   SizedBox(height: defaultWidth * 0.075),
                   divider("Logros"),
                   SizedBox(height: defaultWidth * 0.075),
+                  achievments(),
                   // Achievments
                   SizedBox(height: defaultWidth * 0.075),
                   divider("Tema"),
@@ -41,6 +43,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   theme(),
                   SizedBox(height: defaultWidth * 0.075),
                   divider("Actividad"),
+                  SizedBox(height: defaultWidth * 0.075),
+                  activity(),
                   SizedBox(height: defaultWidth * 0.075),
                   // Activity
                 ],
@@ -138,6 +142,48 @@ class _ProfilePageState extends State<ProfilePage> {
         statisticsContainer(context, "Win rate", "78%"),
         SizedBox(width: defaultWidth * 0.075),
         statisticsContainer(context, "Partidas jugadas", "1283"),
+      ]),
+    ]);
+  }
+
+  Column achievments() {
+    return Column(children: [
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        achievmentImage(1),
+        SizedBox(width: defaultWidth * 0.05),
+        achievmentImage(2),
+        SizedBox(width: defaultWidth * 0.05),
+        achievmentImage(3),
+        SizedBox(width: defaultWidth * 0.05),
+        achievmentImage(4),
+      ]),
+      SizedBox(height: defaultWidth * 0.05),
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        achievmentImage(5),
+        SizedBox(width: defaultWidth * 0.05),
+        achievmentImage(6),
+        SizedBox(width: defaultWidth * 0.05),
+        achievmentImage(7),
+        SizedBox(width: defaultWidth * 0.05),
+        achievmentImage(8),
+      ]),
+    ]);
+  }
+
+  Image achievmentImage(int n) {
+    return Image.asset(
+      "images/${userData.achievments[n - 1] ? "achievment_true" : "achievment_false"}/$n.png",
+      fit: BoxFit.contain,
+      width: defaultWidth * 0.175,
+    );
+  }
+
+  Column activity() {
+    return Column(children: [
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        shortButton(context, false, "Partidas\nguardadas"),
+        SizedBox(width: defaultWidth * 0.075),
+        shortButton(context, false, "Historial\nde partidas"),
       ]),
     ]);
   }

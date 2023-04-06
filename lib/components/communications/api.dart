@@ -8,6 +8,7 @@ import 'package:flutter/services.dart' show rootBundle;
 
 Future<int> apiSignUp(String username, password, email) async {
   var pemBytes = await rootBundle.load("assets/cert.pem");
+
   var context = SecurityContext()
     ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
 
@@ -169,6 +170,40 @@ void apiSignInGoogle(BuildContext context) async {
     // print(responseBody);
   } catch (e) {
     // print(e.toString());
+  } finally {
+    client.close();
+  }
+}
+
+Future<int> apiRanking(int page, int limit) async {
+  var pemBytes = await rootBundle.load("assets/cert.pem");
+
+  var context = SecurityContext()
+    ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
+
+  var client = HttpClient(context: context)
+    ..badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+
+  try {
+    var request =
+        await client.postUrl(Uri.parse('https://api.gracehopper.xyz/v1/users'));
+    // Set headers
+    request.headers.add('Content-Type', 'application/json');
+
+    // Create JSON body
+    var body = jsonEncode({'page': page, 'limit': limit});
+
+    // Set body
+    request.write(body);
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
+    var responseBodyDictionary = jsonDecode(responseBody);
+    // print(responseBody);
+    return responseBodyDictionary["status"]["error_code"];
+  } catch (e) {
+    // print(e.toString());
+    return -1;
   } finally {
     client.close();
   }

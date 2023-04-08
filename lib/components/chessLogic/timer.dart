@@ -9,7 +9,8 @@ class CustomTimer extends StatefulWidget {
   final Duration duration;
   final Function onTimerEnd;
 
-  const CustomTimer ({super.key, 
+  const CustomTimer({
+    super.key,
     required this.label,
     required this.duration,
     required this.onTimerEnd,
@@ -39,18 +40,17 @@ class TimerState extends State<CustomTimer> {
   }
 
   void _startTimer() {
-  _timer = Timer(widget.duration, () {
-    widget.onTimerEnd();
-  });
+    _timer = Timer(widget.duration, () {
+      widget.onTimerEnd();
+    });
 
-  _stream = Stream.periodic(const Duration(seconds: 1), (count) {
-  if (widget.isWhite == BoardData().whiteTurn) {
-    lastTime -= 1;
+    _stream = Stream.periodic(const Duration(seconds: 1), (count) {
+      if (widget.isWhite == BoardData().whiteTurn) {
+        lastTime -= 1;
+      }
+      return lastTime;
+    }).takeWhile((timeRemaining) => timeRemaining >= 0);
   }
-  return lastTime;
-}).takeWhile((timeRemaining) => timeRemaining >= 0);
-
-}
 
   String _formatTime(int timeInSeconds) {
     int minutes = timeInSeconds ~/ 60;
@@ -63,14 +63,16 @@ class TimerState extends State<CustomTimer> {
     return StreamBuilder<int>(
       stream: _stream,
       builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-        String timeText = '${widget.label}: --:--';
+        String timeText = '${widget.label}:\n --:--';
         if (snapshot.hasData) {
-          timeText = '${widget.label}: ${_formatTime(snapshot.data!)}';
+          timeText = '${widget.label}:\n ${_formatTime(snapshot.data!)}';
         }
         return Text(
           timeText,
-          style: const TextStyle(
-            fontSize: 24.0,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.secondary,
+            fontSize: 21,
             fontWeight: FontWeight.bold,
           ),
         );

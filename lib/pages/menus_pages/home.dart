@@ -96,6 +96,13 @@ class _HomePageState extends State<HomePage> {
                       Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            longButton(context, false, "Computer.png",
+                                "Contra la IA", () => ai.popupAI(context)),
+                          ]),
+                      SizedBox(height: defaultWidth * 0.15),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
                             longButton(
                                 context,
                                 false,

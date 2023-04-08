@@ -194,4 +194,35 @@ class Custom {
       ),
     );
   }
+
+  Object popupANONYMOUS(BuildContext context) {
+    roomController.text = "";
+    return showDialog(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+        ),
+        contentPadding: EdgeInsets.all(defaultWidth * 0.05),
+        content: SizedBox(
+          width: defaultWidth * 0.85,
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Text(
+              "Únete a otra partida privada",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            SizedBox(height: defaultWidth * 0.05),
+            textField(context, roomController),
+            SizedBox(height: defaultWidth * 0.05),
+            playButton(context, "Unirse", () => _handleTapJOINCUSTOM(context)),
+          ]),
+        ),
+      ),
+    );
+  }
 }

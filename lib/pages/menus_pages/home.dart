@@ -90,14 +90,7 @@ class _HomePageState extends State<HomePage> {
                                 false,
                                 "Private.png",
                                 "Partida privada",
-                                () => custom.popupCUSTOM(context)),
-                          ]),
-                      SizedBox(height: defaultWidth * 0.15),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            longButton(context, false, "Computer.png",
-                                "Contra la IA", () => ai.popupAI(context)),
+                                () => custom.popupANONYMOUS(context)),
                           ]),
                       SizedBox(height: defaultWidth * 0.15),
                       Row(

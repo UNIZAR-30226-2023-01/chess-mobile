@@ -4,7 +4,8 @@ import 'package:lottie/lottie.dart';
 import '../../components/buttons/textfield_custom.dart';
 import '../../components/buttons/return_button.dart';
 import '../../components/buttons/text_long_button.dart';
-import 'create_password.dart';
+import 'startup.dart';
+//import 'create_password.dart';
 import '../../components/communications/api.dart';
 import '../../components/popups/pop_error.dart';
 import 'signin.dart';
@@ -136,11 +137,16 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
                         switch (errCode) {
                           case 0:
                             if (context.mounted) {
-                              Navigator.push(
+                              popupERR(
+                                  context, "A recovery email has been sent");
+                              Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const CreatePwPage(),
+                                  builder: (context) => const StartupPage(),
                                 ),
+                                (r) {
+                                  return false;
+                                },
                               );
                             }
                             break;

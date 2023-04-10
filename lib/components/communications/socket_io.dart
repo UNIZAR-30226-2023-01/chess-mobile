@@ -1,6 +1,6 @@
 import 'dart:async';
 // import 'dart:convert';
-import 'package:ajedrez/components/chessLogic/board.dart';
+// import 'package:ajedrez/components/chessLogic/board.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
 import 'package:ajedrez/components/profile_data.dart';
 // import 'package:ajedrez/components/profile_data.dart';
@@ -152,7 +152,7 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
 
 void listenGame(BuildContext context) {
   GameSocket s = GameSocket();
-  bool espec = BoardData().spectatorMode;
+  bool espec = s.spectatorMode;
 
   s.socket.on(
       'error',
@@ -162,7 +162,7 @@ void listenGame(BuildContext context) {
   s.socket.on(
       'moved',
       (data) => {
-            // print(data),
+            // print(espec),
             if (!espec)
               {
                 if (data[0]["turn"] == (!s.iAmWhite ? "DARK" : "LIGHT"))
@@ -171,7 +171,9 @@ void listenGame(BuildContext context) {
                   },
               }
             else
-              simulateMovement(decodeMovement(data[0]["move"])),
+              {
+                // print("funciona"),
+              simulateMovement(decodeMovement(data[0]["move"])),}
           });
   s.socket.on(
       'game_over',

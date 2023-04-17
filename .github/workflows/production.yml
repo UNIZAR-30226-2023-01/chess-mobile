@@ -16,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  FLUTTER_VERSION: 3.9.0
+  FLUTTER_VERSION: 3.9.0-1.0.pre.166
   TAG_NAME: "1.0.0"
 
 jobs:

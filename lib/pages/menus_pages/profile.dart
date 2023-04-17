@@ -4,8 +4,10 @@ import '../../components/visual/custom_shape.dart';
 import '../../components/visual/customization_constants.dart';
 import '../../components/visual/screen_size.dart';
 import '../../components/visual/set_image_color.dart';
-import '../../components/buttons/profile_statistic_button.dart';
+import '../../components/buttons/profile_boxes.dart';
 import '../../components/buttons/profile_options_button.dart';
+import '../../components/buttons/profile_short_button.dart';
+import '../../components/buttons/profile_theme_button.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -34,7 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   SizedBox(height: defaultWidth * 0.075),
                   divider("Logros"),
                   SizedBox(height: defaultWidth * 0.075),
-                  // Achievments
+                  achievments(),
                   SizedBox(height: defaultWidth * 0.075),
                   divider("Tema"),
                   SizedBox(height: defaultWidth * 0.075),
@@ -42,7 +44,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   SizedBox(height: defaultWidth * 0.075),
                   divider("Actividad"),
                   SizedBox(height: defaultWidth * 0.075),
-                  // Activity
+                  activity(),
+                  SizedBox(height: defaultWidth * 0.075),
                 ],
               ),
             ),
@@ -129,159 +132,92 @@ class _ProfilePageState extends State<ProfilePage> {
   Column statistics() {
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        statisticsContainer(context, "Puntuación", "2556"),
+        statisticBox(context, "Puntuación", "2556"),
         SizedBox(width: defaultWidth * 0.075),
-        statisticsContainer(context, "Rango", "#78"),
+        statisticBox(context, "Rango", "#78"),
       ]),
       SizedBox(height: defaultWidth * 0.075),
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        statisticsContainer(context, "Win rate", "78%"),
+        statisticBox(context, "Win rate", "78%"),
         SizedBox(width: defaultWidth * 0.075),
-        statisticsContainer(context, "Partidas jugadas", "1283"),
+        statisticBox(context, "Partidas jugadas", "1283"),
+      ]),
+    ]);
+  }
+
+  Column achievments() {
+    return Column(children: [
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        achievmentBox(1),
+        SizedBox(width: defaultWidth * 0.05),
+        achievmentBox(2),
+        SizedBox(width: defaultWidth * 0.05),
+        achievmentBox(3),
+        SizedBox(width: defaultWidth * 0.05),
+        achievmentBox(4),
+      ]),
+      SizedBox(height: defaultWidth * 0.05),
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        achievmentBox(5),
+        SizedBox(width: defaultWidth * 0.05),
+        achievmentBox(6),
+        SizedBox(width: defaultWidth * 0.05),
+        achievmentBox(7),
+        SizedBox(width: defaultWidth * 0.05),
+        achievmentBox(8),
       ]),
     ]);
   }
 
   Column theme() {
+    ValueNotifier<int> counter = ValueNotifier<int>(0);
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        boardTheme(),
+        boardTheme(counter),
         SizedBox(width: defaultWidth * 0.075),
         Column(children: [
-          popupButtonTheme(true, "Tablero", boardTypes),
+          buttonTheme(context, counter, true, "Tablero", boardTypes),
           SizedBox(height: defaultWidth * 0.075),
-          popupButtonTheme(false, "Piezas", piecesTypes),
+          buttonTheme(context, counter, false, "Piezas", piecesTypes),
         ])
       ]),
     ]);
   }
 
-  Stack boardTheme() {
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Color(userData.boardTypeB),
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-          ),
-          height: defaultWidth * 0.3875,
-          width: defaultWidth * 0.3875,
-          child: setImageColor(
-              context, "current_board.png", Color(userData.boardTypeN)),
-        ),
-        Container(
-          margin: EdgeInsets.only(
-              top: defaultWidth * 0.12, left: defaultWidth * 0.12),
-          height: defaultWidth * 0.15,
-          width: defaultWidth * 0.15,
-          child: Image.asset("images/${userData.pieceType}/caballoN.png"),
-        ),
-      ],
-    );
+  Column activity() {
+    return Column(children: [
+      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        shortButton(context, false, "Partidas\nguardadas"),
+        SizedBox(width: defaultWidth * 0.075),
+        shortButton(context, false, "Historial\nde partidas"),
+      ]),
+    ]);
   }
 
-  SizedBox popupButtonTheme(bool isBoard, String text, List<List> list) {
-    return SizedBox(
-      width: defaultWidth * 0.3875,
-      height: defaultWidth * 0.156,
-      child: Material(
-        color: Theme.of(context).colorScheme.secondary,
-        borderRadius: const BorderRadius.all(Radius.circular(15)),
-        child: PopupMenuButton(
-          color: Theme.of(context).colorScheme.tertiary,
-          shape: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(15),
-              borderSide: BorderSide(
-                color: Theme.of(context).colorScheme.primary,
-                width: 1.25,
-              )),
-          child: Center(
-            child: Text(
-              text,
-              style: TextStyle(
-                fontSize: 19,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+  ValueListenableBuilder boardTheme(ValueNotifier counter) {
+    return ValueListenableBuilder(
+      valueListenable: counter,
+      builder: (context, value, child) {
+        return Stack(children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Color(userData.boardTypeB),
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
             ),
+            height: defaultWidth * 0.3875,
+            width: defaultWidth * 0.3875,
+            child: setImageColor(
+                context, "current_board.png", Color(userData.boardTypeN)),
           ),
-          onSelected: (value) {
-            for (int i = 0; i < list.length; i++) {
-              if (value == list[i][0]) {
-                isBoard
-                    ? changeColorBoard(list[i][1], list[i][2])
-                    : changeTypePieces(list[i][1]);
-                break;
-              }
-            }
-            setState(() {});
-          },
-          itemBuilder: (context) {
-            List<PopupMenuItem> items = List.empty(growable: true);
-            for (int i = 0; i < list.length; i++) {
-              items.add(
-                PopupMenuItem(
-                  value: list[i][0],
-                  child: isBoard
-                      ? itemPopupBoard(list[i][1], list[i][2], list[i][3])
-                      : itemPopupPieces(list[i][1], list[i][2]),
-                ),
-              );
-            }
-            return items;
-          },
-        ),
-      ),
-    );
-  }
-
-  itemPopupBoard(int boardN, int boardB, String texto) {
-    return Row(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Color(boardB),
-            borderRadius: const BorderRadius.all(Radius.circular(15)),
+          Container(
+            margin: EdgeInsets.only(
+                top: defaultWidth * 0.12, left: defaultWidth * 0.12),
+            height: defaultWidth * 0.15,
+            width: defaultWidth * 0.15,
+            child: Image.asset("images/${userData.pieceType}/caballoN.png"),
           ),
-          height: defaultWidth * 0.1,
-          width: defaultWidth * 0.1,
-          child: setImageColor(context, "posible_board.png", Color(boardN)),
-        ),
-        SizedBox(
-          width: defaultWidth * 0.05,
-        ),
-        Text(
-          texto,
-          style: TextStyle(
-            fontSize: 19,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        )
-      ],
-    );
-  }
-
-  itemPopupPieces(String type, String text) {
-    return Row(
-      children: [
-        SizedBox(
-          height: defaultWidth * 0.1,
-          width: defaultWidth * 0.1,
-          child: Image(
-            image: AssetImage("images/$type/caballoN.png"),
-          ),
-        ),
-        SizedBox(
-          width: defaultWidth * 0.05,
-        ),
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: 19,
-            color: Theme.of(context).colorScheme.primary,
-          ),
-        )
-      ],
+        ]);
+      },
     );
   }
 

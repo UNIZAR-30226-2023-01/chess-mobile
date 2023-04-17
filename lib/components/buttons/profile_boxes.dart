@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import '../profile_data.dart';
 import '../../components/visual/screen_size.dart';
 
-statisticsContainer(BuildContext context, String title, String body) {
+statisticBox(BuildContext context, String title, String body) {
   return SizedBox(
     width: defaultWidth * 0.3875,
     child: Container(
@@ -31,5 +32,14 @@ statisticsContainer(BuildContext context, String title, String body) {
         ]),
       ),
     ),
+  );
+}
+
+Image achievmentBox(int n) {
+  final UserData userData = UserData();
+  return Image.asset(
+    "images/${userData.achievments[n - 1] ? "achievment_true" : "achievment_false"}/$n.png",
+    fit: BoxFit.contain,
+    width: defaultWidth * 0.175,
   );
 }

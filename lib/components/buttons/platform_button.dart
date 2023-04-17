@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 
 class PlatformButton extends StatelessWidget {
   final String logoPath;
+  final String message;
   final Future<void> Function() onTap;
   const PlatformButton(
-      {super.key, required this.logoPath, required this.onTap});
+      {super.key,
+      required this.logoPath,
+      required this.message,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +30,20 @@ class PlatformButton extends StatelessWidget {
               horizontal: 20,
               vertical: 10,
             ),
-            child: Image.asset(
-              logoPath,
-              height: 40,
+            child: Row(
+              children: [
+                Image.asset(
+                  logoPath,
+                  height: 30,
+                ),
+                const SizedBox(
+                  width: 10,
+                ),
+                Text(
+                  message,
+                  style: const TextStyle(fontWeight: FontWeight.w500),
+                ),
+              ],
             ),
           ),
         ),

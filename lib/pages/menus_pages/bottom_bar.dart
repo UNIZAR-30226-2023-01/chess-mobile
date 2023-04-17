@@ -5,15 +5,36 @@ import 'ranking.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../components/buttons/back_button.dart';
+import '../../components/profile_data.dart';
+// import '../../components/communications/api.dart';
 
+//ignore: must_be_immutable
 class BottomBar extends StatefulWidget {
-  const BottomBar({super.key});
+  bool fromSignIn = false;
+  BottomBar({super.key});
+  BottomBar.fromSignIn({super.key}) {
+    fromSignIn = true;
+  }
 
   @override
-  State<BottomBar> createState() => _BottomBarState();
+  // ignore: no_logic_in_create_state
+  State<BottomBar> createState() {
+    if (fromSignIn) {
+      return _BottomBarState.fromSignIn();
+    } else {
+      return _BottomBarState();
+    }
+  }
 }
 
 class _BottomBarState extends State<BottomBar> {
+  _BottomBarState();
+  _BottomBarState.fromSignIn() {
+    selectedIndex = 1;
+  }
+
+  final UserData userData = UserData();
+
   static int selectedIndex = 1;
 
   static const List widgetOptions = [
@@ -32,45 +53,49 @@ class _BottomBarState extends State<BottomBar> {
             ) ??
             false;
       },
-      child: Scaffold(
-        body: Center(
-          child: widgetOptions.elementAt(selectedIndex),
-        ),
-        bottomNavigationBar: Container(
-          color: Theme.of(context).colorScheme.primary,
-          child: Padding(
-            padding: const EdgeInsets.all(20),
-            child: GNav(
-              backgroundColor: Theme.of(context).colorScheme.primary,
-              color: Colors.white,
-              activeColor: Theme.of(context).colorScheme.primary,
-              tabBackgroundColor: Theme.of(context).colorScheme.secondary,
-              gap: 20,
-              padding: const EdgeInsets.all(16),
-              tabs: const [
-                GButton(
-                  icon: MyFlutterApp.podium,
-                  text: 'CLASIFICACIÓN',
+      child: userData.isRegistered
+          ? Scaffold(
+              body: Center(
+                child: widgetOptions.elementAt(selectedIndex),
+              ),
+              bottomNavigationBar: Container(
+                color: Theme.of(context).colorScheme.primary,
+                child: Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: GNav(
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    color: Colors.white,
+                    activeColor: Theme.of(context).colorScheme.primary,
+                    tabBackgroundColor: Theme.of(context).colorScheme.secondary,
+                    gap: 20,
+                    padding: const EdgeInsets.all(16),
+                    tabs: const [
+                      GButton(
+                        icon: MyFlutterApp.podium,
+                        text: 'CLASIFICACIÓN',
+                      ),
+                      GButton(
+                        icon: MyFlutterApp.chessknight,
+                        text: 'JUEGO',
+                      ),
+                      GButton(
+                        icon: MyFlutterApp.user,
+                        text: 'PERFIL',
+                      ),
+                    ],
+                    selectedIndex: selectedIndex,
+                    onTabChange: (index) async {
+                      // int i = await apiRanking(1, 30);
+                      // print(i);
+                      setState(() {
+                        selectedIndex = index;
+                      });
+                    },
+                  ),
                 ),
-                GButton(
-                  icon: MyFlutterApp.chessknight,
-                  text: 'JUEGO',
-                ),
-                GButton(
-                  icon: MyFlutterApp.user,
-                  text: 'PERFIL',
-                ),
-              ],
-              selectedIndex: selectedIndex,
-              onTabChange: (index) {
-                setState(() {
-                  selectedIndex = index;
-                });
-              },
-            ),
-          ),
-        ),
-      ),
+              ),
+            )
+          : const Scaffold(body: HomePage()),
     );
   }
 
@@ -80,10 +105,10 @@ class _BottomBarState extends State<BottomBar> {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
-      title: const Text("Seguro que deseas salir de la sesión?"),
+      title: const Text("¿Seguro que deseas salir de la sesión?"),
       actions: [
-        backButton(context, "NO", false),
-        backButton(context, "SÍ", true),
+        backButton(context, "No", false),
+        backButton(context, "Sí", true),
       ],
     );
   }

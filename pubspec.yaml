@@ -2,7 +2,7 @@ name: ajedrez
 description: Ajedrez implementado sobre flutter.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev 
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -16,7 +16,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.1.0+1
+version: 1.1.1+1
 
 environment:
   sdk: '>=2.19.0 <3.0.0'
@@ -29,7 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
-    sdk: flutter 
+    sdk: flutter
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -43,6 +43,7 @@ dependencies:
   http: ^0.13.5
   socket_io_client: ^2.0.1
   webview_flutter: ^4.0.7
+  email_validator: ^2.0.1
 
 flutter_icons:
   ios: true
@@ -82,6 +83,8 @@ flutter:
     - images/maya/
     - images/medieval/
     - images/merida/
+    - images/achievment_true/
+    - images/achievment_false/
     - assets/launcher_icons/
     - assets/sounds/
     - assets/

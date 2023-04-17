@@ -1,5 +1,6 @@
 import 'dart:async';
 // import 'dart:convert';
+// import 'package:ajedrez/components/chessLogic/board.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
 import 'package:ajedrez/components/profile_data.dart';
 // import 'package:ajedrez/components/profile_data.dart';
@@ -8,48 +9,41 @@ import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'package:socket_io_client/socket_io_client.dart';
 
-import 'dart:math';
+import '../popups/draw_dialog.dart';
+import '../popups/possible_draw.dart';
 import '../popups/winner_dialog.dart';
 import '../../pages/game_pages/game.dart';
-// void searchGame() {
-//   // Dart client
-//   IO.Socket socket = IO.io('http://localhost:4001');
-//   socket.onConnect((_) {
-//     print('connect');
-//   });
-//   var jsonData = {"token": "adasdada", "time": 180, "user": "Fernando"};
 
-//   String jsonString = jsonEncode(jsonData);
-//   socket.on('error', (data) => print(data));
-//   socket.emit('find_game', jsonData);
-//   // socket.on('event', (data) => print(data));
-//   socket.on('game_state', (data) => print(data));
-//   socket.onDisconnect((_) => print('disconnect'));
-//   // socket.on('fromServer', (_) => print(_));
-// }
+class Arguments {
+  int time = 300;
+  int increment = 5;
+  String hostColor = "RANDOM";
+  int difficulty = 1;
+  String roomID = "roomID";
 
-String _nombreRandom() {
-  Random random = Random();
-  int randomNumber = random
-      .nextInt(26); // generates a random integer between 0 and 25 (inclusive)
-  String randomChar = String.fromCharCode(randomNumber +
-      65); // converts the random integer to an uppercase character (A-Z)
-  return "Fernando$randomChar"; // prints a random character
+  Arguments();
+  Arguments.forCOMP(this.time);
+  Arguments.forAI(this.time, this.increment, this.hostColor, this.difficulty);
+  Arguments.forSPECTATOR(this.roomID);
+  Arguments.forCREATECUSTOM(this.time, this.increment, this.hostColor);
+  Arguments.forJOINCUSTOM(this.roomID);
 }
 
 class GameSocket {
   static final GameSocket _singleton = GameSocket._internal();
   io.Socket socket = io.io(
       //no borrar la linea comentada esta para el desarrollo en la red donde esta hosteado el backend
-      // 'http://192.168.1.250:4001',
+      // 'http://192.168.0.249:4001',
       'http://reign-chess.duckdns.org:4001/',
       OptionBuilder().setTransports(['websocket']).setExtraHeaders({
         'token': UserData().token
       }) // for Flutter or Dart VM SI BORRAS ESTO NO VA EL SOCKET :D
           .build());
   String room = "-1";
+  List pendingMovements = [];
+  bool spectatorMode = false;
   bool iAmWhite = false;
-  String name = _nombreRandom();
+  int timer = 300;
   factory GameSocket() {
     return _singleton;
   }
@@ -57,29 +51,60 @@ class GameSocket {
   GameSocket._internal();
 }
 
-Future<void> startGame(BuildContext context, String type) {
+Future<void> startGame(BuildContext context, String type, Arguments arguments) {
   GameSocket s = GameSocket();
   Completer completer = Completer<void>();
   s.socket.onConnect((_) {
     // print("CONEXIÓN ESTABLECIDA");
   });
-  // var jsonData = {"token": "adasdada", "time": 180, "user": s.name};
+
   Map jsonData;
   switch (type) {
     case "AI":
       {
         jsonData = {
           "gameType": "AI",
-          "time": 300,
-          "increment": 5,
-          "hostColor": "RANDOM",
-          "difficulty": 3
+          "time": arguments.time,
+          "increment": arguments.increment,
+          "hostColor": arguments.hostColor,
+          "difficulty": arguments.difficulty
         };
       }
       break;
     case "COMP":
       {
-        jsonData = {"gameType": "COMPETITIVE", "time": 300};
+        jsonData = {"gameType": "COMPETITIVE", "time": arguments.time};
+      }
+      break;
+    case "CREATECUSTOM":
+      {
+        jsonData = {
+          "gameType": "CUSTOM",
+          "time": arguments.time,
+          "increment": arguments.increment,
+          "hostColor": arguments.hostColor
+        };
+        s.socket.once(
+          'room_created',
+          (data) => {
+            s.room = data[0]["roomID"],
+          },
+        );
+        completer.complete();
+        s.socket.emit('find_room', jsonData);
+      }
+      return completer.future;
+    case "JOINCUSTOM":
+      {
+        jsonData = {"gameType": "CUSTOM", "roomID": arguments.roomID};
+      }
+      break;
+    case "SPECTATOR":
+      {
+        jsonData = {"roomID": arguments.roomID};
+        s.socket.emit('join_room', jsonData);
+        s.room = arguments.roomID;
+        s.spectatorMode = true;
       }
       break;
     default:
@@ -88,60 +113,99 @@ Future<void> startGame(BuildContext context, String type) {
         // print("Animal has metido mal el tipo");
       }
   }
-
-  // print("CONEXIÓN ESTABLECIDA2");
-  s.socket.on(
-      'error',
-      (data) => {
-            // print(data)
-          });
+  var movements = [];
   s.socket.once(
       'room',
       (data) => {
-            s.room = data[0]["roomID"],
-            s.iAmWhite = data[0]["color"] == "LIGHT",
+            if (type != "SPECTATOR")
+              {
+                s.room = data[0]["roomID"],
+                s.iAmWhite = data[0]["color"] == "LIGHT",
+              }
+            else
+              {
+                movements = data[0]["moves"],
+                s.pendingMovements = movements,
+                s.iAmWhite = true
+              },
+            s.timer = data[0]["initialTimer"],
+            // print(data),
+            // print(s.room),
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const GamePage()),
             ),
             completer.complete()
           });
-  s.socket.emit('find_room', jsonData);
-  return completer.future;
-}
-
-void listenGame(BuildContext context) {
-  GameSocket s = GameSocket();
-  // Dart client
+  // print("CONEXIÓN ESTABLECIDA2");
   s.socket.on(
       'error',
       (data) => {
             // print(data)
           });
+  if (type != "SPECTATOR" && type != "WAITCUSTOM") {
+    s.socket.emit('find_room', jsonData);
+  }
+
+  return completer.future;
+}
+
+void listenGame(BuildContext context) {
+  GameSocket s = GameSocket();
+  bool espec = s.spectatorMode;
+
   s.socket.on(
-      'game_state',
+      'error',
       (data) => {
-            // print(data)
+            // print("ERROR" + data)
           });
   s.socket.on(
       'moved',
       (data) => {
-            if (data[0]["turn"] == (!s.iAmWhite ? "DARK" : "LIGHT"))
+            // print(espec),
+            if (!espec)
               {
-                simulateMovement(decodeMovement(data[0]["move"])),
-              },
-            // print(data),
+                if (data[0]["turn"] == (!s.iAmWhite ? "DARK" : "LIGHT"))
+                  {
+                    simulateMovement(decodeMovement(data[0]["move"])),
+                  },
+              }
+            else
+              {
+                // print("funciona"),
+              simulateMovement(decodeMovement(data[0]["move"])),}
           });
   s.socket.on(
       'game_over',
       (data) => {
+            // print(data),
             if (data[0]["endState"] == "CHECKMATE" &&
                 (data[0]["winner"] == (!s.iAmWhite ? "LIGHT" : "DARK")))
               {
-                alertWinner(context, !s.iAmWhite),
+                alertWinner(context, !s.iAmWhite,
+                    "Ha ganado el jugador con las fichas "),
               },
-
-            // print(data),
+            if (data[0]["endState"] == "SURRENDER" &&
+                (data[0]["winner"] == (!s.iAmWhite ? "LIGHT" : "DARK")))
+              {
+                alertWinner(context, s.iAmWhite,
+                    "Se ha rendido el jugador con las fichas "),
+              },
+            if (data[0]["endState"] == "TIMEOUT")
+              {
+                alertWinner(context, !s.iAmWhite,
+                    "Ha ganado por tiempo el jugador con las fichas "),
+              },
+            if (data[0]["endState"] == "DRAW")
+              {
+                alertDraw(context),
+              },
+          });
+  s.socket.on(
+      'voted_draw',
+      (data) => {
+            if (data[0]["color"] == (s.iAmWhite ? "DARK" : "LIGHT"))
+              alertPossibleDraw(context)
           });
   s.socket.onDisconnect((_) => {
         // print('disconnect')
@@ -151,4 +215,15 @@ void listenGame(BuildContext context) {
       (_) => {
             //print(_)
           });
+}
+
+void surrender() {
+  GameSocket s = GameSocket();
+  s.socket.emit('surrender', {});
+}
+
+void draw() {
+  GameSocket s = GameSocket();
+  var jsonData = {"color": s.iAmWhite ? "LIGHT" : "DARK"};
+  s.socket.emit('vote_draw', jsonData);
 }

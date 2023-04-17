@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
 import '../visual/screen_size.dart';
 
-TextButton playButton(BuildContext context, Function() action) {
-  return TextButton(
-    onPressed: action,
-    child: Container(
-      width: defaultWidth * 0.3,
-      padding: const EdgeInsets.symmetric(vertical: 12.5),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
-        borderRadius: const BorderRadius.all(Radius.circular(8)),
-      ),
-      child: Center(
+Material playButton(BuildContext context, String text, Function() action) {
+  return Material(
+    color: Theme.of(context).colorScheme.primary,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(8)),
+    ),
+    child: InkWell(
+      borderRadius: const BorderRadius.all(Radius.circular(8)),
+      onTap: action,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: defaultWidth * 0.03,
+          horizontal: defaultWidth * 0.06,
+        ),
         child: Text(
-          "JUGAR",
+          text,
+          textAlign: TextAlign.center,
           style: TextStyle(
             fontSize: 19,
             fontWeight: FontWeight.bold,

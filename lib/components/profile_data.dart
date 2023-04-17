@@ -9,6 +9,7 @@ class UserData {
   bool shiny = true;
   bool isRegistered = false;
   String id = "", username = "Grace Hopper", email = "Ghopper@mail";
+  List<bool> achievments = [true, true, true, true, true, false, false, false];
   int boardTypeN = maderaN;
   int boardTypeB = maderaB;
   String pieceType = "merida";

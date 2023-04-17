@@ -6,7 +6,9 @@ SizedBox textButton(
   return SizedBox(
     width: defaultWidth * 0.85,
     child: Material(
-      color: type ? Theme.of(context).colorScheme.primary : Colors.grey[50],
+      color: type
+          ? Theme.of(context).colorScheme.primary
+          : Theme.of(context).colorScheme.background,
       shape: RoundedRectangleBorder(
         borderRadius: const BorderRadius.all(Radius.circular(8)),
         side: BorderSide(
@@ -26,7 +28,7 @@ SizedBox textButton(
               fontSize: 19,
               fontWeight: FontWeight.bold,
               color: type
-                  ? Colors.grey[50]
+                  ? Theme.of(context).colorScheme.background
                   : Theme.of(context).colorScheme.primary,
             ),
           ),

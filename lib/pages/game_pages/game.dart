@@ -22,6 +22,7 @@ class GamePageState extends State<GamePage> {
   void dispose() {
     super.dispose();
     resetSingleton(Random().nextBool());
+    resetSocket();
   }
 
   late CustomTimer _player1Timer;
@@ -52,6 +53,7 @@ class GamePageState extends State<GamePage> {
 
   @override
   Widget build(BuildContext context) {
+    // print("gameStart");
     GameSocket s = GameSocket();
     String idR = s.room;
     listenGame(context);

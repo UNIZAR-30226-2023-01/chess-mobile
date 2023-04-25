@@ -48,7 +48,26 @@ class GameSocket {
     return _singleton;
   }
 
+  void reset() {
+    socket = io.io(
+      // 'http://192.168.0.249:4001',
+      'http://reign-chess.duckdns.org:4001/',
+      OptionBuilder().setTransports(['websocket']).setExtraHeaders({
+        'token': UserData().token
+      }).enableForceNew().build());
+    room = "-1";
+    pendingMovements = [];
+    spectatorMode = false;
+    iAmWhite = false;
+    timer = 300;
+  }
+
   GameSocket._internal();
+}
+
+void resetSocket() {
+  GameSocket socket = GameSocket();
+  socket.reset();
 }
 
 Future<void> startGame(BuildContext context, String type, Arguments arguments) {
@@ -162,7 +181,6 @@ void listenGame(BuildContext context) {
   s.socket.on(
       'moved',
       (data) => {
-            // print(espec),
             if (!espec)
               {
                 if (data[0]["turn"] == (!s.iAmWhite ? "DARK" : "LIGHT"))

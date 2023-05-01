@@ -186,21 +186,20 @@ Future<int> apiRanking(int page, int limit) async {
         (X509Certificate cert, String host, int port) => true;
 
   try {
-    var request =
-        await client.postUrl(Uri.parse('https://api.gracehopper.xyz/v1/users'));
+    var request = await client.getUrl(Uri.parse(
+        'https://api.gracehopper.xyz/v1/users?page=$page&limit=$limit'));
     // Set headers
     request.headers.add('Content-Type', 'application/json');
+    request.headers.add('Cookie', 'api-auth=${UserData().token}');
 
-    // Create JSON body
-    var body = jsonEncode({'page': page, 'limit': limit});
+    // var response = await request.close();
+    // var responseBody = await response.transform(utf8.decoder).join();
+    // var responseBodyDictionary = jsonDecode(responseBody);
 
-    // Set body
-    request.write(body);
-    var response = await request.close();
-    var responseBody = await response.transform(utf8.decoder).join();
-    var responseBodyDictionary = jsonDecode(responseBody);
-    // print(responseBody);
-    return responseBodyDictionary["status"]["error_code"];
+    // print(responseBodyDictionary);
+
+    return 0; //aqui ns que necesitas q devuelva
+    // return responseBodyDictionary["status"]["error_code"];
   } catch (e) {
     // print(e.toString());
     return -1;

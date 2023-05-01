@@ -1,3 +1,4 @@
+import 'package:ajedrez/components/communications/api.dart';
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
 
@@ -18,6 +19,8 @@ class _RankingPageState extends State<RankingPage> {
   Widget build(BuildContext context) {
     double defaultHeight = MediaQuery.of(context).size.height;
     double defaultWidth = MediaQuery.of(context).size.width;
+
+    apiRanking(1, 15);
 
     var paginas = List.generate(numPaginas, (index) {
       return Container(

@@ -2,6 +2,7 @@ import 'dart:async';
 // import 'dart:convert';
 // import 'package:ajedrez/components/chessLogic/board.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
+import 'package:ajedrez/components/popups/save_dialog.dart';
 import 'package:ajedrez/components/profile_data.dart';
 // import 'package:ajedrez/components/profile_data.dart';
 // import 'package:ajedrez/components/visual/colores_tablero.dart';
@@ -50,11 +51,13 @@ class GameSocket {
 
   void reset() {
     socket = io.io(
-      // 'http://192.168.0.249:4001',
-      'http://reign-chess.duckdns.org:4001/',
-      OptionBuilder().setTransports(['websocket']).setExtraHeaders({
-        'token': UserData().token
-      }).enableForceNew().build());
+        // 'http://192.168.0.249:4001',
+        'http://reign-chess.duckdns.org:4001/',
+        OptionBuilder()
+            .setTransports(['websocket'])
+            .setExtraHeaders({'token': UserData().token})
+            .enableForceNew()
+            .build());
     room = "-1";
     pendingMovements = [];
     spectatorMode = false;
@@ -191,7 +194,8 @@ void listenGame(BuildContext context) {
             else
               {
                 // print("funciona"),
-              simulateMovement(decodeMovement(data[0]["move"])),}
+                simulateMovement(decodeMovement(data[0]["move"])),
+              }
           });
   s.socket.on(
       'game_over',
@@ -228,6 +232,10 @@ void listenGame(BuildContext context) {
   s.socket.onDisconnect((_) => {
         // print('disconnect')
       });
+  s.socket.on('game_saved', (data) => {alertSave(context)});
+  s.socket.onDisconnect((_) => {
+        // print('disconnect')
+      });
   s.socket.on(
       'fromServer',
       (_) => {
@@ -244,4 +252,11 @@ void draw() {
   GameSocket s = GameSocket();
   var jsonData = {"color": s.iAmWhite ? "LIGHT" : "DARK"};
   s.socket.emit('vote_draw', jsonData);
+}
+
+void save() {
+  GameSocket s = GameSocket();
+  // var jsonData = {"color": s.iAmWhite ? "LIGHT" : "DARK"};
+  // s.socket.emit('vote_save', jsonData);
+  s.socket.emit('vote_save');
 }

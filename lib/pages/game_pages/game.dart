@@ -1,3 +1,4 @@
+import 'package:ajedrez/components/buttons/save_button.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
 import 'package:ajedrez/components/chessLogic/timer.dart';
 import 'package:ajedrez/components/visual/screen_size.dart';
@@ -106,7 +107,8 @@ class GamePageState extends State<GamePage> {
                 _player2Timer,
               ],
             ),
-            SizedBox(height: defaultWidth * 0.15),
+            // SizedBox(height: defaultWidth * 0.15),
+            saveButton(context),
             Text(
               "Código de partida: $idR",
               style: TextStyle(

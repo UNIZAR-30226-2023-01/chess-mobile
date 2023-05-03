@@ -86,7 +86,12 @@ class _BottomBarState extends State<BottomBar> {
                     selectedIndex: selectedIndex,
                     onTabChange: (index) async {
                       if (index == 2) {
-                        await apiGames(1, 50);
+                        restartInfoGames();
+                        int i = 1;
+                        int next = await apiGames(i++, 50);
+                        while (next == 1) {
+                          next = await apiGames(i++, 50);
+                        }
                       }
                       // int i = await apiRanking(1, 30);
                       // print(i);

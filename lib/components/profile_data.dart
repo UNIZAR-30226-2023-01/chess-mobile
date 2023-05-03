@@ -65,9 +65,10 @@ void assignIsRegistred(bool isRegistered) {
   userData.isRegistered = isRegistered;
 }
 
-void restartSavedGame() {
+void restartInfoGames() {
   UserData userData = UserData();
   userData.savedGames = List.empty(growable: true);
+  userData.playedGames = List.empty(growable: true);
 }
 
 void addSavedGame(GameData gameData) {

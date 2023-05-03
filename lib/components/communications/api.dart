@@ -233,7 +233,6 @@ Future<int> apiGames(int page, int limit) async {
     // print(data);
     // print(responseBodyDictionary);
     List<dynamic> gameList = data;
-    restartSavedGame();
     for (var element in gameList) {
       GameData gameData = GameData(
           element["id"],
@@ -258,7 +257,12 @@ Future<int> apiGames(int page, int limit) async {
         addPlayedGame(gameData);
       }
     }
-    return 0; //aqui ns que necesitas q devuelva
+    if (responseBodyDictionary["meta"]["nextPage"] == null) {
+      return 0;
+    } else {
+      return 1;
+    }
+    //aqui ns que necesitas q devuelva
     // return responseBodyDictionary["status"]["error_code"];
   } catch (e) {
     // print(e.toString());

@@ -1,8 +1,8 @@
 import 'package:ajedrez/components/communications/api.dart';
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
-
 import '../../components/visual/custom_shape.dart';
+import '../../components/ranking_data.dart';
 
 class RankingPage extends StatefulWidget {
   const RankingPage({super.key});
@@ -12,17 +12,15 @@ class RankingPage extends StatefulWidget {
 }
 
 class _RankingPageState extends State<RankingPage> {
-  final int itemsPorPagina = 25;
-  final int numPaginas = 25;
   int paginaActual = 0;
+  RankingData rankingData = RankingData();
+
   @override
   Widget build(BuildContext context) {
     double defaultHeight = MediaQuery.of(context).size.height;
     double defaultWidth = MediaQuery.of(context).size.width;
 
-    apiRanking(1, 15);
-
-    var paginas = List.generate(numPaginas, (index) {
+    var paginas = List.generate(RankingData.numPaginas, (index) {
       return Container(
         color: Theme.of(context).colorScheme.background,
         child: Column(
@@ -74,7 +72,7 @@ class _RankingPageState extends State<RankingPage> {
                                               2.5, "Grace_Hopper"),
                                         ),
                                         Text(
-                                          "Grace Hopper",
+                                          RankingData.username[1],
                                           overflow: TextOverflow.visible,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
@@ -86,7 +84,7 @@ class _RankingPageState extends State<RankingPage> {
                                           ),
                                         ),
                                         Text(
-                                          "2556",
+                                          RankingData.elo[1].toString(),
                                           style: TextStyle(
                                             fontSize: 19,
                                             fontWeight: FontWeight.w900,
@@ -121,7 +119,7 @@ class _RankingPageState extends State<RankingPage> {
                                               3, "Grace_Hopper"),
                                         ),
                                         Text(
-                                          "Grace Hopper",
+                                          RankingData.username[0],
                                           overflow: TextOverflow.visible,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
@@ -133,7 +131,7 @@ class _RankingPageState extends State<RankingPage> {
                                           ),
                                         ),
                                         Text(
-                                          "2556",
+                                          RankingData.elo[0].toString(),
                                           style: TextStyle(
                                             fontSize: 19,
                                             fontWeight: FontWeight.w900,
@@ -170,7 +168,7 @@ class _RankingPageState extends State<RankingPage> {
                                               2.5, "Grace_Hopper"),
                                         ),
                                         Text(
-                                          "Grace Hopper",
+                                          RankingData.username[2],
                                           overflow: TextOverflow.visible,
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
@@ -182,7 +180,7 @@ class _RankingPageState extends State<RankingPage> {
                                           ),
                                         ),
                                         Text(
-                                          "2556",
+                                          RankingData.elo[2].toString(),
                                           style: TextStyle(
                                             fontSize: 19,
                                             fontWeight: FontWeight.w900,
@@ -212,9 +210,12 @@ class _RankingPageState extends State<RankingPage> {
             Expanded(
               child: ListView.builder(
                 padding: EdgeInsets.zero,
-                itemCount:
-                    paginaActual == 0 ? itemsPorPagina - 4 : itemsPorPagina,
-                itemBuilder: ((context, index) => Center(
+                itemCount: paginaActual == 0
+                    ? RankingData.itemsPorPagina - 3
+                    : RankingData.itemsPorPagina,
+                itemBuilder: ((context, index) {
+                  if (index < RankingData.username.length) {
+                    return Center(
                       child: Container(
                         margin: EdgeInsets.only(bottom: defaultHeight * 0.02),
                         height: defaultHeight * 0.1,
@@ -235,7 +236,7 @@ class _RankingPageState extends State<RankingPage> {
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Text(
-                                  "#${(index) + (paginaActual * itemsPorPagina) + (paginaActual == 0 ? 4 : 0)}",
+                                  "#${(index) + (paginaActual * RankingData.itemsPorPagina) + (paginaActual == 0 ? 4 : 1)}",
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
                                     fontSize: 21,
@@ -258,7 +259,8 @@ class _RankingPageState extends State<RankingPage> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: defaultWidth * 0.03),
                               child: Text(
-                                "Grace Hopper Prueba Largo",
+                                RankingData.username[
+                                    paginaActual == 0 ? index + 3 : index],
                                 overflow: TextOverflow.visible,
                                 textAlign: TextAlign.left,
                                 style: TextStyle(
@@ -271,7 +273,9 @@ class _RankingPageState extends State<RankingPage> {
                             SizedBox(
                               width: (defaultWidth * 0.85) * 0.15,
                               child: Text(
-                                "2556",
+                                RankingData
+                                    .elo[paginaActual == 0 ? index + 3 : index]
+                                    .toString(),
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   fontSize: 19,
@@ -283,7 +287,11 @@ class _RankingPageState extends State<RankingPage> {
                           ],
                         ),
                       ),
-                    )),
+                    );
+                  } else {
+                    return null;
+                  }
+                }),
               ),
             ),
           ],
@@ -306,7 +314,7 @@ class _RankingPageState extends State<RankingPage> {
         ),
         margin: EdgeInsets.zero,
         child: NumberPaginator(
-          numberPages: numPaginas,
+          numberPages: RankingData.numPaginas,
           config: NumberPaginatorUIConfig(
             buttonSelectedBackgroundColor:
                 Theme.of(context).colorScheme.secondary,
@@ -316,10 +324,14 @@ class _RankingPageState extends State<RankingPage> {
                 Theme.of(context).colorScheme.primary,
             buttonUnselectedForegroundColor: Colors.white,
           ),
-          onPageChange: (index) {
-            setState(() {
-              paginaActual = index;
-            });
+          onPageChange: (index) async {
+            RankingData.restart();
+            await apiRanking(index + 1, RankingData.itemsPorPagina);
+            if (context.mounted) {
+              setState(() {
+                paginaActual = index;
+              });
+            }
           },
         ),
       ),

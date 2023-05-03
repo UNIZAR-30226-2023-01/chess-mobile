@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../components/buttons/back_button.dart';
 import '../../components/profile_data.dart';
+import '../../components/ranking_data.dart';
 import '../../components/communications/api.dart';
 
 //ignore: must_be_immutable
@@ -93,11 +94,18 @@ class _BottomBarState extends State<BottomBar> {
                           next = await apiGames(i++, 50);
                         }
                       }
+                      if (index == 0) {
+                        RankingData.restart();
+                        RankingData.numPaginas =
+                            await apiRanking(1, RankingData.itemsPorPagina);
+                      }
                       // int i = await apiRanking(1, 30);
                       // print(i);
-                      setState(() {
-                        selectedIndex = index;
-                      });
+                      if (context.mounted) {
+                        setState(() {
+                          selectedIndex = index;
+                        });
+                      }
                     },
                   ),
                 ),

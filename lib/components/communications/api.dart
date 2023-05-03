@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:ajedrez/components/profile_data.dart';
 import 'package:ajedrez/components/game_data.dart';
+import 'package:ajedrez/components/ranking_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 // import 'package:webview_flutter/webview_flutter.dart';
@@ -193,13 +194,19 @@ Future<int> apiRanking(int page, int limit) async {
     request.headers.add('Content-Type', 'application/json');
     request.headers.add('Cookie', 'api-auth=${UserData().token}');
 
-    // var response = await request.close();
-    // var responseBody = await response.transform(utf8.decoder).join();
-    // var responseBodyDictionary = jsonDecode(responseBody);
-
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
+    var responseBodyDictionary = jsonDecode(responseBody);
+    var data = responseBodyDictionary["data"];
+    // print(data);
     // print(responseBodyDictionary);
+    List<dynamic> rankingList = data;
+    for (var element in rankingList) {
+      RankingData.add(element["avatar"], element["username"], element["elo"]);
+    }
 
-    return 0; //aqui ns que necesitas q devuelva
+    return responseBodyDictionary["meta"]["pages"];
+    //aqui ns que necesitas q devuelva
     // return responseBodyDictionary["status"]["error_code"];
   } catch (e) {
     // print(e.toString());

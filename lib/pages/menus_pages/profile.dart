@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ajedrez/components/popups/saved_games.dart';
+import 'package:ajedrez/components/popups/played_games.dart';
 import '../../components/profile_data.dart';
 import '../../components/visual/custom_shape.dart';
 import '../../components/visual/customization_constants.dart';
@@ -18,6 +20,8 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   final UserData userData = UserData();
+  final SavedGames savedGames = SavedGames();
+  final PlayedGames playedGames = PlayedGames();
 
   @override
   Widget build(BuildContext context) {
@@ -187,9 +191,11 @@ class _ProfilePageState extends State<ProfilePage> {
   Column activity() {
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        shortButton(context, false, "Partidas\nguardadas"),
+        shortButton(context, false, "Partidas\nguardadas",
+            () => savedGames.popupSAVEDGAMES(context)),
         SizedBox(width: defaultWidth * 0.075),
-        shortButton(context, false, "Historial\nde partidas"),
+        shortButton(context, false, "Historial\nde partidas",
+            () => playedGames.popupPLAYEDGAMES(context)),
       ]),
     ]);
   }

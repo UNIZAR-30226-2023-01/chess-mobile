@@ -3,6 +3,7 @@
 //de momento se queda como singleton :D
 
 import 'package:ajedrez/components/visual/customization_constants.dart';
+import 'game_data.dart';
 
 class UserData {
   static final UserData _singleton = UserData._internal();
@@ -13,6 +14,8 @@ class UserData {
   int boardTypeN = maderaN;
   int boardTypeB = maderaB;
   String pieceType = "merida";
+  List<GameData> savedGames = List.empty(growable: true);
+  List<GameData> playedGames = List.empty(growable: true);
   String token = "";
   factory UserData() {
     return _singleton;
@@ -60,4 +63,19 @@ void assignEmail(String email) {
 void assignIsRegistred(bool isRegistered) {
   UserData userData = UserData();
   userData.isRegistered = isRegistered;
+}
+
+void restartSavedGame() {
+  UserData userData = UserData();
+  userData.savedGames = List.empty(growable: true);
+}
+
+void addSavedGame(GameData gameData) {
+  UserData userData = UserData();
+  userData.savedGames.insert(0, gameData);
+}
+
+void addPlayedGame(GameData gameData) {
+  UserData userData = UserData();
+  userData.playedGames.insert(0, gameData);
 }

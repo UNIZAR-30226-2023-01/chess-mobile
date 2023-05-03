@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'dart:io';
 import 'package:ajedrez/components/profile_data.dart';
+import 'package:ajedrez/components/game_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 // import 'package:webview_flutter/webview_flutter.dart';
@@ -232,10 +233,29 @@ Future<int> apiGames(int page, int limit) async {
     // print(data);
     // print(responseBodyDictionary);
     List<dynamic> gameList = data;
+    restartSavedGame();
     for (var element in gameList) {
+      GameData gameData = GameData(
+          element["id"],
+          element["lightPlayer"],
+          element["darkPlayer"],
+          element["board"],
+          element["moves"],
+          element["times"]["initial"],
+          element["times"]["increment"],
+          element["times"]["lightTimer"],
+          element["times"]["darkTimer"],
+          element["gameType"],
+          element["createdAt"],
+          element["updatedAt"]);
+      // print(element);
       if (element["state"] == "PAUSED") {
         // print(element);
-        //DEscomentar el print
+        addSavedGame(gameData);
+      }
+      if (element["state"] == "FINISHED") {
+        // print(element);
+        addPlayedGame(gameData);
       }
     }
     return 0; //aqui ns que necesitas q devuelva

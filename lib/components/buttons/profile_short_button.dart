@@ -1,9 +1,8 @@
-import 'package:ajedrez/components/communications/api.dart';
 import 'package:flutter/material.dart';
 import '../visual/screen_size.dart';
 
 SizedBox shortButton(
-    BuildContext context, bool type, String text /*, Function() action*/) {
+    BuildContext context, bool type, String text, Function() action) {
   return SizedBox(
     width: defaultWidth * 0.3875,
     child: Material(
@@ -13,10 +12,7 @@ SizedBox shortButton(
       borderRadius: const BorderRadius.all(Radius.circular(15)),
       child: InkWell(
         borderRadius: const BorderRadius.all(Radius.circular(15)),
-        onTap: //action,
-            () async {
-          await apiGames(1, 50);
-        },
+        onTap: action,
         child: SizedBox(
           height: defaultWidth * 0.2,
           child: Center(

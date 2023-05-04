@@ -187,8 +187,11 @@ class Custom {
             ),
             SizedBox(height: defaultWidth * 0.05),
             SizedBox(
-                height: defaultWidth * 0.3,
-                child: Image.asset('images/waiting.gif')),
+              height: defaultWidth * 0.3,
+              child: Image.asset('images/waiting.gif'),
+            ),
+            SizedBox(height: defaultWidth * 0.05),
+            playButton(context, "Cancelar", () => null),
           ]),
         ),
       ),

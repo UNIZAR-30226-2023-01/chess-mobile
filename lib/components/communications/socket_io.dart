@@ -165,7 +165,7 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
       (data) => {
             // print(data)
           });
-  if (type != "SPECTATOR" && type != "WAITCUSTOM") {
+  if (type != "SPECTATOR" && type != "WAITCUSTOM" && type != "") {
     s.socket.emit('find_room', jsonData);
   }
 
@@ -259,4 +259,32 @@ void save() {
   // var jsonData = {"color": s.iAmWhite ? "LIGHT" : "DARK"};
   // s.socket.emit('vote_save', jsonData);
   s.socket.emit('vote_save');
+}
+
+Future<void> resume(String roomID, BuildContext context) async {
+  GameSocket s = GameSocket();
+  Completer completer = Completer<void>();
+  s.socket.on(
+      'error',
+      (data) => {
+            // print(data)
+          });
+  s.socket.once(
+      'room',
+      (data) => {
+            s.room = data[0]["roomID"],
+            s.iAmWhite = data[0]["color"] == "LIGHT",
+
+            s.timer = data[0]["initialTimer"],
+            // print(data),
+            // print(s.room),
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const GamePage()),
+            ),
+            completer.complete()
+          });
+  var jsonData = {"gameID": roomID};
+  s.socket.emit("resume", jsonData);
+  return completer.future;
 }

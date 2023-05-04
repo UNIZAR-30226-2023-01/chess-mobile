@@ -1,3 +1,4 @@
+import 'package:ajedrez/components/communications/socket_io.dart';
 import 'package:flutter/material.dart';
 import '../visual/screen_size.dart';
 import '../buttons/home_play_button.dart';
@@ -50,8 +51,13 @@ class SavedGames {
           ),
         ),
         SizedBox(height: defaultWidth * 0.05),
-        playButton(context, "Restaurar", () => null),
+        playButton(
+            context, "Restaurar", () => _handleTapRes(gameData.id, context)),
       ]),
     );
+  }
+
+  void _handleTapRes(String id, BuildContext context) async {
+    await resume(id, context);
   }
 }

@@ -2,6 +2,7 @@ import 'package:ajedrez/components/buttons/save_button.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
 import 'package:ajedrez/components/chessLogic/timer.dart';
 import 'package:ajedrez/components/visual/screen_size.dart';
+import '../../components/popups/back.dart';
 
 ///import 'package:ajedrez/components/profile_data.dart';
 import 'package:flutter/material.dart';
@@ -68,56 +69,61 @@ class GamePageState extends State<GamePage> {
     }
     BoardData().spectatorMode = s.spectatorMode;
 
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.primary,
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: defaultWidth * 0.075),
-            !s.spectatorMode
-                ? Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      surrenderButton(context),
-                      drawButton(context),
-                    ],
-                  )
-                : Container(),
-            SizedBox(height: defaultWidth * 0.075),
-            Expanded(
-              flex: 4,
+    return WillPopScope(
+      onWillPop: () async {
+        return false;
+      },
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        body: SafeArea(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: defaultWidth * 0.075),
+              !s.spectatorMode
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        surrenderButton(context),
+                        drawButton(context),
+                      ],
+                    )
+                  : Container(),
+              SizedBox(height: defaultWidth * 0.075),
+              Expanded(
+                flex: 4,
 
-              /// Devuelve una tabla de 64 elementos ordenados por filas de 8
-              child: GridView.builder(
-                itemCount: 64,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 8),
-                itemBuilder: (BuildContext context, int index) {
-                  /// Cada elemento es una casilla
-                  return Square(index: index);
-                },
+                /// Devuelve una tabla de 64 elementos ordenados por filas de 8
+                child: GridView.builder(
+                  itemCount: 64,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 8),
+                  itemBuilder: (BuildContext context, int index) {
+                    /// Cada elemento es una casilla
+                    return Square(index: index);
+                  },
+                ),
               ),
-            ),
-            SizedBox(height: defaultWidth * 0.15),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _player1Timer,
-                _player2Timer,
-              ],
-            ),
-            // SizedBox(height: defaultWidth * 0.15),
-            saveButton(context),
-            Text(
-              "Código de partida: $idR",
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.secondary,
-                fontSize: 19,
+              SizedBox(height: defaultWidth * 0.15),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _player1Timer,
+                  _player2Timer,
+                ],
               ),
-            ),
-            SizedBox(height: defaultWidth * 0.075),
-          ],
+              // SizedBox(height: defaultWidth * 0.15),
+              saveButton(context),
+              Text(
+                "Código de partida: $idR",
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.secondary,
+                  fontSize: 19,
+                ),
+              ),
+              SizedBox(height: defaultWidth * 0.075),
+            ],
+          ),
         ),
       ),
     );

@@ -4,7 +4,7 @@ import 'profile.dart';
 import 'ranking.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import '../../components/buttons/back_button.dart';
+import '../../components/popups/back.dart';
 import '../../components/profile_data.dart';
 import '../../components/ranking_data.dart';
 import '../../components/communications/api.dart';
@@ -50,7 +50,9 @@ class _BottomBarState extends State<BottomBar> {
       onWillPop: () async {
         return await showDialog(
               context: context,
-              builder: (BuildContext context) => popupBack(),
+              builder: (BuildContext context) =>
+                  // api sign out donde el null
+                  popupBack(context),
             ) ??
             false;
       },
@@ -112,20 +114,6 @@ class _BottomBarState extends State<BottomBar> {
               ),
             )
           : const Scaffold(body: HomePage()),
-    );
-  }
-
-  AlertDialog popupBack() {
-    return AlertDialog(
-      backgroundColor: Theme.of(context).colorScheme.tertiary,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-      ),
-      title: const Text("¿Seguro que deseas salir de la sesión?"),
-      actions: [
-        backButton(context, "No", false),
-        backButton(context, "Sí", true),
-      ],
     );
   }
 }

@@ -2,9 +2,8 @@ import 'package:ajedrez/components/buttons/save_button.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
 import 'package:ajedrez/components/chessLogic/timer.dart';
 import 'package:ajedrez/components/visual/screen_size.dart';
-import '../../components/popups/back.dart';
 
-///import 'package:ajedrez/components/profile_data.dart';
+//import 'package:ajedrez/components/profile_data.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import '../../components/buttons/draw_button.dart';

@@ -244,7 +244,6 @@ void listenGame(BuildContext context) {
 }
 
 void surrender() {
-  print("si");
   GameSocket s = GameSocket();
   s.socket.emit('surrender', {});
 }

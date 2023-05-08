@@ -142,9 +142,9 @@ class _ProfilePageState extends State<ProfilePage> {
       ]),
       SizedBox(height: defaultWidth * 0.075),
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        statisticBox(context, "Win rate", "78%"),
+        statisticBox(context, "Ratio de victorias", "78%"),
         SizedBox(width: defaultWidth * 0.075),
-        statisticBox(context, "Partidas jugadas", "1283"),
+        statisticBox(context, "Ratio de logros", "25%"),
       ]),
     ]);
   }
@@ -176,15 +176,20 @@ class _ProfilePageState extends State<ProfilePage> {
   Column theme() {
     ValueNotifier<int> counter = ValueNotifier<int>(0);
     return Column(children: [
-      Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        boardTheme(counter),
-        SizedBox(width: defaultWidth * 0.075),
-        Column(children: [
-          buttonTheme(context, counter, true, "Tablero", boardTypes),
-          SizedBox(height: defaultWidth * 0.075),
-          buttonTheme(context, counter, false, "Piezas", piecesTypes),
-        ])
-      ]),
+      Padding(
+        padding: EdgeInsets.symmetric(horizontal: defaultWidth * 0.075),
+        child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          boardTheme(counter),
+          SizedBox(width: defaultWidth * 0.075),
+          Column(children: [
+            buttonTheme(context, counter, true, "Tablero", boardTypes),
+            SizedBox(height: defaultWidth * 0.048),
+            buttonTheme(context, counter, false, "Piezas negras", piecesTypes),
+            SizedBox(height: defaultWidth * 0.048),
+            buttonTheme(context, counter, false, "Piezas blancas", piecesTypes),
+          ])
+        ]),
+      ),
     ]);
   }
 
@@ -204,25 +209,40 @@ class _ProfilePageState extends State<ProfilePage> {
     return ValueListenableBuilder(
       valueListenable: counter,
       builder: (context, value, child) {
-        return Stack(children: [
-          Container(
-            decoration: BoxDecoration(
-              color: Color(userData.boardTypeB),
-              borderRadius: const BorderRadius.all(Radius.circular(20)),
+        return SizedBox(
+          height: defaultWidth * 0.3875,
+          width: defaultWidth * 0.3875,
+          child: Stack(children: [
+            Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Color(userData.boardTypeB),
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                ),
+                child: setImageColor(
+                    context, "current_board.png", Color(userData.boardTypeN)),
+              ),
             ),
-            height: defaultWidth * 0.3875,
-            width: defaultWidth * 0.3875,
-            child: setImageColor(
-                context, "current_board.png", Color(userData.boardTypeN)),
-          ),
-          Container(
-            margin: EdgeInsets.only(
-                top: defaultWidth * 0.12, left: defaultWidth * 0.12),
-            height: defaultWidth * 0.15,
-            width: defaultWidth * 0.15,
-            child: Image.asset("images/${userData.pieceType}/caballoN.png"),
-          ),
-        ]);
+            Align(
+              alignment: Alignment.topLeft,
+              child: Container(
+                height: defaultWidth * 0.15,
+                width: defaultWidth * 0.15,
+                margin: EdgeInsets.all(defaultWidth * 0.0325),
+                child: Image.asset("images/${userData.pieceType}/caballoN.png"),
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomRight,
+              child: Container(
+                height: defaultWidth * 0.15,
+                width: defaultWidth * 0.15,
+                margin: EdgeInsets.all(defaultWidth * 0.0325),
+                child: Image.asset("images/${userData.pieceType}/caballoB.png"),
+              ),
+            ),
+          ]),
+        );
       },
     );
   }

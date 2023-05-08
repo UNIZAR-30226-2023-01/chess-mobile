@@ -74,7 +74,6 @@ void resetSocket() {
 }
 
 Future<void> startGame(BuildContext context, String type, Arguments arguments) {
-  print("aqui");
   GameSocket s = GameSocket();
   Completer completer = Completer<void>();
   s.socket.onConnect((_) {
@@ -96,7 +95,6 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
       break;
     case "COMP":
       {
-        print("aqui");
         jsonData = {"gameType": "COMPETITIVE", "time": arguments.time};
       }
       break;

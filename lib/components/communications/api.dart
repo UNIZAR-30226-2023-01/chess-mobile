@@ -262,7 +262,7 @@ Future<int> apiGames(int page, int limit) async {
       }
       if (element["state"] == "ENDED") {
         gameData.addResult(element["winner"], element["endState"]);
-        print(element);
+        // print(element);
         addPlayedGame(gameData);
       }
     }

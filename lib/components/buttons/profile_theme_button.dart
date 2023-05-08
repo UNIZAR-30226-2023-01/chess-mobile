@@ -7,7 +7,7 @@ SizedBox buttonTheme(BuildContext context, ValueNotifier counter, bool isBoard,
     String text, List<List> list) {
   return SizedBox(
     width: defaultWidth * 0.3875,
-    height: defaultWidth * 0.156,
+    height: defaultWidth * 0.1,
     child: Material(
       color: Theme.of(context).colorScheme.secondary,
       borderRadius: const BorderRadius.all(Radius.circular(15)),

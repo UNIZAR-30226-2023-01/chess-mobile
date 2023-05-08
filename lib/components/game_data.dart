@@ -5,14 +5,16 @@ class GameData {
       board = "",
       gameType = "",
       createdAt = "",
-      updatedAt = "";
-  int tInitial, tIncrement, tLightTimer, tDarkTimer;
+      updatedAt = "",
+      winner = "",
+      endState = "";
+  int tInitial = 0, tIncrement = 0, tLightTimer = 0, tDarkTimer = 0;
   List<String> moves = List.empty(growable: true);
 
   GameData(
       this.id,
-      this.lightPlayer,
-      this.darkPlayer,
+      var lightPlayer,
+      var darkPlayer,
       this.board,
       var moves,
       this.tInitial,
@@ -25,5 +27,14 @@ class GameData {
     for (var i in moves) {
       this.moves.add(i);
     }
+    this.lightPlayer = lightPlayer ?? "Mr. AI";
+    this.darkPlayer = darkPlayer ?? "Mr. AI";
+    winner = "";
+    endState = "";
+  }
+
+  void addResult(var winner, var endState) {
+    this.winner = winner ?? "Empate";
+    this.endState = endState ?? "Este mensaje no deberías poder leerlo";
   }
 }

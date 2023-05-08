@@ -241,6 +241,7 @@ Future<int> apiGames(int page, int limit) async {
     // print(responseBodyDictionary);
     List<dynamic> gameList = data;
     for (var element in gameList) {
+      // print(element);
       GameData gameData = GameData(
           element["id"],
           element["lightPlayer"],
@@ -259,8 +260,9 @@ Future<int> apiGames(int page, int limit) async {
         // print(element);
         addSavedGame(gameData);
       }
-      if (element["state"] == "FINISHED") {
-        // print(element);
+      if (element["state"] == "ENDED") {
+        gameData.addResult(element["winner"], element["endState"]);
+        print(element);
         addPlayedGame(gameData);
       }
     }

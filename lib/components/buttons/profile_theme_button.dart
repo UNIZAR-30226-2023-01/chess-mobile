@@ -3,7 +3,7 @@ import '../profile_data.dart';
 import '../visual/screen_size.dart';
 import '../visual/set_image_color.dart';
 
-SizedBox buttonTheme(BuildContext context, ValueNotifier counter, bool isBoard,
+SizedBox buttonTheme(BuildContext context, ValueNotifier counter, int isBoard,
     String text, List<List> list) {
   return SizedBox(
     width: defaultWidth * 0.3875,
@@ -33,10 +33,19 @@ SizedBox buttonTheme(BuildContext context, ValueNotifier counter, bool isBoard,
         onSelected: (value) {
           for (int i = 0; i < list.length; i++) {
             if (value == list[i][0]) {
-              isBoard
-                  ? changeColorBoard(list[i][1], list[i][2])
-                  : changeTypePieces(list[i][1]);
-              break;
+              switch (isBoard) {
+                case 0:
+                  changeColorBoard(list[i][1], list[i][2]);
+                  break;
+                case 1:
+                  changeDarkPieces(list[i][1]);
+                  break;
+                case 2:
+                  changeLightPieces(list[i][1]);
+                  break;
+                default:
+                  break;
+              }
             }
           }
           counter.value++;
@@ -47,10 +56,13 @@ SizedBox buttonTheme(BuildContext context, ValueNotifier counter, bool isBoard,
             items.add(
               PopupMenuItem(
                 value: list[i][0],
-                child: isBoard
+                child: isBoard == 0
                     ? itemPopupBoard(
                         context, list[i][1], list[i][2], list[i][3])
-                    : itemPopupPieces(context, list[i][1], list[i][2]),
+                    : isBoard == 1
+                        ? itemPopupPieces(context, list[i][1], list[i][2], true)
+                        : itemPopupPieces(
+                            context, list[i][1], list[i][2], false),
               ),
             );
           }
@@ -87,14 +99,14 @@ itemPopupBoard(BuildContext context, int boardN, int boardB, String texto) {
   );
 }
 
-itemPopupPieces(BuildContext context, String type, String text) {
+itemPopupPieces(BuildContext context, String type, String text, bool isBlack) {
   return Row(
     children: [
       SizedBox(
         height: defaultWidth * 0.1,
         width: defaultWidth * 0.1,
         child: Image(
-          image: AssetImage("images/$type/caballoN.png"),
+          image: AssetImage("images/$type/caballo${isBlack ? "N" : "B"}.png"),
         ),
       ),
       SizedBox(

@@ -182,11 +182,11 @@ class _ProfilePageState extends State<ProfilePage> {
           boardTheme(counter),
           SizedBox(width: defaultWidth * 0.075),
           Column(children: [
-            buttonTheme(context, counter, true, "Tablero", boardTypes),
+            buttonTheme(context, counter, 0, "Tablero", boardTypes),
             SizedBox(height: defaultWidth * 0.048),
-            buttonTheme(context, counter, false, "Piezas negras", piecesTypes),
+            buttonTheme(context, counter, 1, "Piezas negras", piecesTypes),
             SizedBox(height: defaultWidth * 0.048),
-            buttonTheme(context, counter, false, "Piezas blancas", piecesTypes),
+            buttonTheme(context, counter, 2, "Piezas blancas", piecesTypes),
           ])
         ]),
       ),
@@ -229,7 +229,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: defaultWidth * 0.15,
                 width: defaultWidth * 0.15,
                 margin: EdgeInsets.all(defaultWidth * 0.0325),
-                child: Image.asset("images/${userData.pieceType}/caballoN.png"),
+                child:
+                    Image.asset("images/${userData.darkPieces}/caballoN.png"),
               ),
             ),
             Align(
@@ -238,7 +239,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: defaultWidth * 0.15,
                 width: defaultWidth * 0.15,
                 margin: EdgeInsets.all(defaultWidth * 0.0325),
-                child: Image.asset("images/${userData.pieceType}/caballoB.png"),
+                child:
+                    Image.asset("images/${userData.lightPieces}/caballoB.png"),
               ),
             ),
           ]),

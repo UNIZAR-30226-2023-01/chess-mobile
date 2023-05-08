@@ -39,9 +39,19 @@ void changeColorBoard(int tableroN, int tableroB) {
   userData.boardTypeB = tableroB;
 }
 
-void changeTypePieces(String tipo) {
+// void changeTypePieces(String tipo) {
+//   UserData userData = UserData();
+//   userData.pieceType = tipo;
+// }
+
+void changeLightPieces(String tipo) {
   UserData userData = UserData();
-  userData.pieceType = tipo;
+  userData.lightPieces = tipo;
+}
+
+void changeDarkPieces(String tipo) {
+  UserData userData = UserData();
+  userData.darkPieces = tipo;
 }
 
 void assignToken(String token) {

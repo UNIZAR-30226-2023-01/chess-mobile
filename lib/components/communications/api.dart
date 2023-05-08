@@ -278,3 +278,36 @@ Future<int> apiGames(int page, int limit) async {
     client.close();
   }
 }
+
+Future<int> apiUser(String id) async {
+  var pemBytes = await rootBundle.load("assets/cert.pem");
+
+  var context = SecurityContext()
+    ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
+
+  var client = HttpClient(context: context)
+    ..badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+
+  try {
+    var request = await client
+        .getUrl(Uri.parse('https://api.gracehopper.xyz/v1/users/$id'));
+    // Set headers
+    request.headers.add('Content-Type', 'application/json');
+    request.headers.add('Cookie', 'api-auth=${UserData().token}');
+
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
+    var responseBodyDictionary = jsonDecode(responseBody);
+
+    //actualizar datos aquí
+    return 0;
+    //aqui ns que necesitas q devuelva
+    // return responseBodyDictionary["status"]["error_code"];
+  } catch (e) {
+    // print(e.toString());
+    return -1;
+  } finally {
+    client.close();
+  }
+}

@@ -9,11 +9,15 @@ class UserData {
   static final UserData _singleton = UserData._internal();
   bool shiny = true;
   bool isRegistered = false;
-  String id = "", username = "Grace Hopper", email = "Ghopper@mail";
+  String id = "", username = "", email = "", avatar = "";
+  int elo = 0, rank = 0, achievmentRate = 0, winRate = 0;
+  int bulletWins = 0, blitzWins = 0, fastWins = 0;
   List<bool> achievments = [true, true, true, true, true, false, false, false];
   int boardTypeN = maderaN;
   int boardTypeB = maderaB;
   String pieceType = "merida";
+  String lightPieces = "merida";
+  String darkPieces = "merida";
   List<GameData> savedGames = List.empty(growable: true);
   List<GameData> playedGames = List.empty(growable: true);
   String token = "";
@@ -79,4 +83,22 @@ void addSavedGame(GameData gameData) {
 void addPlayedGame(GameData gameData) {
   UserData userData = UserData();
   userData.playedGames.insert(0, gameData);
+}
+
+void updateProfile(
+    String username,
+    String email,
+    String avatar,
+    String board,
+    String lightPieces,
+    String darkPieces,
+    int elo,
+    int rank,
+    int bulletWins,
+    int blitzWins,
+    int fastWins,
+    List<bool> achievments) {
+  UserData userData = UserData();
+  userData.username = username;
+  // ...
 }

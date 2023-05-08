@@ -74,10 +74,10 @@ class Custom {
                 context, "Color:", selectColor.selectionMenu(context)),
             SizedBox(height: defaultWidth * 0.05),
             playButton(context, "Crear", (() {
-              () => _handleTapCREATECUSTOM(context);
+              _handleTapCREATECUSTOM(context);
               Navigator.pop(context);
               popupWAITING(context);
-              () => _handleTapWAITCUSTOM(context);
+              _handleTapWAITCUSTOM(context);
             })),
             SizedBox(height: defaultWidth * 0.075),
             Row(

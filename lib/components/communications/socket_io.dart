@@ -74,6 +74,7 @@ void resetSocket() {
 }
 
 Future<void> startGame(BuildContext context, String type, Arguments arguments) {
+  print("aqui");
   GameSocket s = GameSocket();
   Completer completer = Completer<void>();
   s.socket.onConnect((_) {
@@ -95,6 +96,7 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
       break;
     case "COMP":
       {
+        print("aqui");
         jsonData = {"gameType": "COMPETITIVE", "time": arguments.time};
       }
       break;
@@ -153,6 +155,7 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
             s.timer = data[0]["initialTimer"],
             // print(data),
             // print(s.room),
+            if (type == "COMP") Navigator.pop(context),
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const GamePage()),

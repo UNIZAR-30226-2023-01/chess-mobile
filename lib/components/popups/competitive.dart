@@ -16,7 +16,7 @@ class Competitive {
     await startGame(context, "COMP", arguments);
   }
 
-  Object popupCOMP(BuildContext context) {
+  Object popupCOMP(BuildContext context) async {
     return showDialog(
       context: context,
       builder: (BuildContext context) => AlertDialog(
@@ -31,11 +31,10 @@ class Competitive {
             SelectionMenu.rowOption(
                 context, "Duración:", selectTime.selectionMenu(context)),
             SizedBox(height: defaultWidth * 0.05),
-            playButton(context, "Jugar", (() {
-              () => _handleTapCOMP(context);
-              Navigator.pop(context);
+            playButton(context, "Jugar", () {
               popupWAITING(context);
-            })),
+              _handleTapCOMP(context);
+            }),
           ]),
         ),
       ),

@@ -40,7 +40,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   SizedBox(height: defaultWidth * 0.075),
                   divider("Logros"),
                   SizedBox(height: defaultWidth * 0.075),
-                  achievments(),
+                  achievements(),
                   SizedBox(height: defaultWidth * 0.075),
                   divider("Tema"),
                   SizedBox(height: defaultWidth * 0.075),
@@ -120,9 +120,9 @@ class _ProfilePageState extends State<ProfilePage> {
                     color: Theme.of(context).colorScheme.primary,
                     width: 4,
                   ),
-                  image: const DecorationImage(
+                  image: DecorationImage(
                     fit: BoxFit.cover,
-                    image: AssetImage("images/Grace_Hopper.jpg"),
+                    image: AssetImage("images/avatares${userData.avatar}"),
                   ),
                 ),
               ),
@@ -136,39 +136,41 @@ class _ProfilePageState extends State<ProfilePage> {
   Column statistics() {
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        statisticBox(context, "Puntuación", "2556"),
+        statisticBox(context, "Puntuación", userData.elo.toString()),
         SizedBox(width: defaultWidth * 0.075),
-        statisticBox(context, "Rango", "#78"),
+        statisticBox(context, "Rango", "#${userData.rank.toString()}"),
       ]),
       SizedBox(height: defaultWidth * 0.075),
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        statisticBox(context, "Ratio de victorias", "78%"),
+        statisticBox(context, "Ratio de victorias",
+            "${userData.winRate.toStringAsFixed(2)}%"),
         SizedBox(width: defaultWidth * 0.075),
-        statisticBox(context, "Ratio de logros", "25%"),
+        statisticBox(context, "Ratio de logros",
+            "${userData.achievementRate.toStringAsFixed(2)}%"),
       ]),
     ]);
   }
 
-  Column achievments() {
+  Column achievements() {
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        achievmentBox(1),
+        achievementBox(1),
         SizedBox(width: defaultWidth * 0.05),
-        achievmentBox(2),
+        achievementBox(2),
         SizedBox(width: defaultWidth * 0.05),
-        achievmentBox(3),
+        achievementBox(3),
         SizedBox(width: defaultWidth * 0.05),
-        achievmentBox(4),
+        achievementBox(4),
       ]),
       SizedBox(height: defaultWidth * 0.05),
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        achievmentBox(5),
+        achievementBox(5),
         SizedBox(width: defaultWidth * 0.05),
-        achievmentBox(6),
+        achievementBox(6),
         SizedBox(width: defaultWidth * 0.05),
-        achievmentBox(7),
+        achievementBox(7),
         SizedBox(width: defaultWidth * 0.05),
-        achievmentBox(8),
+        achievementBox(8),
       ]),
     ]);
   }

@@ -83,8 +83,11 @@ flutter:
     - images/maya/
     - images/medieval/
     - images/merida/
-    - images/achievment_true/
-    - images/achievment_false/
+    - images/avatares/animales/
+    - images/avatares/humanos/
+    - images/avatares/memojis/
+    - images/achievement_true/
+    - images/achievement_false/
     - assets/launcher_icons/
     - assets/sounds/
     - assets/

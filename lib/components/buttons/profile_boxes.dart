@@ -35,10 +35,10 @@ statisticBox(BuildContext context, String title, String body) {
   );
 }
 
-Image achievmentBox(int n) {
+Image achievementBox(int n) {
   final UserData userData = UserData();
   return Image.asset(
-    "images/${userData.achievments[n - 1] ? "achievment_true" : "achievment_false"}/$n.png",
+    "images/${userData.achievements[n - 1] ? "achievement_true" : "achievement_false"}/$n.png",
     fit: BoxFit.contain,
     width: defaultWidth * 0.175,
   );

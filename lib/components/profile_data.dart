@@ -2,6 +2,8 @@
 
 //de momento se queda como singleton :D
 
+import 'dart:ffi';
+
 import 'package:ajedrez/components/visual/customization_constants.dart';
 import 'game_data.dart';
 
@@ -9,10 +11,19 @@ class UserData {
   static final UserData _singleton = UserData._internal();
   bool shiny = true;
   bool isRegistered = false;
-  String id = "", username = "", email = "", avatar = "";
-  int elo = 0, rank = 0, achievmentRate = 0, winRate = 0;
-  int bulletWins = 0, blitzWins = 0, fastWins = 0;
-  List<bool> achievments = [true, true, true, true, true, false, false, false];
+  String id = "", username = "a", email = "a", avatar = "/humanos/1.webp";
+  int elo = 0, rank = 0;
+  double achievementRate = 0, winRate = 0;
+  List<bool> achievements = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ];
   int boardTypeN = maderaN;
   int boardTypeB = maderaB;
   String pieceType = "merida";
@@ -95,6 +106,7 @@ void addPlayedGame(GameData gameData) {
   userData.playedGames.insert(0, gameData);
 }
 
+// Falta theme
 void updateProfile(
     String username,
     String email,
@@ -105,10 +117,78 @@ void updateProfile(
     int elo,
     int rank,
     int bulletWins,
+    int bulletDraws,
+    int bulletDefeats,
     int blitzWins,
+    int blitzDraws,
+    int blitzDefeats,
     int fastWins,
-    List<bool> achievments) {
+    int fastDraws,
+    int fastDefeats,
+    var achievements) {
   UserData userData = UserData();
   userData.username = username;
-  // ...
+  userData.email = email;
+  userData.avatar = avatar;
+  userData.elo = elo;
+  userData.rank = rank;
+  userData.winRate = ((bulletWins + blitzWins + fastWins) /
+          (bulletWins +
+              bulletDraws +
+              bulletDefeats +
+              blitzWins +
+              blitzDraws +
+              blitzDefeats +
+              fastWins +
+              fastDraws +
+              fastDefeats)) *
+      100;
+  userData.achievements = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false
+  ];
+  int count = 0;
+  for (var i in achievements) {
+    switch (i) {
+      case "FIRST LOGIN":
+        userData.achievements[0] = true;
+        count++;
+        break;
+      case "PLAY 10 COMPETITIVE":
+        userData.achievements[1] = true;
+        count++;
+        break;
+      case "PLAY 10 CUSTOM":
+        userData.achievements[2] = true;
+        count++;
+        break;
+      case "PLAY 10 TOURNAMENT":
+        userData.achievements[3] = true;
+        count++;
+        break;
+      case "PLAY 10 AI":
+        userData.achievements[4] = true;
+        count++;
+        break;
+      case "DRAW 10 GAMES":
+        userData.achievements[5] = true;
+        count++;
+        break;
+      case "TOP 100":
+        userData.achievements[6] = true;
+        count++;
+        break;
+      case "TOP 1":
+        userData.achievements[7] = true;
+        count++;
+        break;
+    }
+  }
+  userData.achievementRate = (count / 8.0) * 100;
 }

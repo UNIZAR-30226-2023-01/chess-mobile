@@ -281,7 +281,9 @@ Future<int> apiGames(int page, int limit) async {
   }
 }
 
-Future<int> apiUser(String id) async {
+Future<int> apiUser() async {
+  UserData userData = UserData();
+
   var pemBytes = await rootBundle.load("assets/cert.pem");
 
   var context = SecurityContext()
@@ -292,8 +294,8 @@ Future<int> apiUser(String id) async {
         (X509Certificate cert, String host, int port) => true;
 
   try {
-    var request = await client
-        .getUrl(Uri.parse('https://api.gracehopper.xyz/v1/users/$id'));
+    var request = await client.getUrl(
+        Uri.parse('https://api.gracehopper.xyz/v1/users/${userData.id}'));
     // Set headers
     request.headers.add('Content-Type', 'application/json');
     request.headers.add('Cookie', 'api-auth=${UserData().token}');
@@ -301,6 +303,28 @@ Future<int> apiUser(String id) async {
     var response = await request.close();
     var responseBody = await response.transform(utf8.decoder).join();
     var responseBodyDictionary = jsonDecode(responseBody);
+    var data = responseBodyDictionary["data"];
+    print(data);
+    updateProfile(
+        data["username"],
+        data["email"],
+        data["avatar"],
+        data["skins"]["board"],
+        data["skins"]["lightPieces"],
+        data["skins"]["darkPieces"],
+        data["elo"],
+        0, //rank
+        data["stats"]["bulletWins"],
+        data["stats"]["bulletDraws"],
+        data["stats"]["bulletDefeats"],
+        data["stats"]["blitzWins"],
+        data["stats"]["blitzDraws"],
+        data["stats"]["blitzDefeats"],
+        data["stats"]["fastWins"],
+        data["stats"]["fastDraws"],
+        data["stats"]["fastDefeats"],
+        data["achievements"]);
+    print(data);
 
     //actualizar datos aquí
     return 0;

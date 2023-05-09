@@ -112,10 +112,11 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
             s.room = data[0]["roomID"],
           },
         );
-        completer.complete();
-        s.socket.emit('find_room', jsonData);
+        // completer.complete();
+        // s.socket.emit('find_room', jsonData);
       }
-      return completer.future;
+      // return completer.future;
+      break;
     case "JOINCUSTOM":
       {
         jsonData = {"gameType": "CUSTOM", "roomID": arguments.roomID};
@@ -153,7 +154,8 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
             s.timer = data[0]["initialTimer"],
             // print(data),
             // print(s.room),
-            if (type == "COMP") Navigator.pop(context),
+            if (type == "COMP" || type == "CREATECUSTOM")
+              Navigator.pop(context),
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const GamePage()),
@@ -166,7 +168,7 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
       (data) => {
             // print(data)
           });
-  if (type != "SPECTATOR" && type != "WAITCUSTOM" && type != "") {
+  if (type != "SPECTATOR" && type != "") {
     s.socket.emit('find_room', jsonData);
   }
 

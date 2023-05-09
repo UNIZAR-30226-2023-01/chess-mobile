@@ -208,8 +208,7 @@ void listenGame(BuildContext context) {
                 alertWinner(context, !s.iAmWhite,
                     "Ha ganado el jugador con las fichas "),
               },
-            if (data[0]["endState"] == "SURRENDER" &&
-                (data[0]["winner"] == (!s.iAmWhite ? "LIGHT" : "DARK")))
+            if (data[0]["endState"] == "SURRENDER")
               {
                 alertWinner(context, s.iAmWhite,
                     "Se ha rendido el jugador con las fichas "),

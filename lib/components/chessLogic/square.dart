@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ajedrez/components/profile_data.dart';
 import 'package:ajedrez/components/communications/socket_io.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -118,7 +120,8 @@ class SquareState extends State<Square> {
         ];
         board.currentBoard[y][x] = board.currentBoard[auxY][auxX];
         board.currentBoard[auxY][auxX] = Empty(isWhite: false);
-        _processPromotion();
+        await _processPromotion();
+
         var jugada = _encodeMovement(auxX, auxY);
         // print(jugada);
         var movimiento = {"move": jugada};
@@ -231,12 +234,13 @@ class SquareState extends State<Square> {
   }
 
   Future<void> _processPromotion() async {
+    BoardData b = BoardData();
+    Completer completer = Completer<void>();
+    b.prom = "";
     if (board.currentBoard[y][x] is Pawn && (y == 0 || y == 7)) {
       final RenderBox box = context.findRenderObject() as RenderBox;
       final Offset position = box.localToGlobal(Offset.zero);
       PieceOption? selectedPiece;
-      BoardData b = BoardData();
-      b.prom = "";
       while (selectedPiece == null) {
         selectedPiece = await showPieceSelectionDialog(
             context, position, board.whiteTurn);
@@ -245,26 +249,28 @@ class SquareState extends State<Square> {
         case PieceOption.reina:
           board.currentBoard[y][x] =
               Queen(isWhite: board.whiteTurn);
-          b.prom = "Q";
+          b.prom = "q";
           break;
         case PieceOption.torre:
           board.currentBoard[y][x] =
               Rook(isWhite: board.whiteTurn);
-          b.prom = "R";
+          b.prom = "r";
           break;
         case PieceOption.alfil:
           board.currentBoard[y][x] =
               Bishop(isWhite: board.whiteTurn);
-          b.prom = "B";
+          b.prom = "b";
           break;
         case PieceOption.caballo:
           board.currentBoard[y][x] =
               Knight(isWhite: board.whiteTurn);
-          b.prom = "N";
+          b.prom = "n";
           break;
       }
       setState(() {});
     }
+    completer.complete();
+    return completer.future;
   }
 
   void _procesarComerAlPaso(int auxY, int auxX) {
@@ -324,7 +330,7 @@ class SquareState extends State<Square> {
   }
 
   String _encodeMovement(int prevX, prevY) {
-    // BoardData b = BoardData();
+    BoardData b = BoardData();
     var jugadas = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     var invertedPrevY = !board.reversedBoard ? 8 - prevY : prevY + 1;
     var invertedY = !board.reversedBoard ? 8 - y : y + 1;
@@ -333,7 +339,10 @@ class SquareState extends State<Square> {
     String jugada = jugadas[invertedPrevX] +
         (invertedPrevY).toString() +
         jugadas[invertedX] +
-        (invertedY).toString();
+        (invertedY).toString() + 
+        b.prom;
+    b.prom = "";
+
     return jugada;
   }
 }
@@ -345,6 +354,12 @@ List<List<int>> decodeMovement(String jugada) {
   int prevy = jugada[1].codeUnitAt(0) - '0'.codeUnitAt(0);
   int y = jugada[3].codeUnitAt(0) - '0'.codeUnitAt(0);
   BoardData board = BoardData();
+  if(jugada.length == 5) {
+    board.prom = jugada[4];
+
+  } else {
+    board.prom = "";
+  }
   prevy = board.reversedBoard ? prevy - 1 : 8 - prevy;
   y = board.reversedBoard ? y - 1 : 8 - y;
 
@@ -370,6 +385,27 @@ void simulateMovement(List<List<int>> movements) {
     musicPlayer.play(AssetSource("sounds/capturePiece.mp3"));
   }
   b.currentBoard[y][x] = b.currentBoard[auxY][auxX];
+  if (b.prom != "") {
+    switch (b.prom) {
+        case "q":
+          b.currentBoard[y][x] =
+              Queen(isWhite: b.whiteTurn);
+          break;
+        case "r":
+          b.currentBoard[y][x] =
+              Rook(isWhite: b.whiteTurn);
+          break;
+        case "b":
+          b.currentBoard[y][x] =
+              Bishop(isWhite: b.whiteTurn);
+          break;
+        case "n":
+          b.currentBoard[y][x] =
+              Knight(isWhite: b.whiteTurn);
+          break;
+      }
+  }
+  b.prom = "";
   b.currentBoard[auxY][auxX] = Empty(isWhite: false);
   b.selectedSquare = [-1, -1];
   (b.squares[auxY * 8 + auxX] as SquareState).actualizarEstado();
@@ -396,6 +432,27 @@ void loadMovement(List<List<int>> movements) {
   int x = movements[1][1];
   b.lastMovement = movements;
   b.currentBoard[y][x] = b.currentBoard[auxY][auxX];
+  if (b.prom != "") {
+    switch (b.prom) {
+        case "q":
+          b.currentBoard[y][x] =
+              Queen(isWhite: b.whiteTurn);
+          break;
+        case "r":
+          b.currentBoard[y][x] =
+              Rook(isWhite: b.whiteTurn);
+          break;
+        case "b":
+          b.currentBoard[y][x] =
+              Bishop(isWhite: b.whiteTurn);
+          break;
+        case "n":
+          b.currentBoard[y][x] =
+              Knight(isWhite: b.whiteTurn);
+          break;
+      }
+  }
+  b.prom = "";
   b.currentBoard[auxY][auxX] = Empty(isWhite: false);
   b.selectedSquare = [-1, -1];
   b.whiteTurn = !b.whiteTurn;

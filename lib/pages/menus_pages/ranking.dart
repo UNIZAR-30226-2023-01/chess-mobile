@@ -2,6 +2,7 @@ import 'package:ajedrez/components/communications/api.dart';
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
 import '../../components/visual/custom_shape.dart';
+import '../../components/visual/get_elo.dart';
 import '../../components/ranking_data.dart';
 
 class RankingPage extends StatefulWidget {
@@ -73,17 +74,24 @@ class _RankingPageState extends State<RankingPage> {
                                               2.5,
                                               "avatares${RankingData.avatar[1]}"),
                                         ),
-                                        Text(
-                                          RankingData.username[1],
-                                          overflow: TextOverflow.visible,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.bold,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                          ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            showElo(RankingData.elo[1]),
+                                            Text(
+                                              RankingData.username[1],
+                                              overflow: TextOverflow.visible,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.bold,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         Text(
                                           RankingData.elo[1].toString(),
@@ -122,17 +130,24 @@ class _RankingPageState extends State<RankingPage> {
                                               3,
                                               "avatares${RankingData.avatar[0]}"),
                                         ),
-                                        Text(
-                                          RankingData.username[0],
-                                          overflow: TextOverflow.visible,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.bold,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                          ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            showElo(RankingData.elo[0]),
+                                            Text(
+                                              RankingData.username[0],
+                                              overflow: TextOverflow.visible,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.bold,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         Text(
                                           RankingData.elo[0].toString(),
@@ -173,17 +188,24 @@ class _RankingPageState extends State<RankingPage> {
                                               2.5,
                                               "avatares${RankingData.avatar[2]}"),
                                         ),
-                                        Text(
-                                          RankingData.username[2],
-                                          overflow: TextOverflow.visible,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.bold,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                          ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            showElo(RankingData.elo[2]),
+                                            Text(
+                                              RankingData.username[2],
+                                              overflow: TextOverflow.visible,
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.bold,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         Text(
                                           RankingData.elo[2].toString(),
@@ -264,16 +286,23 @@ class _RankingPageState extends State<RankingPage> {
                               width: (defaultWidth * 0.85) * 0.45,
                               padding: EdgeInsets.symmetric(
                                   horizontal: defaultWidth * 0.03),
-                              child: Text(
-                                RankingData.username[
-                                    paginaActual == 0 ? index + 3 : index],
-                                overflow: TextOverflow.visible,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
+                              child: Row(
+                                children: [
+                                  showElo(RankingData.elo[
+                                      paginaActual == 0 ? index + 3 : index]),
+                                  Text(
+                                    RankingData.username[
+                                        paginaActual == 0 ? index + 3 : index],
+                                    overflow: TextOverflow.visible,
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                          Theme.of(context).colorScheme.primary,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             SizedBox(

@@ -304,7 +304,7 @@ Future<int> apiUser() async {
     var responseBody = await response.transform(utf8.decoder).join();
     var responseBodyDictionary = jsonDecode(responseBody);
     var data = responseBodyDictionary["data"];
-    print(data);
+    // print(data);
     updateProfile(
         data["username"],
         data["email"],
@@ -324,7 +324,7 @@ Future<int> apiUser() async {
         data["stats"]["fastDraws"],
         data["stats"]["fastDefeats"],
         data["achievements"]);
-    print(data);
+    // print(data);
 
     //actualizar datos aquí
     return 0;

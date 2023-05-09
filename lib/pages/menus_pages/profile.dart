@@ -6,6 +6,7 @@ import '../../components/visual/custom_shape.dart';
 import '../../components/visual/customization_constants.dart';
 import '../../components/visual/screen_size.dart';
 import '../../components/visual/set_image_color.dart';
+import '../../components/visual/get_elo.dart';
 import '../../components/buttons/profile_boxes.dart';
 import '../../components/buttons/profile_options_button.dart';
 import '../../components/buttons/profile_short_button.dart';
@@ -88,14 +89,20 @@ class _ProfilePageState extends State<ProfilePage> {
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      userData.username,
-                      overflow: TextOverflow.visible,
-                      style: TextStyle(
-                        fontSize: 27,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        showElo(userData.elo),
+                        Text(
+                          userData.username,
+                          overflow: TextOverflow.visible,
+                          style: TextStyle(
+                            fontSize: 27,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                      ],
                     ),
                     SizedBox(height: defaultHeight * 0.01),
                     Text(

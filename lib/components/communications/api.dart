@@ -189,7 +189,7 @@ Future<int> apiRanking(int page, int limit) async {
 
   try {
     var request = await client.getUrl(Uri.parse(
-        'https://api.gracehopper.xyz/v1/users?page=$page&limit=$limit'));
+        'https://api.gracehopper.xyz/v1/users?page=$page&limit=$limit&sort=-elo'));
     // Set headers
     request.headers.add('Content-Type', 'application/json');
     request.headers.add('Cookie', 'api-auth=${UserData().token}');

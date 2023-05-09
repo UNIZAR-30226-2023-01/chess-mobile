@@ -68,8 +68,10 @@ class _RankingPageState extends State<RankingPage> {
                                         Padding(
                                           padding: EdgeInsets.all(
                                               defaultHeight * 0.01),
-                                          child: imageItem(defaultHeight * 0.09,
-                                              2.5, "Grace_Hopper"),
+                                          child: imageItem(
+                                              defaultHeight * 0.09,
+                                              2.5,
+                                              "avatares${RankingData.avatar[1]}"),
                                         ),
                                         Text(
                                           RankingData.username[1],
@@ -115,8 +117,10 @@ class _RankingPageState extends State<RankingPage> {
                                         Padding(
                                           padding: EdgeInsets.all(
                                               defaultHeight * 0.01),
-                                          child: imageItem(defaultHeight * 0.11,
-                                              3, "Grace_Hopper"),
+                                          child: imageItem(
+                                              defaultHeight * 0.11,
+                                              3,
+                                              "avatares${RankingData.avatar[0]}"),
                                         ),
                                         Text(
                                           RankingData.username[0],
@@ -164,8 +168,10 @@ class _RankingPageState extends State<RankingPage> {
                                         Padding(
                                           padding: EdgeInsets.all(
                                               defaultHeight * 0.01),
-                                          child: imageItem(defaultHeight * 0.09,
-                                              2.5, "Grace_Hopper"),
+                                          child: imageItem(
+                                              defaultHeight * 0.09,
+                                              2.5,
+                                              "avatares${RankingData.avatar[2]}"),
                                         ),
                                         Text(
                                           RankingData.username[2],
@@ -250,8 +256,8 @@ class _RankingPageState extends State<RankingPage> {
                             Center(
                               child: SizedBox(
                                 width: (defaultWidth * 0.85) * 0.175,
-                                child: imageItem(
-                                    defaultHeight * 0.07, 2, "Grace_Hopper"),
+                                child: imageItem(defaultHeight * 0.07, 2,
+                                    "avatares${RankingData.avatar[paginaActual == 0 ? index + 3 : index]}"),
                               ),
                             ),
                             Container(
@@ -352,7 +358,7 @@ class _RankingPageState extends State<RankingPage> {
             ),
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage('images/$imagen.jpg'),
+              image: AssetImage('images/$imagen'),
             )),
       ),
     );

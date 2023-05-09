@@ -65,6 +65,7 @@ class BoardData {
     [-1, -1],
     [-1, -1]
   ];
+  String prom = "";
   bool nextMoveIsCheckmate = false;
   bool spectatorMode = false;
   factory BoardData() {
@@ -86,6 +87,7 @@ void resetSingleton(bool reversedBoard) {
     [-1, -1],
     [-1, -1]
   ];
+  board.prom = "";
   board.nextMoveIsCheckmate = false;
   board.spectatorMode = false;
 }

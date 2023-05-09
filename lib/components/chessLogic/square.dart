@@ -235,26 +235,32 @@ class SquareState extends State<Square> {
       final RenderBox box = context.findRenderObject() as RenderBox;
       final Offset position = box.localToGlobal(Offset.zero);
       PieceOption? selectedPiece;
+      BoardData b = BoardData();
+      b.prom = "";
       while (selectedPiece == null) {
         selectedPiece = await showPieceSelectionDialog(
-            context, position, board.currentBoard[y][x].color());
+            context, position, board.whiteTurn);
       }
       switch (selectedPiece) {
         case PieceOption.reina:
           board.currentBoard[y][x] =
-              Queen(isWhite: board.currentBoard[y][x].color());
+              Queen(isWhite: board.whiteTurn);
+          b.prom = "Q";
           break;
         case PieceOption.torre:
           board.currentBoard[y][x] =
-              Rook(isWhite: board.currentBoard[y][x].color());
+              Rook(isWhite: board.whiteTurn);
+          b.prom = "R";
           break;
         case PieceOption.alfil:
           board.currentBoard[y][x] =
-              Bishop(isWhite: board.currentBoard[y][x].color());
+              Bishop(isWhite: board.whiteTurn);
+          b.prom = "B";
           break;
         case PieceOption.caballo:
           board.currentBoard[y][x] =
-              Knight(isWhite: board.currentBoard[y][x].color());
+              Knight(isWhite: board.whiteTurn);
+          b.prom = "N";
           break;
       }
       setState(() {});
@@ -318,6 +324,7 @@ class SquareState extends State<Square> {
   }
 
   String _encodeMovement(int prevX, prevY) {
+    // BoardData b = BoardData();
     var jugadas = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     var invertedPrevY = !board.reversedBoard ? 8 - prevY : prevY + 1;
     var invertedY = !board.reversedBoard ? 8 - y : y + 1;

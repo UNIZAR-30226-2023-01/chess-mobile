@@ -275,7 +275,7 @@ Future<void> resume(String roomID, BuildContext context) async {
       (data) => {
             s.room = data[0]["roomID"],
             s.iAmWhite = data[0]["color"] == "LIGHT",
-
+            s.pendingMovements = data[0]["moves"],
             s.timer = data[0]["initialTimer"],
             // print(data),
             // print(s.room),

@@ -11,6 +11,7 @@ import '../../components/buttons/profile_boxes.dart';
 import '../../components/buttons/profile_options_button.dart';
 import '../../components/buttons/profile_short_button.dart';
 import '../../components/buttons/profile_theme_button.dart';
+import '../../components/communications/api.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -205,11 +206,27 @@ class _ProfilePageState extends State<ProfilePage> {
   Column activity() {
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-        shortButton(context, false, "Partidas\nguardadas",
-            () => savedGames.popupSAVEDGAMES(context)),
+        shortButton(context, false, "Partidas\nguardadas", () async {
+          restartInfoGames();
+          String next = await apiGames(userData.games);
+          while (next != "null") {
+            next = await apiGames(next);
+          }
+          if (context.mounted) {
+            savedGames.popupSAVEDGAMES(context);
+          }
+        }),
         SizedBox(width: defaultWidth * 0.075),
-        shortButton(context, false, "Historial\nde partidas",
-            () => playedGames.popupPLAYEDGAMES(context)),
+        shortButton(context, false, "Historial\nde partidas", () async {
+          restartInfoGames();
+          String next = await apiGames(userData.games);
+          while (next != "null") {
+            next = await apiGames(next);
+          }
+          if (context.mounted) {
+            playedGames.popupPLAYEDGAMES(context);
+          }
+        }),
       ]),
     ]);
   }

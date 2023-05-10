@@ -1,3 +1,4 @@
+import 'package:ajedrez/components/communications/api.dart';
 import 'package:flutter/material.dart';
 import '../profile_data.dart';
 import '../visual/screen_size.dart';
@@ -35,17 +36,18 @@ SizedBox buttonTheme(BuildContext context, ValueNotifier counter, int isBoard,
             if (value == list[i][0]) {
               switch (isBoard) {
                 case 0:
-                  changeColorBoard(list[i][1], list[i][2]);
+                  changeColorBoard(list[i][0], list[i][1], list[i][2]);
                   break;
                 case 1:
-                  changeDarkPieces(list[i][1]);
+                  changeDarkPieces(list[i][0]);
                   break;
                 case 2:
-                  changeLightPieces(list[i][1]);
+                  changeLightPieces(list[i][0]);
                   break;
                 default:
                   break;
               }
+              apiUpdateUser();
             }
           }
           counter.value++;
@@ -60,9 +62,9 @@ SizedBox buttonTheme(BuildContext context, ValueNotifier counter, int isBoard,
                     ? itemPopupBoard(
                         context, list[i][1], list[i][2], list[i][3])
                     : isBoard == 1
-                        ? itemPopupPieces(context, list[i][1], list[i][2], true)
+                        ? itemPopupPieces(context, list[i][0], list[i][1], true)
                         : itemPopupPieces(
-                            context, list[i][1], list[i][2], false),
+                            context, list[i][0], list[i][1], false),
               ),
             );
           }

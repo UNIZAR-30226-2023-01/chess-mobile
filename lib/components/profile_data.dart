@@ -24,9 +24,9 @@ class UserData {
     false,
     false
   ];
-  int boardTypeN = maderaN;
-  int boardTypeB = maderaB;
-  String pieceType = "merida";
+  int boardTypeN = woodN;
+  int boardTypeB = woodB;
+  String boardType = "wood";
   String lightPieces = "merida";
   String darkPieces = "merida";
   List<GameData> savedGames = List.empty(growable: true);
@@ -45,8 +45,9 @@ void resetProfileData(bool shiny) {
   userData.shiny = shiny;
 }
 
-void changeColorBoard(int tableroN, int tableroB) {
+void changeColorBoard(String board, int tableroN, int tableroB) {
   UserData userData = UserData();
+  userData.boardType = board;
   userData.boardTypeN = tableroN;
   userData.boardTypeB = tableroB;
 }
@@ -194,4 +195,13 @@ void updateProfile(
   }
   userData.achievementRate = (count / 8.0) * 100;
   userData.games = games;
+  userData.boardType = board;
+  for (int i = 0; i < boardTypes.length; i++) {
+    if (boardTypes[i][0] == board) {
+      userData.boardTypeN = boardTypes[i][1];
+      userData.boardTypeB = boardTypes[i][2];
+    }
+  }
+  userData.darkPieces = darkPieces;
+  userData.lightPieces = lightPieces;
 }

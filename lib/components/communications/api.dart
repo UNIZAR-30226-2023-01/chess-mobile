@@ -303,7 +303,7 @@ Future<int> apiUser() async {
     var responseBody = await response.transform(utf8.decoder).join();
     var responseBodyDictionary = jsonDecode(responseBody);
     var data = responseBodyDictionary["data"];
-    print(data);
+    // print(data);
     updateProfile(
         data["username"],
         data["email"],
@@ -324,12 +324,58 @@ Future<int> apiUser() async {
         data["stats"]["fastDefeats"],
         data["achievements"],
         data["games"]);
-    print(data);
+    // print(data);
 
     //actualizar datos aquí
     return 0;
     //aqui ns que necesitas q devuelva
     // return responseBodyDictionary["status"]["error_code"];
+  } catch (e) {
+    // print(e.toString());
+    return -1;
+  } finally {
+    client.close();
+  }
+}
+
+Future<int> apiUpdateUser() async {
+  UserData userData = UserData();
+
+  var pemBytes = await rootBundle.load("assets/cert.pem");
+
+  var context = SecurityContext()
+    ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
+
+  var client = HttpClient(context: context)
+    ..badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+  try {
+    var request = await client.patchUrl(
+        Uri.parse('https://api.gracehopper.xyz/v1/users/${userData.id}'));
+    // Set headers
+    request.headers.add('Content-Type', 'application/json');
+    request.headers.add('Cookie', 'api-auth=${UserData().token}');
+
+    // Create JSON body
+    var body = jsonEncode({
+      'avatar': userData.avatar,
+      'username': userData.username,
+      'email': userData.email,
+      'board': userData.boardType,
+      'lightPieces': userData.lightPieces,
+      'darkPieces': userData.darkPieces
+    });
+
+    // Set body
+    request.write(body);
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
+    var responseBodyDictionary = jsonDecode(responseBody);
+    var data = responseBodyDictionary["data"];
+    // print(data);
+
+    // print(apiAuthCookie);
+    return responseBodyDictionary["status"]["error_code"];
   } catch (e) {
     // print(e.toString());
     return -1;

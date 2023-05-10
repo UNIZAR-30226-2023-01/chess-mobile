@@ -1,3 +1,4 @@
+import 'package:ajedrez/pages/menus_pages/tournaments.dart';
 import 'package:flutter/material.dart';
 import '../../components/visual/custom_shape.dart';
 import '../../components/visual/screen_size.dart';
@@ -57,8 +58,16 @@ class _HomePageState extends State<HomePage> {
                                 "Partida privada",
                                 () => custom.popupCUSTOM(context)),
                             SizedBox(width: defaultWidth * 0.075),
-                            shortButton(context, false, "Tournaments.png",
-                                "Torneo", () => null),
+                            shortButton(
+                                context,
+                                false,
+                                "Tournaments.png",
+                                "Torneo",
+                                () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const TournamentPage()))),
                           ]),
                       SizedBox(height: defaultWidth * 0.075),
                       Row(

@@ -100,8 +100,8 @@ class _StartupPageState extends State<StartupPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          //builder: (context) => BottomBar.fromSignIn(),
-                          builder: (context) => const TournamentPage(),
+                          builder: (context) => BottomBar.fromSignIn(),
+                          //builder: (context) => const TournamentPage(),
                         ),
                       );
                     },

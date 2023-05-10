@@ -1,3 +1,4 @@
+import 'package:ajedrez/pages/menus_pages/tournaments.dart';
 import 'package:flutter/material.dart';
 import '../../components/buttons/text_long_button.dart';
 import '../menus_pages/bottom_bar.dart';
@@ -99,7 +100,8 @@ class _StartupPageState extends State<StartupPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => BottomBar.fromSignIn(),
+                          //builder: (context) => BottomBar.fromSignIn(),
+                          builder: (context) => const TournamentPage(),
                         ),
                       );
                     },

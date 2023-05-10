@@ -31,6 +31,7 @@ class UserData {
   String darkPieces = "merida";
   List<GameData> savedGames = List.empty(growable: true);
   List<GameData> playedGames = List.empty(growable: true);
+  String games = "";
   String token = "";
   factory UserData() {
     return _singleton;
@@ -125,24 +126,25 @@ void updateProfile(
     int fastWins,
     int fastDraws,
     int fastDefeats,
-    var achievements) {
+    var achievements,
+    String games) {
   UserData userData = UserData();
   userData.username = username;
   userData.email = email;
   userData.avatar = avatar;
   userData.elo = elo;
   userData.rank = rank;
-  userData.winRate = ((bulletWins + blitzWins + fastWins) /
-          (bulletWins +
-              bulletDraws +
-              bulletDefeats +
-              blitzWins +
-              blitzDraws +
-              blitzDefeats +
-              fastWins +
-              fastDraws +
-              fastDefeats)) *
-      100;
+  int total = bulletWins +
+      bulletDraws +
+      bulletDefeats +
+      blitzWins +
+      blitzDraws +
+      blitzDefeats +
+      fastWins +
+      fastDraws +
+      fastDefeats;
+  userData.winRate =
+      total == 0 ? 0 : ((bulletWins + blitzWins + fastWins) / total) * 100;
   userData.achievements = [
     false,
     false,
@@ -191,4 +193,5 @@ void updateProfile(
     }
   }
   userData.achievementRate = (count / 8.0) * 100;
+  userData.games = games;
 }

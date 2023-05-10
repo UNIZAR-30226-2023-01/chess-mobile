@@ -91,10 +91,9 @@ class _BottomBarState extends State<BottomBar> {
                       if (index == 2) {
                         await apiUser();
                         restartInfoGames();
-                        int i = 1;
-                        int next = await apiGames(i++, 50);
-                        while (next == 1) {
-                          next = await apiGames(i++, 50);
+                        String next = await apiGames(userData.games);
+                        while (next != "null") {
+                          next = await apiGames(next);
                         }
                       }
                       if (index == 0) {

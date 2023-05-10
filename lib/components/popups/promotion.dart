@@ -35,28 +35,40 @@ Future<PieceOption?> showPieceSelectionDialog(
       position: positionRelativeRect,
       items: <PopupMenuEntry<PieceOption>>[
         PopupMenuItem(
-            value: PieceOption.reina,
-            child: Image(
+          value: PieceOption.reina,
+          child: Image(
               image: AssetImage(
-                  "images/${userData.pieceType}/reina${isWhite ? "B" : "N"}.png"),
-            )),
+            isWhite
+                ? "images/${userData.lightPieces}/reinaB.png"
+                : "images/${userData.darkPieces}/reinaN.png",
+          )),
+        ),
         PopupMenuItem(
             value: PieceOption.torre,
             child: Image(
               image: AssetImage(
-                  "images/${userData.pieceType}/torre${isWhite ? "B" : "N"}.png"),
+                isWhite
+                    ? "images/${userData.lightPieces}/torreB.png"
+                    : "images/${userData.darkPieces}/torreN.png",
+              ),
             )),
         PopupMenuItem(
             value: PieceOption.alfil,
             child: Image(
               image: AssetImage(
-                  "images/${userData.pieceType}/alfil${isWhite ? "B" : "N"}.png"),
+                isWhite
+                    ? "images/${userData.lightPieces}/alfilB.png"
+                    : "images/${userData.darkPieces}/alfilN.png",
+              ),
             )),
         PopupMenuItem(
             value: PieceOption.caballo,
             child: Image(
               image: AssetImage(
-                  "images/${userData.pieceType}/caballo${isWhite ? "B" : "N"}.png"),
+                isWhite
+                    ? "images/${userData.lightPieces}/caballoB.png"
+                    : "images/${userData.darkPieces}/caballoN.png",
+              ),
             )),
       ],
       elevation: 8.0,

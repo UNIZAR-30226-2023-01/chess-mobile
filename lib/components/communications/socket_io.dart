@@ -1,6 +1,7 @@
 import 'dart:async';
 // import 'dart:convert';
 // import 'package:ajedrez/components/chessLogic/board.dart';
+// import 'package:ajedrez/components/chessLogic/board.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
 import 'package:ajedrez/components/popups/save_dialog.dart';
 import 'package:ajedrez/components/profile_data.dart';
@@ -45,6 +46,7 @@ class GameSocket {
   bool spectatorMode = false;
   bool iAmWhite = false;
   int timer = 300;
+  String type = "";
   factory GameSocket() {
     return _singleton;
   }
@@ -63,6 +65,7 @@ class GameSocket {
     spectatorMode = false;
     iAmWhite = false;
     timer = 300;
+    type = "";
   }
 
   GameSocket._internal();
@@ -81,6 +84,11 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
   });
 
   Map jsonData;
+  
+  s.type = type;
+  if (type == "CREATECUSTOM" || type == "JOINCUSTOM") {
+    s.type = "CUSTOM";
+  }
   switch (type) {
     case "AI":
       {

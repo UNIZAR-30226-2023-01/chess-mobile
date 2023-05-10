@@ -1,6 +1,7 @@
 import 'package:ajedrez/components/buttons/save_button.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
 import 'package:ajedrez/components/chessLogic/timer.dart';
+import 'package:ajedrez/components/profile_data.dart';
 import 'package:ajedrez/components/visual/screen_size.dart';
 
 //import 'package:ajedrez/components/profile_data.dart';
@@ -31,6 +32,7 @@ class GamePageState extends State<GamePage> {
 
   final int _maxTime = GameSocket().timer;
   BoardData b = BoardData();
+  UserData u = UserData();
   @override
   void initState() {
     super.initState();
@@ -59,7 +61,7 @@ class GamePageState extends State<GamePage> {
     String idR = s.room;
     listenGame(context);
     resetSingleton(!s.iAmWhite);
-
+    // print(s.type);
     if (s.pendingMovements.isNotEmpty) {
       for (var mov in s.pendingMovements) {
         loadMovement(decodeMovement(mov));
@@ -79,12 +81,21 @@ class GamePageState extends State<GamePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: defaultWidth * 0.075),
-              !s.spectatorMode
+              s.type == "COMP" || s.type == "CUSTOM"
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         surrenderButton(context),
                         drawButton(context),
+                      ],
+                    )
+                  : Container(),
+              s.type == "AI"
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        surrenderButton(context),
+                        
                       ],
                     )
                   : Container(),
@@ -112,7 +123,8 @@ class GamePageState extends State<GamePage> {
                 ],
               ),
               // SizedBox(height: defaultWidth * 0.15),
-              saveButton(context),
+              s.type == "CUSTOM" || (s.type == "AI" && u.id != "") ?
+              saveButton(context):Container(),
               Text(
                 "Código de partida: $idR",
                 style: TextStyle(

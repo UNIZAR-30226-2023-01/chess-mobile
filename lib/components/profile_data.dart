@@ -2,7 +2,7 @@
 
 //de momento se queda como singleton :D
 
-import 'dart:ffi';
+// import 'dart:ffi';
 
 import 'package:ajedrez/components/visual/customization_constants.dart';
 import 'game_data.dart';

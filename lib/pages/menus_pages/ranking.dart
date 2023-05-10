@@ -242,7 +242,10 @@ class _RankingPageState extends State<RankingPage> {
                     ? RankingData.itemsPorPagina - 3
                     : RankingData.itemsPorPagina,
                 itemBuilder: ((context, index) {
-                  if (index < RankingData.username.length) {
+                  if (index <
+                      (paginaActual == 0
+                          ? RankingData.username.length - 3
+                          : RankingData.username.length)) {
                     return Center(
                       child: Container(
                         margin: EdgeInsets.only(bottom: defaultHeight * 0.02),
@@ -324,7 +327,7 @@ class _RankingPageState extends State<RankingPage> {
                       ),
                     );
                   } else {
-                    return null;
+                    return const SizedBox();
                   }
                 }),
               ),

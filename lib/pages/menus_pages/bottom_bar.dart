@@ -90,19 +90,12 @@ class _BottomBarState extends State<BottomBar> {
                     onTabChange: (index) async {
                       if (index == 2) {
                         await apiUser();
-                        restartInfoGames();
-                        String next = await apiGames(userData.games);
-                        while (next != "null") {
-                          next = await apiGames(next);
-                        }
                       }
                       if (index == 0) {
                         RankingData.restart();
                         RankingData.numPaginas =
                             await apiRanking(1, RankingData.itemsPorPagina);
                       }
-                      // int i = await apiRanking(1, 30);
-                      // print(i);
                       if (context.mounted) {
                         setState(() {
                           selectedIndex = index;

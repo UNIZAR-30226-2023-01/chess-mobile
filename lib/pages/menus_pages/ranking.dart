@@ -73,7 +73,7 @@ class _RankingPageState extends State<RankingPage> {
                                             child: imageItem(
                                                 defaultHeight * 0.09,
                                                 2.5,
-                                                "avatares${RankingData.avatar[1]}"),
+                                                "avatars${RankingData.avatar[1]}"),
                                           ),
                                           Row(
                                             mainAxisAlignment:
@@ -129,7 +129,7 @@ class _RankingPageState extends State<RankingPage> {
                                           child: imageItem(
                                               defaultHeight * 0.11,
                                               3,
-                                              "avatares${RankingData.avatar[0]}"),
+                                              "avatars${RankingData.avatar[0]}"),
                                         ),
                                         Row(
                                           mainAxisAlignment:
@@ -188,7 +188,7 @@ class _RankingPageState extends State<RankingPage> {
                                             child: imageItem(
                                                 defaultHeight * 0.09,
                                                 2.5,
-                                                "avatares${RankingData.avatar[2]}"),
+                                                "avatars${RankingData.avatar[2]}"),
                                           ),
                                           Row(
                                             mainAxisAlignment:
@@ -284,7 +284,7 @@ class _RankingPageState extends State<RankingPage> {
                               child: SizedBox(
                                 width: (defaultWidth * 0.85) * 0.175,
                                 child: imageItem(defaultHeight * 0.07, 2,
-                                    "avatares${RankingData.avatar[paginaActual == 0 ? index + 3 : index]}"),
+                                    "avatars${RankingData.avatar[paginaActual == 0 ? index + 3 : index]}"),
                               ),
                             ),
                             Container(

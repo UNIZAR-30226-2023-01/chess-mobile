@@ -369,7 +369,8 @@ Future<int> apiUpdateUser() async {
     request.write(body);
     var response = await request.close();
     var responseBody = await response.transform(utf8.decoder).join();
-    var responseBodyDictionary = jsonDecode(responseBody); // print(data);
+    var responseBodyDictionary = jsonDecode(responseBody);
+    print(responseBodyDictionary);
 
     // print(apiAuthCookie);
     return responseBodyDictionary["status"]["error_code"];

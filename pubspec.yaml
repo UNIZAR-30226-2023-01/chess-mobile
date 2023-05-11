@@ -82,9 +82,9 @@ flutter:
     - images/pieces/moroccans/
     - images/pieces/maya/
     - images/pieces/medieval/ 
-    - images/pieces/arab/
-    - images/avatars/animals/
-    - images/avatars/humans/
+    - images/pieces/classic/
+    - images/avatars/animales/ 
+    - images/avatars/humanos/
     - images/avatars/memojis/
     - images/achievement_true/
     - images/achievement_false/

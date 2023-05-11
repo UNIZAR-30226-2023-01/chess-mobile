@@ -44,7 +44,6 @@ Object popupEditProfile(BuildContext context, ValueNotifier<int> counter) {
             SizedBox(height: defaultWidth * 0.05),
             Text(
               "Nombre de usuario",
-              textAlign: TextAlign.right,
               style: TextStyle(
                 fontSize: 19,
                 color: Theme.of(context).colorScheme.primary,
@@ -54,7 +53,6 @@ Object popupEditProfile(BuildContext context, ValueNotifier<int> counter) {
             SizedBox(height: defaultWidth * 0.05),
             Text(
               "Correo electrónico",
-              textAlign: TextAlign.right,
               style: TextStyle(
                 fontSize: 19,
                 color: Theme.of(context).colorScheme.primary,
@@ -67,15 +65,57 @@ Object popupEditProfile(BuildContext context, ValueNotifier<int> counter) {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 playButton(context, "Cancelar", () => Navigator.pop(context)),
-                playButton(context, "Guardar", () {
+                playButton(context, "Guardar", () async {
+                  String username = userData.username, email = userData.email;
                   assignUsername(usernameController.text);
                   assignEmail(emailController.text);
-                  // apiUpdateUser();
-                  counter.value++;
-                  Navigator.pop(context);
+                  int i = await apiUpdateUser();
+
+                  if (context.mounted) {
+                    print(i);
+                    if (i == 0) {
+                      counter.value++;
+                      Navigator.pop(context);
+                    } else {
+                      assignUsername(username);
+                      assignEmail(email);
+                      popupErrorEditProfile(context);
+                    }
+                  }
                 }),
               ],
             ),
+          ]),
+        ),
+      ),
+    ),
+  );
+}
+
+Object popupErrorEditProfile(BuildContext context) {
+  return showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) => WillPopScope(
+      onWillPop: () async => false,
+      child: AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+        ),
+        contentPadding: EdgeInsets.all(defaultWidth * 0.05),
+        content: SizedBox(
+          width: defaultWidth * 0.85,
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Text(
+              "El nombre de usuario o el correo electrónico ya están siendo utilizados por otros usuarios.",
+              style: TextStyle(
+                fontSize: 19,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            SizedBox(height: defaultWidth * 0.05),
+            playButton(context, "Ok", () => Navigator.pop(context)),
           ]),
         ),
       ),

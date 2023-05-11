@@ -106,6 +106,8 @@ class _TournamentPageState extends State<TournamentPage> {
                           "pingüino",
                           "avatars/animales/1.webp",
                           "avatars/animales/40.webp",
+                          true,
+                          true,
                           context),
                     )
                 ],

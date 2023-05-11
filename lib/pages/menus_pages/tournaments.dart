@@ -101,7 +101,12 @@ class _TournamentPageState extends State<TournamentPage> {
                   for (int i = 0; i < 10; i++)
                     Center(
                       child: tournamentNode(
-                          "11-05-2023", "Alvaro", "pingüino", context),
+                          "11-05-2023",
+                          "Alvaro",
+                          "pingüino",
+                          "avatars/animales/1.webp",
+                          "avatars/animales/40.webp",
+                          context),
                     )
                 ],
               ),

@@ -1,4 +1,3 @@
-import 'package:ajedrez/components/chessLogic/square.dart';
 import 'package:flutter/material.dart';
 import '../visual/screen_size.dart';
 

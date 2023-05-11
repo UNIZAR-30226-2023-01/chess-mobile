@@ -39,8 +39,8 @@ Future<PieceOption?> showPieceSelectionDialog(
           child: Image(
               image: AssetImage(
             isWhite
-                ? "images/${userData.lightPieces}/reinaB.png"
-                : "images/${userData.darkPieces}/reinaN.png",
+                ? "images/pieces/${userData.lightPieces}/reinaB.png"
+                : "images/pieces/${userData.darkPieces}/reinaN.png",
           )),
         ),
         PopupMenuItem(
@@ -48,8 +48,8 @@ Future<PieceOption?> showPieceSelectionDialog(
             child: Image(
               image: AssetImage(
                 isWhite
-                    ? "images/${userData.lightPieces}/torreB.png"
-                    : "images/${userData.darkPieces}/torreN.png",
+                    ? "images/pieces/${userData.lightPieces}/torreB.png"
+                    : "images/pieces/${userData.darkPieces}/torreN.png",
               ),
             )),
         PopupMenuItem(
@@ -57,8 +57,8 @@ Future<PieceOption?> showPieceSelectionDialog(
             child: Image(
               image: AssetImage(
                 isWhite
-                    ? "images/${userData.lightPieces}/alfilB.png"
-                    : "images/${userData.darkPieces}/alfilN.png",
+                    ? "images/pieces/${userData.lightPieces}/alfilB.png"
+                    : "images/pieces/${userData.darkPieces}/alfilN.png",
               ),
             )),
         PopupMenuItem(
@@ -66,8 +66,8 @@ Future<PieceOption?> showPieceSelectionDialog(
             child: Image(
               image: AssetImage(
                 isWhite
-                    ? "images/${userData.lightPieces}/caballoB.png"
-                    : "images/${userData.darkPieces}/caballoN.png",
+                    ? "images/pieces/${userData.lightPieces}/caballoB.png"
+                    : "images/pieces/${userData.darkPieces}/caballoN.png",
               ),
             )),
       ],

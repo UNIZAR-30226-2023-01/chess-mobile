@@ -79,13 +79,13 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/
-    - images/moroccans/
-    - images/maya/
-    - images/classic/ 
-    - images/arab/
-    - images/avatares/animales/
-    - images/avatares/humanos/
-    - images/avatares/memojis/
+    - images/pieces/moroccans/
+    - images/pieces/maya/
+    - images/pieces/medieval/ 
+    - images/pieces/arab/
+    - images/avatars/animals/
+    - images/avatars/humans/
+    - images/avatars/memojis/
     - images/achievement_true/
     - images/achievement_false/
     - assets/launcher_icons/

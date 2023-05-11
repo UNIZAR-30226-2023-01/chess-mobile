@@ -21,8 +21,8 @@ const List<List> boardTypes = [
 ];
 
 const List<List> piecesTypes = [
-  ["arab", "Mérida"],
+  ["arab", "Clásico"],
   ["maya", "Maya"],
   ["moroccans", "Marroquín"],
-  ["classic", "Medieval"],
+  ["medieval", "Medieval"],
 ];

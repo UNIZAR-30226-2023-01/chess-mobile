@@ -75,8 +75,7 @@ Future<int> apiSignIn(String username, password) async {
     // print(apiAuthCookie);
     assignToken(apiAuthCookie);
     assignId(responseBodyDictionary["data"]["id"]);
-    assignUsername(responseBodyDictionary["data"]["username"]);
-    assignEmail(responseBodyDictionary["data"]["email"]);
+    await apiUser();
     return responseBodyDictionary["status"]["error_code"];
   } catch (e) {
     // print(e.toString());
@@ -370,9 +369,7 @@ Future<int> apiUpdateUser() async {
     request.write(body);
     var response = await request.close();
     var responseBody = await response.transform(utf8.decoder).join();
-    var responseBodyDictionary = jsonDecode(responseBody);
-    var data = responseBodyDictionary["data"];
-    // print(data);
+    var responseBodyDictionary = jsonDecode(responseBody); // print(data);
 
     // print(apiAuthCookie);
     return responseBodyDictionary["status"]["error_code"];

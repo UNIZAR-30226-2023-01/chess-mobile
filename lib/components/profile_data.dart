@@ -11,7 +11,7 @@ class UserData {
   static final UserData _singleton = UserData._internal();
   bool shiny = true;
   bool isRegistered = false;
-  String id = "", username = "a", email = "a", avatar = "/humanos/1.webp";
+  String id = "", username = "a", email = "a", avatar = "/humans/1.webp";
   int elo = 0, rank = 0;
   double achievementRate = 0, winRate = 0;
   List<bool> achievements = [
@@ -27,8 +27,8 @@ class UserData {
   int boardTypeN = woodN;
   int boardTypeB = woodB;
   String boardType = "wood";
-  String lightPieces = "merida";
-  String darkPieces = "merida";
+  String lightPieces = "arab";
+  String darkPieces = "arab";
   List<GameData> savedGames = List.empty(growable: true);
   List<GameData> playedGames = List.empty(growable: true);
   String games = "";

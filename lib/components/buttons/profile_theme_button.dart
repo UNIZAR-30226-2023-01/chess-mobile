@@ -108,7 +108,8 @@ itemPopupPieces(BuildContext context, String type, String text, bool isBlack) {
         height: defaultWidth * 0.1,
         width: defaultWidth * 0.1,
         child: Image(
-          image: AssetImage("images/$type/caballo${isBlack ? "N" : "B"}.png"),
+          image: AssetImage(
+              "images/pieces/$type/caballo${isBlack ? "N" : "B"}.png"),
         ),
       ),
       SizedBox(

@@ -51,8 +51,8 @@ class Rook extends Piece {
   Rook({required super.isWhite}) {
     _value = 5;
     _img = super.isWhite
-        ? "${userData.lightPieces}/torreB"
-        : "${userData.darkPieces}/torreN";
+        ? "pieces/${userData.lightPieces}/torreB"
+        : "pieces/${userData.darkPieces}/torreN";
     alreadyMoved = false;
   }
 
@@ -113,8 +113,8 @@ class Bishop extends Piece {
   Bishop({required super.isWhite}) {
     _value = 3;
     _img = super.isWhite
-        ? "${userData.lightPieces}/alfilB"
-        : "${userData.darkPieces}/alfilN";
+        ? "pieces/${userData.lightPieces}/alfilB"
+        : "pieces/${userData.darkPieces}/alfilN";
   }
 
   @override
@@ -178,8 +178,8 @@ class Knight extends Piece {
   Knight({required super.isWhite}) {
     _value = 3;
     _img = super.isWhite
-        ? "${userData.lightPieces}/caballoB"
-        : "${userData.darkPieces}/caballoN";
+        ? "pieces/${userData.lightPieces}/caballoB"
+        : "pieces/${userData.darkPieces}/caballoN";
   }
 
   @override
@@ -205,8 +205,8 @@ class Pawn extends Piece {
     _value = 1;
 
     _img = super.isWhite
-        ? "${userData.lightPieces}/peonB"
-        : "${userData.darkPieces}/peonN";
+        ? "pieces/${userData.lightPieces}/peonB"
+        : "pieces/${userData.darkPieces}/peonN";
   }
 
   @override
@@ -262,8 +262,8 @@ class Queen extends Piece {
   Queen({required super.isWhite}) {
     _value = 10;
     _img = super.isWhite
-        ? "${userData.lightPieces}/reinaB"
-        : "${userData.darkPieces}/reinaN";
+        ? "pieces/${userData.lightPieces}/reinaB"
+        : "pieces/${userData.darkPieces}/reinaN";
   }
 
   @override
@@ -372,8 +372,8 @@ class King extends Piece {
   King({required super.isWhite}) {
     _value = 10000;
     _img = super.isWhite
-        ? "${userData.lightPieces}/reyB"
-        : "${userData.darkPieces}/reyN";
+        ? "pieces/${userData.lightPieces}/reyB"
+        : "pieces/${userData.darkPieces}/reyN";
     alreadyMoved = false;
   }
 

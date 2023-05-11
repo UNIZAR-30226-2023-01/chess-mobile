@@ -18,10 +18,32 @@ class PlayedGames {
         content: SizedBox(
           width: defaultWidth * 0.85,
           height: defaultHeight * 0.85,
-          child: ListView(children: [
-            for (GameData element in userData.playedGames)
-              gameBox(context, element),
-          ]),
+          child: Column(
+            children: [
+              Text(
+                "Historial de partidas",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              SizedBox(height: defaultWidth * 0.05),
+              Divider(
+                color: Theme.of(context).colorScheme.primary,
+                thickness: 1.25,
+                indent: defaultWidth * 0.05,
+                endIndent: defaultWidth * 0.05,
+              ),
+              SizedBox(height: defaultWidth * 0.05),
+              Expanded(
+                child: ListView(children: [
+                  for (GameData element in userData.playedGames)
+                    gameBox(context, element),
+                ]),
+              ),
+            ],
+          ),
         ),
       ),
     );

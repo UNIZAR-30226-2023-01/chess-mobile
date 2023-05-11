@@ -61,84 +61,90 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  SizedBox header() {
-    return SizedBox(
-      height: defaultHeight * 0.35,
-      child: Stack(children: [
-        ClipPath(
-          clipper: CustomShape(),
-          child: Container(
-            height: defaultHeight * 0.335,
-            color: Theme.of(context).colorScheme.tertiary,
-          ),
-        ),
-        Align(
-          alignment: Alignment.topRight,
-          child: Padding(
-            padding: EdgeInsets.only(
-              top: defaultHeight * 0.04,
-              right: defaultHeight * 0.015,
-            ),
-            child: optionsButton(context),
-          ),
-        ),
-        Center(
-          child: Column(children: [
-            Padding(
-              padding: EdgeInsets.only(
-                  bottom: defaultHeight * 0.025, top: defaultHeight * 0.1),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        showElo(userData.elo),
-                        Text(
-                          userData.username,
-                          overflow: TextOverflow.visible,
-                          style: TextStyle(
-                            fontSize: 27,
-                            fontWeight: FontWeight.bold,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: defaultHeight * 0.01),
-                    Text(
-                      userData.email,
-                      overflow: TextOverflow.visible,
-                      style: TextStyle(
-                        fontSize: 17,
-                        fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.primary,
-                      ),
-                    ),
-                  ]),
-            ),
-            SizedBox(
-              height: defaultHeight * 0.14,
-              width: defaultHeight * 0.14,
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                  border: Border.all(
-                    color: Theme.of(context).colorScheme.primary,
-                    width: 4,
-                  ),
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage("images/avatares${userData.avatar}"),
-                  ),
+  ValueListenableBuilder header() {
+    ValueNotifier<int> counter = ValueNotifier<int>(0);
+    return ValueListenableBuilder(
+        valueListenable: counter,
+        builder: (context, value, child) {
+          return SizedBox(
+            height: defaultHeight * 0.35,
+            child: Stack(children: [
+              ClipPath(
+                clipper: CustomShape(),
+                child: Container(
+                  height: defaultHeight * 0.335,
+                  color: Theme.of(context).colorScheme.tertiary,
                 ),
               ),
-            ),
-          ]),
-        ),
-      ]),
-    );
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    top: defaultHeight * 0.04,
+                    right: defaultHeight * 0.015,
+                  ),
+                  child: optionsButton(context, counter),
+                ),
+              ),
+              Center(
+                child: Column(children: [
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: defaultHeight * 0.025,
+                        top: defaultHeight * 0.1),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              showElo(userData.elo),
+                              Text(
+                                userData.username,
+                                overflow: TextOverflow.visible,
+                                style: TextStyle(
+                                  fontSize: 27,
+                                  fontWeight: FontWeight.bold,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: defaultHeight * 0.01),
+                          Text(
+                            userData.email,
+                            overflow: TextOverflow.visible,
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                          ),
+                        ]),
+                  ),
+                  SizedBox(
+                    height: defaultHeight * 0.14,
+                    width: defaultHeight * 0.14,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.primary,
+                          width: 4,
+                        ),
+                        image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: AssetImage("images/avatars${userData.avatar}"),
+                        ),
+                      ),
+                    ),
+                  ),
+                ]),
+              ),
+            ]),
+          );
+        });
   }
 
   Column statistics() {
@@ -255,8 +261,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: defaultWidth * 0.15,
                 width: defaultWidth * 0.15,
                 margin: EdgeInsets.all(defaultWidth * 0.0325),
-                child:
-                    Image.asset("images/${userData.darkPieces}/caballoN.png"),
+                child: Image.asset(
+                    "images/pieces/${userData.darkPieces}/caballoN.png"),
               ),
             ),
             Align(
@@ -265,8 +271,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: defaultWidth * 0.15,
                 width: defaultWidth * 0.15,
                 margin: EdgeInsets.all(defaultWidth * 0.0325),
-                child:
-                    Image.asset("images/${userData.lightPieces}/caballoB.png"),
+                child: Image.asset(
+                    "images/pieces/${userData.lightPieces}/caballoB.png"),
               ),
             ),
           ]),

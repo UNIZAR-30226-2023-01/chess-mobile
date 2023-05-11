@@ -85,6 +85,42 @@ Future<int> apiSignIn(String username, password) async {
   }
 }
 
+Future<int> apiSignOut() async {
+  var pemBytes = await rootBundle.load("assets/cert.pem");
+
+  var context = SecurityContext()
+    ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
+
+  var client = HttpClient(context: context)
+    ..badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+  try {
+    var request = await client
+        .postUrl(Uri.parse('https://api.gracehopper.xyz/v1/auth/sign-out'));
+    // Set headers
+    request.headers.add('Content-Type', 'application/json');
+    request.headers.add('Cookie', 'api-auth=${UserData().token}');
+
+    // Create JSON body
+    var body = jsonEncode({});
+
+    // Set body
+    request.write(body);
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
+    var responseBodyDictionary = jsonDecode(responseBody);
+    print(responseBodyDictionary);
+
+    // print(apiAuthCookie);
+    return responseBodyDictionary["status"]["error_code"];
+  } catch (e) {
+    // print(e.toString());
+    return -1;
+  } finally {
+    client.close();
+  }
+}
+
 Future<int> apiForgotPassword(String email) async {
   var pemBytes = await rootBundle.load("assets/cert.pem");
 
@@ -370,7 +406,45 @@ Future<int> apiUpdateUser() async {
     var response = await request.close();
     var responseBody = await response.transform(utf8.decoder).join();
     var responseBodyDictionary = jsonDecode(responseBody);
-    print(responseBodyDictionary);
+    // print(responseBodyDictionary);
+
+    // print(apiAuthCookie);
+    return responseBodyDictionary["status"]["error_code"];
+  } catch (e) {
+    // print(e.toString());
+    return -1;
+  } finally {
+    client.close();
+  }
+}
+
+Future<int> apiDeleteUser() async {
+  UserData userData = UserData();
+
+  var pemBytes = await rootBundle.load("assets/cert.pem");
+
+  var context = SecurityContext()
+    ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
+
+  var client = HttpClient(context: context)
+    ..badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+  try {
+    var request = await client.deleteUrl(
+        Uri.parse('https://api.gracehopper.xyz/v1/users/${userData.id}'));
+    // Set headers
+    request.headers.add('Content-Type', 'application/json');
+    request.headers.add('Cookie', 'api-auth=${UserData().token}');
+
+    // Create JSON body
+    var body = jsonEncode({});
+
+    // Set body
+    request.write(body);
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
+    var responseBodyDictionary = jsonDecode(responseBody);
+    // print(responseBodyDictionary);
 
     // print(apiAuthCookie);
     return responseBodyDictionary["status"]["error_code"];

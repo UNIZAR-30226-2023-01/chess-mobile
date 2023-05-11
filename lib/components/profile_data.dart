@@ -87,6 +87,11 @@ void assignEmail(String email) {
   userData.email = email;
 }
 
+void assignAvatar(String avatar) {
+  UserData userData = UserData();
+  userData.avatar = avatar;
+}
+
 void assignIsRegistred(bool isRegistered) {
   UserData userData = UserData();
   userData.isRegistered = isRegistered;

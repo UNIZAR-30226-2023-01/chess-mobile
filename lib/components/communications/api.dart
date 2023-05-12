@@ -6,6 +6,7 @@ import 'package:ajedrez/components/singletons/game_data.dart';
 import 'package:ajedrez/components/singletons/ranking_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
+import 'package:webview_flutter/webview_flutter.dart';
 // import 'package:webview_flutter/webview_flutter.dart';
 
 Future<int> apiSignUp(String username, password, email) async {
@@ -150,63 +151,6 @@ Future<int> apiForgotPassword(String email) async {
   } catch (e) {
     // print(e.toString());
     return -1;
-  } finally {
-    client.close();
-  }
-}
-
-void apiSignInGoogle(BuildContext context) async {
-  var pemBytes = await rootBundle.load("assets/cert.pem");
-
-  var scontext = SecurityContext()
-    ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
-
-  var client = HttpClient(context: scontext)
-    ..badCertificateCallback =
-        (X509Certificate cert, String host, int port) => true;
-  try {
-    // var request = await client.getUrl(
-    //     Uri.parse('https://api.gracehopper.xyz/v1/auth/sign-in/google'));
-
-    /// FUnciona pero como que no
-
-    // var response = await request.close();
-    // var responseBody = await response.transform(utf8.decoder).join();
-    // Create a new route that contains the WebView widget
-
-    // var controller = WebViewController()
-    //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
-    //   ..setBackgroundColor(const Color(0x00000000))
-    //   ..setNavigationDelegate(
-    //     NavigationDelegate(
-    //       onProgress: (int progress) {
-    //         // Update loading bar.
-    //       },
-    //       onPageStarted: (String url) {},
-    //       onPageFinished: (String url) {},
-    //       onWebResourceError: (WebResourceError error) {},
-    //       onNavigationRequest: (NavigationRequest request) {
-    //         if (request.url.startsWith('https://www.youtube.com/')) {
-    //           return NavigationDecision.prevent;
-    //         }
-    //         return NavigationDecision.navigate;
-    //       },
-    //     ),
-    //   )
-    //   ..loadHtmlString(responseBody);
-
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(
-    //     builder: (context) => Scaffold(
-    //       appBar: AppBar(title: const Text('Login with google')),
-    //       body: WebViewWidget(controller: controller),
-    //     ),
-    //   ),
-    // );
-    // print(responseBody);
-  } catch (e) {
-    // print(e.toString());
   } finally {
     client.close();
   }

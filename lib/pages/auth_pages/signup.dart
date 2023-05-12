@@ -224,52 +224,6 @@ class _SignUpPageState extends State<SignUpPage> {
                     height: 50,
                   ),
 
-                  // Divider for other methods
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Divider(
-                            thickness: 0.5,
-                            color: Color.fromARGB(255, 208, 211, 218),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(
-                            'Or',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 208, 211, 218),
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            thickness: 0.5,
-                            color: Color.fromARGB(255, 208, 211, 218),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(
-                    height: 25,
-                  ),
-
-                  // Other platforms for registration
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      PlatformButton(
-                        onTap: () async {},
-                        logoPath: 'images/Google_Logo.png',
-                        message: 'Login with Google',
-                      ),
-                    ],
-                  ),
-
                   const SizedBox(
                     height: 50,
                   ),

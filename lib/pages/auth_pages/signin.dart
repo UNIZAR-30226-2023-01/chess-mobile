@@ -138,7 +138,7 @@ class _SignInPageState extends State<SignInPage> {
                           child: const Text(
                             'Forgot password?',
                             style: TextStyle(
-                              color: Color.fromARGB(255, 208, 211, 218),
+                              color: Color.fromARGB(255, 115, 117, 121),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -193,60 +193,6 @@ class _SignInPageState extends State<SignInPage> {
 
                   const SizedBox(
                     height: 50,
-                  ),
-
-                  // Divider for other methods
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Divider(
-                            thickness: 0.5,
-                            color: Color.fromARGB(255, 208, 211, 218),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(
-                            'Or',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 208, 211, 218),
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            thickness: 0.5,
-                            color: Color.fromARGB(255, 208, 211, 218),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(
-                    height: 25,
-                  ),
-
-                  // Other platforms for login
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      PlatformButton(
-                        logoPath: 'images/Google_Logo.png',
-                        message: 'Login with Google',
-                        onTap: () async {
-                          apiSignInGoogle(context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => BottomBar.fromSignIn(),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
                   ),
 
                   const SizedBox(

@@ -110,7 +110,7 @@ Future<int> apiSignOut() async {
     var responseBody = await response.transform(utf8.decoder).join();
     var responseBodyDictionary = jsonDecode(responseBody);
     // print(responseBodyDictionary);
-
+    print(responseBodyDictionary["status"]["error_code"]);
     // print(apiAuthCookie);
     return responseBodyDictionary["status"]["error_code"];
   } catch (e) {
@@ -236,8 +236,10 @@ Future<int> apiRanking(int page, int limit) async {
     // print(data);
     // print(responseBodyDictionary);
     List<dynamic> rankingList = data;
+    print(rankingList);
     for (var element in rankingList) {
-      RankingData.add(element["avatar"], element["username"], element["elo"]);
+      RankingData.add(element["avatar"], element["username"], element["elo"],
+          element["ranking"]);
     }
 
     return responseBodyDictionary["meta"]["pages"];
@@ -338,14 +340,33 @@ Future<int> apiUser() async {
     var responseBody = await response.transform(utf8.decoder).join();
     var responseBodyDictionary = jsonDecode(responseBody);
     var data = responseBodyDictionary["data"];
-    // print(data);
+    // print(responseBodyDictionary);
+    List<dynamic> skins = data["skins"];
+    var board = skins[0], darkPieces = skins[6], lightPieces = skins[6];
+    for (var skin in skins) {
+      if (skin["type"] == "board" && skin["active"] == true) {
+        board = skin;
+      } else if (skin["type"] == "pieces" && skin["activeDark"] == true) {
+        darkPieces = skin;
+      } else if (skin["type"] == "pieces" && skin["activeDark"] == true) {
+        lightPieces = skin;
+      }
+    }
+    List<dynamic> achievements = data["achievements"];
+    print(achievements);
+    List<List> ach = List.empty(growable: true);
+    for (var achievement in achievements) {
+      ach.add([
+        achievement["imgSrc"],
+        achievement["imgAlt"],
+        achievement["achieved"]
+      ]);
+    }
+
     updateProfile(
+        data["avatar"],
         data["username"],
         data["email"],
-        data["avatar"],
-        data["skins"]["board"],
-        data["skins"]["lightPieces"],
-        data["skins"]["darkPieces"],
         data["elo"],
         data["ranking"],
         data["stats"]["bulletWins"],
@@ -357,11 +378,15 @@ Future<int> apiUser() async {
         data["stats"]["fastWins"],
         data["stats"]["fastDraws"],
         data["stats"]["fastDefeats"],
-        data["achievements"],
+        ach,
+        board["name"],
+        board["darkColor"],
+        board["lightColor"],
+        darkPieces["src"],
+        lightPieces["src"],
         data["games"]);
-    // print(data);
 
-    //actualizar datos aquí
+    // print(responseBodyDictionary);
     return 0;
     //aqui ns que necesitas q devuelva
     // return responseBodyDictionary["status"]["error_code"];

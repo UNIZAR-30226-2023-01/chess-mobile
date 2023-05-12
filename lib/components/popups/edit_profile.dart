@@ -139,10 +139,10 @@ Object popupEditProfile(BuildContext context, ValueNotifier<int> counter) {
                     for (int i = 1; i <= 50; i++)
                       GestureDetector(
                         onTap: () {
-                          avatarController = "/animales/$i.webp";
+                          avatarController = "/animals/$i.webp";
                           setState(() {});
                         },
-                        child: imageSelect(context, "animales", i),
+                        child: imageSelect(context, "animals", i),
                       ),
                   ],
                 ),
@@ -154,10 +154,10 @@ Object popupEditProfile(BuildContext context, ValueNotifier<int> counter) {
                     for (int i = 1; i <= 24; i++)
                       GestureDetector(
                         onTap: () {
-                          avatarController = "/humanos/$i.webp";
+                          avatarController = "/humans/$i.webp";
                           setState(() {});
                         },
-                        child: imageSelect(context, "humanos", i),
+                        child: imageSelect(context, "humans", i),
                       ),
                   ],
                 ),
@@ -230,7 +230,7 @@ Object popupErrorEditProfile(BuildContext context) {
           width: defaultWidth * 0.85,
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             Text(
-              "El nombre de usuario o el correo electrónico ya están siendo utilizados por otros usuarios.",
+              "Ha habido un error cambiando el nombre de usuario o el correo electrónico.",
               style: TextStyle(
                 fontSize: 19,
                 color: Theme.of(context).colorScheme.primary,

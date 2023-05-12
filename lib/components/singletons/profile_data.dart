@@ -14,16 +14,8 @@ class UserData {
   String id = "", username = "a", email = "a", avatar = "/humans/1.webp";
   int elo = 0, rank = 0;
   double achievementRate = 0, winRate = 0;
-  List<bool> achievements = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
-  ];
+  // [String imgSrc, String imgAlt, bool achieved]
+  List<List> achievements = List.empty(growable: true);
   int boardTypeN = woodN;
   int boardTypeB = woodB;
   String boardType = "wood";
@@ -113,14 +105,10 @@ void addPlayedGame(GameData gameData) {
   userData.playedGames.insert(0, gameData);
 }
 
-// Falta theme
 void updateProfile(
+    String avatar,
     String username,
     String email,
-    String avatar,
-    String board,
-    String lightPieces,
-    String darkPieces,
     int elo,
     int rank,
     int bulletWins,
@@ -132,12 +120,17 @@ void updateProfile(
     int fastWins,
     int fastDraws,
     int fastDefeats,
-    var achievements,
+    List<List> achievements,
+    String board,
+    String boardN,
+    String boardB,
+    String darkPieces,
+    String lightPieces,
     String games) {
   UserData userData = UserData();
+  userData.avatar = avatar;
   userData.username = username;
   userData.email = email;
-  userData.avatar = avatar;
   userData.elo = elo;
   userData.rank = rank;
   int total = bulletWins +
@@ -151,62 +144,18 @@ void updateProfile(
       fastDefeats;
   userData.winRate =
       total == 0 ? 0 : ((bulletWins + blitzWins + fastWins) / total) * 100;
-  userData.achievements = [
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false,
-    false
-  ];
+  userData.achievements = achievements;
   int count = 0;
   for (var i in achievements) {
-    switch (i) {
-      case "FIRST LOGIN":
-        userData.achievements[0] = true;
-        count++;
-        break;
-      case "PLAY 10 COMPETITIVE":
-        userData.achievements[1] = true;
-        count++;
-        break;
-      case "PLAY 10 CUSTOM":
-        userData.achievements[2] = true;
-        count++;
-        break;
-      case "PLAY 10 TOURNAMENT":
-        userData.achievements[3] = true;
-        count++;
-        break;
-      case "PLAY 10 AI":
-        userData.achievements[4] = true;
-        count++;
-        break;
-      case "DRAW 10 GAMES":
-        userData.achievements[5] = true;
-        count++;
-        break;
-      case "TOP 100":
-        userData.achievements[6] = true;
-        count++;
-        break;
-      case "TOP 1":
-        userData.achievements[7] = true;
-        count++;
-        break;
+    if (i[2]) {
+      count++;
     }
   }
-  userData.achievementRate = (count / 8.0) * 100;
+  userData.achievementRate = (count / achievements.length) * 100;
   userData.games = games;
   userData.boardType = board;
-  for (int i = 0; i < boardTypes.length; i++) {
-    if (boardTypes[i][0] == board) {
-      userData.boardTypeN = boardTypes[i][1];
-      userData.boardTypeB = boardTypes[i][2];
-    }
-  }
+  userData.boardTypeN = int.parse("0xFF${boardN.substring(1)}");
+  userData.boardTypeB = int.parse("0xFF${boardB.substring(1)}");
   userData.darkPieces = darkPieces;
   userData.lightPieces = lightPieces;
 }

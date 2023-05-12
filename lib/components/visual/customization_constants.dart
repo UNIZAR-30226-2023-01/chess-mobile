@@ -15,7 +15,7 @@ const List<List> boardTypes = [
   ["wood", woodN, woodB, "Madera"],
   ["coral", coralN, coralB, "Coral"],
   ["dark", oscuroN, oscuroB, "Oscuro"],
-  ["marineine", marineN, marineB, "Océano"],
+  ["marine", marineN, marineB, "Océano"],
   ["wheat", wheatN, wheatB, "Trigo"],
   ["emerald", emeraldN, emeraldB, "Esmeralda"]
 ];

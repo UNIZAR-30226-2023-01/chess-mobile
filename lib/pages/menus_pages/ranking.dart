@@ -58,7 +58,7 @@ class _RankingPageState extends State<RankingPage> {
                                       child: Column(
                                         children: [
                                           Text(
-                                            "#2",
+                                            "#${RankingData.rank[1].toString()}",
                                             style: TextStyle(
                                               fontSize: 23,
                                               fontWeight: FontWeight.bold,
@@ -80,16 +80,19 @@ class _RankingPageState extends State<RankingPage> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               showElo(RankingData.elo[1]),
-                                              Text(
-                                                RankingData.username[1],
-                                                overflow: TextOverflow.visible,
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary,
+                                              Flexible(
+                                                child: Text(
+                                                  RankingData.username[1],
+                                                  overflow:
+                                                      TextOverflow.visible,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                  ),
                                                 ),
                                               ),
                                             ],
@@ -114,7 +117,7 @@ class _RankingPageState extends State<RankingPage> {
                                     child: Column(
                                       children: [
                                         Text(
-                                          "#1",
+                                          "#${RankingData.rank[0].toString()}",
                                           style: TextStyle(
                                             fontSize: 30,
                                             fontWeight: FontWeight.bold,
@@ -136,16 +139,18 @@ class _RankingPageState extends State<RankingPage> {
                                               MainAxisAlignment.center,
                                           children: [
                                             showElo(RankingData.elo[0]),
-                                            Text(
-                                              RankingData.username[0],
-                                              overflow: TextOverflow.visible,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: 17,
-                                                fontWeight: FontWeight.bold,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .primary,
+                                            Flexible(
+                                              child: Text(
+                                                RankingData.username[0],
+                                                overflow: TextOverflow.visible,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                ),
                                               ),
                                             ),
                                           ],
@@ -173,7 +178,7 @@ class _RankingPageState extends State<RankingPage> {
                                       child: Column(
                                         children: [
                                           Text(
-                                            "#3",
+                                            "#${RankingData.rank[2].toString()}",
                                             style: TextStyle(
                                               fontSize: 23,
                                               fontWeight: FontWeight.bold,
@@ -195,16 +200,19 @@ class _RankingPageState extends State<RankingPage> {
                                                 MainAxisAlignment.center,
                                             children: [
                                               showElo(RankingData.elo[2]),
-                                              Text(
-                                                RankingData.username[2],
-                                                overflow: TextOverflow.visible,
-                                                textAlign: TextAlign.center,
-                                                style: TextStyle(
-                                                  fontSize: 17,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary,
+                                              Flexible(
+                                                child: Text(
+                                                  RankingData.username[2],
+                                                  overflow:
+                                                      TextOverflow.visible,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                  ),
                                                 ),
                                               ),
                                             ],
@@ -269,7 +277,7 @@ class _RankingPageState extends State<RankingPage> {
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Text(
-                                  "#${(index) + (paginaActual * RankingData.itemsPorPagina) + (paginaActual == 0 ? 4 : 1)}",
+                                  "#${RankingData.rank[paginaActual == 0 ? index + 3 : index].toString()}",
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
                                     fontSize: 21,
@@ -295,16 +303,20 @@ class _RankingPageState extends State<RankingPage> {
                                 children: [
                                   showElo(RankingData.elo[
                                       paginaActual == 0 ? index + 3 : index]),
-                                  Text(
-                                    RankingData.username[
-                                        paginaActual == 0 ? index + 3 : index],
-                                    overflow: TextOverflow.visible,
-                                    textAlign: TextAlign.left,
-                                    style: TextStyle(
-                                      fontSize: 17,
-                                      fontWeight: FontWeight.bold,
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                  Flexible(
+                                    child: Text(
+                                      RankingData.username[paginaActual == 0
+                                          ? index + 3
+                                          : index],
+                                      overflow: TextOverflow.visible,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
                                     ),
                                   ),
                                 ],

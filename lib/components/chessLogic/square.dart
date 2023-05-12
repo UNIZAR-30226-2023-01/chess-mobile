@@ -55,7 +55,7 @@ class SquareState extends State<Square> {
                 image: board.currentBoard[y][x].getImg() != ""
                     ? DecorationImage(
                         image: AssetImage(
-                            "images/${board.currentBoard[y][x].getImg()}.png"),
+                            "images${board.currentBoard[y][x].getImg()}.png"),
                         fit: BoxFit.cover)
                     : null),
           ),
@@ -112,7 +112,7 @@ class SquareState extends State<Square> {
         }
 
         //enroque
-        processCastling(auxY, auxX,y,x);
+        processCastling(auxY, auxX, y, x);
         _procesarComerAlPaso(auxY, auxX);
         board.lastMovement = [
           [auxY, auxX],
@@ -212,8 +212,6 @@ class SquareState extends State<Square> {
                 : blackTile;
   }
 
-  
-
   Future<void> _processPromotion() async {
     BoardData b = BoardData();
     Completer completer = Completer<void>();
@@ -223,28 +221,24 @@ class SquareState extends State<Square> {
       final Offset position = box.localToGlobal(Offset.zero);
       PieceOption? selectedPiece;
       while (selectedPiece == null) {
-        selectedPiece = await showPieceSelectionDialog(
-            context, position, board.whiteTurn);
+        selectedPiece =
+            await showPieceSelectionDialog(context, position, board.whiteTurn);
       }
       switch (selectedPiece) {
         case PieceOption.reina:
-          board.currentBoard[y][x] =
-              Queen(isWhite: board.whiteTurn);
+          board.currentBoard[y][x] = Queen(isWhite: board.whiteTurn);
           b.prom = "q";
           break;
         case PieceOption.torre:
-          board.currentBoard[y][x] =
-              Rook(isWhite: board.whiteTurn);
+          board.currentBoard[y][x] = Rook(isWhite: board.whiteTurn);
           b.prom = "r";
           break;
         case PieceOption.alfil:
-          board.currentBoard[y][x] =
-              Bishop(isWhite: board.whiteTurn);
+          board.currentBoard[y][x] = Bishop(isWhite: board.whiteTurn);
           b.prom = "b";
           break;
         case PieceOption.caballo:
-          board.currentBoard[y][x] =
-              Knight(isWhite: board.whiteTurn);
+          board.currentBoard[y][x] = Knight(isWhite: board.whiteTurn);
           b.prom = "n";
           break;
       }
@@ -320,7 +314,7 @@ class SquareState extends State<Square> {
     String jugada = jugadas[invertedPrevX] +
         (invertedPrevY).toString() +
         jugadas[invertedX] +
-        (invertedY).toString() + 
+        (invertedY).toString() +
         b.prom;
     b.prom = "";
 
@@ -335,9 +329,8 @@ List<List<int>> decodeMovement(String jugada) {
   int prevy = jugada[1].codeUnitAt(0) - '0'.codeUnitAt(0);
   int y = jugada[3].codeUnitAt(0) - '0'.codeUnitAt(0);
   BoardData board = BoardData();
-  if(jugada.length == 5) {
+  if (jugada.length == 5) {
     board.prom = jugada[4];
-
   } else {
     board.prom = "";
   }
@@ -358,7 +351,7 @@ void simulateMovement(List<List<int>> movements) {
   int auxX = movements[0][1];
   int y = movements[1][0];
   int x = movements[1][1];
-  processCastling(auxY, auxX,y,x);
+  processCastling(auxY, auxX, y, x);
   b.lastMovement = movements;
   final musicPlayer = AudioPlayer();
   if (b.currentBoard[y][x].isEmpty()) {
@@ -369,23 +362,19 @@ void simulateMovement(List<List<int>> movements) {
   b.currentBoard[y][x] = b.currentBoard[auxY][auxX];
   if (b.prom != "") {
     switch (b.prom) {
-        case "q":
-          b.currentBoard[y][x] =
-              Queen(isWhite: b.whiteTurn);
-          break;
-        case "r":
-          b.currentBoard[y][x] =
-              Rook(isWhite: b.whiteTurn);
-          break;
-        case "b":
-          b.currentBoard[y][x] =
-              Bishop(isWhite: b.whiteTurn);
-          break;
-        case "n":
-          b.currentBoard[y][x] =
-              Knight(isWhite: b.whiteTurn);
-          break;
-      }
+      case "q":
+        b.currentBoard[y][x] = Queen(isWhite: b.whiteTurn);
+        break;
+      case "r":
+        b.currentBoard[y][x] = Rook(isWhite: b.whiteTurn);
+        break;
+      case "b":
+        b.currentBoard[y][x] = Bishop(isWhite: b.whiteTurn);
+        break;
+      case "n":
+        b.currentBoard[y][x] = Knight(isWhite: b.whiteTurn);
+        break;
+    }
   }
   b.prom = "";
   b.currentBoard[auxY][auxX] = Empty(isWhite: false);
@@ -412,28 +401,24 @@ void loadMovement(List<List<int>> movements) {
   int auxX = movements[0][1];
   int y = movements[1][0];
   int x = movements[1][1];
-  processCastling(auxY, auxX,y,x);
+  processCastling(auxY, auxX, y, x);
   b.lastMovement = movements;
   b.currentBoard[y][x] = b.currentBoard[auxY][auxX];
   if (b.prom != "") {
     switch (b.prom) {
-        case "q":
-          b.currentBoard[y][x] =
-              Queen(isWhite: b.whiteTurn);
-          break;
-        case "r":
-          b.currentBoard[y][x] =
-              Rook(isWhite: b.whiteTurn);
-          break;
-        case "b":
-          b.currentBoard[y][x] =
-              Bishop(isWhite: b.whiteTurn);
-          break;
-        case "n":
-          b.currentBoard[y][x] =
-              Knight(isWhite: b.whiteTurn);
-          break;
-      }
+      case "q":
+        b.currentBoard[y][x] = Queen(isWhite: b.whiteTurn);
+        break;
+      case "r":
+        b.currentBoard[y][x] = Rook(isWhite: b.whiteTurn);
+        break;
+      case "b":
+        b.currentBoard[y][x] = Bishop(isWhite: b.whiteTurn);
+        break;
+      case "n":
+        b.currentBoard[y][x] = Knight(isWhite: b.whiteTurn);
+        break;
+    }
   }
   b.prom = "";
   b.currentBoard[auxY][auxX] = Empty(isWhite: false);
@@ -441,24 +426,24 @@ void loadMovement(List<List<int>> movements) {
   b.whiteTurn = !b.whiteTurn;
 }
 
-void processCastling(int auxY, int auxX,int y, int x) {
-    BoardData board = BoardData();
-    if (board.currentBoard[auxY][auxX] is King) {
-      (board.currentBoard[auxY][auxX] as King).alreadyMoved = true;
-    } else if (board.currentBoard[auxY][auxX] is Rook) {
-      (board.currentBoard[auxY][auxX] as Rook).alreadyMoved = true;
-    }
-    if (board.currentBoard[auxY][auxX] is King && (auxX - x).abs() > 1) {
-      if (x == 6) {
-        board.currentBoard[y][5] = board.currentBoard[y][7];
-        board.currentBoard[y][7] = Empty(isWhite: false);
-        (board.squares[y * 8 + 5]as SquareState).actualizarEstado();
-        (board.squares[y * 8 + 7]as SquareState).actualizarEstado();
-      } else if (x == 2) {
-        board.currentBoard[y][3] = board.currentBoard[y][0];
-        board.currentBoard[y][0] = Empty(isWhite: false);
-        (board.squares[y * 8 + 0]as SquareState).actualizarEstado();
-        (board.squares[y * 8 + 3]as SquareState).actualizarEstado();
-      }
+void processCastling(int auxY, int auxX, int y, int x) {
+  BoardData board = BoardData();
+  if (board.currentBoard[auxY][auxX] is King) {
+    (board.currentBoard[auxY][auxX] as King).alreadyMoved = true;
+  } else if (board.currentBoard[auxY][auxX] is Rook) {
+    (board.currentBoard[auxY][auxX] as Rook).alreadyMoved = true;
+  }
+  if (board.currentBoard[auxY][auxX] is King && (auxX - x).abs() > 1) {
+    if (x == 6) {
+      board.currentBoard[y][5] = board.currentBoard[y][7];
+      board.currentBoard[y][7] = Empty(isWhite: false);
+      (board.squares[y * 8 + 5] as SquareState).actualizarEstado();
+      (board.squares[y * 8 + 7] as SquareState).actualizarEstado();
+    } else if (x == 2) {
+      board.currentBoard[y][3] = board.currentBoard[y][0];
+      board.currentBoard[y][0] = Empty(isWhite: false);
+      (board.squares[y * 8 + 0] as SquareState).actualizarEstado();
+      (board.squares[y * 8 + 3] as SquareState).actualizarEstado();
     }
   }
+}

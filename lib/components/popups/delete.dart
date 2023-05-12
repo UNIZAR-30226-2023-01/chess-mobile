@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../buttons/delete.dart';
-import '../communications/api.dart';
 
 AlertDialog popupDelete(BuildContext context) {
   return AlertDialog(
@@ -11,8 +10,8 @@ AlertDialog popupDelete(BuildContext context) {
     title: const Text(
         "¿Seguro que deseas eliminar tu cuenta? No podrás recuperarla."),
     actions: [
-      deleteButton(context, "No", () => Navigator.pop(context)),
-      deleteButton(context, "Sí", () => apiDeleteUser()), // api sign outS
+      deleteButton(context, "No", false),
+      deleteButton(context, "Sí", true), // api sign outS
     ],
   );
 }

@@ -1,9 +1,13 @@
+import 'package:ajedrez/components/communications/api.dart';
 import 'package:flutter/material.dart';
 import '../visual/screen_size.dart';
 
-TextButton deleteButton(BuildContext context, String text, Function() action) {
+TextButton deleteButton(BuildContext context, String text, bool exit) {
   return TextButton(
-    onPressed: () => action,
+    onPressed: () {
+      if (exit) apiDeleteUser();
+      Navigator.pop(context);
+    },
     child: Container(
       width: defaultWidth * 0.15,
       padding: const EdgeInsets.symmetric(vertical: 12.5),

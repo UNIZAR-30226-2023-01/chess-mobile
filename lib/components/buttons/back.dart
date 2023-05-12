@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import '../visual/screen_size.dart';
+import '../communications/api.dart';
 
-TextButton backButton(
-    BuildContext context, String text, bool exit, Function() action) {
+TextButton backButton(BuildContext context, String text, bool exit) {
   return TextButton(
     onPressed: () {
-      action;
+      if (exit) apiSignOut();
       Navigator.pop(context, exit);
     },
     child: Container(

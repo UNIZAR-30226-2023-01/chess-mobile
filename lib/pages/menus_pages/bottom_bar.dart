@@ -50,9 +50,7 @@ class _BottomBarState extends State<BottomBar> {
       onWillPop: () async {
         return await showDialog(
               context: context,
-              builder: (BuildContext context) =>
-                  // api sign out donde el null
-                  popupBack(context),
+              builder: (BuildContext context) => popupBack(context),
             ) ??
             false;
       },

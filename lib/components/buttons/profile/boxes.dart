@@ -35,11 +35,46 @@ statisticBox(BuildContext context, String title, String body) {
   );
 }
 
-Image achievementBox(int n) {
+Widget achievementBox(int n) {
   final UserData userData = UserData();
-  return Image.asset(
-    "images/${userData.achievements[n - 1] ? "achievement_true" : "achievement_false"}/$n.png",
-    fit: BoxFit.contain,
-    width: defaultWidth * 0.175,
+  return Tooltip(
+    message: userData.achievements[n][1],
+    child: userData.achievements[n][2]
+        ? Image.asset(
+            "images${userData.achievements[n][0]}",
+            fit: BoxFit.contain,
+            width: defaultWidth * 0.175,
+          )
+        : ColorFiltered(
+            colorFilter: greyscale,
+            child: Image.asset(
+              "images${userData.achievements[n][0]}",
+              fit: BoxFit.contain,
+              width: defaultWidth * 0.175,
+            ),
+          ),
   );
 }
+
+const ColorFilter greyscale = ColorFilter.matrix(<double>[
+  0.2126,
+  0.7152,
+  0.0722,
+  0,
+  0,
+  0.2126,
+  0.7152,
+  0.0722,
+  0,
+  0,
+  0.2126,
+  0.7152,
+  0.0722,
+  0,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+]);

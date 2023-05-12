@@ -168,23 +168,23 @@ class _ProfilePageState extends State<ProfilePage> {
   Column achievements() {
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        achievementBox(0),
+        SizedBox(width: defaultWidth * 0.05),
         achievementBox(1),
         SizedBox(width: defaultWidth * 0.05),
         achievementBox(2),
         SizedBox(width: defaultWidth * 0.05),
         achievementBox(3),
-        SizedBox(width: defaultWidth * 0.05),
-        achievementBox(4),
       ]),
       SizedBox(height: defaultWidth * 0.05),
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        achievementBox(4),
+        SizedBox(width: defaultWidth * 0.05),
         achievementBox(5),
         SizedBox(width: defaultWidth * 0.05),
         achievementBox(6),
         SizedBox(width: defaultWidth * 0.05),
         achievementBox(7),
-        SizedBox(width: defaultWidth * 0.05),
-        achievementBox(8),
       ]),
     ]);
   }
@@ -261,8 +261,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: defaultWidth * 0.15,
                 width: defaultWidth * 0.15,
                 margin: EdgeInsets.all(defaultWidth * 0.0325),
-                child: Image.asset(
-                    "images/pieces/${userData.darkPieces}/caballoN.png"),
+                child: Image.asset("images${userData.darkPieces}/caballoN.png"),
               ),
             ),
             Align(
@@ -271,8 +270,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 height: defaultWidth * 0.15,
                 width: defaultWidth * 0.15,
                 margin: EdgeInsets.all(defaultWidth * 0.0325),
-                child: Image.asset(
-                    "images/pieces/${userData.lightPieces}/caballoB.png"),
+                child:
+                    Image.asset("images${userData.lightPieces}/caballoB.png"),
               ),
             ),
           ]),

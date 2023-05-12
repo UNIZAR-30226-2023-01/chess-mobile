@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../buttons/back.dart';
-import '../communications/api.dart';
 
 AlertDialog popupBack(BuildContext context) {
   return AlertDialog(
@@ -10,8 +9,8 @@ AlertDialog popupBack(BuildContext context) {
     ),
     title: const Text("¿Seguro que deseas salir de la sesión?"),
     actions: [
-      backButton(context, "No", false, () => null),
-      backButton(context, "Sí", true, () => apiSignOut()), // api sign outS
+      backButton(context, "No", false),
+      backButton(context, "Sí", true), // api sign outS
     ],
   );
 }

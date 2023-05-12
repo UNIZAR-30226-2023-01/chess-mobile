@@ -18,7 +18,7 @@ Object alertPossibleDraw(BuildContext context) {
             Navigator.of(context).pop(),
           },
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.15,
+            width: MediaQuery.of(context).size.width * 0.45,
             padding: const EdgeInsets.symmetric(vertical: 12.5),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,
@@ -39,7 +39,7 @@ Object alertPossibleDraw(BuildContext context) {
         TextButton(
           onPressed: () => {Navigator.of(context).pop(), draw()},
           child: Container(
-            width: MediaQuery.of(context).size.width * 0.15,
+            width: MediaQuery.of(context).size.width * 0.20,
             padding: const EdgeInsets.symmetric(vertical: 12.5),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,

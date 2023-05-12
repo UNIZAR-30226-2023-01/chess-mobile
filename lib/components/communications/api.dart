@@ -111,7 +111,7 @@ Future<int> apiSignOut() async {
     var responseBody = await response.transform(utf8.decoder).join();
     var responseBodyDictionary = jsonDecode(responseBody);
     // print(responseBodyDictionary);
-    print(responseBodyDictionary["status"]["error_code"]);
+    // print(responseBodyDictionary["status"]["error_code"]);
     // print(apiAuthCookie);
     return responseBodyDictionary["status"]["error_code"];
   } catch (e) {
@@ -180,7 +180,7 @@ Future<int> apiRanking(int page, int limit) async {
     // print(data);
     // print(responseBodyDictionary);
     List<dynamic> rankingList = data;
-    print(rankingList);
+    // print(rankingList);
     for (var element in rankingList) {
       RankingData.add(element["avatar"], element["username"], element["elo"],
           element["ranking"]);
@@ -297,7 +297,7 @@ Future<int> apiUser() async {
       }
     }
     List<dynamic> achievements = data["achievements"];
-    print(achievements);
+    // print(achievements);
     List<List> ach = List.empty(growable: true);
     for (var achievement in achievements) {
       ach.add([

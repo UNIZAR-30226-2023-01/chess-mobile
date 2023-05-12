@@ -65,7 +65,7 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'Forgot Password?',
+                          '¿Contraseña olvidada?',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
@@ -83,7 +83,7 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 25),
                     child: Text(
-                      'Don\'t worry! It occurs. Please enter the email address linked with your account.',
+                      '¡No te preocupes! Suele ocurrir. Por favor, introduce el correo electrónico vinculada a tu cuenta',
                       style: TextStyle(
                         color: Color.fromARGB(255, 131, 145, 161),
                         fontWeight: FontWeight.w400,
@@ -108,14 +108,14 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
 
                   // Email textfield
                   TextFieldCustom(
-                    labelText: 'Enter your email',
+                    labelText: 'Correo electrónico',
                     obscureText: false,
                     iconText: Icons.email,
                     onChanged: (emailTxt) => updateEmail(emailTxt),
                     validator: (emailTxt) => emailTxt == null ||
                             emailTxt.isEmpty ||
                             !EmailValidator.validate(emailTxt)
-                        ? 'Enter a valid email'
+                        ? 'Introduce un correo electrónico válido'
                         : null,
                   ),
 
@@ -127,7 +127,7 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
                   textButton(
                     context,
                     true,
-                    'Send Code',
+                    'Enviar código',
                     () async {
                       final isValidForm = formKey.currentState!.validate();
 
@@ -137,8 +137,8 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
                         switch (errCode) {
                           case 0:
                             if (context.mounted) {
-                              popupERR(
-                                  context, "A recovery email has been sent");
+                              popupERR(context,
+                                  "Se ha enviado un correo de recuperación");
                               Navigator.pushAndRemoveUntil(
                                 context,
                                 MaterialPageRoute(
@@ -154,7 +154,7 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
                           default:
                             if (context.mounted) {
                               popupERR(context,
-                                  "An error has ocurred during recovery");
+                                  "Ha ocurrido un error durante la recuperación");
                             }
                         }
                       }
@@ -170,7 +170,7 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'Remember Password?',
+                        '¿Te acuerdas de la contraseña?',
                         style: TextStyle(fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(
@@ -186,7 +186,7 @@ class _ForgotPwPageState extends State<ForgotPwPage> {
                           );
                         },
                         child: Text(
-                          'Login',
+                          '¡Inicia sesión ya!',
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.secondary,
                               // Color.fromARGB(255, 59, 203, 255),

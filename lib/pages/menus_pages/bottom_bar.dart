@@ -46,16 +46,16 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return await showDialog(
-              context: context,
-              builder: (BuildContext context) => popupBack(context),
-            ) ??
-            false;
-      },
-      child: userData.isRegistered
-          ? Scaffold(
+    return userData.isRegistered
+        ? WillPopScope(
+            onWillPop: () async {
+              return await showDialog(
+                    context: context,
+                    builder: (BuildContext context) => popupBack(context),
+                  ) ??
+                  false;
+            },
+            child: Scaffold(
               body: Center(
                 child: widgetOptions.elementAt(selectedIndex),
               ),
@@ -103,8 +103,8 @@ class _BottomBarState extends State<BottomBar> {
                   ),
                 ),
               ),
-            )
-          : const Scaffold(body: HomePage()),
-    );
+            ),
+          )
+        : const Scaffold(body: HomePage());
   }
 }

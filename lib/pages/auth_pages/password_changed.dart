@@ -33,7 +33,7 @@ class _PwChangedPageState extends State<PwChangedPage> {
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 50),
                 child: Text(
-                  'Password Changed',
+                  'Contraseña cambiada',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 30,
@@ -49,7 +49,7 @@ class _PwChangedPageState extends State<PwChangedPage> {
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 50),
                 child: Text(
-                  'Your password has been changed succesfully.',
+                  'Tu contraseña ha sido cambiada exitosamente',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Color.fromARGB(255, 131, 145, 161),
@@ -67,7 +67,7 @@ class _PwChangedPageState extends State<PwChangedPage> {
               textButton(
                 context,
                 true,
-                'Back to Login',
+                'Vuelve a la pantalla de inicio',
                 () {
                   Navigator.pushAndRemoveUntil(
                     context,

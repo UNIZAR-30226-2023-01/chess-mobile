@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import '../../components/buttons/return.dart';
 import '../../components/buttons/text_long.dart';
 import '../../components/buttons/textfield_custom.dart';
-import '../../components/buttons/platform.dart';
 import '../../components/popups/pop_error.dart';
 import 'signin.dart';
 
@@ -85,7 +84,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: Text(
-                      'Hello! Register to get started',
+                      '¡Hola! Regístrate para acceder a funciones únicas',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,
@@ -100,12 +99,12 @@ class _SignUpPageState extends State<SignUpPage> {
 
                   // Username textfield
                   TextFieldCustom(
-                    labelText: 'Username',
+                    labelText: 'Nombre de usuario',
                     obscureText: false,
                     iconText: Icons.person,
                     onChanged: (userTxt) => updateUsername(userTxt),
                     validator: (userTxt) => userTxt == null || userTxt.isEmpty
-                        ? 'Enter a valid username'
+                        ? 'Introduce un nombre de usuario válido'
                         : null,
                   ),
 
@@ -115,14 +114,14 @@ class _SignUpPageState extends State<SignUpPage> {
 
                   // Email textfield
                   TextFieldCustom(
-                    labelText: 'Email',
+                    labelText: 'Correo electrónico',
                     obscureText: false,
                     iconText: Icons.person,
                     onChanged: (emailTxt) => updateEmail(emailTxt),
                     validator: (emailTxt) => emailTxt == null ||
                             emailTxt.isEmpty ||
                             !EmailValidator.validate(emailTxt)
-                        ? 'Enter a valid email'
+                        ? 'Introduce un correo electrónico válido'
                         : null,
                   ),
 
@@ -132,17 +131,17 @@ class _SignUpPageState extends State<SignUpPage> {
 
                   // Password textfield
                   TextFieldCustom(
-                    labelText: 'Password',
+                    labelText: 'Contraseña',
                     obscureText: true,
                     iconText: Icons.lock,
                     onChanged: (pwTxt) => updatePassword(pwTxt),
                     validator: (pwTxt) {
                       if (pwTxt == null || pwTxt.isEmpty) {
-                        return 'Enter a valid password';
+                        return 'Introduce una contraseña válida';
                       } else if (pwTxt.length < 8) {
-                        return 'Must have at least 8 characters';
+                        return 'La contraseña debe tener al menos 8 carácteres';
                       } else if (pwTxt != confirmedPassword) {
-                        return 'Does not coincide with the confirmed password';
+                        return 'La contraseña no coincide con la confirmación de la contraseña';
                       } else {
                         return null;
                       }
@@ -155,17 +154,17 @@ class _SignUpPageState extends State<SignUpPage> {
 
                   // Confirm password textfield
                   TextFieldCustom(
-                    labelText: 'Confirm password',
+                    labelText: 'Confirma la contraseña',
                     obscureText: true,
                     iconText: Icons.lock_reset,
                     onChanged: (conPwTxt) => updateConfirmedPassword(conPwTxt),
                     validator: (conPwTxt) {
                       if (conPwTxt == null || conPwTxt.isEmpty) {
-                        return 'Enter a valid password';
+                        return 'Introduce una contraseña válida';
                       } else if (conPwTxt.length < 8) {
-                        return 'Must have at least 8 characters';
+                        return 'La contraseña debe tener al menos 8 carácteres';
                       } else if (conPwTxt != password) {
-                        return 'Does not coincide with the purposed password';
+                        return 'La contraseña no coincide con la confirmación de la contraseña';
                       } else {
                         return null;
                       }
@@ -180,7 +179,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   textButton(
                     context,
                     true,
-                    'Register',
+                    'Crear cuenta',
                     () async {
                       final isValidForm = formKey.currentState!.validate();
 
@@ -206,14 +205,14 @@ class _SignUpPageState extends State<SignUpPage> {
                           case 409:
                             if (context.mounted) {
                               popupERR(context,
-                                  "Username or email is already taken");
+                                  "El nombre de usuario o el correo electrónico ya está en uso");
                             }
                             break;
 
                           default:
                             if (context.mounted) {
                               popupERR(context,
-                                  "An error has ocurred during registration");
+                                  "Ha ocurrido un error durante el registro");
                             }
                         }
                       }
@@ -233,7 +232,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'Already have an account?',
+                        '¿Ya tienes una cuenta?',
                         style: TextStyle(fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(
@@ -248,7 +247,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           );
                         },
                         child: Text(
-                          'Login Now',
+                          '¡Inicia sesión ya!',
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.secondary,
                               // Color.fromARGB(255, 59, 203, 255),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../visual/screen_size.dart';
+import '../../visual/screen_size.dart';
 
 Material playButton(BuildContext context, String text, Function() action) {
   return Material(

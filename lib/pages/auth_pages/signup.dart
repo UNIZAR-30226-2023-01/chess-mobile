@@ -1,10 +1,10 @@
 import 'package:ajedrez/components/communications/api.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import '../../components/buttons/return_button.dart';
-import '../../components/buttons/text_long_button.dart';
+import '../../components/buttons/return.dart';
+import '../../components/buttons/text_long.dart';
 import '../../components/buttons/textfield_custom.dart';
-import '../../components/buttons/platform_button.dart';
+import '../../components/buttons/platform.dart';
 import '../../components/popups/pop_error.dart';
 import 'signin.dart';
 

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:ajedrez/components/popups/saved_games.dart';
 import 'package:ajedrez/components/popups/played_games.dart';
-import '../../components/profile_data.dart';
+import '../../components/singletons/profile_data.dart';
 import '../../components/visual/custom_shape.dart';
 import '../../components/visual/customization_constants.dart';
 import '../../components/visual/screen_size.dart';
 import '../../components/visual/set_image_color.dart';
 import '../../components/visual/get_elo.dart';
-import '../../components/buttons/profile_boxes.dart';
-import '../../components/buttons/profile_options_button.dart';
-import '../../components/buttons/profile_short_button.dart';
-import '../../components/buttons/profile_theme_button.dart';
+import '../../components/buttons/profile/boxes.dart';
+import '../../components/buttons/profile/options.dart';
+import '../../components/buttons/profile/short.dart';
+import '../../components/buttons/profile/theme.dart';
 import '../../components/communications/api.dart';
 
 class ProfilePage extends StatefulWidget {

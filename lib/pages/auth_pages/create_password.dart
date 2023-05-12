@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../components/buttons/textfield_custom.dart';
-import '../../components/buttons/return_button.dart';
-import '../../components/buttons/text_long_button.dart';
+import '../../components/buttons/return.dart';
+import '../../components/buttons/text_long.dart';
 import 'password_changed.dart';
 
 class CreatePwPage extends StatefulWidget {

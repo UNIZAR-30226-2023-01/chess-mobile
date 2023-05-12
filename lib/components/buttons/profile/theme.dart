@@ -1,8 +1,8 @@
 import 'package:ajedrez/components/communications/api.dart';
 import 'package:flutter/material.dart';
-import '../profile_data.dart';
-import '../visual/screen_size.dart';
-import '../visual/set_image_color.dart';
+import '../../singletons/profile_data.dart';
+import '../../visual/screen_size.dart';
+import '../../visual/set_image_color.dart';
 
 SizedBox buttonTheme(BuildContext context, ValueNotifier counter, int isBoard,
     String text, List<List> list) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../components/buttons/text_long_button.dart';
+import '../../components/buttons/text_long.dart';
 import 'startup.dart';
 
 class PwChangedPage extends StatefulWidget {

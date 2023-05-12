@@ -3,17 +3,17 @@ import 'dart:async';
 // import 'package:ajedrez/components/chessLogic/board.dart';
 // import 'package:ajedrez/components/chessLogic/board.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
-import 'package:ajedrez/components/popups/save_dialog.dart';
-import 'package:ajedrez/components/profile_data.dart';
+import 'package:ajedrez/components/popups/ingame/save_dialog.dart';
+import 'package:ajedrez/components/singletons/profile_data.dart';
 // import 'package:ajedrez/components/profile_data.dart';
 // import 'package:ajedrez/components/visual/colores_tablero.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'package:socket_io_client/socket_io_client.dart';
 
-import '../popups/draw_dialog.dart';
-import '../popups/possible_draw.dart';
-import '../popups/winner_dialog.dart';
+import '../popups/ingame/draw_dialog.dart';
+import '../popups/ingame/possible_draw.dart';
+import '../popups/ingame/winner_dialog.dart';
 import '../../pages/game_pages/game.dart';
 
 class Arguments {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-import '../visual/screen_size.dart';
+import '../../visual/screen_size.dart';
 
 class SelectionMenu<T> {
   List<String> listOfVisualValues = List.empty(growable: true);

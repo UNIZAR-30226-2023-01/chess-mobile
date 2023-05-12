@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'dart:io';
-import 'package:ajedrez/components/profile_data.dart';
-import 'package:ajedrez/components/game_data.dart';
-import 'package:ajedrez/components/ranking_data.dart';
+import 'package:ajedrez/components/singletons/profile_data.dart';
+import 'package:ajedrez/components/singletons/game_data.dart';
+import 'package:ajedrez/components/singletons/ranking_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 // import 'package:webview_flutter/webview_flutter.dart';
@@ -109,7 +109,7 @@ Future<int> apiSignOut() async {
     var response = await request.close();
     var responseBody = await response.transform(utf8.decoder).join();
     var responseBodyDictionary = jsonDecode(responseBody);
-    print(responseBodyDictionary);
+    // print(responseBodyDictionary);
 
     // print(apiAuthCookie);
     return responseBodyDictionary["status"]["error_code"];

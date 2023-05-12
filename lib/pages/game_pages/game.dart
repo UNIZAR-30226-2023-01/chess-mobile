@@ -1,14 +1,14 @@
-import 'package:ajedrez/components/buttons/save_button.dart';
+import 'package:ajedrez/components/buttons/ingame/save.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
 import 'package:ajedrez/components/chessLogic/timer.dart';
-import 'package:ajedrez/components/profile_data.dart';
+import 'package:ajedrez/components/singletons/profile_data.dart';
 import 'package:ajedrez/components/visual/screen_size.dart';
 
 //import 'package:ajedrez/components/profile_data.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
-import '../../components/buttons/draw_button.dart';
-import '../../components/buttons/surrender_button.dart';
+import '../../components/buttons/ingame/draw.dart';
+import '../../components/buttons/ingame/surrender.dart';
 import '../../components/chessLogic/board.dart';
 import '../../components/communications/socket_io.dart';
 

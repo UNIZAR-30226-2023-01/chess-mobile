@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../visual/screen_size.dart';
-import '../../components/communications/socket_io.dart';
-import '../buttons/home_play_button.dart';
-import '../buttons/home_selection_button.dart';
+import '../../visual/screen_size.dart';
+import '../../communications/socket_io.dart';
+import '../../buttons/home/play.dart';
+import '../../buttons/home/selection.dart';
 
 class AI {
   static final SelectionMenu<int> selectTime = SelectionMenu(

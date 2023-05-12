@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../visual/screen_size.dart';
-import '../popups/edit_profile.dart';
+import '../../visual/screen_size.dart';
+import '../../popups/edit_profile.dart';
 
 PopupMenuButton optionsButton(
     BuildContext context, ValueNotifier<int> counter) {

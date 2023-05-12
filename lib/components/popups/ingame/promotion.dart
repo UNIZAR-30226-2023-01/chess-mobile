@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../profile_data.dart';
+import '../../singletons/profile_data.dart';
 
 enum PieceOption {
   reina,

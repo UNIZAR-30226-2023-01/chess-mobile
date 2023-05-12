@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../visual/screen_size.dart';
+import '../../visual/screen_size.dart';
 
 SizedBox shortButton(
     BuildContext context, bool type, String text, Function() action) {

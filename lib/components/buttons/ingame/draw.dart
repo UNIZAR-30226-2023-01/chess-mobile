@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import '../communications/socket_io.dart';
+import '../../communications/socket_io.dart';
 
-TextButton saveButton(BuildContext context) {
+TextButton drawButton(BuildContext context) {
   return TextButton(
-    onPressed: () => save(),
+    onPressed: () => draw(),
     child: Container(
       padding: const EdgeInsets.all(12.5),
       decoration: BoxDecoration(
@@ -12,7 +12,7 @@ TextButton saveButton(BuildContext context) {
       ),
       child: Center(
         child: Text(
-          "Pausar y guardar la partida",
+          "Proponer tablas",
           style: TextStyle(
             fontSize: 19,
             fontWeight: FontWeight.bold,

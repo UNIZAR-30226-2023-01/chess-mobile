@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../visual/screen_size.dart';
-import '../../components/communications/socket_io.dart';
-import '../buttons/home_textfield_button.dart';
-import '../buttons/home_play_button.dart';
+import '../../visual/screen_size.dart';
+import '../../communications/socket_io.dart';
+import '../../buttons/home/textfield.dart';
+import '../../buttons/home/play.dart';
 
 class Spectator {
   final TextEditingController roomController = TextEditingController();

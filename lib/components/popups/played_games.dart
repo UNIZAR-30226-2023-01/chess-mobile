@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../visual/screen_size.dart';
-import '../../components/profile_data.dart';
-import '../../components/game_data.dart';
+import '../singletons/profile_data.dart';
+import '../singletons/game_data.dart';
 
 class PlayedGames {
   final UserData userData = UserData();

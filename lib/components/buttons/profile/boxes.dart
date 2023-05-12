@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../profile_data.dart';
-import '../../components/visual/screen_size.dart';
+import '../../singletons/profile_data.dart';
+import '../../visual/screen_size.dart';
 
 statisticBox(BuildContext context, String title, String body) {
   return SizedBox(

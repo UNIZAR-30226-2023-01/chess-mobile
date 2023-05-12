@@ -1,10 +1,10 @@
 import 'package:ajedrez/components/communications/api.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+// import 'package:flutter/rendering.dart';
 import '../visual/screen_size.dart';
-import '../buttons/home_play_button.dart';
-import '../profile_data.dart';
-import '../buttons/profile_textfield_button.dart';
+import '../buttons/home/play.dart';
+import '../singletons/profile_data.dart';
+import '../buttons/profile/textfield.dart';
 
 Object popupEditProfile(BuildContext context, ValueNotifier<int> counter) {
   UserData userData = UserData();
@@ -192,7 +192,7 @@ Object popupEditProfile(BuildContext context, ValueNotifier<int> counter) {
                     int i = await apiUpdateUser();
 
                     if (context.mounted) {
-                      print(i);
+                      // print(i);
                       if (i == 0) {
                         counter.value++;
                         Navigator.pop(context);

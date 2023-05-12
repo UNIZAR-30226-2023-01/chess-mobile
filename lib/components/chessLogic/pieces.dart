@@ -1,4 +1,4 @@
-import '../profile_data.dart';
+import '../singletons/profile_data.dart';
 
 abstract class Piece {
   final UserData userData = UserData();

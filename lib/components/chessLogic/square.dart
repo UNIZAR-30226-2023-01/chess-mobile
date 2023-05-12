@@ -1,14 +1,14 @@
 import 'dart:async';
 
-import 'package:ajedrez/components/profile_data.dart';
+import 'package:ajedrez/components/singletons/profile_data.dart';
 import 'package:ajedrez/components/communications/socket_io.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import '../popups/winner_dialog.dart';
+import '../popups/ingame/winner_dialog.dart';
 
 import 'pieces.dart';
 import 'board.dart';
-import '../popups/promotion.dart';
+import '../popups/ingame/promotion.dart';
 
 class Square extends StatefulWidget {
   final int index;
@@ -112,7 +112,7 @@ class SquareState extends State<Square> {
         }
 
         //enroque
-        _processCastling(auxY, auxX);
+        processCastling(auxY, auxX,y,x);
         _procesarComerAlPaso(auxY, auxX);
         board.lastMovement = [
           [auxY, auxX],
@@ -212,26 +212,7 @@ class SquareState extends State<Square> {
                 : blackTile;
   }
 
-  void _processCastling(int auxY, int auxX) {
-    if (board.currentBoard[auxY][auxX] is King) {
-      (board.currentBoard[auxY][auxX] as King).alreadyMoved = true;
-    } else if (board.currentBoard[auxY][auxX] is Rook) {
-      (board.currentBoard[auxY][auxX] as Rook).alreadyMoved = true;
-    }
-    if (board.currentBoard[auxY][auxX] is King && (auxX - x).abs() > 1) {
-      if (x == 6) {
-        board.currentBoard[y][5] = board.currentBoard[y][7];
-        board.currentBoard[y][7] = Empty(isWhite: false);
-        board.squares[y * 8 + 5].setState(() {});
-        board.squares[y * 8 + 7].setState(() {});
-      } else if (x == 2) {
-        board.currentBoard[y][3] = board.currentBoard[y][0];
-        board.currentBoard[y][0] = Empty(isWhite: false);
-        board.squares[y * 8 + 0].setState(() {});
-        board.squares[y * 8 + 3].setState(() {});
-      }
-    }
-  }
+  
 
   Future<void> _processPromotion() async {
     BoardData b = BoardData();
@@ -377,6 +358,7 @@ void simulateMovement(List<List<int>> movements) {
   int auxX = movements[0][1];
   int y = movements[1][0];
   int x = movements[1][1];
+  processCastling(auxY, auxX,y,x);
   b.lastMovement = movements;
   final musicPlayer = AudioPlayer();
   if (b.currentBoard[y][x].isEmpty()) {
@@ -430,6 +412,7 @@ void loadMovement(List<List<int>> movements) {
   int auxX = movements[0][1];
   int y = movements[1][0];
   int x = movements[1][1];
+  processCastling(auxY, auxX,y,x);
   b.lastMovement = movements;
   b.currentBoard[y][x] = b.currentBoard[auxY][auxX];
   if (b.prom != "") {
@@ -457,3 +440,25 @@ void loadMovement(List<List<int>> movements) {
   b.selectedSquare = [-1, -1];
   b.whiteTurn = !b.whiteTurn;
 }
+
+void processCastling(int auxY, int auxX,int y, int x) {
+    BoardData board = BoardData();
+    if (board.currentBoard[auxY][auxX] is King) {
+      (board.currentBoard[auxY][auxX] as King).alreadyMoved = true;
+    } else if (board.currentBoard[auxY][auxX] is Rook) {
+      (board.currentBoard[auxY][auxX] as Rook).alreadyMoved = true;
+    }
+    if (board.currentBoard[auxY][auxX] is King && (auxX - x).abs() > 1) {
+      if (x == 6) {
+        board.currentBoard[y][5] = board.currentBoard[y][7];
+        board.currentBoard[y][7] = Empty(isWhite: false);
+        (board.squares[y * 8 + 5]as SquareState).actualizarEstado();
+        (board.squares[y * 8 + 7]as SquareState).actualizarEstado();
+      } else if (x == 2) {
+        board.currentBoard[y][3] = board.currentBoard[y][0];
+        board.currentBoard[y][0] = Empty(isWhite: false);
+        (board.squares[y * 8 + 0]as SquareState).actualizarEstado();
+        (board.squares[y * 8 + 3]as SquareState).actualizarEstado();
+      }
+    }
+  }

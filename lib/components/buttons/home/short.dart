@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../visual/screen_size.dart';
-import '../visual/set_image_color.dart';
+import '../../visual/screen_size.dart';
+import '../../visual/set_image_color.dart';
 
 SizedBox shortButton(BuildContext context, bool type, String image, String text,
     Function() action) {

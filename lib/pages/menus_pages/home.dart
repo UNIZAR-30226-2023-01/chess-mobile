@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import '../../components/visual/custom_shape.dart';
 import '../../components/visual/screen_size.dart';
 import '../../components/visual/set_image_color.dart';
-import '../../components/buttons/home_long_button.dart';
-import '../../components/buttons/home_short_button.dart';
-import '../../components/popups/spectator.dart';
-import '../../components/popups/competitive.dart';
-import '../../components/popups/ai.dart';
-import '../../components/popups/custom.dart';
-import '../../components/profile_data.dart';
+import '../../components/buttons/home/long.dart';
+import '../../components/buttons/home/short.dart';
+import '../../components/popups/creategame/spectator.dart';
+import '../../components/popups/creategame/competitive.dart';
+import '../../components/popups/creategame/ai.dart';
+import '../../components/popups/creategame/custom.dart';
+import '../../components/singletons/profile_data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

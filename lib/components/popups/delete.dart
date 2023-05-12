@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../buttons/delete_button.dart';
+import '../buttons/delete.dart';
 import '../communications/api.dart';
 
 AlertDialog popupDelete(BuildContext context) {

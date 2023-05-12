@@ -1,4 +1,4 @@
-import 'package:ajedrez/components/buttons/round_button.dart';
+import 'package:ajedrez/components/buttons/round.dart';
 import 'package:ajedrez/components/visual/screen_size.dart';
 
 import '../../components/visual/tournament_node.dart';
@@ -46,6 +46,7 @@ class _TournamentPageState extends State<TournamentPage> {
                 children: [
                   // Return round
                   SizedBox(
+                    width: defaultWidth * 0.15,
                     child: (TournamentData.currentRound > 1)
                         ? roundButton(
                             context,
@@ -55,26 +56,26 @@ class _TournamentPageState extends State<TournamentPage> {
                               setState(() {});
                             },
                           )
-                        : SizedBox(),
-                    width: defaultWidth * 0.15,
+                        : const SizedBox(),
                   ),
 
                   // Round text
                   SizedBox(
+                    width: defaultWidth * 0.7,
                     child: Center(
                       child: Text(
                         "Ronda ${TournamentData.currentRound}",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 32,
                         ),
                       ),
                     ),
-                    width: defaultWidth * 0.7,
                   ),
 
                   // Advance round
                   SizedBox(
+                    width: defaultWidth * 0.15,
                     child: (TournamentData.currentRound <
                             TournamentData.totalRounds)
                         ? roundButton(
@@ -85,14 +86,13 @@ class _TournamentPageState extends State<TournamentPage> {
                               setState(() {});
                             },
                           )
-                        : SizedBox(),
-                    width: defaultWidth * 0.15,
+                        : const SizedBox(),
                   ),
                 ],
               ),
             ),
 
-            Divider(),
+            const Divider(),
 
             // List for matches in a round
             Expanded(

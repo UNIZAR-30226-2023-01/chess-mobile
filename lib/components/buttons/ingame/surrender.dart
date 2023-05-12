@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../communications/socket_io.dart';
+import '../../communications/socket_io.dart';
 
 TextButton surrenderButton(BuildContext context) {
   return TextButton(

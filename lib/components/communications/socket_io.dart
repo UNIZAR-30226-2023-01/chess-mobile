@@ -76,6 +76,11 @@ void resetSocket() {
   socket.reset();
 }
 
+void cancelSearch() {
+  GameSocket socket = GameSocket();
+  socket.socket.emit('cancel');
+}
+
 Future<void> startGame(BuildContext context, String type, Arguments arguments) {
   GameSocket s = GameSocket();
   Completer completer = Completer<void>();
@@ -145,6 +150,7 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
       }
   }
   var movements = [];
+  s.socket.once('cancelled', (data) => {Navigator.pop(context),Completer().complete()});
   s.socket.once(
       'room',
       (data) => {

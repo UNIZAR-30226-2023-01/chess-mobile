@@ -89,6 +89,7 @@ Widget tournamentTag(
   int increments,
   bool finished,
   bool hasStarted,
+  bool notFocused,
   BuildContext context,
 ) {
   return Center(
@@ -99,14 +100,19 @@ Widget tournamentTag(
           // Tournament status
           Container(
             padding: const EdgeInsets.symmetric(vertical: 2.5),
+            foregroundDecoration: BoxDecoration(
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(15)),
+              color: Colors.black.withOpacity(notFocused ? 0.35 : 0.0),
+            ),
             decoration: BoxDecoration(
               color: finished
                   ? Colors.red
                   : hasStarted
                       ? Colors.orange
                       : Colors.green,
-              borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(15), topRight: Radius.circular(15)),
+              borderRadius:
+                  const BorderRadius.vertical(top: Radius.circular(15)),
             ),
             width: defaultWidth * 0.85,
             child: Center(
@@ -130,6 +136,10 @@ Widget tournamentTag(
           Container(
             color: Colors.green,
             child: Container(
+              foregroundDecoration: BoxDecoration(
+                color: Colors.black
+                    .withOpacity(finished || notFocused ? 0.35 : 0.0),
+              ),
               padding: EdgeInsets.symmetric(vertical: defaultWidth * 0.0175),
               color: Theme.of(context).colorScheme.secondary,
               child: Row(
@@ -171,11 +181,16 @@ Widget tournamentTag(
           ),
           Container(
             padding: const EdgeInsets.symmetric(vertical: 2.5),
+            foregroundDecoration: BoxDecoration(
+              borderRadius:
+                  const BorderRadius.vertical(bottom: Radius.circular(15)),
+              color:
+                  Colors.black.withOpacity(finished || notFocused ? 0.35 : 0.0),
+            ),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,
-              borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15)),
+              borderRadius:
+                  const BorderRadius.vertical(bottom: Radius.circular(15)),
             ),
             width: defaultWidth * 0.85,
             child: Center(

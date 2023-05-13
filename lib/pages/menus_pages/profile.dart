@@ -226,13 +226,15 @@ class _ProfilePageState extends State<ProfilePage> {
         }),
         SizedBox(width: defaultWidth * 0.075),
         shortButton(context, false, "Historial\nde partidas", () async {
-          restartInfoGames();
-          String next = await apiGames(userData.games);
-          while (next != "null") {
-            next = await apiGames(next);
-          }
           if (context.mounted) {
-            playedGames.popupPLAYEDGAMES(context);
+            restartInfoGames();
+            String next = await apiGames(userData.games);
+            while (next != "null") {
+              next = await apiGames(next);
+            }
+            if (context.mounted) {
+              playedGames.popupPLAYEDGAMES(context);
+            }
           }
         }),
       ]),

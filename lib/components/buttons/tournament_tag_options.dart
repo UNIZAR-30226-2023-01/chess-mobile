@@ -25,6 +25,8 @@ PopupMenuButton suscribed(BuildContext context, Widget widget, bool finished,
     ),
     child: widget,
     onSelected: (value) {
+      actualSelection.isSelected = false;
+      counter.value++;
       switch (value) {
         case '_jugar':
           break;
@@ -76,6 +78,8 @@ PopupMenuButton unsuscribed(
     ),
     child: widget,
     onSelected: (value) {
+      actualSelection.isSelected = false;
+      counter.value++;
       switch (value) {
         case '_visualizar':
           break;

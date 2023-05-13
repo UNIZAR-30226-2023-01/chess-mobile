@@ -103,7 +103,7 @@ Widget tournamentTag(
             foregroundDecoration: BoxDecoration(
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(15)),
-              color: Colors.black.withOpacity(notFocused ? 0.35 : 0.0),
+              color: Colors.black.withOpacity(notFocused ? 0.45 : 0.0),
             ),
             decoration: BoxDecoration(
               color: finished
@@ -138,7 +138,7 @@ Widget tournamentTag(
             child: Container(
               foregroundDecoration: BoxDecoration(
                 color: Colors.black
-                    .withOpacity(finished || notFocused ? 0.35 : 0.0),
+                    .withOpacity(finished || notFocused ? 0.45 : 0.0),
               ),
               padding: EdgeInsets.symmetric(vertical: defaultWidth * 0.0175),
               color: Theme.of(context).colorScheme.secondary,
@@ -185,7 +185,7 @@ Widget tournamentTag(
               borderRadius:
                   const BorderRadius.vertical(bottom: Radius.circular(15)),
               color:
-                  Colors.black.withOpacity(finished || notFocused ? 0.35 : 0.0),
+                  Colors.black.withOpacity(finished || notFocused ? 0.45 : 0.0),
             ),
             decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.primary,

@@ -27,7 +27,7 @@ class Spectator {
           child: Column(mainAxisSize: MainAxisSize.min, children: [
             textField(context, roomController),
             SizedBox(height: defaultWidth * 0.05),
-            playButton(context, "Espectar", () => _handleTapSPECTATOR(context)),
+            playButton(context, "Observar", () => _handleTapSPECTATOR(context)),
           ]),
         ),
       ),

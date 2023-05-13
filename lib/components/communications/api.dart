@@ -285,18 +285,21 @@ Future<int> apiUser() async {
     var responseBodyDictionary = jsonDecode(responseBody);
     var data = responseBodyDictionary["data"];
     List<dynamic> skins = data["skins"];
+    // print(skins);
     var board = skins[0], darkPieces = skins[6], lightPieces = skins[6];
     for (var skin in skins) {
       if (skin["type"] == "board" && skin["active"] == true) {
         board = skin;
-      } else if (skin["type"] == "pieces" && skin["activeDark"] == true) {
+      }
+      if (skin["type"] == "pieces" && skin["activeDark"] == true) {
         darkPieces = skin;
-      } else if (skin["type"] == "pieces" && skin["activeLight"] == true) {
+      }
+      if (skin["type"] == "pieces" && skin["activeLight"] == true) {
         lightPieces = skin;
       }
     }
     List<dynamic> achievements = data["achievements"];
-    print(achievements);
+    // print(achievements);
     List<List> ach = List.empty(growable: true);
     for (var achievement in achievements) {
       ach.add([

@@ -284,15 +284,15 @@ Future<int> apiUser() async {
     var responseBody = await response.transform(utf8.decoder).join();
     var responseBodyDictionary = jsonDecode(responseBody);
     var data = responseBodyDictionary["data"];
-    // print(responseBodyDictionary);
     List<dynamic> skins = data["skins"];
+    print(skins);
     var board = skins[0], darkPieces = skins[6], lightPieces = skins[6];
     for (var skin in skins) {
       if (skin["type"] == "board" && skin["active"] == true) {
         board = skin;
       } else if (skin["type"] == "pieces" && skin["activeDark"] == true) {
         darkPieces = skin;
-      } else if (skin["type"] == "pieces" && skin["activeDark"] == true) {
+      } else if (skin["type"] == "pieces" && skin["activeLight"] == true) {
         lightPieces = skin;
       }
     }
@@ -366,8 +366,8 @@ Future<int> apiUpdateUser() async {
       'username': userData.username,
       'email': userData.email,
       'board': userData.boardType,
-      'lightPieces': userData.lightPieces,
-      'darkPieces': userData.darkPieces
+      'lightPieces': userData.lightPieces.substring(8),
+      'darkPieces': userData.darkPieces.substring(8),
     });
 
     // Set body

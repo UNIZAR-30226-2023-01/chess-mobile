@@ -4,9 +4,9 @@ import 'dart:io';
 import 'package:ajedrez/components/singletons/profile_data.dart';
 import 'package:ajedrez/components/singletons/game_data.dart';
 import 'package:ajedrez/components/singletons/ranking_data.dart';
-import 'package:flutter/material.dart';
+
 import 'package:flutter/services.dart' show rootBundle;
-import 'package:webview_flutter/webview_flutter.dart';
+
 // import 'package:webview_flutter/webview_flutter.dart';
 
 Future<int> apiSignUp(String username, password, email) async {
@@ -285,7 +285,6 @@ Future<int> apiUser() async {
     var responseBodyDictionary = jsonDecode(responseBody);
     var data = responseBodyDictionary["data"];
     List<dynamic> skins = data["skins"];
-    print(skins);
     var board = skins[0], darkPieces = skins[6], lightPieces = skins[6];
     for (var skin in skins) {
       if (skin["type"] == "board" && skin["active"] == true) {
@@ -454,7 +453,6 @@ Future<int> apiCreateTournament(
     var response = await request.close();
     var responseBody = await response.transform(utf8.decoder).join();
     var responseBodyDictionary = jsonDecode(responseBody);
-    print(responseBodyDictionary);
 
     // print(apiAuthCookie);
     return responseBodyDictionary["status"]["error_code"];

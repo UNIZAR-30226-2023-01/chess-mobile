@@ -1,5 +1,5 @@
 import 'package:ajedrez/components/popups/creategame/tournament.dart';
-import 'package:ajedrez/pages/menus_pages/tournaments.dart';
+
 import 'package:flutter/material.dart';
 import '../../components/visual/custom_shape.dart';
 import '../../components/visual/screen_size.dart';

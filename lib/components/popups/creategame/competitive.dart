@@ -69,7 +69,7 @@ class Competitive {
                 child: Image.asset('images/waiting.gif'),
               ),
               SizedBox(height: defaultWidth * 0.05),
-              playButton(context, "Cancelar", () => Navigator.pop(context)),
+              playButton(context, "Cancelar", () => cancelSearch()),
             ]),
           ),
         ),

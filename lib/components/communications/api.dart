@@ -456,8 +456,7 @@ Future<int> apiCreateTournament(
     var response = await request.close();
     var responseBody = await response.transform(utf8.decoder).join();
     var responseBodyDictionary = jsonDecode(responseBody);
-
-    // print(apiAuthCookie);
+    print(responseBodyDictionary);
     return responseBodyDictionary["status"]["error_code"];
   } catch (e) {
     // print(e.toString());

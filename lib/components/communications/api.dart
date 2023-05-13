@@ -297,7 +297,7 @@ Future<int> apiUser() async {
       }
     }
     List<dynamic> achievements = data["achievements"];
-    // print(achievements);
+    print(achievements);
     List<List> ach = List.empty(growable: true);
     for (var achievement in achievements) {
       ach.add([

@@ -47,6 +47,8 @@ class GameSocket {
   bool iAmWhite = false;
   int timer = 300;
   String type = "";
+  String player1 = "";
+  String player2 = "";
   factory GameSocket() {
     return _singleton;
   }
@@ -66,6 +68,8 @@ class GameSocket {
     iAmWhite = false;
     timer = 300;
     type = "";
+    player1 = "";
+    player2 = "";
   }
 
   GameSocket._internal();
@@ -154,6 +158,8 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
   s.socket.once(
       'room',
       (data) => {
+            s.player1 = data[0]["light"],
+            s.player2 = data[0]["dark"],
             if (type != "SPECTATOR")
               {
                 s.room = data[0]["roomID"],
@@ -292,7 +298,7 @@ Future<void> resume(String roomID, BuildContext context) async {
             s.iAmWhite = data[0]["color"] == "LIGHT",
             s.pendingMovements = data[0]["moves"],
             s.timer = data[0]["initialTimer"],
-            // print(data),
+            s.type = data[0]["gameType"],
             // print(s.room),
             Navigator.push(
               context,

@@ -59,6 +59,8 @@ class GamePageState extends State<GamePage> {
     // print("gameStart");
     GameSocket s = GameSocket();
     String idR = s.room;
+    String player1 = s.player1;
+    String player2 = s.player2;
     listenGame(context);
     resetSingleton(!s.iAmWhite);
     // print(s.type);
@@ -132,7 +134,25 @@ class GamePageState extends State<GamePage> {
                   fontSize: 19,
                 ),
               ),
-              SizedBox(height: defaultWidth * 0.075),
+              Row(
+                children: [
+                  Text(
+                    player1,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 19,
+                    ),
+                  ),
+                  SizedBox(width: defaultWidth * 0.2),
+                  Text(
+                    player2,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 19,
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),

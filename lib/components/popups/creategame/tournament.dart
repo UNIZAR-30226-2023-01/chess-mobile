@@ -1,3 +1,4 @@
+import 'package:ajedrez/pages/menus_pages/manage_tournaments.dart';
 import 'package:flutter/material.dart';
 import '../../communications/api.dart';
 import '../../visual/screen_size.dart';
@@ -39,84 +40,104 @@ class Tournament {
         contentPadding: EdgeInsets.all(defaultWidth * 0.05),
         content: SizedBox(
           width: defaultWidth * 0.85,
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            Text(
-              "Crea un torneo ...",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                "Crea un torneo ...",
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
-            ),
-            SizedBox(height: defaultWidth * 0.05),
-            SelectionMenu.rowOption(
-                context, "Rondas:", selectRound.selectionMenu(context)),
-            SizedBox(height: defaultWidth * 0.05),
-            SelectionMenu.rowOption(
-                context, "Duración:", selectTime.selectionMenu(context)),
-            SizedBox(height: defaultWidth * 0.05),
-            SelectionMenu.rowOption(
-                context, "Incremento:", selectIncrement.selectionMenu(context)),
-            SizedBox(height: defaultWidth * 0.05),
-            SelectionMenu.rowOption(context, "Fecha:", selectDate(context)),
-            SizedBox(height: defaultWidth * 0.05),
-            playButton(context, "Crear", () async {
-              int error = await apiCreateTournament(
-                  backDate,
-                  selectRound.selectedCorrectValue,
-                  selectTime.selectedCorrectValue,
-                  selectIncrement.selectedCorrectValue);
-              if (context.mounted) {
-                if (error == 0) {
-                  popupResultCreate(context, "Torneo creado exitosamente");
-                } else {
-                  popupResultCreate(context,
-                      "La hora de inicio debe ser al menos 15 minutos después de la actual");
+              SizedBox(height: defaultWidth * 0.05),
+              SelectionMenu.rowOption(
+                  context, "Rondas:", selectRound.selectionMenu(context)),
+              SizedBox(height: defaultWidth * 0.05),
+              SelectionMenu.rowOption(
+                  context, "Duración:", selectTime.selectionMenu(context)),
+              SizedBox(height: defaultWidth * 0.05),
+              SelectionMenu.rowOption(context, "Incremento:",
+                  selectIncrement.selectionMenu(context)),
+              SizedBox(height: defaultWidth * 0.05),
+              SelectionMenu.rowOption(context, "Fecha:", selectDate(context)),
+              SizedBox(height: defaultWidth * 0.05),
+              playButton(context, "Crear", () async {
+                int error = await apiCreateTournament(
+                    backDate,
+                    selectRound.selectedCorrectValue,
+                    selectTime.selectedCorrectValue,
+                    selectIncrement.selectedCorrectValue);
+                if (context.mounted) {
+                  if (error == 0) {
+                    popupResultCreate(context, "Torneo creado exitosamente");
+                  } else if (error == 400) {
+                    popupResultCreate(context,
+                        "La hora de inicio debe ser al menos 15 minutos después de la actual");
+                  } else if (error == 409) {
+                    popupResultCreate(context,
+                        "No se puede crear un torneo mientras hay otro activo");
+                  } else {
+                    popupResultCreate(context,
+                        "Ha surgido un error a la hora de crear torneo");
+                  }
                 }
-              }
-            }),
-            SizedBox(height: defaultWidth * 0.075),
-            Row(
-              children: [
-                Expanded(
-                  child: Divider(
-                    color: Theme.of(context).colorScheme.primary,
-                    thickness: 1.25,
-                    indent: defaultWidth * 0.05,
-                    endIndent: defaultWidth * 0.05,
+              }),
+              SizedBox(height: defaultWidth * 0.075),
+              Row(
+                children: [
+                  Expanded(
+                    child: Divider(
+                      color: Theme.of(context).colorScheme.primary,
+                      thickness: 1.25,
+                      indent: defaultWidth * 0.05,
+                      endIndent: defaultWidth * 0.05,
+                    ),
                   ),
-                ),
-                Text(
-                  " o ",
-                  style: TextStyle(
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.primary,
+                  Text(
+                    " o ",
+                    style: TextStyle(
+                      fontSize: 19,
+                      fontWeight: FontWeight.bold,
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
                   ),
-                ),
-                Expanded(
-                  child: Divider(
-                    color: Theme.of(context).colorScheme.primary,
-                    thickness: 1.25,
-                    indent: defaultWidth * 0.05,
-                    endIndent: defaultWidth * 0.05,
+                  Expanded(
+                    child: Divider(
+                      color: Theme.of(context).colorScheme.primary,
+                      thickness: 1.25,
+                      indent: defaultWidth * 0.05,
+                      endIndent: defaultWidth * 0.05,
+                    ),
                   ),
-                ),
-              ],
-            ),
-            SizedBox(height: defaultWidth * 0.05),
-            Text(
-              "... compite en otros existentes",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).colorScheme.primary,
+                ],
               ),
-            ),
-            SizedBox(height: defaultWidth * 0.05),
-            playButton(context, "Gestionar torneos", () => {}),
-          ]),
+              SizedBox(height: defaultWidth * 0.05),
+              Text(
+                "... compite en otros existentes",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              SizedBox(height: defaultWidth * 0.05),
+              playButton(
+                context,
+                "Gestionar torneos",
+                () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ManageTournamentPage(),
+                    ),
+                  ),
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

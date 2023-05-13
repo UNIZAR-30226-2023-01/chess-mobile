@@ -25,7 +25,7 @@ Widget imageItem(
   );
 }
 
-Widget tagInfo(String small, String big, BuildContext context) {
+Widget tagCreator(String small, String big, BuildContext context) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -53,15 +53,42 @@ Widget tagInfo(String small, String big, BuildContext context) {
   );
 }
 
+Widget tagInfo(String small, String big, BuildContext context) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      // Small subtext
+      Text(
+        small,
+        overflow: TextOverflow.visible,
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.primary,
+          fontSize: 15,
+        ),
+      ),
+      // Big title
+      Text(
+        big,
+        overflow: TextOverflow.visible,
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.primary,
+          fontWeight: FontWeight.bold, ////
+          fontSize: 17,
+        ),
+      ),
+    ],
+  );
+}
+
 Widget tournamentTag(
-  String creator_image,
-  String creator_name,
+  String creatorImage,
+  String creatorName,
   String startTime,
   int rounds,
   int duration,
   int increments,
   bool finished,
-  bool status,
+  bool hasStarted,
   BuildContext context,
 ) {
   return Center(
@@ -73,16 +100,24 @@ Widget tournamentTag(
           Container(
             padding: const EdgeInsets.symmetric(vertical: 2.5),
             decoration: BoxDecoration(
-              color: Colors.green,
+              color: finished
+                  ? Colors.red
+                  : hasStarted
+                      ? Colors.orange
+                      : Colors.green,
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(15), topRight: Radius.circular(15)),
             ),
             width: defaultWidth * 0.85,
             child: Center(
               child: Text(
-                "Esperando jugadores...",
+                finished
+                    ? "Finalizado"
+                    : hasStarted
+                        ? "En curso..."
+                        : "Esperando jugadores...",
                 overflow: TextOverflow.visible,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                   fontSize: 17,
@@ -95,15 +130,16 @@ Widget tournamentTag(
           Container(
             color: Colors.green,
             child: Container(
+              padding: EdgeInsets.symmetric(vertical: defaultWidth * 0.0175),
               color: Theme.of(context).colorScheme.secondary,
               child: Row(
                 children: [
                   // Creator picture
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                     child: imageItem(
-                        defaultHeight * 0.07, 2, creator_image, context),
+                        defaultHeight * 0.08, 2, creatorImage, context),
                   ),
 
                   // Tag info
@@ -111,37 +147,20 @@ Widget tournamentTag(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Creator Name
-                      tagInfo("Torneo de:", creator_name, context),
+                      tagCreator("Torneo de:", creatorName, context),
 
                       SizedBox(height: defaultWidth * 0.0175),
 
                       // Match duration & Increment & Round number
                       Row(
                         children: [
-                          Text(
-                            rounds.toString(),
-                            overflow: TextOverflow.visible,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontSize: 17,
-                            ),
-                          ),
-                          Text(
-                            duration.toString(),
-                            overflow: TextOverflow.visible,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontSize: 17,
-                            ),
-                          ),
-                          Text(
-                            increments.toString(),
-                            overflow: TextOverflow.visible,
-                            style: TextStyle(
-                              color: Theme.of(context).colorScheme.primary,
-                              fontSize: 17,
-                            ),
-                          ),
+                          tagInfo("Rondas", rounds.toString(), context),
+                          SizedBox(width: defaultWidth * 0.05),
+                          tagInfo("Duración", "${duration.toString()} min",
+                              context),
+                          SizedBox(width: defaultWidth * 0.05),
+                          tagInfo("Incremento", "${increments.toString()} seg",
+                              context),
                         ],
                       ),
                     ],

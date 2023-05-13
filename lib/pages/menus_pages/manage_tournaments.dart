@@ -19,7 +19,7 @@ class _ManageTournamentPageState extends State<ManageTournamentPage> {
           child: Column(
         children: [
           tournamentTag("avatars/animals/5.webp", "Antoniddo",
-              "15-10-2056 20:48", 4, 10, 10, true, true, context),
+              "15-10-2056 20:48", 4, 10, 10, false, false, context),
         ],
       )),
     );

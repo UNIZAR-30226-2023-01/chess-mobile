@@ -78,7 +78,7 @@ class _HomePageState extends State<HomePage> {
                                 context,
                                 false,
                                 "Spectator.png",
-                                "Espectar juego",
+                                "Observar juego",
                                 () => spectator.popupSPECTATOR(context)),
                           ]),
                       SizedBox(height: defaultWidth * 0.05),

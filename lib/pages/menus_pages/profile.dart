@@ -213,13 +213,15 @@ class _ProfilePageState extends State<ProfilePage> {
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         shortButton(context, false, "Partidas\nguardadas", () async {
-          restartInfoGames();
-          String next = await apiGames(userData.games);
-          while (next != "null") {
-            next = await apiGames(next);
-          }
           if (context.mounted) {
-            savedGames.popupSAVEDGAMES(context);
+            restartInfoGames();
+            String next = await apiGames(userData.games);
+            while (next != "null") {
+              next = await apiGames(next);
+            }
+            if (context.mounted) {
+              savedGames.popupSAVEDGAMES(context);
+            }
           }
         }),
         SizedBox(width: defaultWidth * 0.075),

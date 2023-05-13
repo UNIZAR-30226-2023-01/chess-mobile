@@ -39,10 +39,10 @@ SizedBox buttonTheme(BuildContext context, ValueNotifier counter, int isBoard,
                   changeColorBoard(list[i][0], list[i][1], list[i][2]);
                   break;
                 case 1:
-                  changeDarkPieces(list[i][0]);
+                  changeDarkPieces("/pieces/${list[i][0]}");
                   break;
                 case 2:
-                  changeLightPieces(list[i][0]);
+                  changeLightPieces("/pieces/${list[i][0]}");
                   break;
                 default:
                   break;

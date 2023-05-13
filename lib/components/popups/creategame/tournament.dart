@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../communications/api.dart';
 import '../../visual/screen_size.dart';
 import '../../buttons/home/play.dart';
 import '../../buttons/home/selection.dart';
@@ -22,7 +23,7 @@ class Tournament {
     "5 segundos",
   );
   final TextEditingController roomController = TextEditingController();
-  String visualDate = DateFormat('dd MM yyyy HH:mm').format(DateTime.now());
+  String visualDate = DateFormat('dd-MM-yyyy HH:mm').format(DateTime.now());
   String backDate = "null";
   bool dateUpdate = false;
 
@@ -60,8 +61,19 @@ class Tournament {
             SelectionMenu.rowOption(context, "Fecha:", selectDate(context)),
             SizedBox(height: defaultWidth * 0.05),
             playButton(context, "Crear", () async {
-              // _handleTapCREATECUSTOM(context);
-              // waitCode().then((value) => ());
+              int error = await apiCreateTournament(
+                  backDate,
+                  selectRound.selectedCorrectValue,
+                  selectTime.selectedCorrectValue,
+                  selectIncrement.selectedCorrectValue);
+              if (context.mounted) {
+                if (error == 0) {
+                  popupResultCreate(context, "Torneo creado exitosamente");
+                } else {
+                  popupResultCreate(context,
+                      "La hora de inicio debe ser al menos 15 minutos después de la actual");
+                }
+              }
             }),
             SizedBox(height: defaultWidth * 0.075),
             Row(
@@ -120,7 +132,7 @@ class Tournament {
       onMonthChangeStartWithFirstDate: true,
       onConfirm: (dateTime, List<int> index) {
         DateTime selectdate = dateTime;
-        visualDate = DateFormat('dd MM yyyy HH:mm').format(selectdate);
+        visualDate = DateFormat('dd-MM-yyyy HH:mm').format(selectdate);
         backDate =
             "${DateFormat('yyyy').format(selectdate)}-${DateFormat('MM').format(selectdate)}-${DateFormat('dd').format(selectdate)}T${DateFormat('HH').format(selectdate)}:${DateFormat('mm').format(selectdate)}:00.000Z";
       },
@@ -167,5 +179,36 @@ class Tournament {
     while (!dateUpdate) {
       await Future.delayed(const Duration(milliseconds: 500));
     }
+  }
+
+  Object popupResultCreate(BuildContext context, String text) {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) => WillPopScope(
+        onWillPop: () async => false,
+        child: AlertDialog(
+          backgroundColor: Theme.of(context).colorScheme.tertiary,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+          contentPadding: EdgeInsets.all(defaultWidth * 0.05),
+          content: SizedBox(
+            width: defaultWidth * 0.85,
+            child: Column(mainAxisSize: MainAxisSize.min, children: [
+              Text(
+                text,
+                style: TextStyle(
+                  fontSize: 19,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              SizedBox(height: defaultWidth * 0.05),
+              playButton(context, "Ok", () => Navigator.pop(context)),
+            ]),
+          ),
+        ),
+      ),
+    );
   }
 }

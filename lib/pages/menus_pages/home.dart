@@ -1,3 +1,4 @@
+import 'package:ajedrez/components/popups/creategame/tournament.dart';
 import 'package:ajedrez/pages/menus_pages/tournaments.dart';
 import 'package:flutter/material.dart';
 import '../../components/visual/custom_shape.dart';
@@ -22,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   final UserData userData = UserData();
   final Spectator spectator = Spectator();
   final Competitive competitive = Competitive();
+  final Tournament tournament = Tournament();
   final AI ai = AI();
   final Custom custom = Custom();
 
@@ -63,11 +65,7 @@ class _HomePageState extends State<HomePage> {
                                 false,
                                 "Tournaments.png",
                                 "Torneo",
-                                () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const TournamentPage()))),
+                                () => tournament.popupTOURNAMENT(context)),
                           ]),
                       SizedBox(height: defaultWidth * 0.075),
                       Row(

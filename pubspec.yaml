@@ -44,6 +44,10 @@ dependencies:
   socket_io_client: ^2.0.1
   webview_flutter: ^4.0.7
   email_validator: ^2.0.1
+  flutter_cupertino_datetime_picker: ^3.0.0
+  date_time_picker: ^2.1.0
+  intl: ^0.17.0
+
 
 flutter_icons:
   ios: true

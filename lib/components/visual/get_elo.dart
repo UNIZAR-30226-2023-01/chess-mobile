@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 String getElo(int score) {
   if (2000 < score && score <= 2199) {
     return "EN";
-  } else if (2200 <= score && score <= 2199) {
+  } else if (840 <= score && score <= 2199) {
     return "MI";
   } else if (2300 <= score && score <= 2199) {
     return "MF";

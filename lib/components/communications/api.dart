@@ -6,7 +6,8 @@ import 'package:ajedrez/components/singletons/game_data.dart';
 import 'package:ajedrez/components/singletons/ranking_data.dart';
 import 'package:ajedrez/components/singletons/manage_tournaments_data.dart';
 import 'package:ajedrez/pages/menus_pages/manage_tournaments.dart';
-import 'package:ajedrez/pages/game_pages/game.dart';
+import 'package:ajedrez/pages/menus_pages/tournaments.dart';
+// import 'package:ajedrez/pages/game_pages/game.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -779,6 +780,82 @@ Future<int> apiDeleteTournament(bool imIn, String id) async {
     return responseBodyDictionary["status"]["error_code"];
   } catch (e) {
     //print(e.toString());
+    return -1;
+  } finally {
+    client.close();
+  }
+}
+
+Future<int> apiGetTournament(String id) async {
+  var pemBytes = await rootBundle.load("assets/cert.pem");
+
+  var context = SecurityContext()
+    ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
+
+  var client = HttpClient(context: context)
+    ..badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+
+  try {
+    var request = await client
+        .getUrl(Uri.parse('https://api.gracehopper.xyz/v1/tournaments/$id'));
+    // Set headers
+    request.headers.add('Content-Type', 'application/json');
+    request.headers.add('Cookie', 'api-auth=${UserData().token}');
+
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
+    var responseBodyDictionary = jsonDecode(responseBody);
+    var data = responseBodyDictionary["data"];
+    // Verify subscribed tournaments
+
+    var player1 = null, player2 = null;
+    int i = 0;
+    TournamentMatch tMatch = TournamentMatch();
+    TournamentData.matches = List.empty(growable: true);
+    for (int j = 0; j < data["rounds"]; j++) {
+      TournamentData.matches.add(List.empty(growable: true));
+    }
+    for (var match in data["matches"]) {
+      player1 = null;
+      player2 = null;
+      i = 0;
+      for (var participant in match["participants"]) {
+        if (i == 0) {
+          player1 = participant;
+        } else if (i == 1) {
+          player2 = participant;
+        }
+        i++;
+      }
+      tMatch.update(
+          match["id"],
+          match["startTime"],
+          player1 != null ? player1["id"] : "null",
+          player1 != null ? player1["username"] : "null",
+          player1 != null ? player1["avatar"] : "null",
+          player1 != null ? player1["elo"] : 0,
+          player2 != null ? player2["id"] : "null",
+          player2 != null ? player2["username"] : "null",
+          player2 != null ? player2["avatar"] : "null",
+          player2 != null ? player2["elo"] : 0,
+          false, //match["hasStarted"]
+          false, //match["finished"]
+          "null" //match["finished"] ? match["winner"] : "null"
+          );
+      String n = match["tournamentRoundText"].substring(6);
+      TournamentData.matches[int.parse(n) - 1].add(tMatch);
+      // player1 = null;
+      // player2 = null;
+    }
+    // print(data);
+
+    // print(responseBodyDictionary);
+    return 0;
+    //aqui ns que necesitas q devuelva
+    // return responseBodyDictionary["status"]["error_code"];
+  } catch (e) {
+    // print(e.toString());
     return -1;
   } finally {
     client.close();

@@ -38,6 +38,7 @@ Widget tournamentNode(
     String image_2,
     int elo_1,
     int elo_2,
+    bool hasStarted,
     bool finished,
     bool winner,
     BuildContext context) {

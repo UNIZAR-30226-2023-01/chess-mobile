@@ -4,8 +4,15 @@ import '../../pages/menus_pages/manage_tournaments.dart';
 import '../communications/api.dart';
 import '../../pages/menus_pages/tournaments.dart';
 
-PopupMenuButton suscribed(BuildContext context, Widget widget, bool finished,
-    ValueNotifier<int> counter, String id, bool hasStarted, String owner) {
+PopupMenuButton suscribed(
+    BuildContext context,
+    Widget widget,
+    bool finished,
+    ValueNotifier<int> counter,
+    String id,
+    bool hasStarted,
+    String owner,
+    int rounds) {
   UserData userData = UserData();
 
   return PopupMenuButton(
@@ -31,20 +38,32 @@ PopupMenuButton suscribed(BuildContext context, Widget widget, bool finished,
       ActualSelection.isSelected = false;
       switch (value) {
         case '_jugar':
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const TournamentPage(),
-            ),
-          );
+          TournamentData.matches = List.empty(growable: true);
+          await apiGetTournament(id);
+          TournamentData.totalRounds = rounds;
+          TournamentData.visualCurrentRound = 1;
+          if (context.mounted) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const TournamentPage(),
+              ),
+            );
+          }
           break;
         case '_visualizar':
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const TournamentPage(),
-            ),
-          );
+          TournamentData.matches = List.empty(growable: true);
+          await apiGetTournament(id);
+          TournamentData.totalRounds = rounds;
+          TournamentData.visualCurrentRound = 1;
+          if (context.mounted) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const TournamentPage(),
+              ),
+            );
+          }
           break;
         case '_salir':
           ActualSelection.manageTournamentDatas = List.empty(growable: true);
@@ -85,8 +104,14 @@ PopupMenuButton suscribed(BuildContext context, Widget widget, bool finished,
   );
 }
 
-PopupMenuButton unsuscribed(BuildContext context, Widget widget,
-    ValueNotifier<int> counter, String id, bool hasStarted, String owner) {
+PopupMenuButton unsuscribed(
+    BuildContext context,
+    Widget widget,
+    ValueNotifier<int> counter,
+    String id,
+    bool hasStarted,
+    String owner,
+    int rounds) {
   UserData userData = UserData();
 
   return PopupMenuButton(
@@ -112,12 +137,18 @@ PopupMenuButton unsuscribed(BuildContext context, Widget widget,
       ActualSelection.isSelected = false;
       switch (value) {
         case '_visualizar':
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const TournamentPage(),
-            ),
-          );
+          TournamentData.matches = List.empty(growable: true);
+          await apiGetTournament(id);
+          TournamentData.totalRounds = rounds;
+          TournamentData.visualCurrentRound = 1;
+          if (context.mounted) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const TournamentPage(),
+              ),
+            );
+          }
           break;
         case '_unir':
           ActualSelection.manageTournamentDatas = List.empty(growable: true);

@@ -1,3 +1,4 @@
+import 'package:ajedrez/components/visual/convert_date.dart';
 import 'package:ajedrez/components/visual/screen_size.dart';
 import 'package:ajedrez/components/visual/get_elo.dart';
 
@@ -7,11 +8,47 @@ import 'package:flutter/material.dart';
 // Data structure for matches
 class TournamentMatch {
   String matchID = "null";
-  String nextMatchID = "null";
   String startTime = "null";
   String player1ID = "null";
+  String player1Name = "null";
+  String player1Image = "null";
+  int player1Elo = 0;
   String player2ID = "null";
-  bool played = false;
+  String player2Name = "null";
+  String player2Image = "null";
+  int player2Elo = 0;
+  bool hasStarted = false;
+  bool finished = false;
+  String winner = "null";
+
+  void update(
+      String matchID,
+      String startTime,
+      String player1ID,
+      String player1Name,
+      String player1Image,
+      int player1Elo,
+      String player2ID,
+      String player2Name,
+      String player2Image,
+      int player2Elo,
+      bool hasStarted,
+      bool finished,
+      String winner) {
+    this.matchID = matchID;
+    this.startTime = convertirFecha(startTime);
+    this.player1ID = player1ID;
+    this.player1Name = player1Name;
+    this.player1Image = player1Image;
+    this.player1Elo = player1Elo;
+    this.player2ID = player2ID;
+    this.player2Name = player2Name;
+    this.player2Image = player2Image;
+    this.player2Elo = player2Elo;
+    this.hasStarted = hasStarted;
+    this.finished = finished;
+    this.winner = winner;
+  }
 }
 
 // Data structure for rounds
@@ -21,8 +58,9 @@ class TournamentData {
   static int totalRounds = 5;
 
   // Update every single time user decides to check another round
-  static List<TournamentMatch> matches = List.empty(growable: true);
-  static int visualCurrentRound = 3;
+  // matches[numRound][TournamentMatch]
+  static List<List<TournamentMatch>> matches = List.empty(growable: true);
+  static int visualCurrentRound = 1;
   static int realCurrentRound() {
     return TournamentData.totalRounds - TournamentData.visualCurrentRound + 1;
   }
@@ -101,23 +139,26 @@ class _TournamentPageState extends State<TournamentPage> {
                 color: Theme.of(context).colorScheme.background,
                 child: ListView(
                   children: [
-                    for (int i = 0; i < 10; i++)
+                    for (TournamentMatch m in TournamentData
+                        .matches[TournamentData.realCurrentRound() - 1]) ...[
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Center(
                           child: tournamentNode(
-                              "11-05-2023",
-                              "Alvaro",
-                              "pingüino",
-                              "avatars/animals/1.webp",
-                              "avatars/animals/40.webp",
-                              2330,
-                              5000,
-                              true,
-                              true,
+                              m.startTime,
+                              m.player1Name,
+                              m.player2Name,
+                              "avatars${m.player1Image}",
+                              "avatars${m.player2Image}",
+                              m.player1Elo,
+                              m.player2Elo,
+                              m.hasStarted,
+                              m.finished,
+                              m.winner == m.player1ID,
                               context),
                         ),
                       )
+                    ],
                   ],
                 ),
               ),
@@ -134,7 +175,6 @@ class _TournamentPageState extends State<TournamentPage> {
       child: GestureDetector(
         onTap: () async {
           setState(() {
-            TournamentData.totalRounds = 3;
             TournamentData.visualCurrentRound = i;
           });
         },

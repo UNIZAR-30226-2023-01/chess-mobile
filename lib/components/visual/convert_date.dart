@@ -1,5 +1,6 @@
 String convertirFecha(String time) {
-  List<String> fields = time.split("T");
+  time = DateTime.parse(time).toLocal().toString();
+  List<String> fields = time.split(" ");
   String originalDate = fields[0];
   String originalHour = fields[1].substring(0, 5);
 

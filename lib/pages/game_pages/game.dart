@@ -63,7 +63,7 @@ class GamePageState extends State<GamePage> {
     super.initState();
     GameSocket s = GameSocket();
     _player1Timer = CustomTimer(
-      label: s.player1,
+      label: "",
       duration: Duration(seconds: _maxTime),
       onTimerEnd: () {
         //Pendiente de implementar
@@ -71,7 +71,7 @@ class GamePageState extends State<GamePage> {
       isWhite: true,
     );
     _player2Timer = CustomTimer(
-      label: s.player2,
+      label: "",
       duration: Duration(seconds: _maxTime),
       onTimerEnd: () {
         //Pendiente de implementar
@@ -87,6 +87,8 @@ class GamePageState extends State<GamePage> {
     GameSocket s = GameSocket();
     // Players players = Players();
     String idR = s.room;
+    String player1 = s.player1;
+    String player2 = s.player2;
     listenGame(context);
     resetSingleton(!s.iAmWhite);
     // print(s.type);
@@ -110,9 +112,37 @@ class GamePageState extends State<GamePage> {
             children: [
               SizedBox(height: defaultWidth * 0.1),
               if (s.iAmWhite) ...[
-                _player2Timer,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(width: defaultWidth * 0.1),
+                    Text(
+                      player2,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontSize: 21,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    _player2Timer,
+                  ],
+                ),
               ] else ...[
-                _player1Timer,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(width: defaultWidth * 0.1),
+                    Text(
+                      player1,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontSize: 21,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    _player1Timer,
+                  ],
+                ),
               ],
               SizedBox(height: defaultWidth * 0.1),
               Expanded(
@@ -131,9 +161,37 @@ class GamePageState extends State<GamePage> {
               ),
               SizedBox(height: defaultWidth * 0.075),
               if (s.iAmWhite) ...[
-                _player1Timer,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(width: defaultWidth * 0.1),
+                    Text(
+                      player1,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontSize: 21,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    _player1Timer,
+                  ],
+                ),
               ] else ...[
-                _player2Timer,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(width: defaultWidth * 0.1),
+                    Text(
+                      player2,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontSize: 21,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    _player2Timer,
+                  ],
+                ),
               ],
               SizedBox(height: defaultWidth * 0.2),
               // SizedBox(height: defaultWidth * 0.15),

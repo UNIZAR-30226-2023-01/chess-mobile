@@ -1,4 +1,5 @@
 import 'package:ajedrez/components/communications/socket_io.dart';
+import 'package:ajedrez/components/popups/creategame/custom.dart';
 import 'package:flutter/material.dart';
 import '../visual/screen_size.dart';
 import '../buttons/home/play.dart';
@@ -81,5 +82,9 @@ class SavedGames {
 
   void _handleTapRes(String id, BuildContext context) async {
     await resume(id, context);
+    if (GameSocket().type == "CUSTOM") {
+      Custom().waitCode().then((value) => Custom().popupWAITING(context));
+    }
+    // waitCode().then((value) => popupWAITING(context));
   }
 }

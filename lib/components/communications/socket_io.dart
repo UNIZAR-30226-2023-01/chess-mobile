@@ -13,6 +13,7 @@ import 'package:socket_io_client/socket_io_client.dart';
 
 import '../popups/ingame/draw_dialog.dart';
 import '../popups/ingame/possible_draw.dart';
+import '../popups/ingame/possible_save.dart';
 import '../popups/ingame/winner_dialog.dart';
 import '../../pages/game_pages/game.dart';
 
@@ -251,6 +252,12 @@ void listenGame(BuildContext context) {
             if (data[0]["color"] == (s.iAmWhite ? "DARK" : "LIGHT"))
               alertPossibleDraw(context)
           });
+  s.socket.on(
+      'voted_save',
+      (data) => {
+            if (data[0]["color"] == (s.iAmWhite ? "DARK" : "LIGHT"))
+              alertPossibleSave(context)
+          });
   s.socket.onDisconnect((_) => {
         // print('disconnect')
       });
@@ -291,6 +298,12 @@ Future<void> resume(String roomID, BuildContext context) async {
       (data) => {
             // print(data)
           });
+  s.socket.once(
+          'room_created',
+          (data) => {
+            s.room = data[0]["roomID"],
+          },
+        );
   s.socket.once(
       'room',
       (data) => {

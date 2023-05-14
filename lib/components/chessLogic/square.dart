@@ -445,5 +445,18 @@ void processCastling(int auxY, int auxX, int y, int x) {
       (board.squares[y * 8 + 0] as SquareState).actualizarEstado();
       (board.squares[y * 8 + 3] as SquareState).actualizarEstado();
     }
+
+    else if (x == 1) {
+      board.currentBoard[y][2] = board.currentBoard[y][0];
+      board.currentBoard[y][0] = Empty(isWhite: false);
+      (board.squares[y * 8 + 0] as SquareState).actualizarEstado();
+      (board.squares[y * 8 + 2] as SquareState).actualizarEstado();
+    }
+    else if (x == 5) {
+      board.currentBoard[y][4] = board.currentBoard[y][7];
+      board.currentBoard[y][7] = Empty(isWhite: false);
+      (board.squares[y * 8 + 4] as SquareState).actualizarEstado();
+      (board.squares[y * 8 + 7] as SquareState).actualizarEstado();
+    }
   }
 }

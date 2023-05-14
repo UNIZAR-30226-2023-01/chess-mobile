@@ -1,9 +1,12 @@
 import 'package:ajedrez/components/buttons/round.dart';
 import 'package:ajedrez/components/visual/screen_size.dart';
+import '../../components/singletons/manage_tournaments_data.dart';
 
 import '../../components/visual/tournament_tag.dart';
 import 'package:flutter/material.dart';
 import '../../components/buttons/tournament_tag_options.dart';
+import '../../components/communications/api.dart';
+import '../../components/singletons/manage_tournaments_data.dart';
 
 class ManageTournamentPage extends StatefulWidget {
   const ManageTournamentPage({super.key});
@@ -12,9 +15,11 @@ class ManageTournamentPage extends StatefulWidget {
   State<ManageTournamentPage> createState() => _ManageTournamentPageState();
 }
 
-class actualSelection {
+class ActualSelection {
   static bool isSelected = false;
-  static int id = 2;
+  static String id = "null";
+  static List<ManageTournamentData> manageTournamentDatas =
+      List.empty(growable: true);
 }
 
 class _ManageTournamentPageState extends State<ManageTournamentPage> {
@@ -36,14 +41,19 @@ class _ManageTournamentPageState extends State<ManageTournamentPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       GestureDetector(
-                        onTap: () {
+                        onTap: () async {
                           // actualizar aqui
-                          setState(() {
-                            myTournaments = true;
-                          });
+                          ActualSelection.manageTournamentDatas =
+                              List.empty(growable: true);
+                          await apiMyTournaments();
+                          if (context.mounted) {
+                            setState(() {
+                              myTournaments = true;
+                            });
+                          }
                         },
                         child: Container(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: myTournaments
                                 ? Theme.of(context).colorScheme.secondary
@@ -64,14 +74,20 @@ class _ManageTournamentPageState extends State<ManageTournamentPage> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: () {
-                          // actualizar aqui
-                          setState(() {
-                            myTournaments = false;
-                          });
+                        onTap: () async {
+                          //push
+                          ActualSelection.manageTournamentDatas =
+                              List.empty(growable: true);
+                          await apiOtherTournaments();
+                          if (context.mounted) {
+                            setState(() {
+                              myTournaments = false;
+                              //pop
+                            });
+                          }
                         },
                         child: Container(
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: !myTournaments
                                 ? Theme.of(context).colorScheme.secondary
@@ -80,7 +96,7 @@ class _ManageTournamentPageState extends State<ManageTournamentPage> {
                                 const BorderRadius.all(Radius.circular(20)),
                           ),
                           child: Text(
-                            "Torneos que no son tuyos",
+                            "Buscar torneos",
                             style: TextStyle(
                               color: !myTournaments
                                   ? Theme.of(context).colorScheme.primary
@@ -100,49 +116,51 @@ class _ManageTournamentPageState extends State<ManageTournamentPage> {
                     child: ListView(
                       children: [
                         if (myTournaments) ...[
-                          for (int i = 0; i < 20; i++) ...[
+                          for (ManageTournamentData m
+                              in ActualSelection.manageTournamentDatas) ...[
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: suscribed(
                                   context,
                                   tournamentTag(
-                                      "avatars/animals/5.webp",
-                                      "Antoniddo",
-                                      "15-10-2056 20:48",
-                                      4,
-                                      10,
-                                      10,
-                                      false,
-                                      false,
-                                      actualSelection.id != i &&
-                                          actualSelection.isSelected,
+                                      "avatars${m.creatorImage}",
+                                      m.creatorName,
+                                      m.startTime,
+                                      m.rounds,
+                                      m.duration,
+                                      m.increment,
+                                      m.finished,
+                                      m.hasStarted,
+                                      ActualSelection.id != m.id &&
+                                          ActualSelection.isSelected,
                                       context),
                                   true,
                                   counter,
-                                  i),
+                                  m.id),
                             ),
                           ],
                         ],
                         if (!myTournaments) ...[
-                          for (int i = 0; i < 20; i++) ...[
+                          for (ManageTournamentData m
+                              in ActualSelection.manageTournamentDatas) ...[
                             Padding(
                               padding: const EdgeInsets.all(10.0),
                               child: unsuscribed(
                                   context,
                                   tournamentTag(
-                                      "avatars/animals/5.webp",
-                                      "Antoniddo",
-                                      "15-10-2056 20:48",
-                                      4,
-                                      10,
-                                      10,
-                                      true,
-                                      true,
-                                      actualSelection.id != i &&
-                                          actualSelection.isSelected,
+                                      "avatars${m.creatorImage}",
+                                      m.creatorName,
+                                      m.startTime,
+                                      m.rounds,
+                                      m.duration,
+                                      m.increment,
+                                      m.finished,
+                                      m.hasStarted,
+                                      ActualSelection.id != m.id &&
+                                          ActualSelection.isSelected,
                                       context),
                                   counter,
-                                  i),
+                                  m.id),
                             ),
                           ],
                         ],

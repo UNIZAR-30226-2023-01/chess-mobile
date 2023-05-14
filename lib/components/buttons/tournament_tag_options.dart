@@ -4,15 +4,15 @@ import '../popups/edit_profile.dart';
 import '../../pages/menus_pages/manage_tournaments.dart';
 
 PopupMenuButton suscribed(BuildContext context, Widget widget, bool finished,
-    ValueNotifier<int> counter, int id) {
+    ValueNotifier<int> counter, String id) {
   return PopupMenuButton(
     onCanceled: () {
-      actualSelection.isSelected = false;
+      ActualSelection.isSelected = false;
       counter.value++;
     },
     onOpened: () {
-      actualSelection.id = id;
-      actualSelection.isSelected = true;
+      ActualSelection.id = id;
+      ActualSelection.isSelected = true;
       counter.value++;
     },
     color: Theme.of(context).colorScheme.tertiary,
@@ -25,7 +25,7 @@ PopupMenuButton suscribed(BuildContext context, Widget widget, bool finished,
     ),
     child: widget,
     onSelected: (value) {
-      actualSelection.isSelected = false;
+      ActualSelection.isSelected = false;
       counter.value++;
       switch (value) {
         case '_jugar':
@@ -56,16 +56,16 @@ PopupMenuButton suscribed(BuildContext context, Widget widget, bool finished,
   );
 }
 
-PopupMenuButton unsuscribed(
-    BuildContext context, Widget widget, ValueNotifier<int> counter, int id) {
+PopupMenuButton unsuscribed(BuildContext context, Widget widget,
+    ValueNotifier<int> counter, String id) {
   return PopupMenuButton(
     onCanceled: () {
-      actualSelection.isSelected = false;
+      ActualSelection.isSelected = false;
       counter.value++;
     },
     onOpened: () {
-      actualSelection.id = id;
-      actualSelection.isSelected = true;
+      ActualSelection.id = id;
+      ActualSelection.isSelected = true;
       counter.value++;
     },
     color: Theme.of(context).colorScheme.tertiary,
@@ -78,7 +78,7 @@ PopupMenuButton unsuscribed(
     ),
     child: widget,
     onSelected: (value) {
-      actualSelection.isSelected = false;
+      ActualSelection.isSelected = false;
       counter.value++;
       switch (value) {
         case '_visualizar':

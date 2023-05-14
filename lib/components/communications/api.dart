@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:ajedrez/components/singletons/profile_data.dart';
 import 'package:ajedrez/components/singletons/game_data.dart';
 import 'package:ajedrez/components/singletons/ranking_data.dart';
+import 'package:ajedrez/components/singletons/manage_tournaments_data.dart';
+import 'package:ajedrez/pages/menus_pages/manage_tournaments.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -458,6 +460,149 @@ Future<int> apiCreateTournament(
     var responseBodyDictionary = jsonDecode(responseBody);
     print(responseBodyDictionary);
     return responseBodyDictionary["status"]["error_code"];
+  } catch (e) {
+    // print(e.toString());
+    return -1;
+  } finally {
+    client.close();
+  }
+}
+
+Future<int> apiGetTournamentUser(String id) async {
+  var pemBytes = await rootBundle.load("assets/cert.pem");
+
+  var context = SecurityContext()
+    ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
+
+  var client = HttpClient(context: context)
+    ..badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+  //print(id);
+  try {
+    var request = await client
+        .getUrl(Uri.parse('https://api.gracehopper.xyz/v1/users/$id'));
+    // Set headers
+    request.headers.add('Content-Type', 'application/json');
+    request.headers.add('Cookie', 'api-auth=${UserData().token}');
+
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
+    var responseBodyDictionary = jsonDecode(responseBody);
+    var data = responseBodyDictionary["data"];
+
+    TournamentUserData.update(data["id"], data["username"], data["avatar"]);
+
+    //print(responseBodyDictionary);
+    return 0;
+    //aqui ns que necesitas q devuelva
+    // return responseBodyDictionary["status"]["error_code"];
+  } catch (e) {
+    // print(e.toString());
+    return -1;
+  } finally {
+    client.close();
+  }
+}
+
+Future<int> apiMyTournaments() async {
+  UserData userData = UserData();
+
+  var pemBytes = await rootBundle.load("assets/cert.pem");
+
+  var context = SecurityContext()
+    ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
+
+  var client = HttpClient(context: context)
+    ..badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+
+  try {
+    var request = await client.getUrl(Uri.parse(
+        'https://api.gracehopper.xyz/v1/tournaments?sort=-startTime&filter=%7B%22participants%22%3A+%22${userData.id}%22%7D'));
+    // Set headers
+    request.headers.add('Content-Type', 'application/json');
+    request.headers.add('Cookie', 'api-auth=${UserData().token}');
+
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
+    var responseBodyDictionary = jsonDecode(responseBody);
+    var data = responseBodyDictionary["data"];
+    // Verify subscribed tournaments
+    for (var t in data) {
+      ManageTournamentData m = ManageTournamentData();
+
+      await m.update(
+          t["id"],
+          t["owner"],
+          t["startTime"],
+          t["rounds"],
+          t["matchProps"]["time"],
+          t["matchProps"]["increment"],
+          t["finished"],
+          false);
+      ActualSelection.manageTournamentDatas.add(m);
+    }
+
+    // print(data);
+
+    // print(responseBodyDictionary);
+    return 0;
+    //aqui ns que necesitas q devuelva
+    // return responseBodyDictionary["status"]["error_code"];
+  } catch (e) {
+    // print(e.toString());
+    return -1;
+  } finally {
+    client.close();
+  }
+}
+
+Future<int> apiOtherTournaments() async {
+  UserData userData = UserData();
+
+  var pemBytes = await rootBundle.load("assets/cert.pem");
+
+  var context = SecurityContext()
+    ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
+
+  var client = HttpClient(context: context)
+    ..badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+
+  try {
+    var request = await client.getUrl(Uri.parse(
+        'https://api.gracehopper.xyz/v1/tournaments?-startTime&filter=%7B+%22participants%22%3A+%7B+%22%24nin%22%3A+%5B%22${userData.id}%22%5D+%7D%7D'));
+    // Set headers
+    request.headers.add('Content-Type', 'application/json');
+    request.headers.add('Cookie', 'api-auth=${UserData().token}');
+
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
+    var responseBodyDictionary = jsonDecode(responseBody);
+    var data = responseBodyDictionary["data"];
+    // Verify subscribed tournaments
+    for (var t in data) {
+      ManageTournamentData m = ManageTournamentData();
+
+      await m.update(
+          t["id"],
+          t["owner"],
+          t["startTime"],
+          t["rounds"],
+          t["matchProps"]["time"],
+          t["matchProps"]["increment"],
+          t["finished"],
+          false);
+      ActualSelection.manageTournamentDatas.add(m);
+    }
+    // }
+
+    // print(data);
+
+    // print(responseBodyDictionary);
+    return 0;
+    //aqui ns que necesitas q devuelva
+    // return responseBodyDictionary["status"]["error_code"];
   } catch (e) {
     // print(e.toString());
     return -1;

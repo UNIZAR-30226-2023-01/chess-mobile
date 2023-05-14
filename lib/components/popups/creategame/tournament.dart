@@ -76,8 +76,8 @@ class Tournament {
                     popupResultCreate(context,
                         "La hora de inicio debe ser al menos 15 minutos después de la actual");
                   } else if (error == 409) {
-                    popupResultCreate(context,
-                        "No se puede crear un torneo mientras hay otro activo");
+                    popupResultCreate(
+                        context, "No se puede crear más de un torneo al día");
                   } else {
                     popupResultCreate(context,
                         "Ha surgido un error a la hora de crear torneo");

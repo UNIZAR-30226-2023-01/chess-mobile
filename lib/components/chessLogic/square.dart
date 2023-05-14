@@ -113,7 +113,7 @@ class SquareState extends State<Square> {
 
         //enroque
         processCastling(auxY, auxX, y, x);
-        _procesarComerAlPaso(auxY, auxX);
+        procesarComerAlPaso(auxY, auxX,y,x);
         board.lastMovement = [
           [auxY, auxX],
           [y, x]
@@ -248,15 +248,6 @@ class SquareState extends State<Square> {
     return completer.future;
   }
 
-  void _procesarComerAlPaso(int auxY, int auxX) {
-    if ((x - auxX).abs() > 0 &&
-        board.currentBoard[auxY][auxX] is Pawn &&
-        board.currentBoard[y][x].isEmpty()) {
-      board.currentBoard[auxY][x] = Empty(isWhite: false);
-      board.squares[auxY * 8 + x].setState(() {});
-    }
-  }
-
   void _checkIfWin() {
     var tmpX = x;
     var tmpY = y;
@@ -352,6 +343,7 @@ void simulateMovement(List<List<int>> movements) {
   int y = movements[1][0];
   int x = movements[1][1];
   processCastling(auxY, auxX, y, x);
+  procesarComerAlPaso(auxY, auxX,y,x);
   b.lastMovement = movements;
   final musicPlayer = AudioPlayer();
   if (b.currentBoard[y][x].isEmpty()) {
@@ -402,6 +394,7 @@ void loadMovement(List<List<int>> movements) {
   int y = movements[1][0];
   int x = movements[1][1];
   processCastling(auxY, auxX, y, x);
+  procesarComerAlPaso(auxY, auxX,y,x);
   b.lastMovement = movements;
   b.currentBoard[y][x] = b.currentBoard[auxY][auxX];
   if (b.prom != "") {
@@ -460,3 +453,13 @@ void processCastling(int auxY, int auxX, int y, int x) {
     }
   }
 }
+
+void procesarComerAlPaso(int auxY, int auxX, int y, int x) {
+    BoardData board = BoardData();
+    if ((x - auxX).abs() > 0 &&
+        board.currentBoard[auxY][auxX] is Pawn &&
+        board.currentBoard[y][x].isEmpty()) {
+      board.currentBoard[auxY][x] = Empty(isWhite: false);
+      (board.squares[auxY * 8 + x] as SquareState).actualizarEstado();
+    }
+  }

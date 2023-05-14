@@ -11,7 +11,7 @@ Object alertPossibleSave(BuildContext context) {
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       title: const Text("TABLAS"),
-      content: const Text("El otro jugador ha propuesto pactar tablas."),
+      content: const Text("El otro jugador ha propuesto guardar la partida."),
       actions: <Widget>[
         TextButton(
           onPressed: () => {
@@ -26,7 +26,7 @@ Object alertPossibleSave(BuildContext context) {
             ),
             child: Center(
               child: Text(
-                "KEEP PLAYING",
+                "CONTINUAR JUGANDO",
                 style: TextStyle(
                   fontSize: 19,
                   fontWeight: FontWeight.bold,
@@ -47,7 +47,7 @@ Object alertPossibleSave(BuildContext context) {
             ),
             child: Center(
               child: Text(
-                "SAVE",
+                "GUARDAR",
                 style: TextStyle(
                   fontSize: 19,
                   fontWeight: FontWeight.bold,

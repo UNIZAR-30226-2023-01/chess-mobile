@@ -26,7 +26,7 @@ Object alertPossibleDraw(BuildContext context) {
             ),
             child: Center(
               child: Text(
-                "KEEP PLAYING",
+                "CONTINUAR JUGANDO",
                 style: TextStyle(
                   fontSize: 19,
                   fontWeight: FontWeight.bold,
@@ -47,7 +47,7 @@ Object alertPossibleDraw(BuildContext context) {
             ),
             child: Center(
               child: Text(
-                "DRAW",
+                "TABLAS",
                 style: TextStyle(
                   fontSize: 19,
                   fontWeight: FontWeight.bold,

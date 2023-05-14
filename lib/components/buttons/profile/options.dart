@@ -1,3 +1,4 @@
+import 'package:ajedrez/components/popups/delete.dart';
 import 'package:flutter/material.dart';
 import '../../visual/screen_size.dart';
 import '../../popups/edit_profile.dart';
@@ -23,6 +24,7 @@ PopupMenuButton optionsButton(
           popupEditProfile(context, counter);
           break;
         case '_delete':
+          popupDelete(context);
           break;
       }
     },

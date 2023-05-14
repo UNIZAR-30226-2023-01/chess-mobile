@@ -159,10 +159,13 @@ class Tournament {
       onConfirm: (dateTime, List<int> index) {
         DateTime selectdate = dateTime;
         visualDate = DateFormat('dd-MM-yyyy HH:mm').format(selectdate);
+        selectdate = selectdate.toUtc();
         backDate =
             "${DateFormat('yyyy').format(selectdate)}-${DateFormat('MM').format(selectdate)}-${DateFormat('dd').format(selectdate)}T${DateFormat('HH').format(selectdate)}:${DateFormat('mm').format(selectdate)}:00.000Z";
       },
-      onClose: () => dateUpdate = true,
+      onClose: () {
+        dateUpdate = true;
+      },
     );
   }
 

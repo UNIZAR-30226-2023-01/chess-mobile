@@ -1,3 +1,5 @@
+/// Function that converts the date.
+
 String convertirFecha(String time) {
   time = DateTime.parse(time).toLocal().toString();
   List<String> fields = time.split(" ");

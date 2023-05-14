@@ -1,3 +1,4 @@
+/// Page that shows the ranking.
 import 'package:ajedrez/components/communications/api.dart';
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';

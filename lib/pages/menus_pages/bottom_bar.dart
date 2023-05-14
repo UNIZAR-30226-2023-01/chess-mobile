@@ -1,3 +1,4 @@
+/// Page that holds the rest of the home pages.
 import 'home.dart';
 import '../../components/visual/my_flutter_app_icons.dart';
 import 'profile.dart';

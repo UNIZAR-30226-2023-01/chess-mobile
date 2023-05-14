@@ -1,3 +1,4 @@
+/// Class that implements custom shapes.
 import 'package:flutter/material.dart';
 
 class CustomShape extends CustomClipper<Path> {

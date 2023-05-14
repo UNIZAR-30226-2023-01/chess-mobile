@@ -1,3 +1,4 @@
+/// Page that allows the user to sign up.
 import 'package:ajedrez/components/communications/api.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';

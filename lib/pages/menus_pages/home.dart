@@ -1,3 +1,5 @@
+/// Page that displays the home when after login.
+
 import 'package:ajedrez/components/popups/creategame/tournament.dart';
 
 import 'package:flutter/material.dart';
@@ -18,6 +20,7 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+
 
 class _HomePageState extends State<HomePage> {
   final UserData userData = UserData();

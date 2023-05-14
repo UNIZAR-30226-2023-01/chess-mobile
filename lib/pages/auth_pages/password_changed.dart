@@ -1,3 +1,4 @@
+/// Page that informs the user the sucessfull change of the password.
 import 'package:flutter/material.dart';
 import '../../components/buttons/text_long.dart';
 import 'startup.dart';

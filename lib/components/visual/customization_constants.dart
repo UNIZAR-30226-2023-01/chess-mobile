@@ -1,3 +1,5 @@
+/// Constants of the custom boards and pieces.
+
 const int woodN = 0xffB88B4A;
 const int woodB = 0xffE3C16F;
 const int coralN = 0xff70A2A3;

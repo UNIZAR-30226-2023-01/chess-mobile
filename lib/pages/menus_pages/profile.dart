@@ -1,3 +1,4 @@
+/// Page that shows the profile info.
 import 'package:flutter/material.dart';
 import 'package:ajedrez/components/popups/saved_games.dart';
 import 'package:ajedrez/components/popups/played_games.dart';

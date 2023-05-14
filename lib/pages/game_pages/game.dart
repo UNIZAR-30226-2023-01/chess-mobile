@@ -1,3 +1,5 @@
+/// Page that contains all the game.
+
 import 'package:ajedrez/components/buttons/ingame/save.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
 import 'package:ajedrez/components/chessLogic/timer.dart';

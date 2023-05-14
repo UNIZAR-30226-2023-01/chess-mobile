@@ -1,3 +1,4 @@
+/// Functions that works around with the elo.
 import 'package:flutter/material.dart';
 
 String getElo(int score) {

@@ -1,3 +1,4 @@
+/// Page base for all the app.
 import 'package:flutter/material.dart';
 import 'pages/auth_pages/startup.dart';
 import 'package:flutter/services.dart';

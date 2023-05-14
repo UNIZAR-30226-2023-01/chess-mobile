@@ -1,3 +1,4 @@
+/// Page that allows the user to change a forgotten password.
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';

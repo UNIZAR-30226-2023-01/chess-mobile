@@ -1,3 +1,4 @@
+/// Page that allows the user to sign in.
 import 'package:flutter/material.dart';
 import '../../components/buttons/textfield_custom.dart';
 import '../../components/communications/api.dart';

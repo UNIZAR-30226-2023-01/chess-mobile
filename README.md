@@ -10,6 +10,7 @@
         - `communications/`: Contains the core of the API/Socket calls to the backend.
         - `popups/`: Contains all the different popups of the application.
         - `visual/`: Contains all the customizations in visual aspects like the theme colors.
+        - `data/`: Contains all the classes/singletons which have information.
     - `pages/`: Contains all the screens code.
         - `auth_pages`: Contains the login, registry, password recover screens code.
         - `game_pages`: Contains the core gameplay screen code.

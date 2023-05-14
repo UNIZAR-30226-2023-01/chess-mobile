@@ -1,3 +1,4 @@
+/// Page that shows up when starting the app.
 // import 'package:ajedrez/pages/menus_pages/tournaments.dart';
 import 'package:flutter/material.dart';
 import '../../components/buttons/text_long.dart';

@@ -186,6 +186,8 @@ Object popupEditProfile(BuildContext context, ValueNotifier<int> counter) {
                     String username = userData.username,
                         email = userData.email,
                         avatar = userData.avatar;
+                    bool changeUsername =
+                        userData.username != usernameController.text;
                     assignUsername(usernameController.text);
                     assignEmail(emailController.text);
                     assignAvatar(avatarController);
@@ -195,7 +197,11 @@ Object popupEditProfile(BuildContext context, ValueNotifier<int> counter) {
                       // print(i);
                       if (i == 0) {
                         counter.value++;
-                        Navigator.pop(context);
+                        if (!changeUsername) {
+                          Navigator.pop(context);
+                        } else {
+                          popupChangeUsername(context);
+                        }
                       } else {
                         assignUsername(username);
                         assignEmail(email);
@@ -238,6 +244,42 @@ Object popupErrorEditProfile(BuildContext context) {
             ),
             SizedBox(height: defaultWidth * 0.05),
             playButton(context, "Ok", () => Navigator.pop(context)),
+          ]),
+        ),
+      ),
+    ),
+  );
+}
+
+Object popupChangeUsername(BuildContext context) {
+  return showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) => WillPopScope(
+      onWillPop: () async => false,
+      child: AlertDialog(
+        backgroundColor: Theme.of(context).colorScheme.tertiary,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15)),
+        ),
+        contentPadding: EdgeInsets.all(defaultWidth * 0.05),
+        content: SizedBox(
+          width: defaultWidth * 0.85,
+          child: Column(mainAxisSize: MainAxisSize.min, children: [
+            Text(
+              "Para terminar de cambiar de forma satisfactoria el nombre de usuario debe volver a iniciar sesión.",
+              style: TextStyle(
+                fontSize: 19,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+            SizedBox(height: defaultWidth * 0.05),
+            playButton(context, "Ok", () {
+              Navigator.pop(context);
+              Navigator.pop(context);
+              apiSignOut();
+              Navigator.pop(context);
+            }),
           ]),
         ),
       ),

@@ -115,6 +115,7 @@ class _ManageTournamentPageState extends State<ManageTournamentPage> {
                                   tournamentTag(
                                       "avatars${m.creatorImage}",
                                       m.creatorName,
+                                      m.creatorElo,
                                       m.startTime,
                                       m.rounds,
                                       m.duration,
@@ -140,6 +141,7 @@ class _ManageTournamentPageState extends State<ManageTournamentPage> {
                                   tournamentTag(
                                       "avatars${m.creatorImage}",
                                       m.creatorName,
+                                      m.creatorElo,
                                       m.startTime,
                                       m.rounds,
                                       m.duration,

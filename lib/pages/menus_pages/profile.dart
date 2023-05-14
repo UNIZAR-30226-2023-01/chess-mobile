@@ -99,13 +99,17 @@ class _ProfilePageState extends State<ProfilePage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               showElo(userData.elo),
-                              Text(
-                                userData.username,
-                                overflow: TextOverflow.visible,
-                                style: TextStyle(
-                                  fontSize: 27,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.primary,
+                              Flexible(
+                                child: Text(
+                                  userData.username,
+                                  overflow: TextOverflow.visible,
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    fontSize: 27,
+                                    fontWeight: FontWeight.bold,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
                                 ),
                               ),
                             ],
@@ -114,6 +118,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           Text(
                             userData.email,
                             overflow: TextOverflow.visible,
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 17,
                               fontWeight: FontWeight.bold,

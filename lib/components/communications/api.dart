@@ -203,7 +203,7 @@ Future<String> apiGames(String url) async {
   var page = 1;
   var limit = 50;
   url = 'https://api.gracehopper.xyz/v1/games?page=$page&limit=$limit';
-  
+
   var pemBytes = await rootBundle.load("assets/cert.pem");
 
   var context = SecurityContext()
@@ -493,7 +493,8 @@ Future<int> apiGetTournamentUser(String id) async {
     var responseBodyDictionary = jsonDecode(responseBody);
     var data = responseBodyDictionary["data"];
 
-    TournamentUserData.update(data["id"], data["username"], data["avatar"]);
+    TournamentUserData.update(
+        data["id"], data["username"], data["avatar"], data["elo"]);
 
     //print(responseBodyDictionary);
     return 0;

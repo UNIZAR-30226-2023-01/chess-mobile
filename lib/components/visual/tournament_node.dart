@@ -46,25 +46,45 @@ Widget tournamentNode(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
       // Match date
-      Text(
-        date,
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
-          fontSize: 19,
+      Container(
+        padding: const EdgeInsets.symmetric(vertical: 2.5),
+        decoration: BoxDecoration(
+          color: finished
+              ? Colors.red
+              : hasStarted
+                  ? Colors.orange
+                  : Colors.green,
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(15)),
+        ),
+        width: defaultWidth * 0.85,
+        child: Center(
+          child: Text(
+            finished
+                ? "Finalizado"
+                : hasStarted
+                    ? "En curso..."
+                    : "Esperando...",
+            overflow: TextOverflow.visible,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 17,
+            ),
+          ),
         ),
       ),
 
       // Match Box
       SizedBox(
-        width: defaultWidth * 0.75,
+        width: defaultWidth * 0.85,
         child: Column(
           children: [
             // Player 1 cell
             Container(
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15)),
+                // borderRadius: const BorderRadius.only(
+                //     topLeft: Radius.circular(15),
+                //     topRight: Radius.circular(15)),
                 color: finished && !winner
                     ? Theme.of(context).colorScheme.tertiary
                     : Theme.of(context).colorScheme.secondary,
@@ -75,19 +95,24 @@ Widget tournamentNode(
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 10),
-                    child: imageItem(defaultHeight * 0.07, 2, image_1, context,
-                        finished && !winner ? 0.5 : 1.0),
+                    child: image_1 != "avatarsnull"
+                        ? imageItem(defaultHeight * 0.07, 2, image_1, context,
+                            finished && !winner ? 0.5 : 1.0)
+                        : SizedBox(
+                            width: defaultHeight * 0.07,
+                            height: defaultHeight * 0.07,
+                          ),
                   ),
 
                   // Player 1 name
                   SizedBox(
-                    width: defaultWidth * 0.35,
+                    width: defaultWidth * 0.85 - defaultHeight * 0.07 - 40,
                     child: Row(
                       children: [
                         showEloWithOpacity(elo_1, finished && !winner),
                         Flexible(
                           child: Text(
-                            player_1,
+                            player_1 == "null" ? "---" : player_1,
                             overflow: TextOverflow.visible,
                             textAlign: TextAlign.left,
                             style: TextStyle(
@@ -96,6 +121,7 @@ Widget tournamentNode(
                                   .primary
                                   .withOpacity(finished && !winner ? 0.5 : 1),
                               fontSize: 22,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
@@ -124,9 +150,9 @@ Widget tournamentNode(
             // Player 2 cell
             Container(
               decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(15),
-                    bottomRight: Radius.circular(15)),
+                // borderRadius: const BorderRadius.only(
+                //     bottomLeft: Radius.circular(15),
+                //     bottomRight: Radius.circular(15)),
                 color: finished && winner
                     ? Theme.of(context).colorScheme.tertiary
                     : Theme.of(context).colorScheme.secondary,
@@ -137,18 +163,23 @@ Widget tournamentNode(
                   Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 20, vertical: 10),
-                    child: imageItem(defaultHeight * 0.07, 2, image_2, context,
-                        finished && winner ? 0.5 : 1),
+                    child: image_2 != "avatarsnull"
+                        ? imageItem(defaultHeight * 0.07, 2, image_2, context,
+                            finished && winner ? 0.5 : 1)
+                        : SizedBox(
+                            width: defaultHeight * 0.07,
+                            height: defaultHeight * 0.07,
+                          ),
                   ),
                   // Player 2 name
                   SizedBox(
-                    width: defaultWidth * 0.35,
+                    width: defaultWidth * 0.85 - defaultHeight * 0.07 - 40,
                     child: Row(
                       children: [
                         showEloWithOpacity(elo_2, finished && winner),
                         Flexible(
                           child: Text(
-                            player_2,
+                            player_2 == "null" ? "---" : player_2,
                             overflow: TextOverflow.visible,
                             textAlign: TextAlign.left,
                             style: TextStyle(
@@ -157,6 +188,7 @@ Widget tournamentNode(
                                   .primary
                                   .withOpacity(finished && winner ? 0.5 : 1),
                               fontSize: 22,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
                         ),
@@ -176,6 +208,25 @@ Widget tournamentNode(
               ),
             ),
           ],
+        ),
+      ),
+      Container(
+        padding: const EdgeInsets.symmetric(vertical: 2.5),
+        decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary,
+            borderRadius:
+                const BorderRadius.vertical(bottom: Radius.circular(15))),
+        width: defaultWidth * 0.85,
+        child: Center(
+          child: Text(
+            date,
+            overflow: TextOverflow.visible,
+            style: TextStyle(
+              color: Theme.of(context).colorScheme.tertiary,
+              fontWeight: FontWeight.bold,
+              fontSize: 17,
+            ),
+          ),
         ),
       ),
     ],

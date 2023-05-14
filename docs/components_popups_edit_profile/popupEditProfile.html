@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the popupEditProfile function from the edit_profile library, for the Dart programming language.">
+  <title>popupEditProfile function - edit_profile library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">ajedrez</a></li>
+    <li><a href="../components_popups_edit_profile/components_popups_edit_profile-library.html">edit_profile</a></li>
+    <li class="self-crumb">popupEditProfile function</li>
+  </ol>
+  <div class="self-name">popupEditProfile</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-function">popupEditProfile</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/Object-class.html">Object</a></span>
+<span class="name ">popupEditProfile</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="popupEditProfile-param-context"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span>, </span></li>
+<li><span class="parameter" id="popupEditProfile-param-counter"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/ValueNotifier-class.html">ValueNotifier</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>&gt;</span></span> <span class="parameter-name">counter</span></span></li>
+</ol>)
+
+        
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Object popupEditProfile(BuildContext context, ValueNotifier&lt;int&gt; counter) {
+  UserData userData = UserData();
+  final TextEditingController usernameController = TextEditingController();
+  usernameController.text = userData.username;
+  final TextEditingController emailController = TextEditingController();
+  emailController.text = userData.email;
+  String avatarController = userData.avatar;
+  return showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) =&gt;
+        StatefulBuilder(builder: (context, setState) {
+      return WillPopScope(
+        onWillPop: () async =&gt; false,
+        child: AlertDialog(
+          backgroundColor: Theme.of(context).colorScheme.tertiary,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15)),
+          ),
+          contentPadding: EdgeInsets.all(defaultWidth * 0.05),
+          content: SizedBox(
+            width: defaultWidth * 0.85,
+            height: defaultHeight * 0.85,
+            child: Column(children: [
+              Text(
+                &quot;Editar perfil&quot;,
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              SizedBox(height: defaultWidth * 0.05),
+              Divider(
+                color: Theme.of(context).colorScheme.primary,
+                thickness: 1.25,
+                indent: defaultWidth * 0.05,
+                endIndent: defaultWidth * 0.05,
+              ),
+              SizedBox(height: defaultWidth * 0.05),
+              Text(
+                &quot;Nombre de usuario&quot;,
+                style: TextStyle(
+                  fontSize: 19,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              textField(context, usernameController),
+              SizedBox(height: defaultWidth * 0.05),
+              Text(
+                &quot;Correo electrónico&quot;,
+                style: TextStyle(
+                  fontSize: 19,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              textField(context, emailController),
+              SizedBox(height: defaultWidth * 0.05),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Column(
+                    children: [
+                      Text(
+                        &quot;Foto de perfil\nactual&quot;,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 19,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                      SizedBox(
+                        height: defaultHeight * 0.1,
+                        width: defaultHeight * 0.1,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Theme.of(context).colorScheme.primary,
+                              width: 4,
+                            ),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image: AssetImage(
+                                  &quot;images&#47;avatars${userData.avatar}&quot;),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        &quot;Foto de perfil\nnueva&quot;,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 19,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                      SizedBox(
+                        height: defaultHeight * 0.1,
+                        width: defaultHeight * 0.1,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            border: Border.all(
+                              color: Theme.of(context).colorScheme.primary,
+                              width: 4,
+                            ),
+                            image: DecorationImage(
+                              fit: BoxFit.cover,
+                              image:
+                                  AssetImage(&quot;images&#47;avatars$avatarController&quot;),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              SizedBox(height: defaultWidth * 0.05),
+              Expanded(
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    for (int i = 1; i &lt;= 50; i++)
+                      GestureDetector(
+                        onTap: () {
+                          avatarController = &quot;&#47;animals&#47;$i.webp&quot;;
+                          setState(() {});
+                        },
+                        child: imageSelect(context, &quot;animals&quot;, i),
+                      ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    for (int i = 1; i &lt;= 24; i++)
+                      GestureDetector(
+                        onTap: () {
+                          avatarController = &quot;&#47;humans&#47;$i.webp&quot;;
+                          setState(() {});
+                        },
+                        child: imageSelect(context, &quot;humans&quot;, i),
+                      ),
+                  ],
+                ),
+              ),
+              Expanded(
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    for (int i = 1; i &lt;= 28; i++)
+                      GestureDetector(
+                        onTap: () {
+                          avatarController = &quot;&#47;memojis&#47;$i.webp&quot;;
+                          setState(() {});
+                        },
+                        child: imageSelect(context, &quot;memojis&quot;, i),
+                      ),
+                  ],
+                ),
+              ),
+              SizedBox(height: defaultWidth * 0.05),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  playButton(context, &quot;Cancelar&quot;, () =&gt; Navigator.pop(context)),
+                  playButton(context, &quot;Guardar&quot;, () async {
+                    String username = userData.username,
+                        email = userData.email,
+                        avatar = userData.avatar;
+                    bool changeUsername =
+                        userData.username != usernameController.text;
+                    assignUsername(usernameController.text);
+                    assignEmail(emailController.text);
+                    assignAvatar(avatarController);
+                    int i = await apiUpdateUser();
+
+                    if (context.mounted) {
+                      &#47;&#47; print(i);
+                      if (i == 0) {
+                        counter.value++;
+                        if (!changeUsername) {
+                          Navigator.pop(context);
+                        } else {
+                          popupChangeUsername(context);
+                        }
+                      } else {
+                        assignUsername(username);
+                        assignEmail(email);
+                        assignAvatar(avatar);
+                        popupErrorEditProfile(context);
+                      }
+                    }
+                  }),
+                ],
+              ),
+            ]),
+          ),
+        ),
+      );
+    }),
+  );
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../index.html">ajedrez</a></li>
+  <li><a href="../components_popups_edit_profile/components_popups_edit_profile-library.html">edit_profile</a></li>
+  <li class="self-crumb">popupEditProfile function</li>
+</ol>
+
+
+    <h5>edit_profile library</h5>
+    <ol>
+
+
+
+
+
+      <li class="section-title"><a href="../components_popups_edit_profile/components_popups_edit_profile-library.html#functions">Functions</a></li>
+        <li><a href="../components_popups_edit_profile/imageSelect.html">imageSelect</a></li>
+        <li><a href="../components_popups_edit_profile/popupChangeUsername.html">popupChangeUsername</a></li>
+        <li><a href="../components_popups_edit_profile/popupEditProfile.html">popupEditProfile</a></li>
+        <li><a href="../components_popups_edit_profile/popupErrorEditProfile.html">popupErrorEditProfile</a></li>
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-left-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    ajedrez
+      1.2.3
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

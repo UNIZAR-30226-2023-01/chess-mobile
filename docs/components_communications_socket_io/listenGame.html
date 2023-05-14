@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the listenGame function from the socket_io library, for the Dart programming language.">
+  <title>listenGame function - socket_io library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">ajedrez</a></li>
+    <li><a href="../components_communications_socket_io/components_communications_socket_io-library.html">socket_io</a></li>
+    <li class="self-crumb">listenGame function</li>
+  </ol>
+  <div class="self-name">listenGame</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-function">listenGame</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+
+<span class="returntype">void</span>
+<span class="name ">listenGame</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="listenGame-param-context"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span> <span class="parameter-name">context</span></span></li>
+</ol>)
+
+        
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">void listenGame(BuildContext context) {
+  GameSocket s = GameSocket();
+  bool espec = s.spectatorMode;
+  BoardData b = BoardData();
+  s.socket.on(
+      &#39;error&#39;,
+      (data) =&gt; {
+            &#47;&#47; print(&quot;ERROR&quot; + data)
+          });
+  s.socket.on(
+      &#39;moved&#39;,
+      (data) =&gt; {
+            &#47;&#47; print(data),
+            if (data[0][&quot;turn&quot;] == &quot;LIGHT&quot;)
+              {
+                (b.clocks[0] as TimerState)
+                    .setTimer(data[0][&quot;timerLight&quot;] ~&#47; 1000)
+              }
+            else
+              {
+                (b.clocks[1] as TimerState)
+                    .setTimer(data[0][&quot;timerDark&quot;] ~&#47; 1000)
+              },
+            if (!espec)
+              {
+                if (data[0][&quot;turn&quot;] == (!s.iAmWhite ? &quot;DARK&quot; : &quot;LIGHT&quot;))
+                  {
+                    simulateMovement(decodeMovement(data[0][&quot;move&quot;])),
+                  },
+              }
+            else
+              {
+                &#47;&#47; print(&quot;funciona&quot;),
+                simulateMovement(decodeMovement(data[0][&quot;move&quot;])),
+              }
+          });
+  s.socket.on(
+      &#39;game_over&#39;,
+      (data) =&gt; {
+            &#47;&#47; print(data),
+            if (data[0][&quot;endState&quot;] == &quot;CHECKMATE&quot; &amp;&amp;
+                (data[0][&quot;winner&quot;] == (!s.iAmWhite ? &quot;LIGHT&quot; : &quot;DARK&quot;)))
+              {
+                alertWinner(context, !s.iAmWhite,
+                    &quot;Ha ganado el jugador con las fichas &quot;),
+              },
+            if (data[0][&quot;endState&quot;] == &quot;SURRENDER&quot;)
+              {
+                alertWinner(context, s.iAmWhite,
+                    &quot;Se ha rendido el jugador con las fichas &quot;),
+              },
+            if (data[0][&quot;endState&quot;] == &quot;TIMEOUT&quot;)
+              {
+                alertWinner(context, !s.iAmWhite,
+                    &quot;Ha ganado por tiempo el jugador con las fichas &quot;),
+              },
+            if (data[0][&quot;endState&quot;] == &quot;DRAW&quot;)
+              {
+                alertDraw(context),
+              },
+          });
+  s.socket.on(
+      &#39;voted_draw&#39;,
+      (data) =&gt; {
+            if (data[0][&quot;color&quot;] == (s.iAmWhite ? &quot;DARK&quot; : &quot;LIGHT&quot;))
+              alertPossibleDraw(context)
+          });
+  s.socket.on(
+      &#39;voted_save&#39;,
+      (data) =&gt; {
+            if (data[0][&quot;color&quot;] == (s.iAmWhite ? &quot;DARK&quot; : &quot;LIGHT&quot;))
+              alertPossibleSave(context)
+          });
+  s.socket.onDisconnect((_) =&gt; {
+        &#47;&#47; print(&#39;disconnect&#39;)
+      });
+  s.socket.on(&#39;game_saved&#39;, (data) =&gt; {alertSave(context)});
+  s.socket.onDisconnect((_) =&gt; {
+        &#47;&#47; print(&#39;disconnect&#39;)
+      });
+  s.socket.on(
+      &#39;fromServer&#39;,
+      (_) =&gt; {
+            &#47;&#47;print(_)
+          });
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../index.html">ajedrez</a></li>
+  <li><a href="../components_communications_socket_io/components_communications_socket_io-library.html">socket_io</a></li>
+  <li class="self-crumb">listenGame function</li>
+</ol>
+
+
+    <h5>socket_io library</h5>
+    <ol>
+      <li class="section-title"><a href="../components_communications_socket_io/components_communications_socket_io-library.html#classes">Classes</a></li>
+        <li><a href="../components_communications_socket_io/Arguments-class.html">Arguments</a></li>
+        <li><a href="../components_communications_socket_io/GameSocket-class.html">GameSocket</a></li>
+
+
+
+
+
+      <li class="section-title"><a href="../components_communications_socket_io/components_communications_socket_io-library.html#functions">Functions</a></li>
+        <li><a href="../components_communications_socket_io/cancelSearch.html">cancelSearch</a></li>
+        <li><a href="../components_communications_socket_io/draw.html">draw</a></li>
+        <li><a href="../components_communications_socket_io/listenGame.html">listenGame</a></li>
+        <li><a href="../components_communications_socket_io/resetSocket.html">resetSocket</a></li>
+        <li><a href="../components_communications_socket_io/resume.html">resume</a></li>
+        <li><a href="../components_communications_socket_io/save.html">save</a></li>
+        <li><a href="../components_communications_socket_io/startGame.html">startGame</a></li>
+        <li><a href="../components_communications_socket_io/surrender.html">surrender</a></li>
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-left-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    ajedrez
+      1.2.3
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

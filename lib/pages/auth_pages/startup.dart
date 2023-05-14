@@ -96,7 +96,7 @@ class _StartupPageState extends State<StartupPage> {
                   GestureDetector(
                     onTap: () {
                       // De momento no rellena datos de usuario !!!
-                      assignIsRegistred(false);
+                      resetProfile();
                       Navigator.push(
                         context,
                         MaterialPageRoute(

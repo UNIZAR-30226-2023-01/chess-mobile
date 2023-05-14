@@ -139,7 +139,6 @@ Widget tournamentNode(
                     child: imageItem(defaultHeight * 0.07, 2, image_2, context,
                         finished && winner ? 0.5 : 1),
                   ),
-
                   // Player 2 name
                   SizedBox(
                     width: defaultWidth * 0.35,

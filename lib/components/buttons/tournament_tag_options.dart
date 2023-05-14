@@ -28,8 +28,20 @@ PopupMenuButton suscribed(BuildContext context, Widget widget, bool finished,
       ActualSelection.isSelected = false;
       switch (value) {
         case '_jugar':
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const TournamentPage(),
+            ),
+          );
           break;
         case '_visualizar':
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const TournamentPage(),
+            ),
+          );
           break;
         case '_salir':
           ActualSelection.manageTournamentDatas = List.empty(growable: true);

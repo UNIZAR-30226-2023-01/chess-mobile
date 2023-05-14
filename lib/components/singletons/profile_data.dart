@@ -11,7 +11,10 @@ class UserData {
   static final UserData _singleton = UserData._internal();
   bool shiny = true;
   bool isRegistered = false;
-  String id = "", username = "a", email = "a", avatar = "/humans/1.webp";
+  String id = "",
+      username = "Anónimo",
+      email = "Anónimo",
+      avatar = "/avatars/humans/1.webp";
   int elo = 0, rank = 0;
   double achievementRate = 0, winRate = 0;
   // [String imgSrc, String imgAlt, bool achieved]
@@ -19,8 +22,8 @@ class UserData {
   int boardTypeN = woodN;
   int boardTypeB = woodB;
   String boardType = "wood";
-  String lightPieces = "arab";
-  String darkPieces = "arab";
+  String lightPieces = "/pieces/arab";
+  String darkPieces = "/pieces/arab";
   List<GameData> savedGames = List.empty(growable: true);
   List<GameData> playedGames = List.empty(growable: true);
   String games = "";
@@ -158,4 +161,28 @@ void updateProfile(
   userData.boardTypeB = int.parse("0xFF${boardB.substring(1)}");
   userData.darkPieces = darkPieces;
   userData.lightPieces = lightPieces;
+}
+
+void resetProfile() {
+  UserData userData = UserData();
+  userData.shiny = true;
+  userData.isRegistered = false;
+  userData.id = "";
+  userData.username = "Anónimo";
+  userData.email = "Anónimo";
+  userData.avatar = "/avatars/humans/1.webp";
+  userData.elo = 0;
+  userData.rank = 0;
+  userData.achievementRate = 0;
+  userData.winRate = 0;
+  userData.achievements = List.empty(growable: true);
+  userData.boardTypeN = woodN;
+  userData.boardTypeB = woodB;
+  userData.boardType = "wood";
+  userData.lightPieces = "/pieces/arab";
+  userData.darkPieces = "/pieces/arab";
+  userData.savedGames = List.empty(growable: true);
+  userData.playedGames = List.empty(growable: true);
+  userData.games = "";
+  userData.token = "";
 }

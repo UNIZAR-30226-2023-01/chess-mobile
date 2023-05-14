@@ -38,7 +38,8 @@ statisticBox(BuildContext context, String title, String body) {
 Widget achievementBox(int n) {
   final UserData userData = UserData();
   return Tooltip(
-    message: userData.achievements[n][1],
+    message:
+        "${userData.achievements[n][1][0].toUpperCase()}${userData.achievements[n][1].substring(1)}",
     child: userData.achievements[n][2]
         ? Image.asset(
             "images${userData.achievements[n][0]}",

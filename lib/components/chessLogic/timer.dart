@@ -73,9 +73,9 @@ class TimerState extends State<CustomTimer> {
     return StreamBuilder<int>(
       stream: _stream,
       builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-        String timeText = '${widget.label}:\n --:--';
+        String timeText = '${widget.label}:  --:--';
         if (snapshot.hasData) {
-          timeText = '${widget.label}:\n ${_formatTime(snapshot.data!)}';
+          timeText = '${widget.label}:  ${_formatTime(snapshot.data!)}';
         }
         return Text(
           timeText,

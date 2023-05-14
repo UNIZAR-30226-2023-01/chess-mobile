@@ -6,6 +6,7 @@ import 'package:ajedrez/components/singletons/game_data.dart';
 import 'package:ajedrez/components/singletons/ranking_data.dart';
 import 'package:ajedrez/components/singletons/manage_tournaments_data.dart';
 import 'package:ajedrez/pages/menus_pages/manage_tournaments.dart';
+import 'package:ajedrez/pages/game_pages/game.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -463,6 +464,88 @@ Future<int> apiCreateTournament(
     var responseBodyDictionary = jsonDecode(responseBody);
     // print(responseBodyDictionary);
     return responseBodyDictionary["status"]["error_code"];
+  } catch (e) {
+    // print(e.toString());
+    return -1;
+  } finally {
+    client.close();
+  }
+}
+
+Future<int> apiGetGame(String id, Players players) async {
+  var pemBytes = await rootBundle.load("assets/cert.pem");
+
+  var context = SecurityContext()
+    ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
+
+  var client = HttpClient(context: context)
+    ..badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+  //print(id);
+  try {
+    var request = await client
+        .getUrl(Uri.parse('https://api.gracehopper.xyz/v1/games/$id'));
+    // Set headers
+    request.headers.add('Content-Type', 'application/json');
+    request.headers.add('Cookie', 'api-auth=${UserData().token}');
+
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
+    var responseBodyDictionary = jsonDecode(responseBody);
+    var data = responseBodyDictionary["data"];
+
+    await players.assign(
+        data["darkPlayer"] ?? "null", data["lightPlayer"] ?? "null");
+    if (data["darkPlayer"] != null) {
+      await apiGetGameUser(true, players);
+    }
+    if (data["lightPlayer"] != null) {
+      await apiGetGameUser(false, players);
+    }
+
+    //print(responseBodyDictionary);
+    return 0;
+    //aqui ns que necesitas q devuelva
+    // return responseBodyDictionary["status"]["error_code"];
+  } catch (e) {
+    // print(e.toString());
+    return -1;
+  } finally {
+    client.close();
+  }
+}
+
+Future<int> apiGetGameUser(bool dark, Players p) async {
+  var pemBytes = await rootBundle.load("assets/cert.pem");
+
+  var context = SecurityContext()
+    ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: '');
+
+  var client = HttpClient(context: context)
+    ..badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+  //print(id);
+  try {
+    var request = await client.getUrl(Uri.parse(dark ? p.dark : p.light));
+    // Set headers
+    request.headers.add('Content-Type', 'application/json');
+    request.headers.add('Cookie', 'api-auth=${UserData().token}');
+
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
+    var responseBodyDictionary = jsonDecode(responseBody);
+    var data = responseBodyDictionary["data"];
+
+    if (dark) {
+      await p.updateDark(data["username"], data["avatar"], data["elo"]);
+    } else {
+      await p.updateLight(data["username"], data["avatar"], data["elo"]);
+    }
+
+    //print(responseBodyDictionary);
+    return 0;
+    //aqui ns que necesitas q devuelva
+    // return responseBodyDictionary["status"]["error_code"];
   } catch (e) {
     // print(e.toString());
     return -1;

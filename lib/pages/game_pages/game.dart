@@ -11,6 +11,31 @@ import '../../components/buttons/ingame/draw.dart';
 import '../../components/buttons/ingame/surrender.dart';
 import '../../components/chessLogic/board.dart';
 import '../../components/communications/socket_io.dart';
+import '../../components/communications/api.dart';
+
+class Players {
+  String dark = "null", light = "null";
+  String darkName = "null", lightName = "null";
+  String darkImage = "", lightImage = "null";
+  int darkElo = 0, lightElo = 0;
+
+  Future<void> assign(String dark, String light) async {
+    this.dark = dark;
+    this.light = light;
+  }
+
+  Future<void> updateDark(String name, String image, int elo) async {
+    darkName = name;
+    darkImage = image;
+    darkElo = elo;
+  }
+
+  Future<void> updateLight(String name, String image, int elo) async {
+    lightName = name;
+    lightImage = image;
+    lightElo = elo;
+  }
+}
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -36,8 +61,9 @@ class GamePageState extends State<GamePage> {
   @override
   void initState() {
     super.initState();
+    GameSocket s = GameSocket();
     _player1Timer = CustomTimer(
-      label: 'Jugador blanco',
+      label: s.player1,
       duration: Duration(seconds: _maxTime),
       onTimerEnd: () {
         //Pendiente de implementar
@@ -45,22 +71,22 @@ class GamePageState extends State<GamePage> {
       isWhite: true,
     );
     _player2Timer = CustomTimer(
-      label: 'Jugador negro',
+      label: s.player2,
       duration: Duration(seconds: _maxTime),
       onTimerEnd: () {
         //Pendiente de implementar
       },
       isWhite: false,
     );
+    // apiGetGame(s.room, Players()).then((value) => setState(() {}));
   }
 
   @override
   Widget build(BuildContext context) {
     // print("gameStart");
     GameSocket s = GameSocket();
+    Players players = Players();
     String idR = s.room;
-    String player1 = s.player1;
-    String player2 = s.player2;
     listenGame(context);
     resetSingleton(!s.iAmWhite);
     // print(s.type);
@@ -83,24 +109,11 @@ class GamePageState extends State<GamePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(height: defaultWidth * 0.075),
-              s.type == "COMP" || s.type == "CUSTOM"
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        surrenderButton(context),
-                        drawButton(context),
-                      ],
-                    )
-                  : Container(),
-              s.type == "AI"
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        surrenderButton(context),
-                        
-                      ],
-                    )
-                  : Container(),
+              if (s.iAmWhite) ...[
+                _player2Timer,
+              ] else ...[
+                _player1Timer,
+              ],
               SizedBox(height: defaultWidth * 0.075),
               Expanded(
                 flex: 4,
@@ -116,17 +129,36 @@ class GamePageState extends State<GamePage> {
                   },
                 ),
               ),
-              SizedBox(height: defaultWidth * 0.15),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _player1Timer,
-                  _player2Timer,
-                ],
-              ),
+              SizedBox(height: defaultWidth * 0.075),
+              if (s.iAmWhite) ...[
+                _player1Timer,
+              ] else ...[
+                _player2Timer,
+              ],
+              SizedBox(height: defaultWidth * 0.125),
               // SizedBox(height: defaultWidth * 0.15),
-              s.type == "CUSTOM" || (s.type == "AI" && u.id != "") ?
-              saveButton(context):Container(),
+              s.type == "COMP" || s.type == "CUSTOM"
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        surrenderButton(context),
+                        drawButton(context),
+                      ],
+                    )
+                  : Container(),
+              s.type == "AI"
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        surrenderButton(context),
+                      ],
+                    )
+                  : SizedBox(height: defaultWidth * 0.025),
+              SizedBox(height: defaultWidth * 0.0125),
+              s.type == "CUSTOM" || (s.type == "AI" && u.id != "")
+                  ? saveButton(context)
+                  : SizedBox(height: defaultWidth * 0.025),
+              SizedBox(height: defaultWidth * 0.025),
               Text(
                 "Código de partida: $idR",
                 style: TextStyle(
@@ -134,25 +166,7 @@ class GamePageState extends State<GamePage> {
                   fontSize: 19,
                 ),
               ),
-              Row(
-                children: [
-                  Text(
-                    player1,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontSize: 19,
-                    ),
-                  ),
-                  SizedBox(width: defaultWidth * 0.2),
-                  Text(
-                    player2,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.secondary,
-                      fontSize: 19,
-                    ),
-                  ),
-                ],
-              ),
+              SizedBox(height: defaultWidth * 0.025),
             ],
           ),
         ),

@@ -96,7 +96,7 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
   });
 
   Map jsonData;
-  
+
   s.type = type;
   if (type == "CREATECUSTOM" || type == "JOINCUSTOM") {
     s.type = "CUSTOM";
@@ -157,19 +157,22 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
       }
   }
   var movements = [];
-  s.socket.once('cancelled', (data) => {Navigator.pop(context),Completer().complete()});
+  s.socket.once(
+      'cancelled', (data) => {Navigator.pop(context), Completer().complete()});
   s.socket.once(
       'room',
       (data) => {
+            // print(data),
             s.player1 = data[0]["light"],
             s.player2 = data[0]["dark"],
             if (type != "SPECTATOR")
               {
                 s.room = data[0]["roomID"],
                 s.iAmWhite = data[0]["color"] == "LIGHT",
-                if (data[0]["moves"].length > 0) {
-                  s.pendingMovements = data[0]["moves"],
-                }
+                if (data[0]["moves"].length > 0)
+                  {
+                    s.pendingMovements = data[0]["moves"],
+                  }
               }
             else
               {
@@ -213,12 +216,17 @@ void listenGame(BuildContext context) {
   s.socket.on(
       'moved',
       (data) => {
-        // print(data),
-            if(data[0]["turn"] == "LIGHT") {
-              (b.clocks[0] as TimerState).setTimer(data[0]["timerLight"]~/1000)
-            } else {
-              (b.clocks[1] as TimerState).setTimer(data[0]["timerDark"]~/1000)
-            },
+            // print(data),
+            if (data[0]["turn"] == "LIGHT")
+              {
+                (b.clocks[0] as TimerState)
+                    .setTimer(data[0]["timerLight"] ~/ 1000)
+              }
+            else
+              {
+                (b.clocks[1] as TimerState)
+                    .setTimer(data[0]["timerDark"] ~/ 1000)
+              },
             if (!espec)
               {
                 if (data[0]["turn"] == (!s.iAmWhite ? "DARK" : "LIGHT"))
@@ -310,11 +318,11 @@ Future<void> resume(String roomID, BuildContext context) async {
             // print(data)
           });
   s.socket.once(
-          'room_created',
-          (data) => {
-            s.room = data[0]["roomID"],
-          },
-        );
+    'room_created',
+    (data) => {
+      s.room = data[0]["roomID"],
+    },
+  );
   s.socket.once(
       'room',
       (data) => {

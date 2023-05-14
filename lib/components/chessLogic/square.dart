@@ -10,6 +10,9 @@ import 'pieces.dart';
 import 'board.dart';
 import '../popups/ingame/promotion.dart';
 
+/// Base widget of the board squares.
+/// 
+/// It has a associated index € [0,63].
 class Square extends StatefulWidget {
   final int index;
   const Square({super.key, required this.index});
@@ -17,6 +20,14 @@ class Square extends StatefulWidget {
   State<Square> createState() => SquareState();
 }
 
+/// Dynamic state of a single square.
+/// 
+/// It contains references to the following singleton instances:
+/// - BoardData
+/// - GameSocket
+/// - UserData
+/// The build method which displays the piece that is in that position.
+/// The _tapped methos is called when the Square is pressed, it has all the relevant logic.
 class SquareState extends State<Square> {
   /// Contiene el índice de la casilla(0-63)
   int i = 0;
@@ -34,10 +45,12 @@ class SquareState extends State<Square> {
     x = i % 8;
   }
 
+  /// Auxiliar method to update a square state from outside.
   void actualizarEstado() {
     setState(() {});
   }
 
+  /// Returns a box which contains the piece image and a button, also displays the background color.
   @override
   Widget build(BuildContext context) {
     // debugPrint("Build method called for widget with index ${widget.index}");
@@ -64,9 +77,16 @@ class SquareState extends State<Square> {
     );
   }
 
-  /// Se llama al tocar una casilla
+  /// Manages all the taps in the current square it has inside all the logic.
   Future<Object> _tapped(BuildContext context) async {
     if (!board.spectatorMode) {
+
+      /// If is our turn and we are selecting one of our pieces and the square is not empty.
+      /// 
+      /// We mark the selected position for the next tap in other square.
+      /// We calculate all the possible movements that start using this piece.
+      /// We render all the possible squares new colors.
+      /// We check all the movements and discard all which arent valid.
       if (board.whiteTurn == s.iAmWhite &&
           board.currentBoard[y][x].isWhite == board.whiteTurn &&
           !board.boardMovements[y][x] &&
@@ -91,7 +111,16 @@ class SquareState extends State<Square> {
         }
 
         allowedMovements.forEach(_processValidMovement);
-      } else if (board.whiteTurn == s.iAmWhite &&
+      } 
+      
+      /// If is our turn and the square is among the possible movements of the previously selected one we do the movement.
+      /// 
+      /// Plays the sound of capture/move.
+      /// Sets the previous selected square in aux vars.
+      /// Checks if it is a complex movement(castling/promotion).
+      /// Moves the piece from the last square to this one and updates both squares.
+      /// Encodes the movement and sends it trough the socket.
+      else if (board.whiteTurn == s.iAmWhite &&
           (board.currentBoard[y][x].isEmpty() ||
               board.currentBoard[y][x].isWhite != board.whiteTurn) &&
           board.boardMovements[y][x]) {
@@ -145,6 +174,10 @@ class SquareState extends State<Square> {
         .setState(() {});
   }
 
+  /// Function that checks if a given movement solves the current checkmate or not.
+  /// 
+  /// It returns if the movement solves the checkmate.
+  /// Inside it simulates all the oponents possible movements after doing this move.
   bool _processIfSolvesCheckMate(List<int> movimiento) {
     //hace el posible movimiento
     Piece tmp;
@@ -194,6 +227,7 @@ class SquareState extends State<Square> {
     return solvesCheckMate;
   }
 
+  /// Function that returns the expected color of the square depending of its current state.
   Color _calculateSquareColor() {
     Color whiteTile, blackTile;
     whiteTile = Color(userData.boardTypeB);
@@ -212,6 +246,10 @@ class SquareState extends State<Square> {
                 : blackTile;
   }
 
+  /// Function that shows a popup to choose the kind of piece we want to promote our Pawn.
+  /// 
+  /// This functions returns the information inside the singleton BoardDato.
+  /// Also destroys the pawn and replaces it with the new piece.
   Future<void> _processPromotion() async {
     BoardData b = BoardData();
     Completer completer = Completer<void>();
@@ -248,6 +286,7 @@ class SquareState extends State<Square> {
     return completer.future;
   }
 
+  /// Function that checks locally if the game has ended.
   void _checkIfWin() {
     var tmpX = x;
     var tmpY = y;
@@ -283,6 +322,7 @@ class SquareState extends State<Square> {
     }
   }
 
+  /// Auxiliar function that updates all the squares states.
   void updateSquares() {
     BoardData board = BoardData();
     for (int i = 0; i < 8; i++) {
@@ -295,6 +335,7 @@ class SquareState extends State<Square> {
     }
   }
 
+  /// Function that given a movement coords encodes it in standard notation and returns it.
   String _encodeMovement(int prevX, prevY) {
     BoardData b = BoardData();
     var jugadas = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
@@ -313,6 +354,7 @@ class SquareState extends State<Square> {
   }
 }
 
+/// Function that given a string movement decodes it in movement coords.
 List<List<int>> decodeMovement(String jugada) {
   var jugadas = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   int prevx = jugadas.indexOf(jugada[0]);
@@ -336,6 +378,7 @@ List<List<int>> decodeMovement(String jugada) {
   ];
 }
 
+/// Function that given a movement coords simulates it, is used to simulate opponents moves.
 void simulateMovement(List<List<int>> movements) {
   BoardData b = BoardData();
   int auxY = movements[0][0];
@@ -387,6 +430,9 @@ void simulateMovement(List<List<int>> movements) {
   b.whiteTurn = !b.whiteTurn;
 }
 
+/// Function that given a movement coords loads it in the current game before showing the game.
+/// 
+/// Is called before the start to load previous movements.
 void loadMovement(List<List<int>> movements) {
   BoardData b = BoardData();
   int auxY = movements[0][0];
@@ -419,6 +465,7 @@ void loadMovement(List<List<int>> movements) {
   b.whiteTurn = !b.whiteTurn;
 }
 
+/// Function that simulates the castling move.
 void processCastling(int auxY, int auxX, int y, int x) {
   BoardData board = BoardData();
   if (board.currentBoard[auxY][auxX] is King) {
@@ -454,6 +501,7 @@ void processCastling(int auxY, int auxX, int y, int x) {
   }
 }
 
+/// Function that simulates the eat on the fly move.
 void procesarComerAlPaso(int auxY, int auxX, int y, int x) {
     BoardData board = BoardData();
     if ((x - auxX).abs() > 0 &&

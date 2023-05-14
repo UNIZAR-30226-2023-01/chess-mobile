@@ -11,7 +11,7 @@ import '../../components/buttons/ingame/draw.dart';
 import '../../components/buttons/ingame/surrender.dart';
 import '../../components/chessLogic/board.dart';
 import '../../components/communications/socket_io.dart';
-import '../../components/communications/api.dart';
+
 
 class Players {
   String dark = "null", light = "null";
@@ -85,7 +85,7 @@ class GamePageState extends State<GamePage> {
   Widget build(BuildContext context) {
     // print("gameStart");
     GameSocket s = GameSocket();
-    Players players = Players();
+    // Players players = Players();
     String idR = s.room;
     listenGame(context);
     resetSingleton(!s.iAmWhite);

@@ -618,9 +618,11 @@ Future<int> apiMyTournaments() async {
     // Verify subscribed tournaments
     for (var t in data) {
       ManageTournamentData m = ManageTournamentData();
-      await m.update(
+      m.update(
           t["id"],
-          t["owner"],
+          t["owner"]["id"],
+          t["owner"]["username"],
+          t["owner"]["avatar"],
           t["startTime"],
           t["rounds"],
           t["matchProps"]["time"],
@@ -671,9 +673,11 @@ Future<int> apiOtherTournaments() async {
     for (var t in data) {
       ManageTournamentData m = ManageTournamentData();
 
-      await m.update(
+      m.update(
           t["id"],
-          t["owner"],
+          t["owner"]["id"],
+          t["owner"]["username"],
+          t["owner"]["avatar"],
           t["startTime"],
           t["rounds"],
           t["matchProps"]["time"],
@@ -815,6 +819,7 @@ Future<int> apiGetTournament(String id) async {
       TournamentData.matches.add(List.empty(growable: true));
     }
     for (var match in data["matches"]) {
+      tMatch = TournamentMatch();
       player1 = null;
       player2 = null;
       i = 0;
@@ -837,14 +842,12 @@ Future<int> apiGetTournament(String id) async {
           player2 != null ? player2["username"] : "null",
           player2 != null ? player2["avatar"] : "null",
           player2 != null ? player2["elo"] : 0,
-          false, //match["hasStarted"]
-          false, //match["finished"]
-          "null" //match["finished"] ? match["winner"] : "null"
-          );
+          match["hasStarted"],
+          match["finished"],
+          match["finished"] ? match["winner"] : "null");
       String n = match["tournamentRoundText"].substring(6);
       TournamentData.matches[int.parse(n) - 1].add(tMatch);
-      // player1 = null;
-      // player2 = null;
+      print(match["hasStarted"]);
     }
     // print(data);
 

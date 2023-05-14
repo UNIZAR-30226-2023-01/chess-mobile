@@ -10,14 +10,21 @@ class ManageTournamentData {
   int creatorElo = 0, rounds = 0, duration = 0, increment = 0;
   bool finished = false, hasStarted = false;
 
-  Future<void> update(String id, String owner, String startTime, int rounds,
-      int duration, int increment, bool finished, bool hasStarted) async {
-    List<String> fields = owner.split("/");
-    await apiGetTournamentUser(fields[fields.length - 1]);
+  Future<void> update(
+      String id,
+      String creatorId,
+      String creatorName,
+      String creatorImage,
+      String startTime,
+      int rounds,
+      int duration,
+      int increment,
+      bool finished,
+      bool hasStarted) async {
     this.id = id;
-    creatorId = TournamentUserData.id;
-    creatorName = TournamentUserData.username;
-    creatorImage = TournamentUserData.avatar;
+    this.creatorId = creatorId;
+    this.creatorName = creatorName;
+    this.creatorImage = creatorImage;
     creatorElo = TournamentUserData.elo;
     this.startTime = convertirFecha(startTime);
     this.rounds = rounds;

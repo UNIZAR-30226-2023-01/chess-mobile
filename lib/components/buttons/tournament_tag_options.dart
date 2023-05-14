@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../pages/menus_pages/manage_tournaments.dart';
 import '../communications/api.dart';
+import '../../pages/menus_pages/tournaments.dart';
 
 PopupMenuButton suscribed(BuildContext context, Widget widget, bool finished,
     ValueNotifier<int> counter, String id) {
@@ -82,6 +83,12 @@ PopupMenuButton unsuscribed(BuildContext context, Widget widget,
       ActualSelection.isSelected = false;
       switch (value) {
         case '_visualizar':
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const TournamentPage(),
+            ),
+          );
           break;
         case '_unir':
           ActualSelection.manageTournamentDatas = List.empty(growable: true);

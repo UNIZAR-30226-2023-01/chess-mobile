@@ -1,5 +1,6 @@
 import 'package:ajedrez/components/buttons/round.dart';
 import 'package:ajedrez/components/visual/screen_size.dart';
+import 'package:flutter/gestures.dart';
 
 import '../../components/visual/tournament_node.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class TournamentData {
 
   // Update every single time user decides to check another round
   static List<TournamentMatch> matches = List.empty(growable: true);
-  static int currentRound = 1;
+  static int visualCurrentRound = 3;
 }
 
 class TournamentPage extends StatefulWidget {
@@ -36,84 +37,80 @@ class _TournamentPageState extends State<TournamentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.primary,
       body: SafeArea(
         child: Column(
           children: [
-            // Round header
             SizedBox(
-              height: defaultHeight * 0.2,
-              child: Row(
+              height: 75,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
                 children: [
-                  // Return round
-                  SizedBox(
-                    width: defaultWidth * 0.15,
-                    child: (TournamentData.currentRound > 1)
-                        ? roundButton(
-                            context,
-                            true,
-                            () {
-                              TournamentData.currentRound--;
-                              setState(() {});
-                            },
-                          )
-                        : const SizedBox(),
-                  ),
-
-                  // Round text
-                  SizedBox(
-                    width: defaultWidth * 0.7,
-                    child: Center(
-                      child: Text(
-                        "Ronda ${TournamentData.currentRound}",
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 32,
+                  SizedBox(width: defaultWidth * 0.05),
+                  for (int i = 1; i <= TournamentData.totalRounds; i++) ...[
+                    Container(
+                      width: defaultWidth * 0.265,
+                      margin: EdgeInsets.symmetric(vertical: 15),
+                      child: GestureDetector(
+                        onTap: () async {
+                          setState(() {
+                            TournamentData.totalRounds = 3;
+                            TournamentData.visualCurrentRound = i;
+                          });
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: TournamentData.visualCurrentRound == i
+                                ? Theme.of(context).colorScheme.secondary
+                                : Theme.of(context).colorScheme.primary,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "Ronda $i",
+                              style: TextStyle(
+                                color: TournamentData.visualCurrentRound == i
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
-                  ),
-
-                  // Advance round
-                  SizedBox(
-                    width: defaultWidth * 0.15,
-                    child: (TournamentData.currentRound <
-                            TournamentData.totalRounds)
-                        ? roundButton(
-                            context,
-                            false,
-                            () {
-                              TournamentData.currentRound++;
-                              setState(() {});
-                            },
-                          )
-                        : const SizedBox(),
-                  ),
+                    SizedBox(width: defaultWidth * 0.05),
+                  ],
                 ],
               ),
             ),
 
-            const Divider(),
-
             // List for matches in a round
             Expanded(
-              child: ListView(
-                children: [
-                  for (int i = 0; i < 10; i++)
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Center(
-                        child: tournamentNode(
-                            "11-05-2023",
-                            "Alvaro",
-                            "pingüino",
-                            "avatars/animales/1.webp",
-                            "avatars/animales/40.webp",
-                            true,
-                            true,
-                            context),
-                      ),
-                    )
-                ],
+              child: Container(
+                color: Theme.of(context).colorScheme.background,
+                child: ListView(
+                  children: [
+                    for (int i = 0; i < 10; i++)
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Center(
+                          child: tournamentNode(
+                              "11-05-2023",
+                              "Alvaro",
+                              "pingüino",
+                              "avatars/animals/1.webp",
+                              "avatars/animals/40.webp",
+                              true,
+                              true,
+                              context),
+                        ),
+                      )
+                  ],
+                ),
               ),
             ),
           ],

@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../../components/buttons/tournament_tag_options.dart';
 import '../../components/communications/api.dart';
 
-
 class ManageTournamentPage extends StatefulWidget {
   const ManageTournamentPage({super.key});
 
@@ -43,11 +42,9 @@ class _ManageTournamentPageState extends State<ManageTournamentPage> {
                           ActualSelection.manageTournamentDatas =
                               List.empty(growable: true);
                           await apiMyTournaments();
-                          if (context.mounted) {
-                            setState(() {
-                              myTournaments = true;
-                            });
-                          }
+                          setState(() {
+                            myTournaments = true;
+                          });
                         },
                         child: Container(
                           padding: const EdgeInsets.all(10),
@@ -75,11 +72,9 @@ class _ManageTournamentPageState extends State<ManageTournamentPage> {
                           ActualSelection.manageTournamentDatas =
                               List.empty(growable: true);
                           await apiOtherTournaments();
-                          if (context.mounted) {
-                            setState(() {
-                              myTournaments = false;
-                            });
-                          }
+                          setState(() {
+                            myTournaments = false;
+                          });
                         },
                         child: Container(
                           padding: const EdgeInsets.all(10),

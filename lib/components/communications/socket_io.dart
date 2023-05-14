@@ -165,6 +165,9 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
               {
                 s.room = data[0]["roomID"],
                 s.iAmWhite = data[0]["color"] == "LIGHT",
+                if (data[0]["moves"].length > 0) {
+                  s.pendingMovements = data[0]["moves"],
+                }
               }
             else
               {

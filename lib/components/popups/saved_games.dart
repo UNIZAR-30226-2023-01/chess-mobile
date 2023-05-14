@@ -75,15 +75,19 @@ class SavedGames {
         ),
         SizedBox(height: defaultWidth * 0.05),
         playButton(
-            context, "Restaurar", () => _handleTapRes(gameData.id, context)),
+            context, "Restaurar", () => _handleTapRes(gameData.id, context, gameData.gameType)),
       ]),
     );
   }
 
-  void _handleTapRes(String id, BuildContext context) async {
-    await resume(id, context);
-    if (GameSocket().type == "CUSTOM") {
+  void _handleTapRes(String id, BuildContext context, String type) async {
+    if (type == "AI") {
+      await resume(id, context);
+    }
+    else {
+      resume(id, context);
       Custom().waitCode().then((value) => Custom().popupWAITING(context));
+
     }
     // waitCode().then((value) => popupWAITING(context));
   }

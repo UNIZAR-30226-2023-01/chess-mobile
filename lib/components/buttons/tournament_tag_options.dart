@@ -23,9 +23,8 @@ PopupMenuButton suscribed(BuildContext context, Widget widget, bool finished,
       ),
     ),
     child: widget,
-    onSelected: (value) {
+    onSelected: (value) async {
       ActualSelection.isSelected = false;
-      counter.value++;
       switch (value) {
         case '_jugar':
           break;
@@ -33,11 +32,10 @@ PopupMenuButton suscribed(BuildContext context, Widget widget, bool finished,
           break;
         case '_salir':
           ActualSelection.manageTournamentDatas = List.empty(growable: true);
-          apiJoinOrLeaveTournament("leave", id).then(
-            (val) => counter.value++,
-          );
+          await apiJoinOrLeaveTournament("leave", id);
           break;
       }
+      counter.value++;
     },
     itemBuilder: (context) {
       return [
@@ -80,19 +78,17 @@ PopupMenuButton unsuscribed(BuildContext context, Widget widget,
       ),
     ),
     child: widget,
-    onSelected: (value) {
+    onSelected: (value) async {
       ActualSelection.isSelected = false;
-      counter.value++;
       switch (value) {
         case '_visualizar':
           break;
         case '_unir':
           ActualSelection.manageTournamentDatas = List.empty(growable: true);
-          apiJoinOrLeaveTournament("join", id).then(
-            (val) => counter.value++,
-          );
+          await apiJoinOrLeaveTournament("join", id);
           break;
       }
+      counter.value++;
     },
     itemBuilder: (context) {
       return [

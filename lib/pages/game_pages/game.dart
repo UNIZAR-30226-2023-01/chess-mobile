@@ -1,7 +1,7 @@
 import 'package:ajedrez/components/buttons/ingame/save.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
 import 'package:ajedrez/components/chessLogic/timer.dart';
-import 'package:ajedrez/components/singletons/profile_data.dart';
+import 'package:ajedrez/components/data/profile_data.dart';
 import 'package:ajedrez/components/visual/screen_size.dart';
 
 //import 'package:ajedrez/components/profile_data.dart';

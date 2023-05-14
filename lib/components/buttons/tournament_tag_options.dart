@@ -1,4 +1,4 @@
-import 'package:ajedrez/components/singletons/profile_data.dart';
+import 'package:ajedrez/components/data/profile_data.dart';
 import 'package:flutter/material.dart';
 import '../../pages/menus_pages/manage_tournaments.dart';
 import '../communications/api.dart';

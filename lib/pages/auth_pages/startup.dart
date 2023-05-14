@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import '../../components/buttons/text_long.dart';
 import '../menus_pages/bottom_bar.dart';
-import '../../components/singletons/profile_data.dart';
+import '../../components/data/profile_data.dart';
 import '../../components/visual/set_image_color.dart';
 import '../../components/visual/screen_size.dart';
 import 'signin.dart';

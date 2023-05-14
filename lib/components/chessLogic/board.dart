@@ -1,3 +1,4 @@
+/// Contains the board data, checks the valid movements and starts the board.
 import 'pieces.dart';
 import 'package:flutter/material.dart';
 

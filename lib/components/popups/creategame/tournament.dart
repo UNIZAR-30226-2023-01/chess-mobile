@@ -1,3 +1,4 @@
+/// Popup to select tournaments options when creating/joining the tournament.
 import 'package:ajedrez/pages/menus_pages/manage_tournaments.dart';
 import 'package:flutter/material.dart';
 import '../../communications/api.dart';

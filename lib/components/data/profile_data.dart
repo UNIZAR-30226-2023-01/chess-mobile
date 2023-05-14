@@ -1,3 +1,5 @@
+/// Singleton that contains the userdata.
+
 //enchufar aquí datos del perfil
 
 //de momento se queda como singleton :D

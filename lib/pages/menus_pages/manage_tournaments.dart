@@ -1,4 +1,4 @@
-import '../../components/singletons/manage_tournaments_data.dart';
+import '../../components/data/manage_tournaments_data.dart';
 
 import '../../components/visual/tournament_tag.dart';
 import 'package:flutter/material.dart';

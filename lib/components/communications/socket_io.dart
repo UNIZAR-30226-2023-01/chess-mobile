@@ -1,3 +1,5 @@
+/// Contains all the gamesocket data and methods.
+
 import 'dart:async';
 // import 'dart:convert';
 // import 'package:ajedrez/components/chessLogic/board.dart';
@@ -6,7 +8,7 @@ import 'package:ajedrez/components/chessLogic/board.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
 import 'package:ajedrez/components/chessLogic/timer.dart';
 import 'package:ajedrez/components/popups/ingame/save_dialog.dart';
-import 'package:ajedrez/components/singletons/profile_data.dart';
+import 'package:ajedrez/components/data/profile_data.dart';
 // import 'package:ajedrez/components/profile_data.dart';
 // import 'package:ajedrez/components/visual/colores_tablero.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +35,8 @@ class Arguments {
   Arguments.forCREATECUSTOM(this.time, this.increment, this.hostColor);
   Arguments.forJOINCUSTOM(this.roomID);
 }
+
+
 
 class GameSocket {
   static final GameSocket _singleton = GameSocket._internal();

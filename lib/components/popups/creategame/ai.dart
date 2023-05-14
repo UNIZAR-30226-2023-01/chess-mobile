@@ -1,3 +1,4 @@
+/// Popup to select ai options when creating the game.
 import 'package:flutter/material.dart';
 import '../../visual/screen_size.dart';
 import '../../communications/socket_io.dart';

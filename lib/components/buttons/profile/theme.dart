@@ -1,6 +1,6 @@
 import 'package:ajedrez/components/communications/api.dart';
 import 'package:flutter/material.dart';
-import '../../singletons/profile_data.dart';
+import '../../data/profile_data.dart';
 import '../../visual/screen_size.dart';
 import '../../visual/set_image_color.dart';
 

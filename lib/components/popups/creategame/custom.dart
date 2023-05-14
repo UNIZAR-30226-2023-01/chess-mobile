@@ -1,3 +1,4 @@
+/// Popup to select custom mode options when creating/joining the game.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../visual/screen_size.dart';

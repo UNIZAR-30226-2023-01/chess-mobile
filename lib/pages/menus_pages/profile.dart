@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ajedrez/components/popups/saved_games.dart';
 import 'package:ajedrez/components/popups/played_games.dart';
-import '../../components/singletons/profile_data.dart';
+import '../../components/data/profile_data.dart';
 import '../../components/visual/custom_shape.dart';
 import '../../components/visual/customization_constants.dart';
 import '../../components/visual/screen_size.dart';

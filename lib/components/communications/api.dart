@@ -1,10 +1,11 @@
+/// Contains all the API calls.
 import 'dart:convert';
 
 import 'dart:io';
-import 'package:ajedrez/components/singletons/profile_data.dart';
-import 'package:ajedrez/components/singletons/game_data.dart';
-import 'package:ajedrez/components/singletons/ranking_data.dart';
-import 'package:ajedrez/components/singletons/manage_tournaments_data.dart';
+import 'package:ajedrez/components/data/profile_data.dart';
+import 'package:ajedrez/components/data/game_data.dart';
+import 'package:ajedrez/components/data/ranking_data.dart';
+import 'package:ajedrez/components/data/manage_tournaments_data.dart';
 import 'package:ajedrez/pages/menus_pages/manage_tournaments.dart';
 import 'package:ajedrez/pages/menus_pages/tournaments.dart';
 

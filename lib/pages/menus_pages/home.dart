@@ -10,7 +10,7 @@ import '../../components/popups/creategame/spectator.dart';
 import '../../components/popups/creategame/competitive.dart';
 import '../../components/popups/creategame/ai.dart';
 import '../../components/popups/creategame/custom.dart';
-import '../../components/singletons/profile_data.dart';
+import '../../components/data/profile_data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

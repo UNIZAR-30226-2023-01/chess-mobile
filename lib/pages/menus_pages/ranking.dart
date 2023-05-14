@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
 import '../../components/visual/custom_shape.dart';
 import '../../components/visual/get_elo.dart';
-import '../../components/singletons/ranking_data.dart';
+import '../../components/data/ranking_data.dart';
 
 class RankingPage extends StatefulWidget {
   const RankingPage({super.key});

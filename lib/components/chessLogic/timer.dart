@@ -1,3 +1,4 @@
+/// Widget that acts as a regressive timer.
 import 'dart:async';
 
 import 'package:ajedrez/components/chessLogic/board.dart';

@@ -1,3 +1,4 @@
+/// Popup when a game ends.
 import 'package:flutter/material.dart';
 
 Object alertWinner(BuildContext context, bool whiteTurn, String msg) {

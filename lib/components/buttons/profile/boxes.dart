@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../singletons/profile_data.dart';
+import '../../data/profile_data.dart';
 import '../../visual/screen_size.dart';
 
 statisticBox(BuildContext context, String title, String body) {

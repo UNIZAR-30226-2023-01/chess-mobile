@@ -1,3 +1,4 @@
+/// Popup when a player propose to save the game.
 import 'package:ajedrez/components/communications/socket_io.dart';
 import 'package:flutter/material.dart';
 

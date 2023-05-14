@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:flutter/rendering.dart';
 import '../visual/screen_size.dart';
 import '../buttons/home/play.dart';
-import '../singletons/profile_data.dart';
+import '../data/profile_data.dart';
 import '../buttons/profile/textfield.dart';
 
 Object popupEditProfile(BuildContext context, ValueNotifier<int> counter) {

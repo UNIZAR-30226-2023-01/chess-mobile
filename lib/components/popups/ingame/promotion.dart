@@ -1,6 +1,7 @@
+/// Popup when a pawn promotes.
 import 'package:flutter/material.dart';
 
-import '../../singletons/profile_data.dart';
+import '../../data/profile_data.dart';
 
 enum PieceOption {
   reina,

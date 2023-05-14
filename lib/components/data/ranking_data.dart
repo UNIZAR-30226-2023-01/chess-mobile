@@ -1,3 +1,4 @@
+/// Class that contains the data of the ranking.
 class RankingData {
   static List<String> avatar = List.empty(growable: true);
   static List<String> username = List.empty(growable: true);

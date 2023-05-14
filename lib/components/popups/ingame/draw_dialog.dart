@@ -1,3 +1,4 @@
+/// Popup when a game ends in draw.
 import 'package:flutter/material.dart';
 
 Object alertDraw(BuildContext context) {

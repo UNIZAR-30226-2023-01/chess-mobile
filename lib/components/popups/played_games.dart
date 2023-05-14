@@ -1,7 +1,8 @@
+/// Popup that lists all the played games.
 import 'package:flutter/material.dart';
 import '../visual/screen_size.dart';
-import '../singletons/profile_data.dart';
-import '../singletons/game_data.dart';
+import '../data/profile_data.dart';
+import '../data/game_data.dart';
 
 class PlayedGames {
   final UserData userData = UserData();

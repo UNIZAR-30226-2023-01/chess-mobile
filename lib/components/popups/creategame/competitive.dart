@@ -1,3 +1,4 @@
+/// Popup to select competitive options when searching the game.
 import 'package:flutter/material.dart';
 import '../../visual/screen_size.dart';
 import '../../communications/socket_io.dart';

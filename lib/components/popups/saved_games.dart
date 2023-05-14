@@ -1,10 +1,11 @@
+/// Popup that lists all the saved games.
 import 'package:ajedrez/components/communications/socket_io.dart';
 import 'package:ajedrez/components/popups/creategame/custom.dart';
 import 'package:flutter/material.dart';
 import '../visual/screen_size.dart';
 import '../buttons/home/play.dart';
-import '../singletons/profile_data.dart';
-import '../singletons/game_data.dart';
+import '../data/profile_data.dart';
+import '../data/game_data.dart';
 
 class SavedGames {
   final UserData userData = UserData();

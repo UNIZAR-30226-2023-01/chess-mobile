@@ -5,8 +5,8 @@ import 'ranking.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import '../../components/popups/back.dart';
-import '../../components/singletons/profile_data.dart';
-import '../../components/singletons/ranking_data.dart';
+import '../../components/data/profile_data.dart';
+import '../../components/data/ranking_data.dart';
 import '../../components/communications/api.dart';
 
 //ignore: must_be_immutable

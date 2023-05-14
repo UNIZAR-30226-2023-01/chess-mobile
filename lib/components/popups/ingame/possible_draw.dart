@@ -1,3 +1,4 @@
+/// Popup when a player proposes draw.
 import 'package:ajedrez/components/communications/socket_io.dart';
 import 'package:flutter/material.dart';
 

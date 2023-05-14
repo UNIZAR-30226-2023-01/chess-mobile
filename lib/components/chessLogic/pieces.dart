@@ -1,4 +1,5 @@
-import '../singletons/profile_data.dart';
+/// Contains all the classes of the chess pieces and its native movements.
+import '../data/profile_data.dart';
 
 /// Generic class for the pieces all the types of pieces implement this class.
 /// 

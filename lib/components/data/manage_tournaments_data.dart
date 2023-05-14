@@ -1,3 +1,4 @@
+/// Class that contains the data of a tournament.
 import '../communications/api.dart';
 import '../visual/convert_date.dart';
 

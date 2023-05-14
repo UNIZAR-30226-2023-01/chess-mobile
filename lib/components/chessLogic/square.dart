@@ -1,6 +1,7 @@
+/// Widget that represents a single square of the board, it has all the movement logic.
 import 'dart:async';
 
-import 'package:ajedrez/components/singletons/profile_data.dart';
+import 'package:ajedrez/components/data/profile_data.dart';
 import 'package:ajedrez/components/communications/socket_io.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ import '../popups/ingame/promotion.dart';
 
 /// Base widget of the board squares.
 /// 
-/// It has a associated index € [0,63].
+/// It has a associated index € 0,63.
 class Square extends StatefulWidget {
   final int index;
   const Square({super.key, required this.index});

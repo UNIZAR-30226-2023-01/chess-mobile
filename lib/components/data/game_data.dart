@@ -1,3 +1,4 @@
+/// Class that contains the data of a single game.
 class GameData {
   var id = "",
       lightPlayer = "",

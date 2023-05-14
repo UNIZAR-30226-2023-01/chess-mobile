@@ -3,13 +3,14 @@ import 'dart:async';
 import 'package:ajedrez/components/chessLogic/board.dart';
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class CustomTimer extends StatefulWidget {
   final String label;
   final bool isWhite;
-  final Duration duration;
+  Duration duration;
   final Function onTimerEnd;
 
-  const CustomTimer({
+  CustomTimer({
     super.key,
     required this.label,
     required this.duration,
@@ -30,6 +31,7 @@ class TimerState extends State<CustomTimer> {
   void initState() {
     super.initState();
     lastTime = widget.duration.inSeconds;
+    BoardData().clocks.add(this);
     _startTimer();
   }
 
@@ -50,6 +52,14 @@ class TimerState extends State<CustomTimer> {
       }
       return lastTime;
     }).takeWhile((timeRemaining) => timeRemaining >= 0);
+  }
+
+  void setTimer(int seconds) {
+    lastTime = seconds;
+
+    _timer = Timer(Duration(seconds: lastTime), () {
+      widget.onTimerEnd();
+    });
   }
 
   String _formatTime(int timeInSeconds) {

@@ -58,6 +58,7 @@ class BoardData {
   List<List<Piece>> currentBoard = _initTablero(true);
   List<List<bool>> boardMovements = initEmptyMovements();
   List<State> squares = [];
+  List<State> clocks = [];
   bool whiteTurn = true;
   bool reversedBoard = true;
   List<int> selectedSquare = [-1, -1];
@@ -80,6 +81,7 @@ void resetSingleton(bool reversedBoard) {
   board.currentBoard = _initTablero(reversedBoard);
   board.boardMovements = initEmptyMovements();
   board.squares = [];
+  board.clocks = [];
   board.whiteTurn = true;
   board.reversedBoard = reversedBoard;
   board.selectedSquare = [-1, -1];

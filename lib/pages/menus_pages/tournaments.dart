@@ -1,6 +1,6 @@
-import 'package:ajedrez/components/buttons/round.dart';
+
 import 'package:ajedrez/components/visual/screen_size.dart';
-import 'package:flutter/gestures.dart';
+
 
 import '../../components/visual/tournament_node.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +50,7 @@ class _TournamentPageState extends State<TournamentPage> {
                   for (int i = 1; i <= TournamentData.totalRounds; i++) ...[
                     Container(
                       width: defaultWidth * 0.265,
-                      margin: EdgeInsets.symmetric(vertical: 15),
+                      margin: const EdgeInsets.symmetric(vertical: 15),
                       child: GestureDetector(
                         onTap: () async {
                           setState(() {

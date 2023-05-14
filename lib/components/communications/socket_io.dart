@@ -2,7 +2,9 @@ import 'dart:async';
 // import 'dart:convert';
 // import 'package:ajedrez/components/chessLogic/board.dart';
 // import 'package:ajedrez/components/chessLogic/board.dart';
+import 'package:ajedrez/components/chessLogic/board.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
+import 'package:ajedrez/components/chessLogic/timer.dart';
 import 'package:ajedrez/components/popups/ingame/save_dialog.dart';
 import 'package:ajedrez/components/singletons/profile_data.dart';
 // import 'package:ajedrez/components/profile_data.dart';
@@ -202,7 +204,7 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
 void listenGame(BuildContext context) {
   GameSocket s = GameSocket();
   bool espec = s.spectatorMode;
-
+  BoardData b = BoardData();
   s.socket.on(
       'error',
       (data) => {
@@ -211,6 +213,12 @@ void listenGame(BuildContext context) {
   s.socket.on(
       'moved',
       (data) => {
+        // print(data),
+            if(data[0]["turn"] == "LIGHT") {
+              (b.clocks[0] as TimerState).setTimer(data[0]["timerLight"]~/1000)
+            } else {
+              (b.clocks[1] as TimerState).setTimer(data[0]["timerDark"]~/1000)
+            },
             if (!espec)
               {
                 if (data[0]["turn"] == (!s.iAmWhite ? "DARK" : "LIGHT"))

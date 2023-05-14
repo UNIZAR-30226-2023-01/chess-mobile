@@ -13,29 +13,29 @@ import '../../components/chessLogic/board.dart';
 import '../../components/communications/socket_io.dart';
 import '../../components/communications/api.dart';
 
-class Players {
-  String dark = "null", light = "null";
-  String darkName = "null", lightName = "null";
-  String darkImage = "", lightImage = "null";
-  int darkElo = 0, lightElo = 0;
+// class Players {
+//   String dark = "null", light = "null";
+//   String darkName = "null", lightName = "null";
+//   String darkImage = "", lightImage = "null";
+//   int darkElo = 0, lightElo = 0;
 
-  Future<void> assign(String dark, String light) async {
-    this.dark = dark;
-    this.light = light;
-  }
+//   Future<void> assign(String dark, String light) async {
+//     this.dark = dark;
+//     this.light = light;
+//   }
 
-  Future<void> updateDark(String name, String image, int elo) async {
-    darkName = name;
-    darkImage = image;
-    darkElo = elo;
-  }
+//   Future<void> updateDark(String name, String image, int elo) async {
+//     darkName = name;
+//     darkImage = image;
+//     darkElo = elo;
+//   }
 
-  Future<void> updateLight(String name, String image, int elo) async {
-    lightName = name;
-    lightImage = image;
-    lightElo = elo;
-  }
-}
+//   Future<void> updateLight(String name, String image, int elo) async {
+//     lightName = name;
+//     lightImage = image;
+//     lightElo = elo;
+//   }
+// }
 
 class GamePage extends StatefulWidget {
   const GamePage({super.key});
@@ -85,7 +85,7 @@ class GamePageState extends State<GamePage> {
   Widget build(BuildContext context) {
     // print("gameStart");
     GameSocket s = GameSocket();
-    Players players = Players();
+    // Players players = Players();
     String idR = s.room;
     listenGame(context);
     resetSingleton(!s.iAmWhite);
@@ -108,13 +108,13 @@ class GamePageState extends State<GamePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: defaultWidth * 0.075),
+              SizedBox(height: defaultWidth * 0.1),
               if (s.iAmWhite) ...[
                 _player2Timer,
               ] else ...[
                 _player1Timer,
               ],
-              SizedBox(height: defaultWidth * 0.075),
+              SizedBox(height: defaultWidth * 0.1),
               Expanded(
                 flex: 4,
 
@@ -135,7 +135,7 @@ class GamePageState extends State<GamePage> {
               ] else ...[
                 _player2Timer,
               ],
-              SizedBox(height: defaultWidth * 0.125),
+              SizedBox(height: defaultWidth * 0.2),
               // SizedBox(height: defaultWidth * 0.15),
               s.type == "COMP" || s.type == "CUSTOM"
                   ? Row(
@@ -145,7 +145,7 @@ class GamePageState extends State<GamePage> {
                         drawButton(context),
                       ],
                     )
-                  : Container(),
+                  : const SizedBox(),
               s.type == "AI"
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -153,7 +153,7 @@ class GamePageState extends State<GamePage> {
                         surrenderButton(context),
                       ],
                     )
-                  : SizedBox(height: defaultWidth * 0.025),
+                  : const SizedBox(),
               SizedBox(height: defaultWidth * 0.0125),
               s.type == "CUSTOM" || (s.type == "AI" && u.id != "")
                   ? saveButton(context)

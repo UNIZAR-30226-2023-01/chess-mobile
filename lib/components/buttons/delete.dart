@@ -5,7 +5,10 @@ import '../visual/screen_size.dart';
 TextButton deleteButton(BuildContext context, String text, bool exit) {
   return TextButton(
     onPressed: () {
-      if (exit) apiDeleteUser();
+      if (exit) {
+        apiDeleteUser();
+        Navigator.pop(context);
+      }
       Navigator.pop(context);
     },
     child: Container(

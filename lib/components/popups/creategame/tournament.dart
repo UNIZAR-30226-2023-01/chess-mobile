@@ -127,13 +127,18 @@ class Tournament {
               playButton(
                 context,
                 "Gestionar torneos",
-                () => {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ManageTournamentPage(),
-                    ),
-                  ),
+                () async {
+                  ActualSelection.manageTournamentDatas =
+                      List.empty(growable: true);
+                  await apiMyTournaments();
+                  if (context.mounted) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ManageTournamentPage(),
+                      ),
+                    );
+                  }
                 },
               ),
             ],

@@ -42,7 +42,6 @@ class _ManageTournamentPageState extends State<ManageTournamentPage> {
                     children: [
                       GestureDetector(
                         onTap: () async {
-                          // actualizar aqui
                           ActualSelection.manageTournamentDatas =
                               List.empty(growable: true);
                           await apiMyTournaments();
@@ -75,14 +74,12 @@ class _ManageTournamentPageState extends State<ManageTournamentPage> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          //push
                           ActualSelection.manageTournamentDatas =
                               List.empty(growable: true);
                           await apiOtherTournaments();
                           if (context.mounted) {
                             setState(() {
                               myTournaments = false;
-                              //pop
                             });
                           }
                         },

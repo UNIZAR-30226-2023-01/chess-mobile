@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import '../visual/screen_size.dart';
-import '../popups/edit_profile.dart';
 import '../../pages/menus_pages/manage_tournaments.dart';
+import '../communications/api.dart';
 
 PopupMenuButton suscribed(BuildContext context, Widget widget, bool finished,
     ValueNotifier<int> counter, String id) {
@@ -33,6 +32,10 @@ PopupMenuButton suscribed(BuildContext context, Widget widget, bool finished,
         case '_visualizar':
           break;
         case '_salir':
+          ActualSelection.manageTournamentDatas = List.empty(growable: true);
+          apiJoinOrLeaveTournament("leave", id).then(
+            (val) => counter.value++,
+          );
           break;
       }
     },
@@ -84,6 +87,10 @@ PopupMenuButton unsuscribed(BuildContext context, Widget widget,
         case '_visualizar':
           break;
         case '_unir':
+          ActualSelection.manageTournamentDatas = List.empty(growable: true);
+          apiJoinOrLeaveTournament("join", id).then(
+            (val) => counter.value++,
+          );
           break;
       }
     },

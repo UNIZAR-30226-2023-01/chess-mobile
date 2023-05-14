@@ -19,20 +19,28 @@ String getElo(int score) {
 }
 
 showElo(int elo) {
+  return printElo(elo, false);
+}
+
+showEloWithOpacity(int elo, bool opacity) {
+  return printElo(elo, opacity);
+}
+
+printElo(int elo, bool opacity) {
   if (getElo(elo) != "null") {
     return Container(
       margin: const EdgeInsets.only(right: 5),
       padding: const EdgeInsets.all(3),
-      decoration: const BoxDecoration(
-        color: Colors.red,
-        borderRadius: BorderRadius.all(Radius.circular(8)),
+      decoration: BoxDecoration(
+        color: !opacity ? Colors.red : Colors.red.withOpacity(0.5),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
       ),
       child: Text(
         getElo(elo),
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w900,
-          color: Colors.white,
+          color: !opacity ? Colors.white : Colors.white.withOpacity(0.5),
         ),
       ),
     );

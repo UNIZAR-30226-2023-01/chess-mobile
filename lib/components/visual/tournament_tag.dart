@@ -1,5 +1,6 @@
 import '../../components/visual/screen_size.dart';
 import 'package:flutter/material.dart';
+import '../../components/visual/get_elo.dart';
 
 Widget imageItem(
     double tamanyo, double circle, String image, BuildContext context) {
@@ -23,7 +24,7 @@ Widget imageItem(
   );
 }
 
-Widget tagCreator(String small, String big, BuildContext context) {
+Widget tagCreator(String small, String big, int elo, BuildContext context) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -38,13 +39,24 @@ Widget tagCreator(String small, String big, BuildContext context) {
       ),
 
       // Big title
-      Text(
-        big,
-        overflow: TextOverflow.visible,
-        style: TextStyle(
-          color: Theme.of(context).colorScheme.primary,
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
+      SizedBox(
+        width: defaultWidth * 0.85 - defaultHeight * 0.08 - 40,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            showElo(elo),
+            Flexible(
+              child: Text(
+                big,
+                overflow: TextOverflow.visible,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     ],
@@ -81,6 +93,7 @@ Widget tagInfo(String small, String big, BuildContext context) {
 Widget tournamentTag(
   String creatorImage,
   String creatorName,
+  int creatorElo,
   String startTime,
   int rounds,
   int duration,
@@ -155,7 +168,8 @@ Widget tournamentTag(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Creator Name
-                      tagCreator("Torneo de:", creatorName, context),
+                      tagCreator(
+                          "Torneo de:", creatorName, creatorElo, context),
 
                       SizedBox(height: defaultWidth * 0.0175),
 

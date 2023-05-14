@@ -1,3 +1,4 @@
+import 'package:ajedrez/components/visual/get_elo.dart';
 import 'package:ajedrez/components/visual/set_image_color.dart';
 
 import '../../components/visual/screen_size.dart';
@@ -35,6 +36,8 @@ Widget tournamentNode(
     String player_2,
     String image_1,
     String image_2,
+    int elo_1,
+    int elo_2,
     bool finished,
     bool winner,
     BuildContext context) {
@@ -78,16 +81,24 @@ Widget tournamentNode(
                   // Player 1 name
                   SizedBox(
                     width: defaultWidth * 0.35,
-                    child: Text(
-                      player_1,
-                      overflow: TextOverflow.visible,
-                      style: TextStyle(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(finished && !winner ? 0.5 : 1),
-                        fontSize: 22,
-                      ),
+                    child: Row(
+                      children: [
+                        showEloWithOpacity(elo_1, finished && !winner),
+                        Flexible(
+                          child: Text(
+                            player_1,
+                            overflow: TextOverflow.visible,
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(finished && !winner ? 0.5 : 1),
+                              fontSize: 22,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
 
@@ -132,16 +143,24 @@ Widget tournamentNode(
                   // Player 2 name
                   SizedBox(
                     width: defaultWidth * 0.35,
-                    child: Text(
-                      player_2,
-                      overflow: TextOverflow.visible,
-                      style: TextStyle(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(finished && winner ? 0.5 : 1),
-                        fontSize: 22,
-                      ),
+                    child: Row(
+                      children: [
+                        showEloWithOpacity(elo_2, finished && winner),
+                        Flexible(
+                          child: Text(
+                            player_2,
+                            overflow: TextOverflow.visible,
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .primary
+                                  .withOpacity(finished && winner ? 0.5 : 1),
+                              fontSize: 22,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
 

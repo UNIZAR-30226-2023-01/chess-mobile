@@ -3,7 +3,7 @@ import '../visual/convert_date.dart';
 
 class ManageTournamentData {
   String id = "", creatorName = "", creatorImage = "", startTime = "";
-  int rounds = 0, duration = 0, increment = 0;
+  int creatorElo = 0, rounds = 0, duration = 0, increment = 0;
   bool finished = false, hasStarted = false;
 
   Future<void> update(String id, String owner, String startTime, int rounds,
@@ -13,6 +13,7 @@ class ManageTournamentData {
     this.id = id;
     creatorName = TournamentUserData.username;
     creatorImage = TournamentUserData.avatar;
+    creatorElo = TournamentUserData.elo;
     this.startTime = convertirFecha(startTime);
     this.rounds = rounds;
     this.duration = duration ~/ 60;
@@ -24,10 +25,12 @@ class ManageTournamentData {
 
 class TournamentUserData {
   static String id = "", username = "", avatar = "";
+  static int elo = 0;
 
-  static void update(String id, String username, String avatar) {
+  static void update(String id, String username, String avatar, int elo) {
     TournamentUserData.id = id;
     TournamentUserData.username = username;
     TournamentUserData.avatar = avatar;
+    TournamentUserData.elo = elo;
   }
 }

@@ -1,7 +1,5 @@
-import 'package:ajedrez/components/buttons/round.dart';
+import 'package:ajedrez/components/visual/get_elo.dart';
 import 'package:ajedrez/components/visual/screen_size.dart';
-import 'package:flutter/gestures.dart';
-
 import '../../components/visual/tournament_node.dart';
 import 'package:flutter/material.dart';
 
@@ -24,6 +22,9 @@ class TournamentData {
   // Update every single time user decides to check another round
   static List<TournamentMatch> matches = List.empty(growable: true);
   static int visualCurrentRound = 2;
+  static int realCurrentRound() {
+    return TournamentData.totalRounds - TournamentData.visualCurrentRound + 1;
+  }
 }
 
 class TournamentPage extends StatefulWidget {
@@ -45,13 +46,26 @@ class _TournamentPageState extends State<TournamentPage> {
               padding: const EdgeInsets.only(top: 15),
               child: FittedBox(
                 fit: BoxFit.scaleDown,
-                child: Text(
-                  "Torneo de Antonio Martínez",
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.secondary,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Row(
+                  children: [
+                    Text(
+                      "Torneo de  ",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    showElo(2300),
+                    Text(
+                      "Antonio Antoniddo",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -96,6 +110,8 @@ class _TournamentPageState extends State<TournamentPage> {
                               "pingüino",
                               "avatars/animals/1.webp",
                               "avatars/animals/40.webp",
+                              2300,
+                              5000,
                               true,
                               true,
                               context),

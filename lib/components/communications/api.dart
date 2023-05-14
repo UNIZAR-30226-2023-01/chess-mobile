@@ -6,7 +6,6 @@ import 'package:ajedrez/components/singletons/game_data.dart';
 import 'package:ajedrez/components/singletons/ranking_data.dart';
 import 'package:ajedrez/components/singletons/manage_tournaments_data.dart';
 import 'package:ajedrez/pages/menus_pages/manage_tournaments.dart';
-import 'package:ajedrez/pages/game_pages/game.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
 
@@ -424,7 +423,7 @@ Future<int> apiDeleteUser() async {
     // print(responseBodyDictionary);
 
     // print(apiAuthCookie);
-    print(responseBodyDictionary["status"]["error_code"]);
+    // print(responseBodyDictionary["status"]["error_code"]);
     return responseBodyDictionary["status"]["error_code"];
   } catch (e) {
     // print(e.toString());

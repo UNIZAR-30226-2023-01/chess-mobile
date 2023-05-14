@@ -61,7 +61,7 @@ class GamePageState extends State<GamePage> {
   @override
   void initState() {
     super.initState();
-    GameSocket s = GameSocket();
+    // GameSocket s = GameSocket();
     _player1Timer = CustomTimer(
       label: "",
       duration: Duration(seconds: _maxTime),

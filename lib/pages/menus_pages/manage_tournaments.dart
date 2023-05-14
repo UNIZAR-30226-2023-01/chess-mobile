@@ -1,12 +1,10 @@
-import 'package:ajedrez/components/buttons/round.dart';
-import 'package:ajedrez/components/visual/screen_size.dart';
 import '../../components/singletons/manage_tournaments_data.dart';
 
 import '../../components/visual/tournament_tag.dart';
 import 'package:flutter/material.dart';
 import '../../components/buttons/tournament_tag_options.dart';
 import '../../components/communications/api.dart';
-import '../../components/singletons/manage_tournaments_data.dart';
+
 
 class ManageTournamentPage extends StatefulWidget {
   const ManageTournamentPage({super.key});

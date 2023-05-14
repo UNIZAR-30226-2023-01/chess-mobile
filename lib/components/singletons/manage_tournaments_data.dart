@@ -1,6 +1,5 @@
 import '../communications/api.dart';
 import '../visual/convert_date.dart';
-import '../../pages/menus_pages/manage_tournaments.dart';
 
 class ManageTournamentData {
   String id = "", creatorName = "", creatorImage = "", startTime = "";
@@ -12,8 +11,8 @@ class ManageTournamentData {
     List<String> fields = owner.split("/");
     await apiGetTournamentUser(fields[fields.length - 1]);
     this.id = id;
-    this.creatorName = TournamentUserData.username;
-    this.creatorImage = TournamentUserData.avatar;
+    creatorName = TournamentUserData.username;
+    creatorImage = TournamentUserData.avatar;
     this.startTime = convertirFecha(startTime);
     this.rounds = rounds;
     this.duration = duration ~/ 60;

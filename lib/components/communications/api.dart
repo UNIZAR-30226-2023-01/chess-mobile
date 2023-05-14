@@ -200,6 +200,10 @@ Future<int> apiRanking(int page, int limit) async {
 }
 
 Future<String> apiGames(String url) async {
+  var page = 1;
+  var limit = 50;
+  url = 'https://api.gracehopper.xyz/v1/games?page=$page&limit=$limit';
+  
   var pemBytes = await rootBundle.load("assets/cert.pem");
 
   var context = SecurityContext()
@@ -214,7 +218,6 @@ Future<String> apiGames(String url) async {
     // Set headers
     request.headers.add('Content-Type', 'application/json');
     request.headers.add('Cookie', 'api-auth=${UserData().token}');
-
     var response = await request.close();
     var responseBody = await response.transform(utf8.decoder).join();
     var responseBodyDictionary = jsonDecode(responseBody);
@@ -458,7 +461,7 @@ Future<int> apiCreateTournament(
     var response = await request.close();
     var responseBody = await response.transform(utf8.decoder).join();
     var responseBodyDictionary = jsonDecode(responseBody);
-    print(responseBodyDictionary);
+    // print(responseBodyDictionary);
     return responseBodyDictionary["status"]["error_code"];
   } catch (e) {
     // print(e.toString());

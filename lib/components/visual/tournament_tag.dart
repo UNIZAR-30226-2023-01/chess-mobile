@@ -1,5 +1,3 @@
-import 'package:ajedrez/components/visual/set_image_color.dart';
-
 import '../../components/visual/screen_size.dart';
 import 'package:flutter/material.dart';
 

@@ -132,7 +132,7 @@ Widget tournamentTag(
                     ? "Finalizado"
                     : hasStarted
                         ? "En curso..."
-                        : "Esperando jugadores...",
+                        : "Esperando...",
                 overflow: TextOverflow.visible,
                 style: const TextStyle(
                   color: Colors.white,

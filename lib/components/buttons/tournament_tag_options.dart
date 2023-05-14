@@ -1,10 +1,13 @@
+import 'package:ajedrez/components/singletons/profile_data.dart';
 import 'package:flutter/material.dart';
 import '../../pages/menus_pages/manage_tournaments.dart';
 import '../communications/api.dart';
 import '../../pages/menus_pages/tournaments.dart';
 
 PopupMenuButton suscribed(BuildContext context, Widget widget, bool finished,
-    ValueNotifier<int> counter, String id) {
+    ValueNotifier<int> counter, String id, bool hasStarted, String owner) {
+  UserData userData = UserData();
+
   return PopupMenuButton(
     onCanceled: () {
       ActualSelection.isSelected = false;
@@ -47,31 +50,45 @@ PopupMenuButton suscribed(BuildContext context, Widget widget, bool finished,
           ActualSelection.manageTournamentDatas = List.empty(growable: true);
           await apiJoinOrLeaveTournament("leave", id);
           break;
+        case '_delete':
+          ActualSelection.manageTournamentDatas = List.empty(growable: true);
+          await apiDeleteTournament(true, id);
+          break;
       }
       counter.value++;
     },
     itemBuilder: (context) {
       return [
-        finished
-            ? const PopupMenuItem(
-                value: '_visualizar',
-                child: Text("Visualizar"),
-              )
-            : const PopupMenuItem(
-                value: '_jugar',
-                child: Text("Jugar"),
-              ),
-        const PopupMenuItem(
-          value: '_salir',
-          child: Text("Salirse"),
-        ),
+        if (hasStarted && !finished) ...[
+          const PopupMenuItem(
+            value: '_jugar',
+            child: Text("Jugar"),
+          ),
+        ] else ...[
+          const PopupMenuItem(
+            value: '_visualizar',
+            child: Text("Visualizar"),
+          ),
+        ],
+        if (!hasStarted)
+          const PopupMenuItem(
+            value: '_salir',
+            child: Text("Salirse"),
+          ),
+        if (!hasStarted && userData.id == owner)
+          const PopupMenuItem(
+            value: '_delete',
+            child: Text("Eliminar"),
+          ),
       ];
     },
   );
 }
 
 PopupMenuButton unsuscribed(BuildContext context, Widget widget,
-    ValueNotifier<int> counter, String id) {
+    ValueNotifier<int> counter, String id, bool hasStarted, String owner) {
+  UserData userData = UserData();
+
   return PopupMenuButton(
     onCanceled: () {
       ActualSelection.isSelected = false;
@@ -106,6 +123,10 @@ PopupMenuButton unsuscribed(BuildContext context, Widget widget,
           ActualSelection.manageTournamentDatas = List.empty(growable: true);
           await apiJoinOrLeaveTournament("join", id);
           break;
+        case '_delete':
+          ActualSelection.manageTournamentDatas = List.empty(growable: true);
+          await apiDeleteTournament(false, id);
+          break;
       }
       counter.value++;
     },
@@ -115,10 +136,16 @@ PopupMenuButton unsuscribed(BuildContext context, Widget widget,
           value: '_visualizar',
           child: Text("Visualizar"),
         ),
-        const PopupMenuItem(
-          value: '_unir',
-          child: Text("Unirse"),
-        ),
+        if (!hasStarted)
+          const PopupMenuItem(
+            value: '_unir',
+            child: Text("Unirse"),
+          ),
+        if (!hasStarted && userData.id == owner)
+          const PopupMenuItem(
+            value: '_delete',
+            child: Text("Eliminar"),
+          ),
       ];
     },
   );

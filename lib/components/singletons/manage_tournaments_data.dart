@@ -2,7 +2,11 @@ import '../communications/api.dart';
 import '../visual/convert_date.dart';
 
 class ManageTournamentData {
-  String id = "", creatorName = "", creatorImage = "", startTime = "";
+  String id = "",
+      creatorId = "",
+      creatorName = "",
+      creatorImage = "",
+      startTime = "";
   int creatorElo = 0, rounds = 0, duration = 0, increment = 0;
   bool finished = false, hasStarted = false;
 
@@ -11,6 +15,7 @@ class ManageTournamentData {
     List<String> fields = owner.split("/");
     await apiGetTournamentUser(fields[fields.length - 1]);
     this.id = id;
+    creatorId = TournamentUserData.id;
     creatorName = TournamentUserData.username;
     creatorImage = TournamentUserData.avatar;
     creatorElo = TournamentUserData.elo;

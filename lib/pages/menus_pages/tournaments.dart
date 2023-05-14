@@ -19,11 +19,11 @@ class TournamentMatch {
 class TournamentData {
   // Update only first time the tournament itself is fethed
   static List<List> players = List.empty(growable: true);
-  static int totalRounds = 5;
+  static int totalRounds = 2;
 
   // Update every single time user decides to check another round
   static List<TournamentMatch> matches = List.empty(growable: true);
-  static int visualCurrentRound = 3;
+  static int visualCurrentRound = 2;
 }
 
 class TournamentPage extends StatefulWidget {
@@ -41,51 +41,43 @@ class _TournamentPageState extends State<TournamentPage> {
       body: SafeArea(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 15),
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  "Torneo de Antonio Martínez",
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.secondary,
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
             SizedBox(
               height: 75,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  SizedBox(width: defaultWidth * 0.05),
-                  for (int i = 1; i <= TournamentData.totalRounds; i++) ...[
-                    Container(
-                      width: defaultWidth * 0.265,
-                      margin: EdgeInsets.symmetric(vertical: 15),
-                      child: GestureDetector(
-                        onTap: () async {
-                          setState(() {
-                            TournamentData.totalRounds = 3;
-                            TournamentData.visualCurrentRound = i;
-                          });
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            color: TournamentData.visualCurrentRound == i
-                                ? Theme.of(context).colorScheme.secondary
-                                : Theme.of(context).colorScheme.primary,
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(20)),
-                          ),
-                          child: Center(
-                            child: Text(
-                              "Ronda $i",
-                              style: TextStyle(
-                                color: TournamentData.visualCurrentRound == i
-                                    ? Theme.of(context).colorScheme.primary
-                                    : Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
+              child: TournamentData.totalRounds > 3
+                  ? ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        SizedBox(width: defaultWidth * 0.05),
+                        for (int i = 1;
+                            i <= TournamentData.totalRounds;
+                            i++) ...[
+                          roundField(i),
+                          SizedBox(width: defaultWidth * 0.05),
+                        ],
+                      ],
+                    )
+                  : Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        if (TournamentData.totalRounds >= 1) roundField(1),
+                        if (TournamentData.totalRounds >= 2) roundField(2),
+                        if (TournamentData.totalRounds >= 3) roundField(3),
+                      ],
                     ),
-                    SizedBox(width: defaultWidth * 0.05),
-                  ],
-                ],
-              ),
             ),
 
             // List for matches in a round
@@ -114,6 +106,45 @@ class _TournamentPageState extends State<TournamentPage> {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget roundField(int i) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 15),
+      child: GestureDetector(
+        onTap: () async {
+          setState(() {
+            TournamentData.totalRounds = 3;
+            TournamentData.visualCurrentRound = i;
+          });
+        },
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: TournamentData.visualCurrentRound == i
+                ? Theme.of(context).colorScheme.secondary
+                : Theme.of(context).colorScheme.primary,
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+          ),
+          child: Center(
+            child: Text(
+              i == TournamentData.totalRounds
+                  ? "Final"
+                  : i == TournamentData.totalRounds - 1
+                      ? "Semifinal"
+                      : "Ronda $i",
+              style: TextStyle(
+                color: TournamentData.visualCurrentRound == i
+                    ? Theme.of(context).colorScheme.primary
+                    : Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
         ),
       ),
     );

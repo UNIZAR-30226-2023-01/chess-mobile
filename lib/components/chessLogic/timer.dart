@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:ajedrez/components/chessLogic/board.dart';
 import 'package:flutter/material.dart';
 
+/// Widget that acts as a clock.
 // ignore: must_be_immutable
 class CustomTimer extends StatefulWidget {
   final String label;
@@ -22,6 +23,10 @@ class CustomTimer extends StatefulWidget {
   TimerState createState() => TimerState();
 }
 
+/// State of the clock widget.
+/// 
+/// It starts as a regressive count set to the duration
+/// Provides the function set timer to restart the count from a new duration.
 class TimerState extends State<CustomTimer> {
   late Timer _timer;
   late Stream<int> _stream;

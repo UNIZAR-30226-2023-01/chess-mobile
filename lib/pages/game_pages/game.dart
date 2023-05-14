@@ -11,7 +11,7 @@ import '../../components/buttons/ingame/draw.dart';
 import '../../components/buttons/ingame/surrender.dart';
 import '../../components/chessLogic/board.dart';
 import '../../components/communications/socket_io.dart';
-import '../../components/communications/api.dart';
+
 
 // class Players {
 //   String dark = "null", light = "null";
@@ -61,7 +61,7 @@ class GamePageState extends State<GamePage> {
   @override
   void initState() {
     super.initState();
-    GameSocket s = GameSocket();
+    // GameSocket s = GameSocket();
     _player1Timer = CustomTimer(
       label: "",
       duration: Duration(seconds: _maxTime),

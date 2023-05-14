@@ -1,6 +1,7 @@
 import 'pieces.dart';
 import 'package:flutter/material.dart';
 
+/// Array of the black pieces to setup the board.
 List<Piece> blackPieces() {
   return [
     Rook(isWhite: false),
@@ -14,6 +15,7 @@ List<Piece> blackPieces() {
   ];
 }
 
+/// Array of the white pieces to setup the board.
 List<Piece> whitePieces() {
   return [
     Rook(isWhite: true),
@@ -27,6 +29,7 @@ List<Piece> whitePieces() {
   ];
 }
 
+/// Array of the black pieces to setup the reversed board.
 List<Piece> inversedBlackPieces() {
   return [
     Rook(isWhite: false),
@@ -40,6 +43,7 @@ List<Piece> inversedBlackPieces() {
   ];
 }
 
+/// Array of the white pieces to setup the reversed board.
 List<Piece> inversedWhitePieces() {
   return [
     Rook(isWhite: true),
@@ -53,6 +57,17 @@ List<Piece> inversedWhitePieces() {
   ];
 }
 
+/// Singleton which contains all the ingame info about the pieces and the essential components.
+/// 
+/// This singleton contains:
+/// - The boards state.
+/// - A list of pending movements.
+/// - A reference to use the squares and the timers in order to update them.
+/// - What color has the current turn.
+/// - If the board must be rendered reversed(playing as black) or not.
+/// - The last movement done
+/// - A few helpers
+/// It is a singleton so it is the same instance all along the different components of the app.
 class BoardData {
   static final BoardData _singleton = BoardData._internal();
   List<List<Piece>> currentBoard = _initTablero(true);
@@ -76,6 +91,9 @@ class BoardData {
   BoardData._internal();
 }
 
+/// Function that resets the information of the BoardData singleton.
+/// 
+/// It should be used after ending a game in order to clear all the data.
 void resetSingleton(bool reversedBoard) {
   BoardData board = BoardData();
   board.currentBoard = _initTablero(reversedBoard);
@@ -94,6 +112,11 @@ void resetSingleton(bool reversedBoard) {
   board.spectatorMode = false;
 }
 
+/// Function that starts the pieces positions along the board.
+/// 
+/// It is used when the BoardData is created.
+/// reversedBoard specifies if the current player is playing as black.
+/// reversedBoard == True -> Is black.
 List<List<Piece>> _initTablero(bool reversedBoard) {
   List<List<Piece>> tab = [];
 
@@ -123,6 +146,7 @@ List<List<Piece>> _initTablero(bool reversedBoard) {
   return tab;
 }
 
+/// Function that starts the movement matrix empty(set as false).
 List<List<bool>> initEmptyMovements() {
   List<List<bool>> movements = [];
   for (int i = 0; i < 64; i++) {
@@ -132,6 +156,7 @@ List<List<bool>> initEmptyMovements() {
   return movements;
 }
 
+/// Function that checks all the movements in a array it only returns the list of valid ones.
 List<List<int>> validateMovements(List<List<int>> movements) {
   List<List<int>> validMovements = [];
   final BoardData board = BoardData();
@@ -142,6 +167,7 @@ List<List<int>> validateMovements(List<List<int>> movements) {
   return validMovements;
 }
 
+/// Function that checks if a single movement is valid or not.
 void _validateMovement(List<int> movement, int temp, BoardData board,
     List<List<int>> validMovements) {
   if (movement[0] >= 0 &&

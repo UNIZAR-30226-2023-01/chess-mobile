@@ -76,6 +76,7 @@
   <pre class="language-dart"><code class="language-dart">Future&lt;void&gt; resume(String roomID, BuildContext context) async {
   GameSocket s = GameSocket();
   Completer completer = Completer&lt;void&gt;();
+  &#47;&#47; BoardData b = BoardData();
   s.socket.on(
       &#39;error&#39;,
       (data) =&gt; {
@@ -95,6 +96,10 @@
             s.pendingMovements = data[0][&quot;moves&quot;],
             s.timer = data[0][&quot;initialTimer&quot;],
             s.type = data[0][&quot;gameType&quot;],
+
+            s.player1 = data[0][&quot;light&quot;],
+            s.player2 = data[0][&quot;dark&quot;],
+
             &#47;&#47; print(s.room),
             Navigator.push(
               context,
@@ -159,7 +164,7 @@
 <footer>
   <span class="no-break">
     ajedrez
-      1.2.3
+      2.0.1
   </span>
 
   

@@ -73,9 +73,9 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">Future&lt;String&gt; apiGames(String url) async {
-  var page = 1;
-  var limit = 50;
-  url = &#39;https:&#47;&#47;api.gracehopper.xyz&#47;v1&#47;games?page=$page&amp;limit=$limit&#39;;
+  &#47;&#47; var page = 1;
+  &#47;&#47; var limit = 50;
+  &#47;&#47; url = &#39;https:&#47;&#47;api.gracehopper.xyz&#47;v1&#47;games?page=$page&amp;limit=$limit&#39;;
 
   var pemBytes = await rootBundle.load(&quot;assets&#47;cert.pem&quot;);
 
@@ -196,7 +196,7 @@
 <footer>
   <span class="no-break">
     ajedrez
-      1.2.3
+      2.0.1
   </span>
 
   

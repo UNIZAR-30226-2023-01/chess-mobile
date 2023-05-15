@@ -187,6 +187,10 @@ Widget build(BuildContext context) {
   String idR = s.room;
   String player1 = s.player1;
   String player2 = s.player2;
+  if (BoardData().reversedBoard) {
+    player1 = s.player2;
+    player2 = s.player1;
+  }
   listenGame(context);
   resetSingleton(!s.iAmWhite);
   &#47;&#47; print(s.type);
@@ -302,7 +306,7 @@ Widget build(BuildContext context) {
                     ],
                   )
                 : const SizedBox(),
-            s.type == &quot;AI&quot;
+            s.type == &quot;AI&quot; || s.type == &quot;TOURNAMENT&quot;
                 ? Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -315,13 +319,15 @@ Widget build(BuildContext context) {
                 ? saveButton(context)
                 : SizedBox(height: defaultWidth * 0.025),
             SizedBox(height: defaultWidth * 0.025),
-            Text(
-              &quot;Código de partida: $idR&quot;,
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.secondary,
-                fontSize: 19,
-              ),
-            ),
+            s.type != &quot;TOURNAMENT&quot;
+                ? Text(
+                    &quot;Código de partida: $idR&quot;,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.secondary,
+                      fontSize: 19,
+                    ),
+                  )
+                : Container(),
             SizedBox(height: defaultWidth * 0.025),
           ],
         ),
@@ -401,7 +407,7 @@ Widget build(BuildContext context) {
 <footer>
   <span class="no-break">
     ajedrez
-      1.2.3
+      2.0.1
   </span>
 
   

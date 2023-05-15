@@ -79,14 +79,14 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">void procesarComerAlPaso(int auxY, int auxX, int y, int x) {
-    BoardData board = BoardData();
-    if ((x - auxX).abs() &gt; 0 &amp;&amp;
-        board.currentBoard[auxY][auxX] is Pawn &amp;&amp;
-        board.currentBoard[y][x].isEmpty()) {
-      board.currentBoard[auxY][x] = Empty(isWhite: false);
-      (board.squares[auxY * 8 + x] as SquareState).actualizarEstado();
-    }
-  }</code></pre>
+  BoardData board = BoardData();
+  if ((x - auxX).abs() &gt; 0 &amp;&amp;
+      board.currentBoard[auxY][auxX] is Pawn &amp;&amp;
+      board.currentBoard[y][x].isEmpty()) {
+    board.currentBoard[auxY][x] = Empty(isWhite: false);
+    (board.squares[auxY * 8 + x] as SquareState).actualizarEstado();
+  }
+}</code></pre>
 </section>
 
 
@@ -137,7 +137,7 @@
 <footer>
   <span class="no-break">
     ajedrez
-      1.2.3
+      2.0.1
   </span>
 
   

@@ -59,7 +59,7 @@ List<Piece> inversedWhitePieces() {
 }
 
 /// Singleton which contains all the ingame info about the pieces and the essential components.
-/// 
+///
 /// This singleton contains:
 /// - The boards state.
 /// - A list of pending movements.
@@ -93,7 +93,7 @@ class BoardData {
 }
 
 /// Function that resets the information of the BoardData singleton.
-/// 
+///
 /// It should be used after ending a game in order to clear all the data.
 void resetSingleton(bool reversedBoard) {
   BoardData board = BoardData();
@@ -114,7 +114,7 @@ void resetSingleton(bool reversedBoard) {
 }
 
 /// Function that starts the pieces positions along the board.
-/// 
+///
 /// It is used when the BoardData is created.
 /// reversedBoard specifies if the current player is playing as black.
 /// reversedBoard == True -> Is black.

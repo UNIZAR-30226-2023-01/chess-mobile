@@ -2,15 +2,11 @@
 
 import 'dart:async';
 // import 'dart:convert';
-// import 'package:ajedrez/components/chessLogic/board.dart';
-// import 'package:ajedrez/components/chessLogic/board.dart';
 import 'package:ajedrez/components/chessLogic/board.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
 import 'package:ajedrez/components/chessLogic/timer.dart';
 import 'package:ajedrez/components/popups/ingame/save_dialog.dart';
 import 'package:ajedrez/components/data/profile_data.dart';
-// import 'package:ajedrez/components/profile_data.dart';
-// import 'package:ajedrez/components/visual/colores_tablero.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'package:socket_io_client/socket_io_client.dart';
@@ -40,7 +36,6 @@ class Arguments {
 class GameSocket {
   static final GameSocket _singleton = GameSocket._internal();
   io.Socket socket = io.io(
-      //no borrar la linea comentada esta para el desarrollo en la red donde esta hosteado el backend
       // 'http://192.168.0.249:4001',
       'http://reign-chess.duckdns.org:4001/',
       OptionBuilder().setTransports(['websocket']).setExtraHeaders({
@@ -94,6 +89,7 @@ void cancelSearch() {
 Future<void> startGame(BuildContext context, String type, Arguments arguments) {
   GameSocket s = GameSocket();
   Completer completer = Completer<void>();
+  // BoardData b = BoardData();
   s.socket.onConnect((_) {
     // print("CONEXIÓN ESTABLECIDA");
   });
@@ -171,8 +167,10 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
       'room',
       (data) => {
             // print(data),
+
             s.player1 = data[0]["light"],
             s.player2 = data[0]["dark"],
+
             if (type != "SPECTATOR")
               {
                 s.room = data[0]["roomID"],
@@ -227,15 +225,20 @@ void listenGame(BuildContext context) {
       'moved',
       (data) => {
             // print(data),
-            if (data[0]["turn"] == "LIGHT")
+
+            if (b.reversedBoard)
               {
                 (b.clocks[0] as TimerState)
-                    .setTimer(data[0]["timerLight"] ~/ 1000)
+                    .setTimer(data[0]["timerLight"] ~/ 1000),
+                (b.clocks[1] as TimerState)
+                    .setTimer(data[0]["timerDark"] ~/ 1000),
               }
             else
               {
                 (b.clocks[1] as TimerState)
-                    .setTimer(data[0]["timerDark"] ~/ 1000)
+                    .setTimer(data[0]["timerLight"] ~/ 1000),
+                (b.clocks[0] as TimerState)
+                    .setTimer(data[0]["timerDark"] ~/ 1000),
               },
             if (!espec)
               {
@@ -262,12 +265,12 @@ void listenGame(BuildContext context) {
               },
             if (data[0]["endState"] == "SURRENDER")
               {
-                alertWinner(context, s.iAmWhite,
+                alertWinner(context, !(data[0]["winner"] == "LIGHT"),
                     "Se ha rendido el jugador con las fichas "),
               },
             if (data[0]["endState"] == "TIMEOUT")
               {
-                alertWinner(context, !s.iAmWhite,
+                alertWinner(context, (data[0]["winner"] == "LIGHT"),
                     "Ha ganado por tiempo el jugador con las fichas "),
               },
             if (data[0]["endState"] == "DRAW")
@@ -322,6 +325,7 @@ void save() {
 Future<void> resume(String roomID, BuildContext context) async {
   GameSocket s = GameSocket();
   Completer completer = Completer<void>();
+  // BoardData b = BoardData();
   s.socket.on(
       'error',
       (data) => {
@@ -341,6 +345,10 @@ Future<void> resume(String roomID, BuildContext context) async {
             s.pendingMovements = data[0]["moves"],
             s.timer = data[0]["initialTimer"],
             s.type = data[0]["gameType"],
+
+            s.player1 = data[0]["light"],
+            s.player2 = data[0]["dark"],
+
             // print(s.room),
             Navigator.push(
               context,

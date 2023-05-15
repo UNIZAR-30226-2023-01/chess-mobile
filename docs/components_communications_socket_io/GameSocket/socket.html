@@ -69,9 +69,8 @@
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">io.Socket socket = io.io(
-    &#47;&#47;no borrar la linea comentada esta para el desarrollo en la red donde esta hosteado el backend
-    &#47;&#47; &#39;http:&#47;&#47;192.168.0.249:4001&#39;,
-    &#39;http:&#47;&#47;reign-chess.duckdns.org:4001&#47;&#39;,
+    &#39;http:&#47;&#47;192.168.0.249:4001&#39;,
+    &#47;&#47; &#39;http:&#47;&#47;reign-chess.duckdns.org:4001&#47;&#39;,
     OptionBuilder().setTransports([&#39;websocket&#39;]).setExtraHeaders({
       &#39;token&#39;: UserData().token
     }) &#47;&#47; for Flutter or Dart VM SI BORRAS ESTO NO VA EL SOCKET :D
@@ -141,7 +140,7 @@
 <footer>
   <span class="no-break">
     ajedrez
-      1.2.3
+      2.0.1
   </span>
 
   

@@ -350,6 +350,7 @@ Future<void> resume(String roomID, BuildContext context) async {
             s.player2 = data[0]["dark"],
 
             // print(s.room),
+            Navigator.pop(context),
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const GamePage()),

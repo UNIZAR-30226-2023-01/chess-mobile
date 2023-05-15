@@ -202,9 +202,9 @@ Future<int> apiRanking(int page, int limit) async {
 }
 
 Future<String> apiGames(String url) async {
-  var page = 1;
-  var limit = 50;
-  url = 'https://api.gracehopper.xyz/v1/games?page=$page&limit=$limit';
+  // var page = 1;
+  // var limit = 50;
+  // url = 'https://api.gracehopper.xyz/v1/games?page=$page&limit=$limit';
 
   var pemBytes = await rootBundle.load("assets/cert.pem");
 
@@ -848,7 +848,6 @@ Future<int> apiGetTournament(String id) async {
           match["finished"] ? match["winner"] : "null");
       String n = match["tournamentRoundText"].substring(6);
       TournamentData.matches[int.parse(n) - 1].add(tMatch);
-      print(match["hasStarted"]);
     }
     // print(data);
 

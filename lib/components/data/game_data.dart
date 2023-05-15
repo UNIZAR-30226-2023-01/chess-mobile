@@ -28,8 +28,8 @@ class GameData {
     for (var i in moves) {
       this.moves.add(i);
     }
-    this.lightPlayer = lightPlayer ?? "Mr. AI";
-    this.darkPlayer = darkPlayer ?? "Mr. AI";
+    this.lightPlayer = lightPlayer ?? "AI";
+    this.darkPlayer = darkPlayer ?? "AI";
     winner = "";
     endState = "";
   }

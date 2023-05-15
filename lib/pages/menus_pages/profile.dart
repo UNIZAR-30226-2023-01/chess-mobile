@@ -220,10 +220,7 @@ class _ProfilePageState extends State<ProfilePage> {
       Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         shortButton(context, false, "Partidas\nguardadas", () async {
           restartInfoGames();
-          String next = await apiGames(userData.games);
-          while (next != "null") {
-            next = await apiGames(next);
-          }
+          await apiGames(userData.games);
           if (context.mounted) {
             savedGames.popupSAVEDGAMES(context);
           }
@@ -231,10 +228,7 @@ class _ProfilePageState extends State<ProfilePage> {
         SizedBox(width: defaultWidth * 0.075),
         shortButton(context, false, "Historial\nde partidas", () async {
           restartInfoGames();
-          String next = await apiGames(userData.games);
-          while (next != "null") {
-            next = await apiGames(next);
-          }
+          await apiGames(userData.games);
           if (context.mounted) {
             playedGames.popupPLAYEDGAMES(context);
           }

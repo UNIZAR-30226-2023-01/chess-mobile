@@ -1,6 +1,7 @@
 /// Popup that lists all the saved games.
 import 'package:ajedrez/components/communications/socket_io.dart';
 import 'package:ajedrez/components/popups/creategame/custom.dart';
+import '../visual/convert_date.dart';
 import 'package:flutter/material.dart';
 import '../visual/screen_size.dart';
 import '../buttons/home/play.dart';
@@ -67,16 +68,26 @@ class SavedGames {
           )),
       child: Column(children: [
         Text(
-          "Partida creada en:\n${gameData.createdAt}",
+          convertirFecha(gameData.createdAt),
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 19,
+            fontSize: 17,
             color: Theme.of(context).colorScheme.primary,
           ),
         ),
         SizedBox(height: defaultWidth * 0.05),
-        playButton(
-            context, "Restaurar", () => _handleTapRes(gameData.id, context, gameData.gameType)),
+        Text(
+          gameData.gameType,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 17,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+        SizedBox(height: defaultWidth * 0.05),
+        SizedBox(height: defaultWidth * 0.05),
+        playButton(context, "Restaurar",
+            () => _handleTapRes(gameData.id, context, gameData.gameType)),
       ]),
     );
   }
@@ -84,11 +95,9 @@ class SavedGames {
   void _handleTapRes(String id, BuildContext context, String type) async {
     if (type == "AI") {
       await resume(id, context);
-    }
-    else {
+    } else {
       resume(id, context);
       Custom().waitCode().then((value) => Custom().popupWAITING(context));
-
     }
     // waitCode().then((value) => popupWAITING(context));
   }

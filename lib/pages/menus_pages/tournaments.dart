@@ -1,7 +1,7 @@
 import 'package:ajedrez/components/visual/convert_date.dart';
 import 'package:ajedrez/components/visual/screen_size.dart';
 import 'package:ajedrez/components/visual/get_elo.dart';
-
+import '../../components/buttons/tournament_node_options.dart';
 import '../../components/visual/tournament_node.dart';
 import 'package:flutter/material.dart';
 
@@ -61,6 +61,8 @@ class TournamentData {
   // matches[numRound][TournamentMatch]
   static List<List<TournamentMatch>> matches = List.empty(growable: true);
   static int visualCurrentRound = 1;
+  static int ownerElo = 0;
+  static String ownerName = "";
   static int realCurrentRound() {
     return TournamentData.totalRounds - TournamentData.visualCurrentRound + 1;
   }
@@ -95,9 +97,9 @@ class _TournamentPageState extends State<TournamentPage> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    showElo(2300),
+                    showElo(TournamentData.ownerElo),
                     Text(
-                      "Antonio Antoniddo",
+                      TournamentData.ownerName,
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.secondary,
                         fontSize: 22,
@@ -144,18 +146,25 @@ class _TournamentPageState extends State<TournamentPage> {
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Center(
-                          child: tournamentNode(
-                              m.startTime,
-                              m.player1Name,
-                              m.player2Name,
-                              "avatars${m.player1Image}",
-                              "avatars${m.player2Image}",
-                              m.player1Elo,
-                              m.player2Elo,
-                              m.hasStarted,
+                          child: options(
+                              context,
+                              tournamentNode(
+                                  m.startTime,
+                                  m.player1Name,
+                                  m.player2Name,
+                                  "avatars${m.player1Image}",
+                                  "avatars${m.player2Image}",
+                                  m.player1Elo,
+                                  m.player2Elo,
+                                  m.hasStarted,
+                                  m.finished,
+                                  m.winner == m.player1ID,
+                                  context),
                               m.finished,
-                              m.winner == m.player1ID,
-                              context),
+                              m.hasStarted,
+                              m.player1ID,
+                              m.player2ID,
+                              m.matchID),
                         ),
                       )
                     ],

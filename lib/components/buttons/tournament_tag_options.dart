@@ -12,7 +12,9 @@ PopupMenuButton suscribed(
     String id,
     bool hasStarted,
     String owner,
-    int rounds) {
+    int rounds,
+    String ownerName,
+    int ownerElo) {
   UserData userData = UserData();
 
   return PopupMenuButton(
@@ -42,6 +44,8 @@ PopupMenuButton suscribed(
           await apiGetTournament(id);
           TournamentData.totalRounds = rounds;
           TournamentData.visualCurrentRound = 1;
+          TournamentData.ownerName = ownerName;
+          TournamentData.ownerElo = ownerElo;
           if (context.mounted) {
             Navigator.push(
               context,
@@ -56,6 +60,8 @@ PopupMenuButton suscribed(
           await apiGetTournament(id);
           TournamentData.totalRounds = rounds;
           TournamentData.visualCurrentRound = 1;
+          TournamentData.ownerName = ownerName;
+          TournamentData.ownerElo = ownerElo;
           if (context.mounted) {
             Navigator.push(
               context,
@@ -78,7 +84,7 @@ PopupMenuButton suscribed(
     },
     itemBuilder: (context) {
       return [
-        if (hasStarted && !finished) ...[
+        if (!finished) ...[
           const PopupMenuItem(
             value: '_jugar',
             child: Text("Jugar"),
@@ -111,7 +117,9 @@ PopupMenuButton unsuscribed(
     String id,
     bool hasStarted,
     String owner,
-    int rounds) {
+    int rounds,
+    String ownerName,
+    int ownerElo) {
   UserData userData = UserData();
 
   return PopupMenuButton(
@@ -141,6 +149,8 @@ PopupMenuButton unsuscribed(
           await apiGetTournament(id);
           TournamentData.totalRounds = rounds;
           TournamentData.visualCurrentRound = 1;
+          TournamentData.ownerName = ownerName;
+          TournamentData.ownerElo = ownerElo;
           if (context.mounted) {
             Navigator.push(
               context,

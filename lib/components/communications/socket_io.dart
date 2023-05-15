@@ -34,9 +34,8 @@ class Arguments {
   Arguments.forSPECTATOR(this.roomID);
   Arguments.forCREATECUSTOM(this.time, this.increment, this.hostColor);
   Arguments.forJOINCUSTOM(this.roomID);
+  Arguments.forTOURNAMENT(this.roomID);
 }
-
-
 
 class GameSocket {
   static final GameSocket _singleton = GameSocket._internal();
@@ -154,6 +153,11 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
         s.spectatorMode = true;
       }
       break;
+    case "TOURNAMENT":
+      {
+        jsonData = {"gameType": "TOURNAMENT", "matchID": arguments.roomID};
+      }
+      break;
     default:
       {
         jsonData = {};
@@ -187,7 +191,9 @@ Future<void> startGame(BuildContext context, String type, Arguments arguments) {
             s.timer = data[0]["initialTimer"],
             // print(data),
             // print(s.room),
-            if (type == "COMP" || type == "CREATECUSTOM")
+            if (type == "COMP" ||
+                type == "CREATECUSTOM" ||
+                type == "TOURNAMENT")
               Navigator.pop(context),
             Navigator.push(
               context,

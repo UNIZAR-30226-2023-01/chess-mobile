@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../visual/screen_size.dart';
 import '../data/profile_data.dart';
 import '../data/game_data.dart';
+import '../visual/convert_date.dart';
 
 class PlayedGames {
   final UserData userData = UserData();
@@ -62,16 +63,65 @@ class PlayedGames {
             color: Theme.of(context).colorScheme.primary,
             width: 1.25,
           )),
-      child: Column(children: [
-        Text(
-          "Partida creada en:\n${gameData.createdAt}",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 19,
-            color: Theme.of(context).colorScheme.primary,
+      child: Column(
+        children: [
+          Text(
+            convertirFecha(gameData.createdAt),
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 17,
+              color: Theme.of(context).colorScheme.primary,
+            ),
           ),
-        ),
-      ]),
+          SizedBox(height: defaultWidth * 0.05),
+          Text(
+            gameData.gameType,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 17,
+              color: Theme.of(context).colorScheme.primary,
+            ),
+          ),
+          SizedBox(height: defaultWidth * 0.05),
+          if (gameData.winner == "Empate") ...[
+            const Text(
+              "¡Has empatado!",
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.visible,
+              style: TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.bold,
+                color: Colors.orange,
+              ),
+            ),
+          ] else if (gameData.winner == "LIGHT" &&
+                  gameData.lightPlayer == userData.id ||
+              gameData.winner == "DARK" &&
+                  gameData.darkPlayer == userData.id) ...[
+            const Text(
+              "¡Has ganado!",
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.visible,
+              style: TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
+              ),
+            ),
+          ] else ...[
+            const Text(
+              "¡Has perdido!",
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.visible,
+              style: TextStyle(
+                fontSize: 19,
+                fontWeight: FontWeight.bold,
+                color: Colors.red,
+              ),
+            ),
+          ]
+        ],
+      ),
     );
   }
 }

@@ -42,7 +42,7 @@ PopupMenuButton options(BuildContext context, Widget widget, bool finished,
     },
     itemBuilder: (context) {
       return [
-        if (!hasStarted &&
+        if (hasStarted &&
             !finished &&
             (id1 == userData.id || id2 == userData.id)) ...[
           const PopupMenuItem(

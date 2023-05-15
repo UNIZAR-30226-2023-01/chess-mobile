@@ -176,7 +176,10 @@ Widget tournamentNode(
                   ),
                   // Player 2 name
                   SizedBox(
-                    width: defaultWidth * 0.85 - defaultHeight * 0.07 - 40,
+                    width: defaultWidth * 0.85 -
+                        defaultHeight * 0.07 -
+                        50 -
+                        defaultWidth * 0.125,
                     child: Row(
                       children: [
                         showEloWithOpacity(elo_2, finished && winner),

@@ -36,8 +36,8 @@ class Arguments {
 class GameSocket {
   static final GameSocket _singleton = GameSocket._internal();
   io.Socket socket = io.io(
-      'http://192.168.0.249:4001',
-      // 'http://reign-chess.duckdns.org:4001/',
+      // 'http://192.168.0.249:4001',
+      'http://reign-chess.duckdns.org:4001/',
       OptionBuilder().setTransports(['websocket']).setExtraHeaders({
         'token': UserData().token
       }) // for Flutter or Dart VM SI BORRAS ESTO NO VA EL SOCKET :D
@@ -56,8 +56,8 @@ class GameSocket {
 
   void reset() {
     socket = io.io(
-        'http://192.168.0.249:4001',
-        // 'http://reign-chess.duckdns.org:4001/',
+        // 'http://192.168.0.249:4001',
+        'http://reign-chess.duckdns.org:4001/',
         OptionBuilder()
             .setTransports(['websocket'])
             .setExtraHeaders({'token': UserData().token})

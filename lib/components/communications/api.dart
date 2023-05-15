@@ -11,8 +11,6 @@ import 'package:ajedrez/pages/menus_pages/tournaments.dart';
 
 import 'package:flutter/services.dart' show rootBundle;
 
-// import 'package:webview_flutter/webview_flutter.dart';
-
 Future<int> apiSignUp(String username, password, email) async {
   var pemBytes = await rootBundle.load("assets/cert.pem");
 

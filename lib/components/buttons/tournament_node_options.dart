@@ -8,12 +8,12 @@ PopupMenuButton options(BuildContext context, Widget widget, bool finished,
     bool hasStarted, String id1, String id2, String matchID) {
   UserData userData = UserData();
 
-  void _handleTapTOURNAMENT(BuildContext context) async {
+  void handleTapTOURNAMENT(BuildContext context) async {
     Arguments arguments = Arguments.forTOURNAMENT(matchID);
     await startGame(context, "TOURNAMENT", arguments);
   }
 
-  void _handleTapSPECTATOR(BuildContext context) async {
+  void handleTapSPECTATOR(BuildContext context) async {
     Arguments arguments = Arguments.forSPECTATOR(matchID);
     await startGame(context, "SPECTATOR", arguments);
   }
@@ -32,11 +32,11 @@ PopupMenuButton options(BuildContext context, Widget widget, bool finished,
       ActualSelection.isSelected = false;
       switch (value) {
         case '_jugar':
-          _handleTapTOURNAMENT(context);
+          handleTapTOURNAMENT(context);
           popupWAITING(context);
           break;
         case '_observar':
-          _handleTapSPECTATOR(context);
+          handleTapSPECTATOR(context);
           break;
       }
     },

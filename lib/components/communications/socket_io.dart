@@ -2,15 +2,11 @@
 
 import 'dart:async';
 // import 'dart:convert';
-// import 'package:ajedrez/components/chessLogic/board.dart';
-// import 'package:ajedrez/components/chessLogic/board.dart';
 import 'package:ajedrez/components/chessLogic/board.dart';
 import 'package:ajedrez/components/chessLogic/square.dart';
 import 'package:ajedrez/components/chessLogic/timer.dart';
 import 'package:ajedrez/components/popups/ingame/save_dialog.dart';
 import 'package:ajedrez/components/data/profile_data.dart';
-// import 'package:ajedrez/components/profile_data.dart';
-// import 'package:ajedrez/components/visual/colores_tablero.dart';
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 import 'package:socket_io_client/socket_io_client.dart';
@@ -40,7 +36,6 @@ class Arguments {
 class GameSocket {
   static final GameSocket _singleton = GameSocket._internal();
   io.Socket socket = io.io(
-      //no borrar la linea comentada esta para el desarrollo en la red donde esta hosteado el backend
       // 'http://192.168.0.249:4001',
       'http://reign-chess.duckdns.org:4001/',
       OptionBuilder().setTransports(['websocket']).setExtraHeaders({

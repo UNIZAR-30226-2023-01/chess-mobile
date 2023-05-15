@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the possibleMovements method from the Queen class, for the Dart programming language.">
+  <title>possibleMovements method - Queen class - pieces library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../../static-assets/styles.css?v1">
+  <link rel="icon" href="../../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../../index.html">ajedrez</a></li>
+    <li><a href="../../components_chessLogic_pieces/components_chessLogic_pieces-library.html">pieces</a></li>
+    <li><a href="../../components_chessLogic_pieces/Queen-class.html">Queen</a></li>
+    <li class="self-crumb">possibleMovements method</li>
+  </ol>
+  <div class="self-name">possibleMovements</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-method">possibleMovements</span> method 
+</h1></div>
+
+    <section class="multi-line-signature">
+      
+  <div>
+    <ol class="annotation-list">
+        <li>@<a href="https://api.flutter.dev/flutter/dart-core/override-constant.html">override</a></li>
+    </ol>
+  </div>
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>&gt;</span></span>&gt;</span></span>
+<span class="name ">possibleMovements</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="possibleMovements-param-x"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">x</span>, </span></li>
+<li><span class="parameter" id="possibleMovements-param-y"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span> <span class="parameter-name">y</span>, </span></li>
+<li><span class="parameter" id="possibleMovements-param-board"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="../../components_chessLogic_pieces/Piece-class.html">Piece</a></span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">board</span>, </span></li>
+<li><span class="parameter" id="possibleMovements-param-reversedBoard"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">reversedBoard</span>, </span></li>
+<li><span class="parameter" id="possibleMovements-param-lastMovement"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>&gt;</span></span>&gt;</span></span> <span class="parameter-name">lastMovement</span></span></li>
+</ol>)
+
+      <div class="features"><span class="feature">override</span></div>
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">@override
+List&lt;List&lt;int&gt;&gt; possibleMovements(int x, int y, List&lt;List&lt;Piece&gt;&gt; board,
+    bool reversedBoard, List&lt;List&lt;int&gt;&gt; lastMovement) {
+  List&lt;List&lt;int&gt;&gt; movements = [];
+
+  for (int i = y + 1; i &lt; 8; i++) {
+    if (board[i][x].isEmpty()) {
+      movements.add([i, x]);
+    } else {
+      if (board[i][x].isWhite != isWhite) {
+        movements.add([i, x]);
+      }
+      break;
+    }
+  }
+
+  for (int i = y - 1; i &gt;= 0; i--) {
+    if (board[i][x].isEmpty()) {
+      movements.add([i, x]);
+    } else {
+      if (board[i][x].isWhite != isWhite) {
+        movements.add([i, x]);
+      }
+      break;
+    }
+  }
+
+  for (int i = x + 1; i &lt; 8; i++) {
+    if (board[y][i].isEmpty()) {
+      movements.add([y, i]);
+    } else {
+      if (board[y][i].isWhite != isWhite) {
+        movements.add([y, i]);
+      }
+      break;
+    }
+  }
+
+  for (int i = x - 1; i &gt;= 0; i--) {
+    if (board[y][i].isEmpty()) {
+      movements.add([y, i]);
+    } else {
+      if (board[y][i].isWhite != isWhite) {
+        movements.add([y, i]);
+      }
+      break;
+    }
+  }
+
+  for (int i = 1; i &lt; 8; i++) {
+    if ((x + i &lt; 8 &amp;&amp; y + i &lt; 8) &amp;&amp; board[y + i][x + i].isEmpty()) {
+      movements.add([y + i, x + i]);
+    } else {
+      if ((x + i &lt; 8 &amp;&amp; y + i &lt; 8) &amp;&amp;
+          board[y + i][x + i].isWhite != isWhite) {
+        movements.add([y + i, x + i]);
+      }
+      break;
+    }
+  }
+
+  for (int i = 1; i &lt; 8; i++) {
+    if ((x - i &gt;= 0 &amp;&amp; y - i &gt;= 0) &amp;&amp; board[y - i][x - i].isEmpty()) {
+      movements.add([y - i, x - i]);
+    } else {
+      if ((x - i &gt;= 0 &amp;&amp; y - i &gt;= 0) &amp;&amp;
+          board[y - i][x - i].isWhite != isWhite) {
+        movements.add([y - i, x - i]);
+      }
+      break;
+    }
+  }
+
+  for (int i = 1; i &lt; 8; i++) {
+    if ((x + i &lt; 8 &amp;&amp; y - i &gt;= 0) &amp;&amp; board[y - i][x + i].isEmpty()) {
+      movements.add([y - i, x + i]);
+    } else {
+      if ((x + i &lt; 8 &amp;&amp; y - i &gt;= 0) &amp;&amp;
+          board[y - i][x + i].isWhite != isWhite) {
+        movements.add([y - i, x + i]);
+      }
+      break;
+    }
+  }
+
+  for (int i = 1; i &lt; 8; i++) {
+    if ((x - i &gt;= 0 &amp;&amp; y + i &lt; 8) &amp;&amp; board[y + i][x - i].isEmpty()) {
+      movements.add([y + i, x - i]);
+    } else {
+      if ((x - i &gt;= 0 &amp;&amp; y + i &lt; 8) &amp;&amp;
+          board[y + i][x - i].isWhite != isWhite) {
+        movements.add([y + i, x - i]);
+      }
+      break;
+    }
+  }
+
+  return movements;
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../../index.html">ajedrez</a></li>
+  <li><a href="../../components_chessLogic_pieces/components_chessLogic_pieces-library.html">pieces</a></li>
+  <li><a href="../../components_chessLogic_pieces/Queen-class.html">Queen</a></li>
+  <li class="self-crumb">possibleMovements method</li>
+</ol>
+
+
+    <h5>Queen class</h5>
+    <ol>
+
+        <li class="section-title"><a href="../../components_chessLogic_pieces/Queen-class.html#constructors">Constructors</a></li>
+          <li><a href="../../components_chessLogic_pieces/Queen/Queen.html">Queen</a></li>
+
+
+        <li class="section-title inherited">
+          <a href="../../components_chessLogic_pieces/Queen-class.html#instance-properties">Properties</a>
+        </li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/hashCode.html">hashCode</a></li>
+          <li class="inherited"><a href="../../components_chessLogic_pieces/Piece/isWhite.html">isWhite</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/runtimeType.html">runtimeType</a></li>
+          <li class="inherited"><a href="../../components_chessLogic_pieces/Piece/userData.html">userData</a></li>
+
+        <li class="section-title"><a href="../../components_chessLogic_pieces/Queen-class.html#instance-methods">Methods</a></li>
+          <li class="inherited"><a href="../../components_chessLogic_pieces/Piece/color.html">color</a></li>
+          <li class="inherited"><a href="../../components_chessLogic_pieces/Piece/getImg.html">getImg</a></li>
+          <li class="inherited"><a href="../../components_chessLogic_pieces/Piece/getValue.html">getValue</a></li>
+          <li class="inherited"><a href="../../components_chessLogic_pieces/Piece/isEmpty.html">isEmpty</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/noSuchMethod.html">noSuchMethod</a></li>
+          <li><a href="../../components_chessLogic_pieces/Queen/possibleMovements.html">possibleMovements</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/toString.html">toString</a></li>
+
+        <li class="section-title inherited"><a href="../../components_chessLogic_pieces/Queen-class.html#operators">Operators</a></li>
+          <li class="inherited"><a href="https://api.flutter.dev/flutter/dart-core/Object/operator_equals.html">operator ==</a></li>
+
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    ajedrez
+      1.2.3
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../../static-assets/highlight.pack.js?v1"></script>
+<script src="../../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

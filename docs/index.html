@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 6.2.1">
+  <meta name="description" content="ajedrez API docs, for the Dart programming language.">
+  <title>ajedrez - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li class="self-crumb">ajedrez package</li>
+  </ol>
+  <div class="self-name">ajedrez</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <p><a href="https://github.com/UNIZAR-30226-2023-01/chess-mobile/blob/main/.github/workflows/production.yml"><img src="https://github.com/UNIZAR-30226-2023-01/chess-mobile/actions/workflows/badge.svg" alt="Production CI"></a></p>
+<h2 id="folder-structure">Folder structure</h2>
+<ul>
+<li><code>lib/</code>: Contains all the code of the applicaction:
+<ul>
+<li><code>main.dart</code>: Entry point of the app, it setups the general configurations.</li>
+<li><code>components/</code>: Contains all the specific components which are reused along all the code.
+<ul>
+<li><code>buttons/</code>: Contains all the custom buttons used in the app</li>
+<li><code>chessLogic/</code>: Contains the core of the gameplay logic and all the elements that we visualize in game.</li>
+<li><code>communications/</code>: Contains the core of the API/Socket calls to the backend.</li>
+<li><code>popups/</code>: Contains all the different popups of the application.</li>
+<li><code>visual/</code>: Contains all the customizations in visual aspects like the theme colors.</li>
+<li><code>data/</code>: Contains all the classes/singletons which have information.</li>
+</ul>
+</li>
+<li><code>pages/</code>: Contains all the screens code.
+<ul>
+<li><code>auth_pages</code>: Contains the login, registry, password recover screens code.</li>
+<li><code>game_pages</code>: Contains the core gameplay screen code.</li>
+<li><code>menus_pages</code>: Contains all the intermediate screens between the login and the gameplay.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><code>images/</code>: Logos and chess pieces images.</li>
+<li><code>pubspec.yaml</code>: Dependencies of the application.</li>
+<li><code>assets/</code>: Icons and animations of the application.</li>
+<li><code>fonts/</code>: Fonts of the application.</li>
+</ul>
+<h2 id="how-to-run">How to run</h2>
+<pre class="language-bash"><code class="language-bash">flutter run
+</code></pre>
+<h2 id="how-to-build-apk">How to build apk</h2>
+<pre class="language-bash"><code class="language-bash">flutter build apk
+</code></pre>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="ai">
+  <span class="name"><a href="components_popups_creategame_ai/components_popups_creategame_ai-library.html">ai</a></span> 
+
+</dt>
+<dd>Popup to select ai options when creating the game.
+</dd>
+
+          <dt id="api">
+  <span class="name"><a href="components_communications_api/components_communications_api-library.html">api</a></span> 
+
+</dt>
+<dd>Contains all the API calls.
+</dd>
+
+          <dt id="back">
+  <span class="name"><a href="components_popups_back/components_popups_back-library.html">back</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="board">
+  <span class="name"><a href="components_chessLogic_board/components_chessLogic_board-library.html">board</a></span> 
+
+</dt>
+<dd>Contains the board data, checks the valid movements and starts the board.
+</dd>
+
+          <dt id="bottom_bar">
+  <span class="name"><a href="pages_menus_pages_bottom_bar/pages_menus_pages_bottom_bar-library.html">bottom_bar</a></span> 
+
+</dt>
+<dd>Page that holds the rest of the home pages.
+</dd>
+
+          <dt id="competitive">
+  <span class="name"><a href="components_popups_creategame_competitive/components_popups_creategame_competitive-library.html">competitive</a></span> 
+
+</dt>
+<dd>Popup to select competitive options when searching the game.
+</dd>
+
+          <dt id="convert_date">
+  <span class="name"><a href="components_visual_convert_date/components_visual_convert_date-library.html">convert_date</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="create_password">
+  <span class="name"><a href="pages_auth_pages_create_password/pages_auth_pages_create_password-library.html">create_password</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="custom">
+  <span class="name"><a href="components_popups_creategame_custom/components_popups_creategame_custom-library.html">custom</a></span> 
+
+</dt>
+<dd>Popup to select custom mode options when creating/joining the game.
+</dd>
+
+          <dt id="custom_shape">
+  <span class="name"><a href="components_visual_custom_shape/components_visual_custom_shape-library.html">custom_shape</a></span> 
+
+</dt>
+<dd>Class that implements custom shapes.
+</dd>
+
+          <dt id="customization_constants">
+  <span class="name"><a href="components_visual_customization_constants/components_visual_customization_constants-library.html">customization_constants</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="delete">
+  <span class="name"><a href="components_popups_delete/components_popups_delete-library.html">delete</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="draw_dialog">
+  <span class="name"><a href="components_popups_ingame_draw_dialog/components_popups_ingame_draw_dialog-library.html">draw_dialog</a></span> 
+
+</dt>
+<dd>Popup when a game ends in draw.
+</dd>
+
+          <dt id="edit_profile">
+  <span class="name"><a href="components_popups_edit_profile/components_popups_edit_profile-library.html">edit_profile</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="forgot_password">
+  <span class="name"><a href="pages_auth_pages_forgot_password/pages_auth_pages_forgot_password-library.html">forgot_password</a></span> 
+
+</dt>
+<dd>Page that allows the user to change a forgotten password.
+</dd>
+
+          <dt id="game">
+  <span class="name"><a href="pages_game_pages_game/pages_game_pages_game-library.html">game</a></span> 
+
+</dt>
+<dd>Page that contains all the game.
+</dd>
+
+          <dt id="game_data">
+  <span class="name"><a href="components_data_game_data/components_data_game_data-library.html">game_data</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="get_elo">
+  <span class="name"><a href="components_visual_get_elo/components_visual_get_elo-library.html">get_elo</a></span> 
+
+</dt>
+<dd>Functions that works around with the elo.
+</dd>
+
+          <dt id="home">
+  <span class="name"><a href="pages_menus_pages_home/pages_menus_pages_home-library.html">home</a></span> 
+
+</dt>
+<dd>Page that displays the home when after login.
+</dd>
+
+          <dt id="main">
+  <span class="name"><a href="main/main-library.html">main</a></span> 
+
+</dt>
+<dd>Page base for all the app.
+</dd>
+
+          <dt id="manage_tournaments">
+  <span class="name"><a href="pages_menus_pages_manage_tournaments/pages_menus_pages_manage_tournaments-library.html">manage_tournaments</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="manage_tournaments_data">
+  <span class="name"><a href="components_data_manage_tournaments_data/components_data_manage_tournaments_data-library.html">manage_tournaments_data</a></span> 
+
+</dt>
+<dd>Class that contains the data of a tournament.
+</dd>
+
+          <dt id="my_flutter_app_icons">
+  <span class="name"><a href="components_visual_my_flutter_app_icons/components_visual_my_flutter_app_icons-library.html">my_flutter_app_icons</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="password_changed">
+  <span class="name"><a href="pages_auth_pages_password_changed/pages_auth_pages_password_changed-library.html">password_changed</a></span> 
+
+</dt>
+<dd>Page that informs the user the sucessfull change of the password.
+</dd>
+
+          <dt id="pieces">
+  <span class="name"><a href="components_chessLogic_pieces/components_chessLogic_pieces-library.html">pieces</a></span> 
+
+</dt>
+<dd>Contains all the classes of the chess pieces and its native movements.
+</dd>
+
+          <dt id="played_games">
+  <span class="name"><a href="components_popups_played_games/components_popups_played_games-library.html">played_games</a></span> 
+
+</dt>
+<dd>Popup that lists all the played games.
+</dd>
+
+          <dt id="pop_error">
+  <span class="name"><a href="components_popups_pop_error/components_popups_pop_error-library.html">pop_error</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="possible_draw">
+  <span class="name"><a href="components_popups_ingame_possible_draw/components_popups_ingame_possible_draw-library.html">possible_draw</a></span> 
+
+</dt>
+<dd>Popup when a player proposes draw.
+</dd>
+
+          <dt id="possible_save">
+  <span class="name"><a href="components_popups_ingame_possible_save/components_popups_ingame_possible_save-library.html">possible_save</a></span> 
+
+</dt>
+<dd>Popup when a player propose to save the game.
+</dd>
+
+          <dt id="profile">
+  <span class="name"><a href="pages_menus_pages_profile/pages_menus_pages_profile-library.html">profile</a></span> 
+
+</dt>
+<dd>Page that shows the profile info.
+</dd>
+
+          <dt id="profile_data">
+  <span class="name"><a href="components_data_profile_data/components_data_profile_data-library.html">profile_data</a></span> 
+
+</dt>
+<dd>Singleton that contains the userdata.
+</dd>
+
+          <dt id="promotion">
+  <span class="name"><a href="components_popups_ingame_promotion/components_popups_ingame_promotion-library.html">promotion</a></span> 
+
+</dt>
+<dd>Popup when a pawn promotes.
+</dd>
+
+          <dt id="ranking">
+  <span class="name"><a href="pages_menus_pages_ranking/pages_menus_pages_ranking-library.html">ranking</a></span> 
+
+</dt>
+<dd>Page that shows the ranking.
+</dd>
+
+          <dt id="ranking_data">
+  <span class="name"><a href="components_data_ranking_data/components_data_ranking_data-library.html">ranking_data</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="save_dialog">
+  <span class="name"><a href="components_popups_ingame_save_dialog/components_popups_ingame_save_dialog-library.html">save_dialog</a></span> 
+
+</dt>
+<dd>Popup when a game is saved.
+</dd>
+
+          <dt id="saved_games">
+  <span class="name"><a href="components_popups_saved_games/components_popups_saved_games-library.html">saved_games</a></span> 
+
+</dt>
+<dd>Popup that lists all the saved games.
+</dd>
+
+          <dt id="screen_size">
+  <span class="name"><a href="components_visual_screen_size/components_visual_screen_size-library.html">screen_size</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="set_image_color">
+  <span class="name"><a href="components_visual_set_image_color/components_visual_set_image_color-library.html">set_image_color</a></span> 
+
+</dt>
+<dd>Function that acts as a image color filter.
+</dd>
+
+          <dt id="signin">
+  <span class="name"><a href="pages_auth_pages_signin/pages_auth_pages_signin-library.html">signin</a></span> 
+
+</dt>
+<dd>Page that allows the user to sign in.
+</dd>
+
+          <dt id="signup">
+  <span class="name"><a href="pages_auth_pages_signup/pages_auth_pages_signup-library.html">signup</a></span> 
+
+</dt>
+<dd>Page that allows the user to sign up.
+</dd>
+
+          <dt id="socket_io">
+  <span class="name"><a href="components_communications_socket_io/components_communications_socket_io-library.html">socket_io</a></span> 
+
+</dt>
+<dd>Contains all the gamesocket data and methods.
+</dd>
+
+          <dt id="spectator">
+  <span class="name"><a href="components_popups_creategame_spectator/components_popups_creategame_spectator-library.html">spectator</a></span> 
+
+</dt>
+<dd>Popup to select spectator options when joining the game.
+</dd>
+
+          <dt id="square">
+  <span class="name"><a href="components_chessLogic_square/components_chessLogic_square-library.html">square</a></span> 
+
+</dt>
+<dd>Widget that represents a single square of the board, it has all the movement logic.
+</dd>
+
+          <dt id="startup">
+  <span class="name"><a href="pages_auth_pages_startup/pages_auth_pages_startup-library.html">startup</a></span> 
+
+</dt>
+<dd>Page that shows up when starting the app.
+</dd>
+
+          <dt id="timer">
+  <span class="name"><a href="components_chessLogic_timer/components_chessLogic_timer-library.html">timer</a></span> 
+
+</dt>
+<dd>Widget that acts as a regressive timer.
+</dd>
+
+          <dt id="tournament">
+  <span class="name"><a href="components_popups_creategame_tournament/components_popups_creategame_tournament-library.html">tournament</a></span> 
+
+</dt>
+<dd>Popup to select tournaments options when creating/joining the tournament.
+</dd>
+
+          <dt id="tournament_node">
+  <span class="name"><a href="components_visual_tournament_node/components_visual_tournament_node-library.html">tournament_node</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="tournament_tag">
+  <span class="name"><a href="components_visual_tournament_tag/components_visual_tournament_tag-library.html">tournament_tag</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="tournaments">
+  <span class="name"><a href="pages_menus_pages_tournaments/pages_menus_pages_tournaments-library.html">tournaments</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="winner_dialog">
+  <span class="name"><a href="components_popups_ingame_winner_dialog/components_popups_ingame_winner_dialog-library.html">winner_dialog</a></span> 
+
+</dt>
+<dd>Popup when a game ends.
+</dd>
+
+        </dl>
+      </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li class="self-crumb">ajedrez package</li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">ajedrez</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="components_popups_creategame_ai/components_popups_creategame_ai-library.html">ai</a></li>
+      <li><a href="components_communications_api/components_communications_api-library.html">api</a></li>
+      <li><a href="components_popups_back/components_popups_back-library.html">back</a></li>
+      <li><a href="components_chessLogic_board/components_chessLogic_board-library.html">board</a></li>
+      <li><a href="pages_menus_pages_bottom_bar/pages_menus_pages_bottom_bar-library.html">bottom_bar</a></li>
+      <li><a href="components_popups_creategame_competitive/components_popups_creategame_competitive-library.html">competitive</a></li>
+      <li><a href="components_visual_convert_date/components_visual_convert_date-library.html">convert_date</a></li>
+      <li><a href="pages_auth_pages_create_password/pages_auth_pages_create_password-library.html">create_password</a></li>
+      <li><a href="components_popups_creategame_custom/components_popups_creategame_custom-library.html">custom</a></li>
+      <li><a href="components_visual_custom_shape/components_visual_custom_shape-library.html">custom_shape</a></li>
+      <li><a href="components_visual_customization_constants/components_visual_customization_constants-library.html">customization_constants</a></li>
+      <li><a href="components_popups_delete/components_popups_delete-library.html">delete</a></li>
+      <li><a href="components_popups_ingame_draw_dialog/components_popups_ingame_draw_dialog-library.html">draw_dialog</a></li>
+      <li><a href="components_popups_edit_profile/components_popups_edit_profile-library.html">edit_profile</a></li>
+      <li><a href="pages_auth_pages_forgot_password/pages_auth_pages_forgot_password-library.html">forgot_password</a></li>
+      <li><a href="pages_game_pages_game/pages_game_pages_game-library.html">game</a></li>
+      <li><a href="components_data_game_data/components_data_game_data-library.html">game_data</a></li>
+      <li><a href="components_visual_get_elo/components_visual_get_elo-library.html">get_elo</a></li>
+      <li><a href="pages_menus_pages_home/pages_menus_pages_home-library.html">home</a></li>
+      <li><a href="main/main-library.html">main</a></li>
+      <li><a href="pages_menus_pages_manage_tournaments/pages_menus_pages_manage_tournaments-library.html">manage_tournaments</a></li>
+      <li><a href="components_data_manage_tournaments_data/components_data_manage_tournaments_data-library.html">manage_tournaments_data</a></li>
+      <li><a href="components_visual_my_flutter_app_icons/components_visual_my_flutter_app_icons-library.html">my_flutter_app_icons</a></li>
+      <li><a href="pages_auth_pages_password_changed/pages_auth_pages_password_changed-library.html">password_changed</a></li>
+      <li><a href="components_chessLogic_pieces/components_chessLogic_pieces-library.html">pieces</a></li>
+      <li><a href="components_popups_played_games/components_popups_played_games-library.html">played_games</a></li>
+      <li><a href="components_popups_pop_error/components_popups_pop_error-library.html">pop_error</a></li>
+      <li><a href="components_popups_ingame_possible_draw/components_popups_ingame_possible_draw-library.html">possible_draw</a></li>
+      <li><a href="components_popups_ingame_possible_save/components_popups_ingame_possible_save-library.html">possible_save</a></li>
+      <li><a href="pages_menus_pages_profile/pages_menus_pages_profile-library.html">profile</a></li>
+      <li><a href="components_data_profile_data/components_data_profile_data-library.html">profile_data</a></li>
+      <li><a href="components_popups_ingame_promotion/components_popups_ingame_promotion-library.html">promotion</a></li>
+      <li><a href="pages_menus_pages_ranking/pages_menus_pages_ranking-library.html">ranking</a></li>
+      <li><a href="components_data_ranking_data/components_data_ranking_data-library.html">ranking_data</a></li>
+      <li><a href="components_popups_ingame_save_dialog/components_popups_ingame_save_dialog-library.html">save_dialog</a></li>
+      <li><a href="components_popups_saved_games/components_popups_saved_games-library.html">saved_games</a></li>
+      <li><a href="components_visual_screen_size/components_visual_screen_size-library.html">screen_size</a></li>
+      <li><a href="components_visual_set_image_color/components_visual_set_image_color-library.html">set_image_color</a></li>
+      <li><a href="pages_auth_pages_signin/pages_auth_pages_signin-library.html">signin</a></li>
+      <li><a href="pages_auth_pages_signup/pages_auth_pages_signup-library.html">signup</a></li>
+      <li><a href="components_communications_socket_io/components_communications_socket_io-library.html">socket_io</a></li>
+      <li><a href="components_popups_creategame_spectator/components_popups_creategame_spectator-library.html">spectator</a></li>
+      <li><a href="components_chessLogic_square/components_chessLogic_square-library.html">square</a></li>
+      <li><a href="pages_auth_pages_startup/pages_auth_pages_startup-library.html">startup</a></li>
+      <li><a href="components_chessLogic_timer/components_chessLogic_timer-library.html">timer</a></li>
+      <li><a href="components_popups_creategame_tournament/components_popups_creategame_tournament-library.html">tournament</a></li>
+      <li><a href="components_visual_tournament_node/components_visual_tournament_node-library.html">tournament_node</a></li>
+      <li><a href="components_visual_tournament_tag/components_visual_tournament_tag-library.html">tournament_tag</a></li>
+      <li><a href="pages_menus_pages_tournaments/pages_menus_pages_tournaments-library.html">tournaments</a></li>
+      <li><a href="components_popups_ingame_winner_dialog/components_popups_ingame_winner_dialog-library.html">winner_dialog</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    ajedrez
+      1.2.3
+  </span>
+
+  
+</footer>
+
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

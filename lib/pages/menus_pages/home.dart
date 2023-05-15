@@ -1,14 +1,18 @@
+/// Page that displays the home when after login.
+
+import 'package:ajedrez/components/popups/creategame/tournament.dart';
+
 import 'package:flutter/material.dart';
 import '../../components/visual/custom_shape.dart';
 import '../../components/visual/screen_size.dart';
 import '../../components/visual/set_image_color.dart';
-import '../../components/buttons/home_long_button.dart';
-import '../../components/buttons/home_short_button.dart';
-import '../../components/popups/spectator.dart';
-import '../../components/popups/competitive.dart';
-import '../../components/popups/ai.dart';
-import '../../components/popups/custom.dart';
-import '../../components/profile_data.dart';
+import '../../components/buttons/home/long.dart';
+import '../../components/buttons/home/short.dart';
+import '../../components/popups/creategame/spectator.dart';
+import '../../components/popups/creategame/competitive.dart';
+import '../../components/popups/creategame/ai.dart';
+import '../../components/popups/creategame/custom.dart';
+import '../../components/data/profile_data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -17,10 +21,12 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
+
 class _HomePageState extends State<HomePage> {
   final UserData userData = UserData();
   final Spectator spectator = Spectator();
   final Competitive competitive = Competitive();
+  final Tournament tournament = Tournament();
   final AI ai = AI();
   final Custom custom = Custom();
 
@@ -57,8 +63,12 @@ class _HomePageState extends State<HomePage> {
                                 "Partida privada",
                                 () => custom.popupCUSTOM(context)),
                             SizedBox(width: defaultWidth * 0.075),
-                            shortButton(context, false, "Tournaments.png",
-                                "Torneo", () => null),
+                            shortButton(
+                                context,
+                                false,
+                                "Tournaments.png",
+                                "Torneo",
+                                () => tournament.popupTOURNAMENT(context)),
                           ]),
                       SizedBox(height: defaultWidth * 0.075),
                       Row(
@@ -71,7 +81,7 @@ class _HomePageState extends State<HomePage> {
                                 context,
                                 false,
                                 "Spectator.png",
-                                "Espectar juego",
+                                "Observar juego",
                                 () => spectator.popupSPECTATOR(context)),
                           ]),
                       SizedBox(height: defaultWidth * 0.05),

@@ -1,4 +1,4 @@
-import 'package:ajedrez/components/buttons/home_play_button.dart';
+import 'package:ajedrez/components/buttons/home/play.dart';
 import 'package:flutter/material.dart';
 import '../../components/visual/screen_size.dart';
 

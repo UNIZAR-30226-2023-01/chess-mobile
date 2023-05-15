@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the apiUpdateUser function from the api library, for the Dart programming language.">
+  <title>apiUpdateUser function - api library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">ajedrez</a></li>
+    <li><a href="../components_communications_api/components_communications_api-library.html">api</a></li>
+    <li class="self-crumb">apiUpdateUser function</li>
+  </ol>
+  <div class="self-name">apiUpdateUser</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-function">apiUpdateUser</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-async/Future-class.html">Future</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>&gt;</span></span>
+<span class="name ">apiUpdateUser</span>(<wbr>)
+
+        
+
+    </section>
+    
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">Future&lt;int&gt; apiUpdateUser() async {
+  UserData userData = UserData();
+
+  var pemBytes = await rootBundle.load(&quot;assets&#47;cert.pem&quot;);
+
+  var context = SecurityContext()
+    ..setTrustedCertificatesBytes(pemBytes.buffer.asUint8List(), password: &#39;&#39;);
+
+  var client = HttpClient(context: context)
+    ..badCertificateCallback =
+        (X509Certificate cert, String host, int port) =&gt; true;
+  try {
+    var request = await client.patchUrl(
+        Uri.parse(&#39;https:&#47;&#47;api.gracehopper.xyz&#47;v1&#47;users&#47;${userData.id}&#39;));
+    &#47;&#47; Set headers
+    request.headers.add(&#39;Content-Type&#39;, &#39;application&#47;json&#39;);
+    request.headers.add(&#39;Cookie&#39;, &#39;api-auth=${UserData().token}&#39;);
+
+    &#47;&#47; Create JSON body
+    var body = jsonEncode({
+      &#39;avatar&#39;: userData.avatar,
+      &#39;username&#39;: userData.username,
+      &#39;email&#39;: userData.email,
+      &#39;board&#39;: userData.boardType,
+      &#39;lightPieces&#39;: userData.lightPieces.substring(8),
+      &#39;darkPieces&#39;: userData.darkPieces.substring(8),
+    });
+
+    &#47;&#47; Set body
+    request.write(body);
+    var response = await request.close();
+    var responseBody = await response.transform(utf8.decoder).join();
+    var responseBodyDictionary = jsonDecode(responseBody);
+    &#47;&#47; print(responseBodyDictionary);
+
+    &#47;&#47; print(apiAuthCookie);
+    return responseBodyDictionary[&quot;status&quot;][&quot;error_code&quot;];
+  } catch (e) {
+    &#47;&#47; print(e.toString());
+    return -1;
+  } finally {
+    client.close();
+  }
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../index.html">ajedrez</a></li>
+  <li><a href="../components_communications_api/components_communications_api-library.html">api</a></li>
+  <li class="self-crumb">apiUpdateUser function</li>
+</ol>
+
+
+    <h5>api library</h5>
+    <ol>
+
+
+
+
+
+      <li class="section-title"><a href="../components_communications_api/components_communications_api-library.html#functions">Functions</a></li>
+        <li><a href="../components_communications_api/apiCreateTournament.html">apiCreateTournament</a></li>
+        <li><a href="../components_communications_api/apiDeleteTournament.html">apiDeleteTournament</a></li>
+        <li><a href="../components_communications_api/apiDeleteUser.html">apiDeleteUser</a></li>
+        <li><a href="../components_communications_api/apiForgotPassword.html">apiForgotPassword</a></li>
+        <li><a href="../components_communications_api/apiGames.html">apiGames</a></li>
+        <li><a href="../components_communications_api/apiGetTournament.html">apiGetTournament</a></li>
+        <li><a href="../components_communications_api/apiGetTournamentUser.html">apiGetTournamentUser</a></li>
+        <li><a href="../components_communications_api/apiJoinOrLeaveTournament.html">apiJoinOrLeaveTournament</a></li>
+        <li><a href="../components_communications_api/apiMyTournaments.html">apiMyTournaments</a></li>
+        <li><a href="../components_communications_api/apiOtherTournaments.html">apiOtherTournaments</a></li>
+        <li><a href="../components_communications_api/apiRanking.html">apiRanking</a></li>
+        <li><a href="../components_communications_api/apiSignIn.html">apiSignIn</a></li>
+        <li><a href="../components_communications_api/apiSignOut.html">apiSignOut</a></li>
+        <li><a href="../components_communications_api/apiSignUp.html">apiSignUp</a></li>
+        <li><a href="../components_communications_api/apiUpdateUser.html">apiUpdateUser</a></li>
+        <li><a href="../components_communications_api/apiUser.html">apiUser</a></li>
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-left-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    ajedrez
+      1.2.3
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

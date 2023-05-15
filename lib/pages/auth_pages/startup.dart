@@ -1,7 +1,9 @@
+/// Page that shows up when starting the app.
+// import 'package:ajedrez/pages/menus_pages/tournaments.dart';
 import 'package:flutter/material.dart';
-import '../../components/buttons/text_long_button.dart';
+import '../../components/buttons/text_long.dart';
 import '../menus_pages/bottom_bar.dart';
-import '../../components/profile_data.dart';
+import '../../components/data/profile_data.dart';
 import '../../components/visual/set_image_color.dart';
 import '../../components/visual/screen_size.dart';
 import 'signin.dart';
@@ -33,27 +35,27 @@ class _StartupPageState extends State<StartupPage> {
 
               // Logo
               SizedBox(
-                height: 150,
-                child: setImageColor(context, "Logo_app_chess_white.png",
+                height: 200,
+                child: setImageColor(context, "Logo_with_text.png",
                     Theme.of(context).colorScheme.primary),
               ),
 
-              Text(
-                'R E I G N',
-                style: TextStyle(
-                  fontFamily: 'VesperLibre',
-                  fontWeight: FontWeight.w400,
-                  fontSize: 56,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
+              // Text(
+              //   'R E I G N',
+              //   style: TextStyle(
+              //     fontFamily: 'VesperLibre',
+              //     fontWeight: FontWeight.w400,
+              //     fontSize: 56,
+              //     color: Theme.of(context).colorScheme.primary,
+              //   ),
+              // ),
 
               const SizedBox(
-                height: 15,
+                height: 40,
               ),
 
               // Sign In button
-              textButton(context, true, 'Sign In', () {
+              textButton(context, true, 'Iniciar sesión', () {
                 assignIsRegistred(true);
                 Navigator.push(
                   context,
@@ -66,7 +68,7 @@ class _StartupPageState extends State<StartupPage> {
               ),
 
               // Sign Up button
-              textButton(context, false, "Sign Up", () {
+              textButton(context, false, "Registrarse", () {
                 assignIsRegistred(true);
                 Navigator.push(
                   context,
@@ -84,7 +86,7 @@ class _StartupPageState extends State<StartupPage> {
                 children: [
                   // User doesn't have an account
                   const Text(
-                    'Wan\'t to play without an account?',
+                    '¿Quieres jugar sin tener una cuenta?',
                     style: TextStyle(fontWeight: FontWeight.w500),
                   ),
 
@@ -95,16 +97,17 @@ class _StartupPageState extends State<StartupPage> {
                   GestureDetector(
                     onTap: () {
                       // De momento no rellena datos de usuario !!!
-                      assignIsRegistred(false);
+                      resetProfile();
                       Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => BottomBar.fromSignIn(),
+                          //builder: (context) => const TournamentPage(),
                         ),
                       );
                     },
                     child: Text(
-                      'Play Now',
+                      '¡Haz click aquí!',
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.secondary,
                           // Color.fromARGB(255, 59, 203, 255),

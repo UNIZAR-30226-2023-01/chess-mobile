@@ -1,15 +1,18 @@
+/// Widget that acts as a regressive timer.
 import 'dart:async';
 
 import 'package:ajedrez/components/chessLogic/board.dart';
 import 'package:flutter/material.dart';
 
+/// Widget that acts as a clock.
+// ignore: must_be_immutable
 class CustomTimer extends StatefulWidget {
   final String label;
   final bool isWhite;
-  final Duration duration;
+  Duration duration;
   final Function onTimerEnd;
 
-  const CustomTimer({
+  CustomTimer({
     super.key,
     required this.label,
     required this.duration,
@@ -21,6 +24,10 @@ class CustomTimer extends StatefulWidget {
   TimerState createState() => TimerState();
 }
 
+/// State of the clock widget.
+/// 
+/// It starts as a regressive count set to the duration
+/// Provides the function set timer to restart the count from a new duration.
 class TimerState extends State<CustomTimer> {
   late Timer _timer;
   late Stream<int> _stream;
@@ -30,6 +37,7 @@ class TimerState extends State<CustomTimer> {
   void initState() {
     super.initState();
     lastTime = widget.duration.inSeconds;
+    BoardData().clocks.add(this);
     _startTimer();
   }
 
@@ -52,6 +60,14 @@ class TimerState extends State<CustomTimer> {
     }).takeWhile((timeRemaining) => timeRemaining >= 0);
   }
 
+  void setTimer(int seconds) {
+    lastTime = seconds;
+
+    _timer = Timer(Duration(seconds: lastTime), () {
+      widget.onTimerEnd();
+    });
+  }
+
   String _formatTime(int timeInSeconds) {
     int minutes = timeInSeconds ~/ 60;
     int seconds = timeInSeconds % 60;
@@ -63,9 +79,9 @@ class TimerState extends State<CustomTimer> {
     return StreamBuilder<int>(
       stream: _stream,
       builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-        String timeText = '${widget.label}:\n --:--';
+        String timeText = '${widget.label}:  --:--';
         if (snapshot.hasData) {
-          timeText = '${widget.label}:\n ${_formatTime(snapshot.data!)}';
+          timeText = '${widget.label}:  ${_formatTime(snapshot.data!)}';
         }
         return Text(
           timeText,

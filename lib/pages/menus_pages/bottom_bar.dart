@@ -1,12 +1,14 @@
+/// Page that holds the rest of the home pages.
 import 'home.dart';
 import '../../components/visual/my_flutter_app_icons.dart';
 import 'profile.dart';
 import 'ranking.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import '../../components/buttons/back_button.dart';
-import '../../components/profile_data.dart';
-// import '../../components/communications/api.dart';
+import '../../components/popups/back.dart';
+import '../../components/data/profile_data.dart';
+import '../../components/data/ranking_data.dart';
+import '../../components/communications/api.dart';
 
 //ignore: must_be_immutable
 class BottomBar extends StatefulWidget {
@@ -45,16 +47,16 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        return await showDialog(
-              context: context,
-              builder: (BuildContext context) => popupBack(),
-            ) ??
-            false;
-      },
-      child: userData.isRegistered
-          ? Scaffold(
+    return userData.isRegistered
+        ? WillPopScope(
+            onWillPop: () async {
+              return await showDialog(
+                    context: context,
+                    builder: (BuildContext context) => popupBack(context),
+                  ) ??
+                  false;
+            },
+            child: Scaffold(
               body: Center(
                 child: widgetOptions.elementAt(selectedIndex),
               ),
@@ -85,31 +87,25 @@ class _BottomBarState extends State<BottomBar> {
                     ],
                     selectedIndex: selectedIndex,
                     onTabChange: (index) async {
-                      // int i = await apiRanking(1, 30);
-                      // print(i);
-                      setState(() {
-                        selectedIndex = index;
-                      });
+                      if (index == 2) {
+                        await apiUser();
+                      }
+                      if (index == 0) {
+                        RankingData.restart();
+                        RankingData.numPaginas =
+                            await apiRanking(1, RankingData.itemsPorPagina);
+                      }
+                      if (context.mounted) {
+                        setState(() {
+                          selectedIndex = index;
+                        });
+                      }
                     },
                   ),
                 ),
               ),
-            )
-          : const Scaffold(body: HomePage()),
-    );
-  }
-
-  AlertDialog popupBack() {
-    return AlertDialog(
-      backgroundColor: Theme.of(context).colorScheme.tertiary,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(15)),
-      ),
-      title: const Text("¿Seguro que deseas salir de la sesión?"),
-      actions: [
-        backButton(context, "No", false),
-        backButton(context, "Sí", true),
-      ],
-    );
+            ),
+          )
+        : const Scaffold(body: HomePage());
   }
 }

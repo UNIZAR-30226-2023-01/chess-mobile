@@ -1,5 +1,16 @@
-import '../profile_data.dart';
+/// Contains all the classes of the chess pieces and its native movements.
+import '../data/profile_data.dart';
 
+/// Generic class for the pieces all the types of pieces implement this class.
+/// 
+/// We use this to be able to treat all the types as the same one with a common interface.
+/// It haves the following methods and fields:
+/// - Userdata: Instance of the singleton to render custom skins.
+/// - _img: String to save the img name.
+/// - _value: Value of the Piece.
+/// - isWhite: Boolean, it sets the color of the piece.
+/// - isEmpty: Boolean method, it returns if a Piece is Empty or not(we use a Empty piece for all the empty squares).
+/// - possibleMovements: Returns all the possible movements for the current board for a given piece.
 abstract class Piece {
   final UserData userData = UserData();
   bool isWhite;
@@ -27,6 +38,7 @@ abstract class Piece {
       bool reversedBoard, List<List<int>> lastMovement);
 }
 
+/// Special implentation class for the pieces, it represents all the Empty squares.
 class Empty extends Piece {
   Empty({required super.isWhite}) {
     _value = 0;
@@ -46,11 +58,14 @@ class Empty extends Piece {
   }
 }
 
+/// Implentation class for the rooks.
 class Rook extends Piece {
   bool alreadyMoved = false;
   Rook({required super.isWhite}) {
     _value = 5;
-    _img = "${userData.pieceType}/torre${super.isWhite ? "B" : "N"}";
+    _img = super.isWhite
+        ? "${userData.lightPieces}/torreB"
+        : "${userData.darkPieces}/torreN";
     alreadyMoved = false;
   }
 
@@ -107,10 +122,13 @@ class Rook extends Piece {
   }
 }
 
+/// Implentation class for the bishops.
 class Bishop extends Piece {
   Bishop({required super.isWhite}) {
     _value = 3;
-    _img = "${userData.pieceType}/alfil${super.isWhite ? "B" : "N"}";
+    _img = super.isWhite
+        ? "${userData.lightPieces}/alfilB"
+        : "${userData.darkPieces}/alfilN";
   }
 
   @override
@@ -170,10 +188,13 @@ class Bishop extends Piece {
   }
 }
 
+/// Implentation class for the knights.
 class Knight extends Piece {
   Knight({required super.isWhite}) {
     _value = 3;
-    _img = "${userData.pieceType}/caballo${super.isWhite ? "B" : "N"}";
+    _img = super.isWhite
+        ? "${userData.lightPieces}/caballoB"
+        : "${userData.darkPieces}/caballoN";
   }
 
   @override
@@ -194,11 +215,14 @@ class Knight extends Piece {
   }
 }
 
+/// Implentation class for the pawns.
 class Pawn extends Piece {
   Pawn({required super.isWhite}) {
     _value = 1;
 
-    _img = "${userData.pieceType}/peon${super.isWhite ? "B" : "N"}";
+    _img = super.isWhite
+        ? "${userData.lightPieces}/peonB"
+        : "${userData.darkPieces}/peonN";
   }
 
   @override
@@ -250,10 +274,13 @@ class Pawn extends Piece {
   }
 }
 
+/// Implentation class for the queens.
 class Queen extends Piece {
   Queen({required super.isWhite}) {
     _value = 10;
-    _img = "${userData.pieceType}/reina${super.isWhite ? "B" : "N"}";
+    _img = super.isWhite
+        ? "${userData.lightPieces}/reinaB"
+        : "${userData.darkPieces}/reinaN";
   }
 
   @override
@@ -357,11 +384,14 @@ class Queen extends Piece {
   }
 }
 
+/// Implentation class for the kings.
 class King extends Piece {
   bool alreadyMoved = false;
   King({required super.isWhite}) {
     _value = 10000;
-    _img = "${userData.pieceType}/rey${super.isWhite ? "B" : "N"}";
+    _img = super.isWhite
+        ? "${userData.lightPieces}/reyB"
+        : "${userData.darkPieces}/reyN";
     alreadyMoved = false;
   }
 
@@ -379,7 +409,7 @@ class King extends Piece {
     movements.add([y, x + 1]);
     movements.add([y + 1, x + 1]);
 
-    if ((x + 3) < 8 &&
+    if ((x + 3) < 8 && isWhite &&
         board[y][x + 3] is Rook &&
         board[y][x + 2] is Empty &&
         board[y][x + 1] is Empty &&
@@ -388,7 +418,7 @@ class King extends Piece {
         !(board[y][x] as King).alreadyMoved) {
       movements.add([y, x + 2]);
     }
-    if ((x - 4) >= 0 &&
+    if ((x - 4) >= 0 && isWhite &&
         board[y][x - 4] is Rook &&
         board[y][x - 3] is Empty &&
         board[y][x - 2] is Empty &&
@@ -398,6 +428,26 @@ class King extends Piece {
         !(board[y][x] as King).alreadyMoved) {
       movements.add([y, x - 2]);
     }
+
+    if ((x - 3) >= 0 && !isWhite &&
+        board[y][x - 3] is Rook &&
+        board[y][x - 2] is Empty &&
+        board[y][x - 1] is Empty &&
+        board[y][x] is King &&
+        !(board[y][x - 3] as Rook).alreadyMoved &&
+        !(board[y][x] as King).alreadyMoved) {
+      movements.add([y, x - 2]);
+    }
+    if ((x + 4) < 8 && !isWhite &&
+        board[y][x + 4] is Rook &&
+        board[y][x + 3] is Empty &&
+        board[y][x + 2] is Empty &&
+        board[y][x + 1] is Empty &&
+        board[y][x] is King &&
+        !(board[y][x + 4] as Rook).alreadyMoved &&
+        !(board[y][x] as King).alreadyMoved) {
+      movements.add([y, x + 2]);
+      }
     return movements;
   }
 }

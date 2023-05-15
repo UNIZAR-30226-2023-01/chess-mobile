@@ -1,3 +1,4 @@
+/// Function that acts as a image color filter.
 import 'package:flutter/material.dart';
 
 ColorFiltered setImageColor(BuildContext context, String image, Color color) {

@@ -1,7 +1,10 @@
+/// Page that shows the ranking.
+import 'package:ajedrez/components/communications/api.dart';
 import 'package:flutter/material.dart';
 import 'package:number_paginator/number_paginator.dart';
-
 import '../../components/visual/custom_shape.dart';
+import '../../components/visual/get_elo.dart';
+import '../../components/data/ranking_data.dart';
 
 class RankingPage extends StatefulWidget {
   const RankingPage({super.key});
@@ -11,15 +14,15 @@ class RankingPage extends StatefulWidget {
 }
 
 class _RankingPageState extends State<RankingPage> {
-  final int itemsPorPagina = 25;
-  final int numPaginas = 25;
   int paginaActual = 0;
+  RankingData rankingData = RankingData();
+
   @override
   Widget build(BuildContext context) {
     double defaultHeight = MediaQuery.of(context).size.height;
     double defaultWidth = MediaQuery.of(context).size.width;
 
-    var paginas = List.generate(numPaginas, (index) {
+    var paginas = List.generate(RankingData.numPaginas, (index) {
       return Container(
         color: Theme.of(context).colorScheme.background,
         child: Column(
@@ -47,62 +50,75 @@ class _RankingPageState extends State<RankingPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Flexible(
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: defaultWidth * 0.02),
-                                    width: defaultWidth / 3,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "#2",
-                                          style: TextStyle(
-                                            fontSize: 23,
-                                            fontWeight: FontWeight.bold,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
+                                if (RankingData.username.length >= 2)
+                                  Flexible(
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: defaultWidth * 0.02),
+                                      width: defaultWidth / 3,
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "#${RankingData.rank[1].toString()}",
+                                            style: TextStyle(
+                                              fontSize: 23,
+                                              fontWeight: FontWeight.bold,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            ),
                                           ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(
-                                              defaultHeight * 0.01),
-                                          child: imageItem(defaultHeight * 0.09,
-                                              2.5, "Grace_Hopper"),
-                                        ),
-                                        Text(
-                                          "Grace Hopper",
-                                          overflow: TextOverflow.visible,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.bold,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
+                                          Padding(
+                                            padding: EdgeInsets.all(
+                                                defaultHeight * 0.01),
+                                            child: imageItem(
+                                                defaultHeight * 0.09,
+                                                2.5,
+                                                "avatars${RankingData.avatar[1]}"),
                                           ),
-                                        ),
-                                        Text(
-                                          "2556",
-                                          style: TextStyle(
-                                            fontSize: 19,
-                                            fontWeight: FontWeight.w900,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              showElo(RankingData.elo[1]),
+                                              Flexible(
+                                                child: Text(
+                                                  RankingData.username[1],
+                                                  overflow:
+                                                      TextOverflow.visible,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                      ],
+                                          Text(
+                                            RankingData.elo[1].toString(),
+                                            style: TextStyle(
+                                              fontSize: 19,
+                                              fontWeight: FontWeight.w900,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
                                 Flexible(
                                   child: SizedBox(
                                     width: defaultWidth / 3,
                                     child: Column(
                                       children: [
                                         Text(
-                                          "#1",
+                                          "#${RankingData.rank[0].toString()}",
                                           style: TextStyle(
                                             fontSize: 30,
                                             fontWeight: FontWeight.bold,
@@ -114,72 +130,34 @@ class _RankingPageState extends State<RankingPage> {
                                         Padding(
                                           padding: EdgeInsets.all(
                                               defaultHeight * 0.01),
-                                          child: imageItem(defaultHeight * 0.11,
-                                              3, "Grace_Hopper"),
+                                          child: imageItem(
+                                              defaultHeight * 0.11,
+                                              3,
+                                              "avatars${RankingData.avatar[0]}"),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            showElo(RankingData.elo[0]),
+                                            Flexible(
+                                              child: Text(
+                                                RankingData.username[0],
+                                                overflow: TextOverflow.visible,
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                         Text(
-                                          "Grace Hopper",
-                                          overflow: TextOverflow.visible,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.bold,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                          ),
-                                        ),
-                                        Text(
-                                          "2556",
-                                          style: TextStyle(
-                                            fontSize: 19,
-                                            fontWeight: FontWeight.w900,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Flexible(
-                                  child: Container(
-                                    padding: EdgeInsets.only(
-                                        right: defaultWidth * 0.01),
-                                    width: defaultWidth / 3,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "#3",
-                                          style: TextStyle(
-                                            fontSize: 23,
-                                            fontWeight: FontWeight.bold,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.all(
-                                              defaultHeight * 0.01),
-                                          child: imageItem(defaultHeight * 0.09,
-                                              2.5, "Grace_Hopper"),
-                                        ),
-                                        Text(
-                                          "Grace Hopper",
-                                          overflow: TextOverflow.visible,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.bold,
-                                            color: Theme.of(context)
-                                                .colorScheme
-                                                .primary,
-                                          ),
-                                        ),
-                                        Text(
-                                          "2556",
+                                          RankingData.elo[0].toString(),
                                           style: TextStyle(
                                             fontSize: 19,
                                             fontWeight: FontWeight.w900,
@@ -192,6 +170,68 @@ class _RankingPageState extends State<RankingPage> {
                                     ),
                                   ),
                                 ),
+                                if (RankingData.username.length >= 3)
+                                  Flexible(
+                                    child: Container(
+                                      padding: EdgeInsets.only(
+                                          right: defaultWidth * 0.01),
+                                      width: defaultWidth / 3,
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            "#${RankingData.rank[2].toString()}",
+                                            style: TextStyle(
+                                              fontSize: 23,
+                                              fontWeight: FontWeight.bold,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.all(
+                                                defaultHeight * 0.01),
+                                            child: imageItem(
+                                                defaultHeight * 0.09,
+                                                2.5,
+                                                "avatars${RankingData.avatar[2]}"),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              showElo(RankingData.elo[2]),
+                                              Flexible(
+                                                child: Text(
+                                                  RankingData.username[2],
+                                                  overflow:
+                                                      TextOverflow.visible,
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                    fontSize: 17,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Text(
+                                            RankingData.elo[2].toString(),
+                                            style: TextStyle(
+                                              fontSize: 19,
+                                              fontWeight: FontWeight.w900,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                               ],
                             ),
                           ),
@@ -209,9 +249,15 @@ class _RankingPageState extends State<RankingPage> {
             Expanded(
               child: ListView.builder(
                 padding: EdgeInsets.zero,
-                itemCount:
-                    paginaActual == 0 ? itemsPorPagina - 4 : itemsPorPagina,
-                itemBuilder: ((context, index) => Center(
+                itemCount: paginaActual == 0
+                    ? RankingData.itemsPorPagina - 3
+                    : RankingData.itemsPorPagina,
+                itemBuilder: ((context, index) {
+                  if (index <
+                      (paginaActual == 0
+                          ? RankingData.username.length - 3
+                          : RankingData.username.length)) {
+                    return Center(
                       child: Container(
                         margin: EdgeInsets.only(bottom: defaultHeight * 0.02),
                         height: defaultHeight * 0.1,
@@ -232,7 +278,7 @@ class _RankingPageState extends State<RankingPage> {
                               child: FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Text(
-                                  "#${(index) + (paginaActual * itemsPorPagina) + (paginaActual == 0 ? 4 : 0)}",
+                                  "#${RankingData.rank[paginaActual == 0 ? index + 3 : index].toString()}",
                                   textAlign: TextAlign.right,
                                   style: TextStyle(
                                     fontSize: 21,
@@ -246,29 +292,43 @@ class _RankingPageState extends State<RankingPage> {
                             Center(
                               child: SizedBox(
                                 width: (defaultWidth * 0.85) * 0.175,
-                                child: imageItem(
-                                    defaultHeight * 0.07, 2, "Grace_Hopper"),
+                                child: imageItem(defaultHeight * 0.07, 2,
+                                    "avatars${RankingData.avatar[paginaActual == 0 ? index + 3 : index]}"),
                               ),
                             ),
                             Container(
                               width: (defaultWidth * 0.85) * 0.45,
                               padding: EdgeInsets.symmetric(
                                   horizontal: defaultWidth * 0.03),
-                              child: Text(
-                                "Grace Hopper Prueba Largo",
-                                overflow: TextOverflow.visible,
-                                textAlign: TextAlign.left,
-                                style: TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.bold,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
+                              child: Row(
+                                children: [
+                                  showElo(RankingData.elo[
+                                      paginaActual == 0 ? index + 3 : index]),
+                                  Flexible(
+                                    child: Text(
+                                      RankingData.username[paginaActual == 0
+                                          ? index + 3
+                                          : index],
+                                      overflow: TextOverflow.visible,
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                        fontSize: 17,
+                                        fontWeight: FontWeight.bold,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             SizedBox(
                               width: (defaultWidth * 0.85) * 0.15,
                               child: Text(
-                                "2556",
+                                RankingData
+                                    .elo[paginaActual == 0 ? index + 3 : index]
+                                    .toString(),
                                 textAlign: TextAlign.right,
                                 style: TextStyle(
                                   fontSize: 19,
@@ -280,7 +340,11 @@ class _RankingPageState extends State<RankingPage> {
                           ],
                         ),
                       ),
-                    )),
+                    );
+                  } else {
+                    return const SizedBox();
+                  }
+                }),
               ),
             ),
           ],
@@ -303,7 +367,7 @@ class _RankingPageState extends State<RankingPage> {
         ),
         margin: EdgeInsets.zero,
         child: NumberPaginator(
-          numberPages: numPaginas,
+          numberPages: RankingData.numPaginas,
           config: NumberPaginatorUIConfig(
             buttonSelectedBackgroundColor:
                 Theme.of(context).colorScheme.secondary,
@@ -313,10 +377,14 @@ class _RankingPageState extends State<RankingPage> {
                 Theme.of(context).colorScheme.primary,
             buttonUnselectedForegroundColor: Colors.white,
           ),
-          onPageChange: (index) {
-            setState(() {
-              paginaActual = index;
-            });
+          onPageChange: (index) async {
+            RankingData.restart();
+            await apiRanking(index + 1, RankingData.itemsPorPagina);
+            if (context.mounted) {
+              setState(() {
+                paginaActual = index;
+              });
+            }
           },
         ),
       ),
@@ -337,7 +405,7 @@ class _RankingPageState extends State<RankingPage> {
             ),
             image: DecorationImage(
               fit: BoxFit.cover,
-              image: AssetImage('images/$imagen.jpg'),
+              image: AssetImage('images/$imagen'),
             )),
       ),
     );

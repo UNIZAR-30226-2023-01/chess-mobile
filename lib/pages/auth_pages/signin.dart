@@ -1,10 +1,10 @@
+/// Page that allows the user to sign in.
 import 'package:flutter/material.dart';
 import '../../components/buttons/textfield_custom.dart';
 import '../../components/communications/api.dart';
 import '../menus_pages/bottom_bar.dart';
-import '../../components/buttons/return_button.dart';
-import '../../components/buttons/platform_button.dart';
-import '../../components/buttons/text_long_button.dart';
+import '../../components/buttons/return.dart';
+import '../../components/buttons/text_long.dart';
 import '../../components/popups/pop_error.dart';
 import 'forgot_password.dart';
 import 'signup.dart';
@@ -71,7 +71,7 @@ class _SignInPageState extends State<SignInPage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25),
                     child: Text(
-                      'Welcome back! Glad to see you, Again!',
+                      '¡Bienvenido! ¡Me alegra verte de nuevo!',
                       style: TextStyle(
                         color: Theme.of(context).colorScheme.primary,
                         fontWeight: FontWeight.bold,
@@ -86,12 +86,12 @@ class _SignInPageState extends State<SignInPage> {
 
                   // Username textfield
                   TextFieldCustom(
-                    labelText: 'Username',
+                    labelText: 'Nombre de usuario',
                     obscureText: false,
                     iconText: Icons.person,
                     onChanged: (userTxt) => updateUsername(userTxt),
                     validator: (userTxt) => userTxt == null || userTxt.isEmpty
-                        ? 'Enter a valid username'
+                        ? 'Introduce un nombre de usuario válido'
                         : null,
                   ),
 
@@ -101,15 +101,15 @@ class _SignInPageState extends State<SignInPage> {
 
                   // Password textfield
                   TextFieldCustom(
-                    labelText: 'Password',
+                    labelText: 'Contraseña',
                     obscureText: true,
                     iconText: Icons.lock,
                     onChanged: (passTxt) => updatePassword(passTxt),
                     validator: (passTxt) {
                       if (passTxt == null || passTxt.isEmpty) {
-                        return 'Enter a valid password';
+                        return 'Introduce una contraseña válida';
                       } else if (passTxt.length < 8) {
-                        return 'Must have at least 8 characters';
+                        return 'La contraseña debe tener al menos 8 carácteres';
                       } else {
                         return null;
                       }
@@ -136,9 +136,9 @@ class _SignInPageState extends State<SignInPage> {
                             );
                           },
                           child: const Text(
-                            'Forgot password?',
+                            '¿Contraseña olvidada?',
                             style: TextStyle(
-                              color: Color.fromARGB(255, 208, 211, 218),
+                              color: Color.fromARGB(255, 115, 117, 121),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
@@ -155,7 +155,7 @@ class _SignInPageState extends State<SignInPage> {
                   textButton(
                     context,
                     true,
-                    'Login',
+                    'Acceder',
                     () async {
                       final isValidForm = formKey.currentState!.validate();
 
@@ -184,7 +184,7 @@ class _SignInPageState extends State<SignInPage> {
                           default:
                             if (context.mounted) {
                               popupERR(context,
-                                  "An error has occurred during authentication");
+                                  "Ha ocurrido un error durante la autenticación");
                             }
                         }
                       }
@@ -193,60 +193,6 @@ class _SignInPageState extends State<SignInPage> {
 
                   const SizedBox(
                     height: 50,
-                  ),
-
-                  // Divider for other methods
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Divider(
-                            thickness: 0.5,
-                            color: Color.fromARGB(255, 208, 211, 218),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Text(
-                            'Or',
-                            style: TextStyle(
-                                color: Color.fromARGB(255, 208, 211, 218),
-                                fontWeight: FontWeight.w500),
-                          ),
-                        ),
-                        Expanded(
-                          child: Divider(
-                            thickness: 0.5,
-                            color: Color.fromARGB(255, 208, 211, 218),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                  const SizedBox(
-                    height: 25,
-                  ),
-
-                  // Other platforms for login
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      PlatformButton(
-                        logoPath: 'images/Google_Logo.png',
-                        message: 'Login with Google',
-                        onTap: () async {
-                          apiSignInGoogle(context);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => BottomBar.fromSignIn(),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
                   ),
 
                   const SizedBox(
@@ -259,7 +205,7 @@ class _SignInPageState extends State<SignInPage> {
                     children: [
                       // User doesn't have an account
                       const Text(
-                        'Don\'t have an account?',
+                        '¿No tienes cuenta?',
                         style: TextStyle(fontWeight: FontWeight.w500),
                       ),
 
@@ -276,7 +222,7 @@ class _SignInPageState extends State<SignInPage> {
                           );
                         },
                         child: Text(
-                          'Register Now',
+                          '¡Regístrate ahora!',
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.secondary,
                               // Color.fromARGB(255, 59, 203, 255),

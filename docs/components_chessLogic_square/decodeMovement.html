@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="API docs for the decodeMovement function from the square library, for the Dart programming language.">
+  <title>decodeMovement function - square library - Dart API</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="../static-assets/github.css?v1">
+  <link rel="stylesheet" href="../static-assets/styles.css?v1">
+  <link rel="icon" href="../static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="../" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="../index.html">ajedrez</a></li>
+    <li><a href="../components_chessLogic_square/components_chessLogic_square-library.html">square</a></li>
+    <li class="self-crumb">decodeMovement function</li>
+  </ol>
+  <div class="self-name">decodeMovement</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        brightness_4
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        brightness_5
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div id="dartdoc-main-content" class="main-content">
+      <div>
+<h1><span class="kind-function">decodeMovement</span> function 
+ 
+</h1></div>
+
+    <section class="multi-line-signature">
+        
+
+<span class="returntype"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/List-class.html">List</a><span class="signature">&lt;<wbr><span class="type-parameter"><a href="https://api.flutter.dev/flutter/dart-core/int-class.html">int</a></span>&gt;</span></span>&gt;</span></span>
+<span class="name ">decodeMovement</span>(<wbr><ol class="parameter-list"><li><span class="parameter" id="decodeMovement-param-jugada"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a></span> <span class="parameter-name">jugada</span></span></li>
+</ol>)
+
+        
+
+    </section>
+    
+<section class="desc markdown">
+  <p>Function that given a string movement decodes it in movement coords.</p>
+</section>
+
+
+    
+<section class="summary source-code" id="source">
+  <h2><span>Implementation</span></h2>
+  <pre class="language-dart"><code class="language-dart">List&lt;List&lt;int&gt;&gt; decodeMovement(String jugada) {
+  var jugadas = [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;, &#39;d&#39;, &#39;e&#39;, &#39;f&#39;, &#39;g&#39;, &#39;h&#39;];
+  int prevx = jugadas.indexOf(jugada[0]);
+  int x = jugadas.indexOf(jugada[2]);
+  int prevy = jugada[1].codeUnitAt(0) - &#39;0&#39;.codeUnitAt(0);
+  int y = jugada[3].codeUnitAt(0) - &#39;0&#39;.codeUnitAt(0);
+  BoardData board = BoardData();
+  if (jugada.length == 5) {
+    board.prom = jugada[4];
+  } else {
+    board.prom = &quot;&quot;;
+  }
+  prevy = board.reversedBoard ? prevy - 1 : 8 - prevy;
+  y = board.reversedBoard ? y - 1 : 8 - y;
+
+  prevx = !board.reversedBoard ? prevx : 7 - prevx;
+  x = !board.reversedBoard ? x : 7 - x;
+  return [
+    [prevy, prevx],
+    [y, x]
+  ];
+}</code></pre>
+</section>
+
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li><a href="../index.html">ajedrez</a></li>
+  <li><a href="../components_chessLogic_square/components_chessLogic_square-library.html">square</a></li>
+  <li class="self-crumb">decodeMovement function</li>
+</ol>
+
+
+    <h5>square library</h5>
+    <ol>
+      <li class="section-title"><a href="../components_chessLogic_square/components_chessLogic_square-library.html#classes">Classes</a></li>
+        <li><a href="../components_chessLogic_square/Square-class.html">Square</a></li>
+        <li><a href="../components_chessLogic_square/SquareState-class.html">SquareState</a></li>
+
+
+
+
+
+      <li class="section-title"><a href="../components_chessLogic_square/components_chessLogic_square-library.html#functions">Functions</a></li>
+        <li><a href="../components_chessLogic_square/decodeMovement.html">decodeMovement</a></li>
+        <li><a href="../components_chessLogic_square/loadMovement.html">loadMovement</a></li>
+        <li><a href="../components_chessLogic_square/procesarComerAlPaso.html">procesarComerAlPaso</a></li>
+        <li><a href="../components_chessLogic_square/processCastling.html">processCastling</a></li>
+        <li><a href="../components_chessLogic_square/simulateMovement.html">simulateMovement</a></li>
+
+
+
+</ol>
+
+  </div><!--/.sidebar-offcanvas-left-->
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div><!--/.sidebar-offcanvas-->
+
+</main>
+
+<footer>
+  <span class="no-break">
+    ajedrez
+      1.2.3
+  </span>
+
+  
+</footer>
+
+
+
+<script src="../static-assets/highlight.pack.js?v1"></script>
+<script src="../static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../components/buttons/textfield_custom.dart';
-import '../../components/buttons/return_button.dart';
-import '../../components/buttons/text_long_button.dart';
+import '../../components/buttons/return.dart';
+import '../../components/buttons/text_long.dart';
 import 'password_changed.dart';
 
 class CreatePwPage extends StatefulWidget {
@@ -49,7 +49,7 @@ class _CreatePwPageState extends State<CreatePwPage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'Create new password',
+                          'Crea una nueva contraseña',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 30,
@@ -67,7 +67,7 @@ class _CreatePwPageState extends State<CreatePwPage> {
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 25),
                     child: Text(
-                      'Your new password must be unique from those previously used.',
+                      'Tu nueva contraseña debe ser diferente de la utilizada anteriormente',
                       style: TextStyle(
                         color: Color.fromARGB(255, 131, 145, 161),
                         fontWeight: FontWeight.w400,
@@ -82,11 +82,11 @@ class _CreatePwPageState extends State<CreatePwPage> {
 
                   // New Password textfield
                   TextFieldCustom(
-                    labelText: 'New Password',
+                    labelText: 'Nueva contraseña',
                     obscureText: true,
                     iconText: Icons.lock_reset,
                     validator: (value) =>
-                        value != '456' ? 'Invalid password' : null,
+                        value != '456' ? 'Contraseña inválida' : null,
                   ),
 
                   const SizedBox(
@@ -95,11 +95,11 @@ class _CreatePwPageState extends State<CreatePwPage> {
 
                   // Confirm Password textfield
                   TextFieldCustom(
-                    labelText: 'Confirm Password',
+                    labelText: 'Confirma la nueva contraseña',
                     obscureText: true,
                     iconText: Icons.lock_reset,
                     validator: (value) =>
-                        value != '123' ? 'Invalid password' : null,
+                        value != '123' ? 'Contraseña inválida' : null,
                   ),
 
                   const SizedBox(
@@ -110,7 +110,7 @@ class _CreatePwPageState extends State<CreatePwPage> {
                   textButton(
                     context,
                     true,
-                    'Reset Password',
+                    'Restaurar contraseña',
                     () {
                       Navigator.push(
                         context,

@@ -1,13 +1,19 @@
-import 'package:ajedrez/components/profile_data.dart';
+/// Widget that represents a single square of the board, it has all the movement logic.
+import 'dart:async';
+
+import 'package:ajedrez/components/data/profile_data.dart';
 import 'package:ajedrez/components/communications/socket_io.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import '../popups/winner_dialog.dart';
+import '../popups/ingame/winner_dialog.dart';
 
 import 'pieces.dart';
 import 'board.dart';
-import '../popups/promotion.dart';
+import '../popups/ingame/promotion.dart';
 
+/// Base widget of the board squares.
+/// 
+/// It has a associated index € 0,63.
 class Square extends StatefulWidget {
   final int index;
   const Square({super.key, required this.index});
@@ -15,6 +21,14 @@ class Square extends StatefulWidget {
   State<Square> createState() => SquareState();
 }
 
+/// Dynamic state of a single square.
+/// 
+/// It contains references to the following singleton instances:
+/// - BoardData
+/// - GameSocket
+/// - UserData
+/// The build method which displays the piece that is in that position.
+/// The _tapped methos is called when the Square is pressed, it has all the relevant logic.
 class SquareState extends State<Square> {
   /// Contiene el índice de la casilla(0-63)
   int i = 0;
@@ -32,10 +46,12 @@ class SquareState extends State<Square> {
     x = i % 8;
   }
 
+  /// Auxiliar method to update a square state from outside.
   void actualizarEstado() {
     setState(() {});
   }
 
+  /// Returns a box which contains the piece image and a button, also displays the background color.
   @override
   Widget build(BuildContext context) {
     // debugPrint("Build method called for widget with index ${widget.index}");
@@ -53,7 +69,7 @@ class SquareState extends State<Square> {
                 image: board.currentBoard[y][x].getImg() != ""
                     ? DecorationImage(
                         image: AssetImage(
-                            "images/${board.currentBoard[y][x].getImg()}.png"),
+                            "images${board.currentBoard[y][x].getImg()}.png"),
                         fit: BoxFit.cover)
                     : null),
           ),
@@ -62,9 +78,16 @@ class SquareState extends State<Square> {
     );
   }
 
-  /// Se llama al tocar una casilla
+  /// Manages all the taps in the current square it has inside all the logic.
   Future<Object> _tapped(BuildContext context) async {
     if (!board.spectatorMode) {
+
+      /// If is our turn and we are selecting one of our pieces and the square is not empty.
+      /// 
+      /// We mark the selected position for the next tap in other square.
+      /// We calculate all the possible movements that start using this piece.
+      /// We render all the possible squares new colors.
+      /// We check all the movements and discard all which arent valid.
       if (board.whiteTurn == s.iAmWhite &&
           board.currentBoard[y][x].isWhite == board.whiteTurn &&
           !board.boardMovements[y][x] &&
@@ -89,7 +112,16 @@ class SquareState extends State<Square> {
         }
 
         allowedMovements.forEach(_processValidMovement);
-      } else if (board.whiteTurn == s.iAmWhite &&
+      } 
+      
+      /// If is our turn and the square is among the possible movements of the previously selected one we do the movement.
+      /// 
+      /// Plays the sound of capture/move.
+      /// Sets the previous selected square in aux vars.
+      /// Checks if it is a complex movement(castling/promotion).
+      /// Moves the piece from the last square to this one and updates both squares.
+      /// Encodes the movement and sends it trough the socket.
+      else if (board.whiteTurn == s.iAmWhite &&
           (board.currentBoard[y][x].isEmpty() ||
               board.currentBoard[y][x].isWhite != board.whiteTurn) &&
           board.boardMovements[y][x]) {
@@ -110,15 +142,16 @@ class SquareState extends State<Square> {
         }
 
         //enroque
-        _processCastling(auxY, auxX);
-        _procesarComerAlPaso(auxY, auxX);
+        processCastling(auxY, auxX, y, x);
+        procesarComerAlPaso(auxY, auxX,y,x);
         board.lastMovement = [
           [auxY, auxX],
           [y, x]
         ];
         board.currentBoard[y][x] = board.currentBoard[auxY][auxX];
         board.currentBoard[auxY][auxX] = Empty(isWhite: false);
-        _processPromotion();
+        await _processPromotion();
+
         var jugada = _encodeMovement(auxX, auxY);
         // print(jugada);
         var movimiento = {"move": jugada};
@@ -142,6 +175,10 @@ class SquareState extends State<Square> {
         .setState(() {});
   }
 
+  /// Function that checks if a given movement solves the current checkmate or not.
+  /// 
+  /// It returns if the movement solves the checkmate.
+  /// Inside it simulates all the oponents possible movements after doing this move.
   bool _processIfSolvesCheckMate(List<int> movimiento) {
     //hace el posible movimiento
     Piece tmp;
@@ -191,6 +228,7 @@ class SquareState extends State<Square> {
     return solvesCheckMate;
   }
 
+  /// Function that returns the expected color of the square depending of its current state.
   Color _calculateSquareColor() {
     Color whiteTile, blackTile;
     whiteTile = Color(userData.boardTypeB);
@@ -209,67 +247,47 @@ class SquareState extends State<Square> {
                 : blackTile;
   }
 
-  void _processCastling(int auxY, int auxX) {
-    if (board.currentBoard[auxY][auxX] is King) {
-      (board.currentBoard[auxY][auxX] as King).alreadyMoved = true;
-    } else if (board.currentBoard[auxY][auxX] is Rook) {
-      (board.currentBoard[auxY][auxX] as Rook).alreadyMoved = true;
-    }
-    if (board.currentBoard[auxY][auxX] is King && (auxX - x).abs() > 1) {
-      if (x == 6) {
-        board.currentBoard[y][5] = board.currentBoard[y][7];
-        board.currentBoard[y][7] = Empty(isWhite: false);
-        board.squares[y * 8 + 5].setState(() {});
-        board.squares[y * 8 + 7].setState(() {});
-      } else if (x == 2) {
-        board.currentBoard[y][3] = board.currentBoard[y][0];
-        board.currentBoard[y][0] = Empty(isWhite: false);
-        board.squares[y * 8 + 0].setState(() {});
-        board.squares[y * 8 + 3].setState(() {});
-      }
-    }
-  }
-
+  /// Function that shows a popup to choose the kind of piece we want to promote our Pawn.
+  /// 
+  /// This functions returns the information inside the singleton BoardDato.
+  /// Also destroys the pawn and replaces it with the new piece.
   Future<void> _processPromotion() async {
+    BoardData b = BoardData();
+    Completer completer = Completer<void>();
+    b.prom = "";
     if (board.currentBoard[y][x] is Pawn && (y == 0 || y == 7)) {
       final RenderBox box = context.findRenderObject() as RenderBox;
       final Offset position = box.localToGlobal(Offset.zero);
       PieceOption? selectedPiece;
       while (selectedPiece == null) {
-        selectedPiece = await showPieceSelectionDialog(
-            context, position, board.currentBoard[y][x].color());
+        selectedPiece =
+            await showPieceSelectionDialog(context, position, board.whiteTurn);
       }
       switch (selectedPiece) {
         case PieceOption.reina:
-          board.currentBoard[y][x] =
-              Queen(isWhite: board.currentBoard[y][x].color());
+          board.currentBoard[y][x] = Queen(isWhite: board.whiteTurn);
+          b.prom = "q";
           break;
         case PieceOption.torre:
-          board.currentBoard[y][x] =
-              Rook(isWhite: board.currentBoard[y][x].color());
+          board.currentBoard[y][x] = Rook(isWhite: board.whiteTurn);
+          b.prom = "r";
           break;
         case PieceOption.alfil:
-          board.currentBoard[y][x] =
-              Bishop(isWhite: board.currentBoard[y][x].color());
+          board.currentBoard[y][x] = Bishop(isWhite: board.whiteTurn);
+          b.prom = "b";
           break;
         case PieceOption.caballo:
-          board.currentBoard[y][x] =
-              Knight(isWhite: board.currentBoard[y][x].color());
+          board.currentBoard[y][x] = Knight(isWhite: board.whiteTurn);
+          b.prom = "n";
           break;
       }
       setState(() {});
     }
+    completer.complete();
+    return completer.future;
   }
 
-  void _procesarComerAlPaso(int auxY, int auxX) {
-    if ((x - auxX).abs() > 0 &&
-        board.currentBoard[auxY][auxX] is Pawn &&
-        board.currentBoard[y][x].isEmpty()) {
-      board.currentBoard[auxY][x] = Empty(isWhite: false);
-      board.squares[auxY * 8 + x].setState(() {});
-    }
-  }
-
+  /// Function that checks locally if the game has ended.
   void _checkIfWin() {
     var tmpX = x;
     var tmpY = y;
@@ -305,6 +323,7 @@ class SquareState extends State<Square> {
     }
   }
 
+  /// Auxiliar function that updates all the squares states.
   void updateSquares() {
     BoardData board = BoardData();
     for (int i = 0; i < 8; i++) {
@@ -317,7 +336,9 @@ class SquareState extends State<Square> {
     }
   }
 
+  /// Function that given a movement coords encodes it in standard notation and returns it.
   String _encodeMovement(int prevX, prevY) {
+    BoardData b = BoardData();
     var jugadas = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     var invertedPrevY = !board.reversedBoard ? 8 - prevY : prevY + 1;
     var invertedY = !board.reversedBoard ? 8 - y : y + 1;
@@ -326,11 +347,15 @@ class SquareState extends State<Square> {
     String jugada = jugadas[invertedPrevX] +
         (invertedPrevY).toString() +
         jugadas[invertedX] +
-        (invertedY).toString();
+        (invertedY).toString() +
+        b.prom;
+    b.prom = "";
+
     return jugada;
   }
 }
 
+/// Function that given a string movement decodes it in movement coords.
 List<List<int>> decodeMovement(String jugada) {
   var jugadas = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
   int prevx = jugadas.indexOf(jugada[0]);
@@ -338,6 +363,11 @@ List<List<int>> decodeMovement(String jugada) {
   int prevy = jugada[1].codeUnitAt(0) - '0'.codeUnitAt(0);
   int y = jugada[3].codeUnitAt(0) - '0'.codeUnitAt(0);
   BoardData board = BoardData();
+  if (jugada.length == 5) {
+    board.prom = jugada[4];
+  } else {
+    board.prom = "";
+  }
   prevy = board.reversedBoard ? prevy - 1 : 8 - prevy;
   y = board.reversedBoard ? y - 1 : 8 - y;
 
@@ -349,12 +379,15 @@ List<List<int>> decodeMovement(String jugada) {
   ];
 }
 
+/// Function that given a movement coords simulates it, is used to simulate opponents moves.
 void simulateMovement(List<List<int>> movements) {
   BoardData b = BoardData();
   int auxY = movements[0][0];
   int auxX = movements[0][1];
   int y = movements[1][0];
   int x = movements[1][1];
+  processCastling(auxY, auxX, y, x);
+  procesarComerAlPaso(auxY, auxX,y,x);
   b.lastMovement = movements;
   final musicPlayer = AudioPlayer();
   if (b.currentBoard[y][x].isEmpty()) {
@@ -363,6 +396,23 @@ void simulateMovement(List<List<int>> movements) {
     musicPlayer.play(AssetSource("sounds/capturePiece.mp3"));
   }
   b.currentBoard[y][x] = b.currentBoard[auxY][auxX];
+  if (b.prom != "") {
+    switch (b.prom) {
+      case "q":
+        b.currentBoard[y][x] = Queen(isWhite: b.whiteTurn);
+        break;
+      case "r":
+        b.currentBoard[y][x] = Rook(isWhite: b.whiteTurn);
+        break;
+      case "b":
+        b.currentBoard[y][x] = Bishop(isWhite: b.whiteTurn);
+        break;
+      case "n":
+        b.currentBoard[y][x] = Knight(isWhite: b.whiteTurn);
+        break;
+    }
+  }
+  b.prom = "";
   b.currentBoard[auxY][auxX] = Empty(isWhite: false);
   b.selectedSquare = [-1, -1];
   (b.squares[auxY * 8 + auxX] as SquareState).actualizarEstado();
@@ -381,15 +431,84 @@ void simulateMovement(List<List<int>> movements) {
   b.whiteTurn = !b.whiteTurn;
 }
 
+/// Function that given a movement coords loads it in the current game before showing the game.
+/// 
+/// Is called before the start to load previous movements.
 void loadMovement(List<List<int>> movements) {
   BoardData b = BoardData();
   int auxY = movements[0][0];
   int auxX = movements[0][1];
   int y = movements[1][0];
   int x = movements[1][1];
+  processCastling(auxY, auxX, y, x);
+  procesarComerAlPaso(auxY, auxX,y,x);
   b.lastMovement = movements;
   b.currentBoard[y][x] = b.currentBoard[auxY][auxX];
+  if (b.prom != "") {
+    switch (b.prom) {
+      case "q":
+        b.currentBoard[y][x] = Queen(isWhite: b.whiteTurn);
+        break;
+      case "r":
+        b.currentBoard[y][x] = Rook(isWhite: b.whiteTurn);
+        break;
+      case "b":
+        b.currentBoard[y][x] = Bishop(isWhite: b.whiteTurn);
+        break;
+      case "n":
+        b.currentBoard[y][x] = Knight(isWhite: b.whiteTurn);
+        break;
+    }
+  }
+  b.prom = "";
   b.currentBoard[auxY][auxX] = Empty(isWhite: false);
   b.selectedSquare = [-1, -1];
   b.whiteTurn = !b.whiteTurn;
 }
+
+/// Function that simulates the castling move.
+void processCastling(int auxY, int auxX, int y, int x) {
+  BoardData board = BoardData();
+  if (board.currentBoard[auxY][auxX] is King) {
+    (board.currentBoard[auxY][auxX] as King).alreadyMoved = true;
+  } else if (board.currentBoard[auxY][auxX] is Rook) {
+    (board.currentBoard[auxY][auxX] as Rook).alreadyMoved = true;
+  }
+  if (board.currentBoard[auxY][auxX] is King && (auxX - x).abs() > 1) {
+    if (x == 6) {
+      board.currentBoard[y][5] = board.currentBoard[y][7];
+      board.currentBoard[y][7] = Empty(isWhite: false);
+      (board.squares[y * 8 + 5] as SquareState).actualizarEstado();
+      (board.squares[y * 8 + 7] as SquareState).actualizarEstado();
+    } else if (x == 2) {
+      board.currentBoard[y][3] = board.currentBoard[y][0];
+      board.currentBoard[y][0] = Empty(isWhite: false);
+      (board.squares[y * 8 + 0] as SquareState).actualizarEstado();
+      (board.squares[y * 8 + 3] as SquareState).actualizarEstado();
+    }
+
+    else if (x == 1) {
+      board.currentBoard[y][2] = board.currentBoard[y][0];
+      board.currentBoard[y][0] = Empty(isWhite: false);
+      (board.squares[y * 8 + 0] as SquareState).actualizarEstado();
+      (board.squares[y * 8 + 2] as SquareState).actualizarEstado();
+    }
+    else if (x == 5) {
+      board.currentBoard[y][4] = board.currentBoard[y][7];
+      board.currentBoard[y][7] = Empty(isWhite: false);
+      (board.squares[y * 8 + 4] as SquareState).actualizarEstado();
+      (board.squares[y * 8 + 7] as SquareState).actualizarEstado();
+    }
+  }
+}
+
+/// Function that simulates the eat on the fly move.
+void procesarComerAlPaso(int auxY, int auxX, int y, int x) {
+    BoardData board = BoardData();
+    if ((x - auxX).abs() > 0 &&
+        board.currentBoard[auxY][auxX] is Pawn &&
+        board.currentBoard[y][x].isEmpty()) {
+      board.currentBoard[auxY][x] = Empty(isWhite: false);
+      (board.squares[auxY * 8 + x] as SquareState).actualizarEstado();
+    }
+  }

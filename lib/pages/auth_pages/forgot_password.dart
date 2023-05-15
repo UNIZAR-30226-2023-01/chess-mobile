@@ -6,7 +6,6 @@ import '../../components/buttons/textfield_custom.dart';
 import '../../components/buttons/return.dart';
 import '../../components/buttons/text_long.dart';
 import 'startup.dart';
-//import 'create_password.dart';
 import '../../components/communications/api.dart';
 import '../../components/popups/pop_error.dart';
 import 'signin.dart';

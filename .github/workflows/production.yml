@@ -10,7 +10,8 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
-
+  tags : 
+      - v*
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -20,43 +21,27 @@ env:
  TAG_NAME: "1.0.0"
 
 jobs:
-  build:
+  build-and-test: 
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Flutter
-        uses: subosito/flutter-action@v1
-        with:
-          flutter-version: ${{ env.FLUTTER_VERSION }}
-      - name: Install dependencies
-        run: flutter pub get
-      # Consider passing '--fatal-infos' for slightly stricter analysis.
-      - name: Analyze project source
+    - uses: actions/checkout@v1 
+    # we need java to build android apks
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '12.x'
+    # this flutter action does the heavy lifting for us
+    - uses: subosito/flutter-action@v1
+      with:
+        channel: 'stable'  
+    # get packages as you used to in your computer
+    - run: flutter pub get
+    - name: Analyze project source
         run: dart analyze
-      # - run: flutter build apk
-      # - uses: actions/upload-artifact@v1
-      #   with:
-      #     name: release-apk
-      #     path: build/app/outputs/apk/release/app-release.apk
-
-
-      # - name: Create a Release
-      #   uses: actions/create-release@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     tag_name: "v${{ env.TAG_NAME }}"
-      #     release_name: "Release v${{ env.TAG_NAME }}"
-      #     draft: false
-      #     prerelease: false
-
-      # - name: Upload APK as Release Asset
-      #   uses: actions/upload-release-asset@v1
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #   with:
-      #     upload_url: "${{ steps.create_release.outputs.upload_url }}"
-      #     asset_path: build/app/outputs/apk/release/app-release.apk
-      #     asset_name: app-release.apk
-      #     asset_content_type: application/vnd.android.package-archive
+    # Now build apk
+    - run: flutter build apk --split-per-abi
+    # now relase the just created build
+    - name: Create a Release APK
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: "build/app/outputs/apk/release/*.apk"
+        token: ${{ secrets.MY_REPO_SECRET }}

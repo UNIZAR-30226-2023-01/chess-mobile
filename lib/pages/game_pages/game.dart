@@ -14,7 +14,6 @@ import '../../components/buttons/ingame/surrender.dart';
 import '../../components/chessLogic/board.dart';
 import '../../components/communications/socket_io.dart';
 
-
 // class Players {
 //   String dark = "null", light = "null";
 //   String darkName = "null", lightName = "null";
@@ -206,7 +205,7 @@ class GamePageState extends State<GamePage> {
                       ],
                     )
                   : const SizedBox(),
-              s.type == "AI"
+              s.type == "AI" || s.type == "TOURNAMENT"
                   ? Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -219,13 +218,15 @@ class GamePageState extends State<GamePage> {
                   ? saveButton(context)
                   : SizedBox(height: defaultWidth * 0.025),
               SizedBox(height: defaultWidth * 0.025),
-              Text(
-                "Código de partida: $idR",
-                style: TextStyle(
-                  color: Theme.of(context).colorScheme.secondary,
-                  fontSize: 19,
-                ),
-              ),
+              s.type != "TOURNAMENT"
+                  ? Text(
+                      "Código de partida: $idR",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.secondary,
+                        fontSize: 19,
+                      ),
+                    )
+                  : Container(),
               SizedBox(height: defaultWidth * 0.025),
             ],
           ),

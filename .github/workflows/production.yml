@@ -35,8 +35,7 @@ jobs:
         channel: 'stable'  
     # get packages as you used to in your computer
     - run: flutter pub get
-    - name: Analyze project source
-        run: dart analyze
+    - run: dart analyze
     # Now build apk
     - run: flutter build apk --split-per-abi
     # now relase the just created build

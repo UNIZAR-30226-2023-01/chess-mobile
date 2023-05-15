@@ -21,7 +21,6 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-
 class _HomePageState extends State<HomePage> {
   final UserData userData = UserData();
   final Spectator spectator = Spectator();

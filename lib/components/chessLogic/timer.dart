@@ -25,7 +25,7 @@ class CustomTimer extends StatefulWidget {
 }
 
 /// State of the clock widget.
-/// 
+///
 /// It starts as a regressive count set to the duration
 /// Provides the function set timer to restart the count from a new duration.
 class TimerState extends State<CustomTimer> {

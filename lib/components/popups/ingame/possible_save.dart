@@ -48,7 +48,7 @@ Object alertPossibleSave(BuildContext context) {
             ),
             child: Center(
               child: Text(
-                "GUARDAR",
+                "PAUSAR",
                 style: TextStyle(
                   fontSize: 19,
                   fontWeight: FontWeight.bold,

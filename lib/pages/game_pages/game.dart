@@ -90,6 +90,10 @@ class GamePageState extends State<GamePage> {
     String idR = s.room;
     String player1 = s.player1;
     String player2 = s.player2;
+    if (BoardData().reversedBoard) {
+      player1 = s.player2;
+      player2 = s.player1;
+    }
     listenGame(context);
     resetSingleton(!s.iAmWhite);
     // print(s.type);

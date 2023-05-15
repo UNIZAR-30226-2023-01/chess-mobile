@@ -2,7 +2,7 @@
 import '../data/profile_data.dart';
 
 /// Generic class for the pieces all the types of pieces implement this class.
-/// 
+///
 /// We use this to be able to treat all the types as the same one with a common interface.
 /// It haves the following methods and fields:
 /// - Userdata: Instance of the singleton to render custom skins.
@@ -409,7 +409,8 @@ class King extends Piece {
     movements.add([y, x + 1]);
     movements.add([y + 1, x + 1]);
 
-    if ((x + 3) < 8 && isWhite &&
+    if ((x + 3) < 8 &&
+        isWhite &&
         board[y][x + 3] is Rook &&
         board[y][x + 2] is Empty &&
         board[y][x + 1] is Empty &&
@@ -418,7 +419,8 @@ class King extends Piece {
         !(board[y][x] as King).alreadyMoved) {
       movements.add([y, x + 2]);
     }
-    if ((x - 4) >= 0 && isWhite &&
+    if ((x - 4) >= 0 &&
+        isWhite &&
         board[y][x - 4] is Rook &&
         board[y][x - 3] is Empty &&
         board[y][x - 2] is Empty &&
@@ -429,7 +431,8 @@ class King extends Piece {
       movements.add([y, x - 2]);
     }
 
-    if ((x - 3) >= 0 && !isWhite &&
+    if ((x - 3) >= 0 &&
+        !isWhite &&
         board[y][x - 3] is Rook &&
         board[y][x - 2] is Empty &&
         board[y][x - 1] is Empty &&
@@ -438,7 +441,8 @@ class King extends Piece {
         !(board[y][x] as King).alreadyMoved) {
       movements.add([y, x - 2]);
     }
-    if ((x + 4) < 8 && !isWhite &&
+    if ((x + 4) < 8 &&
+        !isWhite &&
         board[y][x + 4] is Rook &&
         board[y][x + 3] is Empty &&
         board[y][x + 2] is Empty &&
@@ -447,7 +451,7 @@ class King extends Piece {
         !(board[y][x + 4] as Rook).alreadyMoved &&
         !(board[y][x] as King).alreadyMoved) {
       movements.add([y, x + 2]);
-      }
+    }
     return movements;
   }
 }

@@ -11,8 +11,7 @@ Object alertWinner(BuildContext context, bool whiteTurn, String msg) {
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
       title: const Text("Partida finalizada"),
-      content: Text(
-          "$msg ${whiteTurn ? "blancas" : "negras"}."),
+      content: Text("$msg ${whiteTurn ? "blancas" : "negras"}."),
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(),

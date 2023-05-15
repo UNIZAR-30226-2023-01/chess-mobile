@@ -85,16 +85,65 @@
           color: Theme.of(context).colorScheme.primary,
           width: 1.25,
         )),
-    child: Column(children: [
-      Text(
-        &quot;Partida creada en:\n${gameData.createdAt}&quot;,
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 19,
-          color: Theme.of(context).colorScheme.primary,
+    child: Column(
+      children: [
+        Text(
+          convertirFecha(gameData.createdAt),
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 17,
+            color: Theme.of(context).colorScheme.primary,
+          ),
         ),
-      ),
-    ]),
+        SizedBox(height: defaultWidth * 0.05),
+        Text(
+          gameData.gameType,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontSize: 17,
+            color: Theme.of(context).colorScheme.primary,
+          ),
+        ),
+        SizedBox(height: defaultWidth * 0.05),
+        if (gameData.winner == &quot;Empate&quot;) ...[
+          const Text(
+            &quot;¡Has empatado!&quot;,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.visible,
+            style: TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.bold,
+              color: Colors.orange,
+            ),
+          ),
+        ] else if (gameData.winner == &quot;LIGHT&quot; &amp;&amp;
+                gameData.lightPlayer == userData.id ||
+            gameData.winner == &quot;DARK&quot; &amp;&amp;
+                gameData.darkPlayer == userData.id) ...[
+          const Text(
+            &quot;¡Has ganado!&quot;,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.visible,
+            style: TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.bold,
+              color: Colors.green,
+            ),
+          ),
+        ] else ...[
+          const Text(
+            &quot;¡Has perdido!&quot;,
+            textAlign: TextAlign.center,
+            overflow: TextOverflow.visible,
+            style: TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.bold,
+              color: Colors.red,
+            ),
+          ),
+        ]
+      ],
+    ),
   );
 }</code></pre>
 </section>
@@ -155,7 +204,7 @@
 <footer>
   <span class="no-break">
     ajedrez
-      1.2.3
+      2.0.1
   </span>
 
   
